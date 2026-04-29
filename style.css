@@ -41,13 +41,18 @@ footer p {
 .colaborador-info {
     display: flex;
 }
-
+.colaborador-info a{
+    text-decoration: none;
+    margin-left: 7px;
+    color: #000;
+}
 .colaborador-img {
     flex: 0 0 22%;
 }
 
 .colaborador-details {
     flex: 0 0 60%;
+    font-size: 14px;
 }
 .equipamentos-info{
 
