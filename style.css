@@ -23,6 +23,7 @@ article {
 img{
     width: 191px;
     height: 291px;
+    border-radius: 7px;
 }
 h2 {
     margin-left: 10px;
@@ -48,7 +49,29 @@ footer p {
 .colaborador-details {
     flex: 0 0 60%;
 }
+.equipamentos-info{
 
+    display: flex;
+    gap: 5px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+}
 .equipamento {
-    margin-bottom: 20px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    padding: 0 0 0 10px;
+    border: 1px solid #ccc;
+    background-color: whitesmoke;
+    border-radius: 6px;
+    flex: 0 0 18%;
+}
+.serial{
+    text-transform: uppercase;
+}
+.ticket{
+    margin-bottom: 15px;
+    padding: 0 0 0 10px;;
+    border: 1px solid #ccc;
+    background-color: whitesmoke;
+    border-radius: 5px;
 }
