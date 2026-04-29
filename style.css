@@ -41,6 +41,9 @@ footer p {
     margin: 0;
 }
 
+.colaborador-verificar{
+    border: 1px solid #c21c1c;
+}
 .colaborador-info {
     display: flex;
 }
