@@ -1,53 +1,51 @@
 body {
     font-family: 'Bree Serif', serif;
 }
-
-.corpo {
+.main{
     margin: 0 auto;
-    max-width: 800px;
-    padding: 20px;
-}
-
-header h1 {
-    text-align: center;
-}
-
-.inventario {
-    margin-top: 20px;
-}
-
-.colaboradores {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    background-color: whitesmoke;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-.colaboradores img {
-    max-width: 200px;
-    height: auto;
-    margin-right: 10px;
-}
-article{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    width: 960px;
+    padding: 0px;
     
 }
-.colaboradores p {
-    margin: 5px 0;
-    display: inline;
+h1{
+    text-align: center;
 }
-
+article{
+    border: 1px solid #ccc;
+    background-color: whitesmoke;
+}
+h2{
+    margin-left: 10px;
+}
+.flex{
+    display: flex;
+}
+.foto_col{
+    display: flex;
+    width: 21%;
+    background-color: aliceblue;
+    margin-left: 15px;
+}
+.foto{
+    max-width: 200px;
+    height: 130px;;
+    
+}
+.dados{
+    display: flex;
+    flex-wrap: wrap;
+    width: 79%;
+    margin-left: 10px;
+    margin-top: -15px
+}
+.meia_linha {
+    width:50%;
+}
 .linha {
-    flex-basis: 100%;
     width: 100%;
-}
+    flex-basis: 100%;
 
+}
 footer {
     text-align: center;
     margin-top: 20px;
