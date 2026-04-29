@@ -1,24 +1,33 @@
 body {
     font-family: 'Bree Serif', serif;
 }
-.main{
+
+.main {
     margin: 0 auto;
     width: 960px;
     padding: 0px;
-    
 }
-h1{
+
+h1 {
     text-align: center;
 }
-article{
+
+article {
     border: 1px solid #ccc;
     background-color: whitesmoke;
     border-radius: 5px;
     box-shadow: #ccc;
+    padding: 10px;
+    margin-top: 20px;
 }
-h2{
+img{
+    width: 191px;
+    height: 291px;
+}
+h2 {
     margin-left: 10px;
 }
+
 footer {
     text-align: center;
     margin-top: 20px;
@@ -26,4 +35,20 @@ footer {
 
 footer p {
     margin: 0;
+}
+
+.colaborador-info {
+    display: flex;
+}
+
+.colaborador-img {
+    flex: 0 0 22%;
+}
+
+.colaborador-details {
+    flex: 0 0 60%;
+}
+
+.equipamento {
+    margin-bottom: 20px;
 }
