@@ -46,7 +46,7 @@ main{
 }
 aside {
     background-color: #333;
-    width: 300px;
+    width: 320px;
     border-right: 1px solid #444; /* Simplificado para aplicar bordas em ambos os lados */
     box-sizing: border-box;
 }
@@ -135,7 +135,7 @@ img {
     margin-right: 10px;
     border: 1px solid #555;
     border-radius: 6px;
-    flex: 0 0 calc(26% - 5px) /* Calcule a largura com margem entre os itens */
+    flex: 0 0 calc(25% - 10px) /* Calcule a largura com margem entre os itens */
     box-sizing: border-box; /* Aplicado para todos os elementos .equipamento */
 }
 
