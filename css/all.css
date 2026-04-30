@@ -4,17 +4,6 @@
     box-sizing: border-box; /* Define o modelo de caixa para incluir padding e borda no tamanho total */
 }
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-/* Fonte para site */
-.inter-<uniquifier> {
-
-            font-optical-sizing: auto;
-            font-weight: <weight>;
-            font-style: normal;
-            font-variation-settings:
-                    "slnt" 0;
-        }
-
 /* Estilo da estrutura principal */
 body {
     font-family: 'Roboto', sans-serif;
@@ -39,14 +28,15 @@ header img {
 
 .container {
     display: flex;
-    min-height: 100vh;
+    min-height: 77vh;
 }
 main{
     background-color: #1e1e1e;
+    width: 880px;
 }
 aside {
     background-color: #333;
-    width: 320px;
+    width: 200px;
     border-right: 1px solid #444; /* Simplificado para aplicar bordas em ambos os lados */
     box-sizing: border-box;
 }
@@ -83,9 +73,9 @@ article {
 
 footer {
     border-top: 1px solid #444;
+    background-color: #1e1e1e;
     text-align: center;
     padding: 10px;
-    margin-top: 20px;
     text-align: center;
 }
 
