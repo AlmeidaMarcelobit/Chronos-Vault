@@ -18,7 +18,165 @@ include 'header.php';
         <h2>Dados do colaborador</h2>
         <section class="colaborador-info">
             <div class="colaborador-details">
-                <p><strong>ID Caixa:</strong></p>
+                <p><strong>ID Caixa:</strong> 83512</p>
+                <p><strong>Colaborador:</strong> Tatiane Coelho da Luz</p>
+                <p><strong>Email:</strong>tatiane.luz@amorsaude.com</p>
+                <p><strong>Cargo:</strong> Consultor de Operações</p>
+                <p><strong>Departamento:</strong> Operações</p>
+                <p><strong>CPF:</strong> 346.405.008-40</p>
+                <p><strong>Data de Entrada:</strong> 15/07/2024</p>
+                <p><strong>Substituição:</strong> Luiz Assumpção</p>
+                <p><strong>Centro de Custo:</strong> 12006 - Regional 1</p>
+            </div>
+        </section>
+        <h2>Dados equipamentos</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Notebook</p>
+                <p><strong>Marca/Modelo:</strong> Dell Vostro 15 3510</p>
+                <p class="serial"><strong>S/N:</strong> 62KLOV3</p>
+                <p><strong>Patrimonio:</strong> 224</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                <p><strong>Marca/Modelo:</strong> Logitech MK270</p>
+                <p class="serial"><strong>S/N:</strong> 2251CE5DBA8</p>
+                <p><strong>Patrimonio:</strong> 262</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Fone</p>
+                <p><strong>Marca/Modelo:</strong> Jabra HSC016</p>
+                <p class="serial"><strong>S/N:</strong> 00273964058</p>
+                <p><strong>Patrimonio:</strong> 669</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Celular</p>
+                <p><strong>Marca/Modelo:</strong></p>
+                <p class="serial"><strong>S/N:</strong> r9xta0efpll</p>
+                <p><strong>Patrimonio:</strong> 667</p>
+                <p><strong>IMEI 1:</strong> 350916877023195/01</p>
+                <p><strong>IMEI 2:</strong> 354654237023193/01</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Suporte</p>
+                <p><strong>Marca/Modelo:</strong> Aluminio</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Patrimonio:</strong> 819</p>
+            </div>
+        </section>
+        <section class="ticket">
+            <p><strong>ID Ticket:</strong> #49273</p>
+            <p><strong>Equipamentos:</strong> Notebook, Teclado e Mouse, Fone, Celular, Suporte</p>
+        </section>
+
+    </article>
+    <article>
+        <h2>Dados do colaborador</h2>
+        <section class="colaborador-info">
+            <div class="colaborador-details">
+                <p><strong>ID Caixa:</strong> 61739</p>
+                <p><strong>Colaborador:</strong> Lucilene Santos Matias</p>
+                <p><strong>Email:</strong> lucilene.matias@amorsaude.com</p>
+                <p><strong>Cargo:</strong> Consultor de Operações</p>
+                <p><strong>Departamento:</strong> Operações</p>
+                <p><strong>CPF:</strong> 219.665.528-74</p>
+                <p><strong>Centro de Custo:</strong> 12006 - Regional 1</p>
+                <p><strong>Substituição:</strong> Karen Loureiro</p>
+            </div>
+        </section>
+        <h2>Dados equipamentos</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Celular</p>
+                <p><strong>Marca/Modelo:</strong> Samsung Galaxy A03</p>
+                <p class="serial"><strong>S/N:</strong> R9XT700F6NK</p>
+                <p><strong>Patrimonio:</strong> 582</p>
+                <p><strong>IMEI 1:</strong> 354985988580910/01</p>
+                <p><strong>IMEI 2:</strong> 355106278590811/01</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Fone</p>
+                <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+                <p class="serial"><strong>S/N:</strong> 2316ME027FK9</p>
+                <p><strong>Patrimonio:</strong> 879</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Suporte</p>
+                <p><strong>Marca/Modelo:</strong> Aluminio</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Patrimonio:</strong> 826</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                <p><strong>Marca/Modelo:</strong> Dell KM5221W</p>
+                <p class="serial"><strong>S/N:</strong> CN-ONCRCC-L0300-331-KOUH-A01</p>
+                <p><strong>Patrimonio:</strong> 325</p>
+            </div>
+        </section>
+        <section class="ticket">
+            <p><strong>ID Ticket:</strong> #39681</p>
+            <p><strong>Equipamentos:</strong> Notebook, Teclado e Mouse, Suporte, Celular, Fone</p>
+        </section>
+
+    </article>
+    <article>
+        <h2>Dados do colaborador</h2>
+        <section class="colaborador-info">
+            <div class="colaborador-details">
+                <p><strong>ID Caixa:</strong>93204</p>
+                <p><strong>Colaborador:</strong> Gabriela Fritz</p>
+                <p><strong>Email:</strong>gabriela.fritz@amorsaude.com</p>
+                <p><strong>Cargo:</strong> Analista de Experiência do Cliente</p>
+                <p><strong>Departamento:</strong> Experiência do Cliente</p>
+                <p><strong>CPF:</strong> 446.392.818-46</p>
+                <p><strong>Centro de Custo:</strong>12004 - Experiência do Cliente</p>
+                <p><strong>Data de Entrada:</strong> 15/07/2024</p>
+                <p><strong>Substituição:</strong> Letícia Osone</p>
+            </div>
+        </section>
+        <h2>Dados equipamentos</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Monitor</p>
+                <p><strong>Marca/Modelo:</strong> LG22M410</p>
+                <p class="serial"><strong>S/N:</strong> 308AZW585585</p>
+                <p><strong>Patrimonio:</strong> 485</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Notebook</p>
+                <p><strong>Marca/Modelo:</strong> Lenovo V15 V2</p>
+                <p class="serial"><strong>S/N:</strong> PE09XVKT</p>
+                <p><strong>Patrimonio:</strong> 211</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Fone</p>
+                <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+                <p class="serial"><strong>S/N:</strong> 2315AY078409</p>
+                <p><strong>Patrimonio:</strong> 868</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Suporte</p>
+                <p><strong>Marca/Modelo:</strong> Aluminio</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Patrimonio:</strong> Patrimonio</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+                <p class="serial"><strong>S/N:</strong> CN-ONCRCC-LO300-331-K14W-A01</p>
+                <p><strong>Patrimonio:</strong> 421</p>
+            </div>
+        </section>
+        <section class="ticket">
+            <p><strong>ID Ticket:</strong> 37860</p>
+            <p><strong>Equipamentos:</strong> Monitor, Notebook, Fone, Suporte, Teclado e Mouse</p>
+        </section>
+    </article>
+    <article>
+        <h2>Dados do colaborador</h2>
+        <section class="colaborador-info">
+            <div class="colaborador-details">
+                <p><strong>ID Caixa:</strong>47658 </p>
                 <p><strong>Colaborador:</strong> Consultor 1</p>
                 <p><strong>Departamento:</strong>Consultoria</p>
                 <p><strong>Centro de Custo:</strong> 12007 - Regional 2</p>
