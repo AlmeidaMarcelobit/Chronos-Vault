@@ -6,6 +6,6 @@
     <a href="departamentos/pessoas_e_cultura.php">Pessoas e Cultura</a>
     <a href="departamentos/financeiro.php">Financeiro</a>
     <a href="departamentos/maquina_reserva.php">Maquinas Reserva</a>
-    <a href="kits_prontos.php">Kits Prontos</a>
+    <a href="estoque.php">Estoque</a>
     <a href="centro_custo.php">Centro de Custo</a>
 </nav>
