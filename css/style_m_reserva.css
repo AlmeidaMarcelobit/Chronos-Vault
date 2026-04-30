@@ -26,33 +26,7 @@ article {
     padding: 20px;
     margin-top: 30px;
 }
-/* Estilos adicionais para notebook */
-.notebooks-info {
-    display: flex;
-    align-items: center;
-}
-.img{
-    margin-right: 20px;
- }
-.notebooks-info img{
-    height: 191px;
-    width: 150px;
-}
 
-.colaborador-info a {
-    text-decoration: none;
-    margin-left: 7px;
-    color: #000;
-}
-
-.colaborador-img {
-    flex: 0 0 22%;
-}
-
-.colaborador-details {
-    flex: 0 0 58%;
-    font-size: 14px;
-}
 
 /* Estilos adicionais para o menu lateral */
 .sidebar-menu {
@@ -80,19 +54,4 @@ article {
 .sidebar-menu a:hover {
     background-color: #575757;
 }
-/*Estilo dos status do stock*/
-.in-stock{
-    background-color: #90ee90;
-}
-.off{
-    background-color: #eb3131;
-}
-/*Estilo para rodape da pagina*/
-footer {
-    text-align: center;
-    margin-top: 20px;
-}
 
-footer p {
-    margin: 0;
-}
