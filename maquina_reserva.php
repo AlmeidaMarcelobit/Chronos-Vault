@@ -15,7 +15,7 @@
 include 'header.php';
 ?>
 <main>
-    <article class="in-stock">
+    <article class="">
         <section class="notebooks-info">
             <div class="img">
                 <img src="icones/laptop.png" alt="icone laptop">
@@ -30,7 +30,22 @@ include 'header.php';
             </div>
         </section>
     </article>
-    <article class="off">
+    <article class="in-stock">
+        <section class="notebooks-info">
+            <div class="img">
+                <img src="icones/laptop.png" alt="icone laptop">
+            </div>
+            <div class="equipamento-details">
+                <p><strong>Nome: </strong> Reserva-02</p>
+                <p><strong>Tipo: </strong>Notebook Win-10 i3-7020u 4GB</p>
+                <p><strong>Patrimonio: </strong>36</p>
+                <p><strong>Marca\Modelo: </strong>Dell Inspiron 15 3584</p>
+                <p class="serial"><strong>S/N: </strong>6F21R23</p>
+                <p><strong>Alocado:</strong></p>
+            </div>
+        </section>
+    </article>
+    <article class="">
         <section class="notebooks-info">
             <div class="img">
                 <img src="icones/laptop.png" alt="icone laptop">
@@ -45,7 +60,7 @@ include 'header.php';
             </div>
         </section>
     </article>
-    <article class="in-stock">
+    <article class="off">
         <section class="notebooks-info">
             <div class="img">
                 <img src="icones/laptop.png" alt="icone laptop">
@@ -56,11 +71,11 @@ include 'header.php';
                 <p><strong>Patrimonio: </strong>11</p>
                 <p><strong>Marca\Modelo: </strong>Dell Inspiron 15 3584</p>
                 <p class="serial"><strong>S/N: </strong>H9RJ263</p>
-                <p><strong>Alocado:</strong></p>
+                <p><strong>Alocado:</strong>Marcelo Almeida</p>
             </div>
         </section>
     </article>
-    <article class="in-stock">
+    <article class="">
         <section class="notebooks-info">
             <div class="img">
                 <img src="icones/laptop.png" alt="icone laptop">
@@ -75,7 +90,7 @@ include 'header.php';
             </div>
         </section>
     </article>
-    <article class="in-stock">
+    <article class="off">
         <section class="notebooks-info">
             <div class="img">
                 <img src="icones/laptop.png" alt="icone laptop">
@@ -86,11 +101,11 @@ include 'header.php';
                 <p><strong>Patrimonio: </strong>19</p>
                 <p><strong>Marca\Modelo: </strong>Dell inspiron 3584</p>
                 <p class="serial"><strong>S/N: </strong>6F53R23</p>
-                <p><strong>Alocado:</strong></p>
+                <p><strong>Alocado:</strong>Inativa</p>
             </div>
         </section>
     </article>
-    <article class="in-stock">
+    <article class="">
         <section class="notebooks-info">
             <div class="img">
                 <img src="icones/laptop.png" alt="icone laptop">
