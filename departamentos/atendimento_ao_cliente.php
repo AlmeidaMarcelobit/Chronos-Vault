@@ -401,6 +401,7 @@
                             <p><strong>Termo de Entrega Equipamento: </strong><a href="">Not Found</a></p>
                         </div>
                     </section>
+                    <div class=""></div>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="equipamentos-info">
                         <div class="equipamento">
