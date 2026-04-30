@@ -9,78 +9,21 @@
     <title>Consultoria</title>
 </head>
 <body>
+    <header>
+        <img src="icones/LOGO_RGB_AMORSAUDE_FINAL_HORIZONTAL.png" alt="LOGO AMORSAUDE">
+    </header>
+<div class="container">
 <?php
 include 'header.php';
 ?>
     <main>
-        <header>
+        <header class="ativo">
             <h1>COLABORADORES ATIVOS</h1>
         </header>
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"> <img src="foto_colaboradores/Bruna Emilio.jpg" alt="Foto de Daniel Morais Vieira" class="foto" />
-                </div>
-                <div class="colaborador-details">
-                    <p><strong>Colaborador:</strong> Bruna Rafaela Emilio
-                    </p>
-                    <p><strong>Email:</strong> bruna.emilio@amorsaude.com </p>
-                    <p><strong>Cargo:</strong> Consultoria de Operações
-                    </p>
-                    <p><strong>Departamento:</strong> Consultoria</p>
-                    <p><strong>CPF: </strong>416.119.918-03</p>
-                    <p><strong>Data de Entrada: </strong>20.Junho.2023</p>
-                    <p><strong>Centro de Custo: </strong> 12006 - Regional 1</p>
-                    <p><strong>Termo de Entrega de Equipamento: </strong><a target="_blank" href="https://drive.google.com/file/d/1d34HGEe8PYKtASlIKueaWKCjRPIMB2k3/view?usp=sharing">Termo 01</a><a
-                                href="https://drive.google.com/file/d/1EG7fOQGkXnlgIKX7TPjJexX35C780QMy/view?usp=sharing" target="_blank">Termo 02</a></p>
-                </div>
-            </section>
-            <h2>DADOS DOS EQUIPAMENTOS</h2>
-            <section class="equipamentos-info">
-                <div class="equipamento">
-                    <p><strong>Tipo:</strong> Teclado e Mouse</p>
-                    <p><strong>Patrimônio:</strong> 261</p>
-                    <p class="serial"><strong>S/N:</strong> 2243CE258149</p>
-                    <p><strong>Marca/Modelo:</strong> Logitech MK270</p>
-                </div>
-                <div class="equipamento">
-                    <p><strong>Tipo:</strong> Suporte</p>
-                    <p><strong>Patrimônio:</strong> </p>
-                    <p class="serial"><strong>S/N:</strong> </p>
-                    <p><strong>Marca/Modelo:</strong> Aluminio</p>
-                </div>
-                <div class="equipamento">
-                    <p><strong>Tipo:</strong> Notebook</p>
-                    <p><strong>Patrimônio:</strong> 165</p>
-                    <p class="serial"><strong>S/N:</strong> PE09784e</p>
-                    <p><strong>Marca/Modelo:</strong> Ideapad315alc6</p>
-                </div>
-                <div class="equipamento">
-                    <p><strong>Tipo:</strong> Headset</p>
-                    <p><strong>Patrimônio:</strong>1010</p>
-                    <p class="serial"><strong>S/N:</strong>881000466</p>
-                    <p><strong>Marca/Modelo:</strong>Logitech MO3000</p>
-                </div>
-                <div class="equipamento">
-                    <p><strong>Tipo:</strong> Celular</p>
-                    <p><strong>Patrimônio:</strong>  794</p>
-                    <p class="serial"><strong>S/N:</strong> RX8R90HDAAR</p>
-                    <p><strong>Marca/Modelo:</strong> Galaxy AO3</p>
-                    <p><strong>IMEI 1:</strong> 354397910709045/01</p>
-                    <p><strong>IMEI 2:</strong> 354578130709048/01</p>
-                </div>
-                <div class="equipamento">
-                    <p><strong>Tipo:</strong> Adaptador de Rede</p>
-                    <p><strong>Patrimônio:</strong>  610</p>
-                    <p class="serial"><strong>S/N:</strong>  </p>
-                    <p><strong>Marca/Modelo:</strong> Generic</p>
-                </div>
-            </section>
-        </article>
-        <article>
-            <h2>DADOS DO COLABORADOR</h2>
-            <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Yago Mariano.jfif" alt="Miguel Silverio"></div>
+                <div class="colaborador-img"><img src="foto_colaboradores/Yago Mariano.jfif" alt="Miguel Silverio" class="foto"></div>
                 <div class="colaborador-details">
                     <p><strong>Colaborador:</strong>Yago dos Anjos Mariano</p>
                     <p><strong>Email:</strong>yago.mariano@amorsaude.com</p>
@@ -420,18 +363,83 @@ include 'header.php';
                 </div>
             </section>
         </article>
-        <h2>Coloboradore desligados</h2>
+        <header class="ativo">
+            <h1>COLABORADORES DESATIVADOS</h1>
+        </header>
+        <article>
+            <h2>DADOS DO COLABORADOR</h2>
+            <section class="colaborador-info">
+                <div class="colaborador-img"> <img src="foto_colaboradores/Bruna Emilio.jpg" alt="Foto de Daniel Morais Vieira" class="foto" />
+                </div>
+                <div class="colaborador-details">
+                    <p><strong>Colaborador:</strong> Bruna Rafaela Emilio
+                    </p>
+                    <p><strong>Email:</strong> bruna.emilio@amorsaude.com </p>
+                    <p><strong>Cargo:</strong> Consultoria de Operações
+                    </p>
+                    <p><strong>Departamento:</strong> Consultoria</p>
+                    <p><strong>CPF: </strong>416.119.918-03</p>
+                    <p><strong>Data de Entrada: </strong>20.Junho.2023</p>
+                    <p><strong>Centro de Custo: </strong> 12006 - Regional 1</p>
+                    <p><strong>Termo de Entrega de Equipamento: </strong><a target="_blank" href="https://drive.google.com/file/d/1d34HGEe8PYKtASlIKueaWKCjRPIMB2k3/view?usp=sharing">Termo 01</a><a
+                                href="https://drive.google.com/file/d/1EG7fOQGkXnlgIKX7TPjJexX35C780QMy/view?usp=sharing" target="_blank">Termo 02</a></p>
+                </div>
+            </section>
+            <h2>DADOS DOS EQUIPAMENTOS</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                    <p><strong>Patrimônio:</strong> 261</p>
+                    <p class="serial"><strong>S/N:</strong> 2243CE258149</p>
+                    <p><strong>Marca/Modelo:</strong> Logitech MK270</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Suporte</p>
+                    <p><strong>Patrimônio:</strong> </p>
+                    <p class="serial"><strong>S/N:</strong> </p>
+                    <p><strong>Marca/Modelo:</strong> Aluminio</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Notebook</p>
+                    <p><strong>Patrimônio:</strong> 165</p>
+                    <p class="serial"><strong>S/N:</strong> PE09784e</p>
+                    <p><strong>Marca/Modelo:</strong> Ideapad315alc6</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Headset</p>
+                    <p><strong>Patrimônio:</strong>1010</p>
+                    <p class="serial"><strong>S/N:</strong>881000466</p>
+                    <p><strong>Marca/Modelo:</strong>Logitech MO3000</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Celular</p>
+                    <p><strong>Patrimônio:</strong>  794</p>
+                    <p class="serial"><strong>S/N:</strong> RX8R90HDAAR</p>
+                    <p><strong>Marca/Modelo:</strong> Galaxy AO3</p>
+                    <p><strong>IMEI 1:</strong> 354397910709045/01</p>
+                    <p><strong>IMEI 2:</strong> 354578130709048/01</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Adaptador de Rede</p>
+                    <p><strong>Patrimônio:</strong>  610</p>
+                    <p class="serial"><strong>S/N:</strong>  </p>
+                    <p><strong>Marca/Modelo:</strong> Generic</p>
+                </div>
+            </section>
+        </article>
         <article>
             <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
+                <div class="colaborador-img"> <img src="foto_colaboradores/Jade%20Rodrigues.jpeg" alt="Foto de Daniel Morais Vieira" class="foto" />
+                </div>
                 <div class="colaborador-details">
-                    <p><strong>ID Caixa:</strong> (Não fornecido)</p>
                     <p><strong>Colaborador:</strong> Jade Rodrigues</p>
                     <p><strong>Email:</strong> jade.cunha@amorsaude.com</p>
                     <p><strong>Cargo:</strong> Consultora de Operações</p>
                     <p><strong>Departamento:</strong> Operação</p>
                     <p><strong>CPF:</strong> 435.810.868-75</p>
                     <p><strong>Data da Entrada:</strong> (Não fornecido)</p>
+                    <p><strong>Data da Desligamento</strong>02/07/2024</p>
                     <p><strong>Centro de Custo:</strong> 33009 - Coordenação Clientes</p>
                 </div>
             </section>
@@ -483,9 +491,89 @@ include 'header.php';
                 <p><strong>Equipamentos:</strong> Smartphone, Notebook, Teclado e Mouse, Fone</p>
             </section>
         </article>
-        <?php
-        include '../footer.php';
-        ?>
-    </main>
+        <article>
+            <h2>Dados do colaborador</h2>
+            <section class="colaborador-info">
+                <div class="colaborador-img"> <img src="foto_colaboradores/Amanda%20Gazetta.jpeg" alt="Foto de Amanda Gazetta" class="foto" />
+                </div>
+                <div class="colaborador-details">
+                    <p><strong>ID Caixa:</strong> (Não fornecido)</p>
+                    <p><strong>Colaborador:</strong> Amanda Gazetta Amigo</p>
+                    <p><strong>Email:</strong> amanda.gazetta@amorsaude.com</p>
+                    <p><strong>Cargo:</strong> Coordenadora de Operação</p>
+                    <p><strong>Departamento:</strong> Regional 2</p>
+                    <p><strong>CPF:</strong> 418.310.088-74</p>
+                    <p><strong>Data da Entrada:</strong> 04/09/2023</p>
+                    <p><strong>Data do Desligamento: </strong>03/07/2024</p>
+                    <p><strong>Centro de Custo:</strong> (Não fornecido)</p>
+                </div>
+            </section>
+            <h2>Dados equipamentos</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Notebook Ideapad3 15alc6</p>
+                    <p><strong>Marca/Modelo:</strong> (Não fornecido)</p>
+                    <p class="serial"><strong>S/N:</strong> PE09781x</p>
+                    <p><strong>Patrimônio:</strong> 166</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Fone</p>
+                    <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+                    <p class="serial"><strong>S/N:</strong> 2315Ay07AC39</p>
+                    <p><strong>Patrimônio:</strong> 876</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Suporte</p>
+                    <p><strong>Marca/Modelo:</strong> Aluminio</p>
+                    <p class="serial"><strong>S/N:</strong> (Não fornecido)</p>
+                    <p><strong>Patrimônio:</strong> (Não fornecido)</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                    <p><strong>Marca/Modelo:</strong> Logitech MK235</p>
+                    <p class="serial"><strong>S/N:</strong> 2207LZX4F248</p>
+                    <p><strong>Patrimônio:</strong> 185 -578</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo: </strong>Celular</p>
+                    <p><strong>Marca/Modelo:</strong>Galaxy A03 Core</p>
+                    <p class="serial"><strong>S/N</strong>R9QW800QQ6R</p>
+                    <p><strong>Patrimonio: </strong></p>
+                    <p><strong>IMEI 1:</strong>350589197094384</p>
+                    <p><strong>IMEI 2:</strong>353306167094386</p>
+                </div>
+            </section>
+            <h2>Equipamento Danificados</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Danificado:</strong></p>
+                    <p><strong>Tipo:</strong> Adaptador-Rede</p>
+                    <p><strong>Marca/Modelo:</strong> Fy-684</p>
+                    <p class="serial"><strong>S/N:</strong> (Não fornecido)</p>
+                    <p><strong>Patrimônio:</strong> 933</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Celular</p>
+                    <p><strong>Marca/Modelo:</strong> R9qt403wmhp</p>
+                    <p class="serial"><strong>S/N:</strong> (Não fornecido)</p>
+                    <p><strong>Patrimônio:</strong> 511</p>
+                    <p><strong>IMEI 1:</strong> 35198927132251/01</p>
+                    <p><strong>IMEI 2:</strong> 35327223192257/01</p>
+                </div>
+            </section>
+
+            <section class="ticket">
+                <p><strong>ID Ticket:</strong> (Não fornecido)</p>
+                <p><strong>Equipamentos:</strong> Notebook, Fone, Suporte, Teclado e Mouse, Celular, Adaptador-Rede</p>
+            </section>
+            <section class="obs">
+                <p><strong>Observação: </strong>O celular entregue a Amanda foi quebrado. Ela comprou um novo para substituí-lor</p>
+            </section>
+        </article>
+</main>
+</div>
+<?php
+include 'footer.php';
+?>
 </body>
 </html>
