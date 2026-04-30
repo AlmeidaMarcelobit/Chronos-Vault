@@ -1397,7 +1397,6 @@
 					</div>
 				</div>
 			</article>
-			
 			<article>
 				<h2>DADOS DO COLABORADOR</h2>
 				<div class="colaborador-info">
@@ -1447,7 +1446,6 @@
 					</div>
 				</div>
 			</article>
-			
 			<article>
 				<h2>DADOS DO COLABORADOR</h2>
 				<div class="colaborador-info">
@@ -1770,21 +1768,7 @@
             </div>
         </div>
     </article>
-    <article>
-        <h2>DADOS DO COLABORADOR</h2>
-        <div class="colaborador-info">
-            <div class="colaborador-details">
-                <p><strong>Colaborador: </strong>Cinthia Viana</p>
-                <p><strong>Email: </strong>cinthia.viana@amorsaude.com</p>
-                <p><strong>Cargo: </strong>Analista Contábil Sr.</p>
-                <p><strong>Departamento: </strong>Financeiro</p>
-                <p><strong>CPF: </strong>425.270.208-95</p>
-                <p><strong>Data da Entrada: </strong>22.abril.2024</p>
-                <p><strong>Centro de Custo: </strong>13001</p>
-                <p><strong>Aumento de Quadro</strong></p>
-            </div>
-        </div>
-    </article>
+
     <article>
         <h2>DADOS DO COLABORADOR</h2>
         <div class="colaborador-info">
