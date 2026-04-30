@@ -5,7 +5,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <title>Estoque</title>
+    <title>Tech</title>
 </head>
 
 <body>
@@ -59,6 +59,71 @@
             <section class="ticket">
                 <p><strong>ID Ticket:</strong>#54344</p>
                 <p><strong>Equipamentos:</strong>Fone</p>
+            </section>
+        </article>
+        <header class="ativo">
+            <h1>COLABORADORES DESATIVADOS</h1>
+        </header>
+        <article>
+            <h2>Dados do colaborador</h2>
+            <section class="colaborador-info">
+                <div class="colaborador-img">
+                    <img src="foto_colaboradores/SEM FOTO.jpg" alt="Foto de Bruno Yuri Alves De Oliveira" class="foto">
+                </div>
+                <div class="colaborador-details">
+                    <p><strong>Colaborador:</strong>Bruno Yuri Alves De Oliveira</p>
+                    <p><strong>Email:</strong>bruno.oliveira@amorsaude.com</p>
+                    <p><strong>Cargo:</strong>Desenvolvedor Sr</p>
+                    <p><strong>Departamento:</strong>Desenvolvimento</p>
+                    <p><strong>CPF:</strong>158. 353.667-10</p>
+                    <p><strong>Data da Entrada:</strong>11/03/2024</p>
+                    <p><strong>Data do desligamento: </strong></p>
+                    <p><strong>Centro de Custo:</strong>13012 - Desenvolvimento</p>
+                    <p><strong>Termo de Entrega do Equipamento:</strong></p>
+                    <p><strong>Subtituição:</strong>William Koller</p>
+                </div>
+            </section>
+            <h2>Dados equipamentos</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Notebook Win-11 i5-1135G7 16GB</p>
+                    <p><strong>Marca/Modelo:</strong> Dell Latitude 3420</p>
+                    <p class="serial"><strong>S/N:</strong> 571781747</p>
+                    <p><strong>Patrimônio:</strong> 258</p>
+                </div>
+            </section>
+            <section class="ticket">
+                <p><strong>ID Ticket:</strong> #32126</p>
+                <p><strong>Equipamentos:</strong> Notebook</p>
+            </section>
+        </article>
+        <article>
+            <h2>Dados do colaborador</h2>
+            <section class="colaborador-info">
+                <div class="colaborador-img">
+                    <img src="foto_colaboradores/William Koller.jpeg" alt="Foto de William Cezar Koller" class="foto">
+                </div>
+                <div class="colaborador-details">
+                    <p><strong>Colaborador:</strong>William Cezar Koller</p>
+                    <p><strong>Email:</strong>william.koller@amorsaude.com</p>
+                    <p><strong>Cargo:</strong>Desenvolvedor Sr</p>
+                    <p><strong>Departamento:</strong>Desenvolvimento</p>
+                    <p><strong>CPF:</strong>068.190.919-66</p>
+                    <p><strong>Data da Entrada:</strong>20/06/2023</p>
+                    <p><strong>Data do desligamento: </strong></p>
+                    <p><strong>Centro de Custo:</strong>13012 - Desenvolvimento</p>
+                    <p><strong>Termo de Entrega do Equipamento:</strong></p>
+                    <p><strong>Subtituição:</strong>William Koller</p>
+                </div>
+            </section>
+            <h2>Dados equipamentos</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Notebook Win-11 i5-1135G7 16GB</p>
+                    <p><strong>Marca/Modelo:</strong> Dell Latitude 3420</p>
+                    <p class="serial"><strong>S/N:</strong> 571781747</p>
+                    <p><strong>Patrimônio:</strong> 258</p>
+                </div>
             </section>
         </article>
     </main>

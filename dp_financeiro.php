@@ -316,6 +316,9 @@
                     <p class="serial"><strong>S/N: </strong>401AZYE6G026</p>
                     <p><strong>Marca/Modelo: </strong>LG 22MP410-B</p>
                 </div>
+                <div>
+                    
+                </div>
                 <div class="equipamento">
                     <p><strong>Tipo: </strong>Celular</p>
                     <p><strong>Patrimônio: </strong>587</p>
