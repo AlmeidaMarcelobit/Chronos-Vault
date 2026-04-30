@@ -137,7 +137,7 @@
                         <p><strong>ID Ticket:</strong>#33188</p>
                         <p><strong>Equipamento:</strong>Headset, Notebook 8G, Suporte para notebook, Teclado e Mouse</p>
                     </section>
-                    <section class="observacao">
+                    <section class="obs">
                         <p><strong>Observação:</strong>Termo do colaborador não encontrado.</p>
                     </section>
                 </article>
@@ -257,9 +257,9 @@
                     </section>
                     <section class="ticket">
                         <p><strong>ID Ticket:</strong>#21705</p>
-                        <p><strong>equipamentos:</strong>Teclado e Mouse, Suporte, Fone, Notebook, Celular, Monitor</p>
+                        <p><strong>Equipamentos:</strong>Teclado e Mouse, Suporte, Fone, Notebook, Celular, Monitor</p>
                     </section>
-                    <section class="observacao">
+                    <section class="obs">
                         <p><strong>Observação:</strong>Termo do equipamentos kit basico nao encontrado apenas monitor.</p>
                     </section>
                 </article>
@@ -310,7 +310,7 @@
                             <p><strong>Marca/Modelo:</strong>Dell P2018HC</p>
                         </div>
                     </section>
-                    <section class="observacao">
+                    <section class="obs">
                         <p><strong>Observação:</strong>Verificar dados do Suporte, Teclado e Mouse</p>
                     </section>
                 </article>
