@@ -16,130 +16,131 @@
     ?>
             <main>
                 <article>
+                    <h2>Dados do colaborador</h2>
                     <section class="colaborador-info">
                         <div class="colaborador-details">
                             <p><strong>ID Caixa:</strong> 13</p>
-                            <p><strong>Cargo:</strong> ANALISTA ADMINISTRATIVO JUNIOR</p>
-                            <p><strong>Departamento:</strong> Administrativo Laboratório - AMOR LAB</p>
+                            <p><strong>Cargo:</strong> Analista Administrativo Junior</p>
+                            <p><strong>Departamento:</strong> Administrativo Laboratório</p>
                             <p><strong>Centro de Custo:</strong> 42001</p>
                         </div>
                     </section>
                     <h2>Dados equipamentos</h2>
                     <section class="equipamentos-info">
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> NOTEBOOK</p>
-                            <p><strong>Marca/Modelo:</strong> LENOVO V15 G3 IAP</p>
+                            <p><strong>Tipo:</strong> Notebook</p>
+                            <p><strong>Marca/Modelo:</strong> Lenovo V15 G3 IAP</p>
                             <p class="serial"><strong>S/N:</strong> PE0CK0Z5</p>
                             <p><strong>Patrimônio:</strong> 1566</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> HEADSET USB C/ MICROFONE</p>
-                            <p><strong>Marca/Modelo:</strong> DELL HS2201 USB</p>
+                            <p><strong>Tipo:</strong>Headset Usb C/ Microfone</p>
+                            <p><strong>Marca/Modelo:</strong> Dell HS2201 USB</p>
                             <p class="serial"><strong>S/N:</strong> ORMH97-LXN00-43S-07JA-A01</p>
                             <p><strong>Patrimônio:</strong> 1183</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> SUPORTE PRA NOTEBOOK</p>
-                            <p><strong>Marca/Modelo:</strong> METALICO</p>
+                            <p><strong>Tipo:</strong> Suporte</p>
+                            <p><strong>Marca/Modelo:</strong> Aluminio</p>
                             <p><strong>Patrimônio:</strong> 1166</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> KIT MOUSE E TECLADO LOGITECH S/FIO MK270</p>
-                            <p class="serial"><strong>S/N:</strong> MOUSE - 2344LZXBR568 / TECLADO - 2347CE267D58</p>
-                            <p><strong>Patrimônio:</strong> MOUSE - 1156 / TECLADO - 1567</p>
+                            <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                            <p><strong>Marca/Modelo: </strong> Logitech MK270</p>
+                            <p class="serial"><strong>S/N:</strong>2344LZXBR568 - 2347CE267D58</p>
+                            <p><strong>Patrimônio:</strong>1156 - 1567</p>
                         </div>
                     </section>
                     <section class="ticket">
                         <p><strong>ID Ticket:</strong> 58463</p>
-                        <p><strong>Equipamentos:</strong> NOTEBOOK, MOUSE, TECLADO, HEADSET, SUPORTE PRA NOTEBOOK</p>
+                        <p><strong>Equipamentos:</strong>Notebook, Mouse, Teclado, Headset, Suporte</p>
                     </section>
                 </article>
 
                 <article>
+                    <h2>Dados do colaborador</h2>
                     <section class="colaborador-info">
                         <div class="colaborador-details">
                             <p><strong>ID Caixa:</strong> 12</p>
-                            <p><strong>Cargo:</strong> CONSULTOR</p>
-                            <p><strong>Departamento:</strong> CONSULTORIA</p>
+                            <p><strong>Cargo:</strong> Consultor</p>
+                            <p><strong>Departamento:</strong> Consultoria</p>
                             <p><strong>Centro de Custo:</strong> 12006</p>
                         </div>
                     </section>
                     <h2>Dados equipamentos</h2>
                     <section class="equipamentos-info">
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> NOTEBOOK</p>
-                            <p><strong>Marca/Modelo:</strong> LENOVO V15 G3 IAP</p>
+                            <p><strong>Tipo:</strong> Notebook</p>
+                            <p><strong>Marca/Modelo:</strong> Lenovo V15 G3 IAP</p>
                             <p class="serial"><strong>S/N:</strong> PE0C2WY1</p>
                             <p><strong>Patrimônio:</strong> 1562</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> HEADSET USB C/ MICROFONE</p>
-                            <p><strong>Marca/Modelo:</strong> LOGITECH H390</p>
+                            <p><strong>Tipo:</strong> Fone</p>
+                            <p><strong>Marca/Modelo:</strong> Logitech H390</p>
                             <p class="serial"><strong>S/N:</strong> 2310ME010LN8</p>
                             <p><strong>Patrimônio:</strong> 848</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> SUPORTE PRA NOTEBOOK</p>
-                            <p><strong>Marca/Modelo:</strong> METALICO</p>
+                            <p><strong>Tipo:</strong> Suporte</p>
+                            <p><strong>Marca/Modelo:</strong> Aluminio</p>
                             <p><strong>Patrimônio:</strong> 1175</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> KIT MOUSE E TECLADO LOGITECH S/FIO MK270</p>
-                            <p class="serial"><strong>S/N:</strong> MOUSE - 2344LZXBR4H8 / TECLADO - 2347CE267DE8</p>
-                            <p><strong>Patrimônio:</strong> MOUSE - 1192 / TECLADO - 1191</p>
+                            <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                            <p><strong>Marca/Modelo: </strong> Logitech MK270</p>
+                            <p class="serial"><strong>S/N:</strong> 2344LZXBR4H8 - 2347CE267DE8</p>
+                            <p><strong>Patrimônio:</strong> 1192 - 1191</p>
                         </div>
                     </section>
                     <section class="ticket">
                         <p><strong>ID Ticket:</strong> 62786</p>
-                        <p><strong>Equipamentos:</strong> NOTEBOOK, MOUSE, TECLADO, HEADSET, SUPORTE PRA NOTEBOOK</p>
+                        <p><strong>Equipamentos:</strong> Notebook, Mouse, Teclado, Headset, Suporte</p>
                     </section>
                 </article>
 
                 <article>
-                    <section class="colaborador-info">
-                        <div class="colaborador-details">
-                            <p><strong>ID Caixa:</strong> 11</p>
-                            <p><strong>Cargo:</strong> CONSULTOR</p>
-                            <p><strong>Departamento:</strong> CONSULTORIA</p>
-                            <p><strong>Centro de Custo:</strong> 12007</p>
-                        </div>
-                    </section>
                     <h2>Dados do colaborador</h2>
                     <section class="colaborador-info">
                         <div class="colaborador-details">
-                            <p><strong>Cargo:</strong> CONSULTOR</p>
-                            <p><strong>Departamento:</strong> CONSULTORIA</p>
+                            <p><strong>ID Caixa:</strong> 11</p>
+                            <p><strong>Cargo:</strong> Consultor</p>
+                            <p><strong>Departamento:</strong> Consultoria</p>
+                            <p><strong>Centro de Custo:</strong> 12007</p>
+                            <p><strong>Cargo:</strong> Consultor</p>
+                            <p><strong>Departamento:</strong> Consultoria</p>
                             <p><strong>Centro de Custo:</strong> 12007</p>
                         </div>
                     </section>
                     <h2>Dados equipamentos</h2>
                     <section class="equipamentos-info">
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> NOTEBOOK</p>
-                            <p><strong>Marca/Modelo:</strong> LENOVO V15 G3 IAP</p>
+                            <p><strong>Tipo:</strong> Notebook</p>
+                            <p><strong>Marca/Modelo:</strong> Lenovo V15 G3 IAP</p>
                             <p class="serial"><strong>S/N:</strong> PE0C2YB5</p>
                             <p><strong>Patrimônio:</strong> 1561</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> HEADSET USB C/ MICROFONE</p>
-                            <p><strong>Marca/Modelo:</strong> LOGITECH H390</p>
+                            <p><strong>Tipo:</strong> Fone</p>
+                            <p><strong>Marca/Modelo:</strong> Logitech H390</p>
                             <p class="serial"><strong>S/N:</strong> 2412AY00LTPB</p>
                             <p><strong>Patrimônio:</strong> 1179</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> SUPORTE PRA NOTEBOOK</p>
-                            <p><strong>Marca/Modelo:</strong> METALICO</p>
+                            <p><strong>Tipo:</strong> Suporte</p>
+                            <p><strong>Marca/Modelo:</strong> Aluminio</p>
                             <p><strong>Patrimônio:</strong> 1165</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> KIT MOUSE E TECLADO LOGITECH S/FIO MK270</p>
-                            <p class="serial"><strong>S/N:</strong> MOUSE - 2344LZXBR4E8 / TECLADO - 2347CE267DD8</p>
-                            <p><strong>Patrimônio:</strong> MOUSE - 1189 / TECLADO - 1190</p>
+                            <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                            <p><strong>Marca/Modelo: </strong> Logitech MK270</p>
+                            <p class="serial"><strong>S/N:</strong>2344LZXBR4E8 - 2347CE267DD8</p>
+                            <p><strong>Patrimônio:</strong>1189 - 1190</p>
                         </div>
                     </section>
                     <section class="ticket">
                         <p><strong>ID Ticket:</strong> 59531</p>
-                        <p><strong>Equipamentos:</strong> NOTEBOOK, MOUSE, TECLADO, HEADSET, SUPORTE PRA NOTEBOOK</p>
+                        <p><strong>Equipamentos:</strong> Notebook, Mouse, Teclado, Headset, Suporte</p>
                     </section>
                 </article>
 
@@ -148,38 +149,40 @@
                     <section class="colaborador-info">
                         <div class="colaborador-details">
                             <p><strong>ID Caixa:</strong>10</p>
-                            <p><strong>Departamento:</strong> PRODUTO - PRODUCT OWNER</p>
+                            <p><strong>Departamento:</strong> Produto</p>
+                            <p><strong>Cargo: </strong>Product Owner</p>
                             <p><strong>Centro de Custo:</strong> 13013</p>
                         </div>
                     </section>
                     <h2>Dados equipamentos</h2>
                     <section class="equipamentos-info">
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> NOTEBOOK</p>
-                            <p><strong>Marca/Modelo:</strong> LENOVO V15 G3 IAP</p>
+                            <p><strong>Tipo:</strong> Notebook</p>
+                            <p><strong>Marca/Modelo:</strong> Lenovo V15 G3 IAP</p>
                             <p class="serial"><strong>S/N:</strong> PE0CK1FF</p>
                             <p><strong>Patrimônio:</strong> 1568</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> HEADSET USB C/ MICROFONE</p>
-                            <p><strong>Marca/Modelo:</strong> LOGITECH H390</p>
+                            <p><strong>Tipo:</strong> Fone</p>
+                            <p><strong>Marca/Modelo:</strong> Logitech H390</p>
                             <p class="serial"><strong>S/N:</strong> 2412AY00NY48</p>
                             <p><strong>Patrimônio:</strong> 1181</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> SUPORTE PRA NOTEBOOK</p>
-                            <p><strong>Marca/Modelo:</strong> METALICO</p>
+                            <p><strong>Tipo:</strong> Suprote</p>
+                            <p><strong>Marca/Modelo:</strong> Aluminio</p>
                             <p><strong>Patrimônio:</strong> 1145</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> KIT MOUSE E TECLADO LOGITECH S/FIO MK270</p>
-                            <p class="serial"><strong>S/N:</strong> MOUSE - 2344LZXBR3R8 / TECLADO - 2347CE267DB8</p>
-                            <p><strong>Patrimônio:</strong> MOUSE - 1186 / TECLADO - 1176</p>
+                            <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                            <p><strong>Marca\Modelo: </strong>Logitech MK270</p>
+                            <p class="serial"><strong>S/N:</strong>2344LZXBR3R8 - 2347CE267DB8</p>
+                            <p><strong>Patrimônio:</strong>1186 - 1176</p>
                         </div>
                     </section>
                     <section class="ticket">
                         <p><strong>ID Ticket:</strong> 60654</p>
-                        <p><strong>Equipamentos:</strong> NOTEBOOK, MOUSE, TECLADO, HEADSET, SUPORTE PRA NOTEBOOK</p>
+                        <p><strong>Equipamentos:</strong> Notebook, Mouse, Teclado, Headset, Suporte</p>
                     </section>
                 </article>
                 <article>
@@ -187,7 +190,7 @@
                     <section class="colaborador-info">
                         <div class="colaborador-details">
                             <p><strong>ID Caixa: </strong>09</p>
-                            <p><strong>Departamento:</strong> DENTAL</p>
+                            <p><strong>Departamento:</strong> Dental</p>
                             <p><strong>Centro de Custo:</strong> 72024</p>
                             <p>
                         </div>
@@ -195,31 +198,32 @@
                     <h2>Dados equipamentos</h2>
                     <section class="equipamentos-info">
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> NOTEBOOK</p>
-                            <p><strong>Marca/Modelo:</strong> LENOVO V15 G3 IAP</p>
+                            <p><strong>Tipo:</strong> Notebook</p>
+                            <p><strong>Marca/Modelo:</strong> Lenovo V15 G3 IAP</p>
                             <p class="serial"><strong>S/N:</strong> PE0CK1FH</p>
                             <p><strong>Patrimônio:</strong> 1557</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> HEADSET USB C/ MICROFONE</p>
-                            <p><strong>Marca/Modelo:</strong> LOGITECH H390</p>
+                            <p><strong>Tipo:</strong> Fone</p>
+                            <p><strong>Marca/Modelo:</strong> Logitech H390</p>
                             <p class="serial"><strong>S/N:</strong> 2412AY00P198</p>
                             <p><strong>Patrimônio:</strong> 1180</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> SUPORTE PRA NOTEBOOK</p>
-                            <p><strong>Marca/Modelo:</strong> METALICO</p>
+                            <p><strong>Tipo:</strong> Suporte</p>
+                            <p><strong>Marca/Modelo:</strong> Aluminio</p>
                             <p><strong>Patrimônio:</strong> 1155</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> KIT MOUSE E TECLADO LOGITECH S/FIO MK270</p>
-                            <p class="serial"><strong>S/N:</strong> MOUSE - 2344LZXBR3L8 / TECLADO - 2347CE267DA8</p>
-                            <p><strong>Patrimônio:</strong> MOUSE - 1188 / TECLADO - 1187</p>
+                            <p><strong>Tipo:</strong> Teclado e Mouse MK270</p>
+                            <p><strong>Marca/Modelo: </strong>Logitech MK270</p>
+                            <p class="serial"><strong>S/N:</strong> 2344LZXBR3L8 - 2347CE267DA8</p>
+                            <p><strong>Patrimônio:</strong> 1188 - 1187</p>
                         </div>
                     </section>
                     <section class="ticket">
                         <p><strong>ID Ticket:</strong> 60232</p>
-                        <p><strong>Equipamentos:</strong> NOTEBOOK, MOUSE, TECLADO, HEADSET, SUPORTE PRA NOTEBOOK</p>
+                        <p><strong>Equipamentos:</strong> Notebook, Mouse, Teclado, Headset, Suporte</p>
                     </section>
                 </article>
                 <article>
@@ -229,55 +233,38 @@
                             <p><strong>ID Caixa: </strong>08</p>
                             <p><strong>Colaborador:</strong> Jéssica Fideles Silva</p>
                             <p><strong>Email:</strong> jessica.silva@amorsaude.com</p>
-                            <p><strong>Departamento:</strong> BACKOFFICE</p>
+                            <p><strong>Departamento:</strong> Backoffice</p>
                         </div>
                     </section>
                     <h2>Dados equipamentos</h2>
                     <section class="equipamentos-info">
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> NOTEBOOK</p>
-                            <p><strong>Marca/Modelo:</strong> LENOVO V15 G3 IAP</p>
+                            <p><strong>Tipo:</strong> Notebook</p>
+                            <p><strong>Marca/Modelo:</strong> Lenovo V15 G3 IAP</p>
                             <p class="serial"><strong>S/N:</strong> PE0CKOW</p>
                             <p><strong>Patrimônio:</strong> 1574</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> HEADSET USB C/ MICROFONE</p>
-                            <p><strong>Marca/Modelo:</strong> LOGITECH H390</p>
+                            <p><strong>Tipo:</strong> Fone</p>
+                            <p><strong>Marca/Modelo:</strong> Logitech H390</p>
                             <p class="serial"><strong>S/N:</strong> 2412AY00LJS8</p>
                             <p><strong>Patrimônio:</strong> 1182</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> SUPORTE PRA NOTEBOOK</p>
-                            <p><strong>Marca/Modelo:</strong> METALICO</p>
+                            <p><strong>Tipo:</strong> Suporte</p>
+                            <p><strong>Marca/Modelo:</strong> Aluminio</p>
                             <p><strong>Patrimônio:</strong> 1182</p>
                         </div>
                         <div class="equipamento">
-                            <p><strong>Tipo:</strong> KIT MOUSE E TECLADO LOGITECH S/FIO MK270</p>
-                            <p class="serial"><strong>S/N:</strong> MOUSE - 2344LZXBR3M8 / TECLADO - 2347CE267DC8</p>
-                            <p><strong>Patrimônio:</strong> MOUSE - 1177 / TECLADO - 1178</p>
+                            <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                            <p><strong>Marca/Modelo: </strong>Logitech MK270</p>
+                            <p class="serial"><strong>S/N:</strong>2344LZXBR3M8 - 2347CE267DC8</p>
+                            <p><strong>Patrimônio:</strong>1177 - 1178</p>
                         </div>
                     </section>
                     <section class="ticket">
                         <p><strong>ID Ticket:</strong> 56006</p>
-                        <p><strong>Equipamentos:</strong> NOTEBOOK, MOUSE, TECLADO, HEADSET, SUPORTE PRA NOTEBOOK</p>
-                    </section>
-                </article>
-
-
-                <article>
-                    <h2>Dados do colaborador</h2>
-                    <section class="colaborador-info">
-                        <div class="colaborador-img"><img class="foto" src="foto_colaboradores/Foto_Quem.jpg" alt="imagem de quem"></div>
-                        <div class="colaborador-details">
-                            <p><strong>Colaborador:</strong>Felipe Cando Oliveira</p>
-                            <p><strong>Email:</strong>felipe.oliveira@amorsaude.com</p>
-                            <p><strong>Cargo:</strong>Gerente Financeiro</p>
-                            <p><strong>Departamento:</strong>Financeiro</p>
-                            <p><strong>CPF:</strong>392.754.808-18</p>
-                            <p><strong>Centro de Custo:</strong>13000 - Dir. Financeira</p>
-                            <p><strong>Subtituição:</strong>Francisco Fabrício</p>
-                            <p><strong>Termo de entrega de equipamento:</strong></p>
-                        </div>
+                        <p><strong>Equipamentos:</strong> Notebook, Mouse, Teclado, Headset, SuporteK</p>
                     </section>
                 </article>
                 <article>
@@ -425,52 +412,7 @@
                         <p><strong>Equipamentos:</strong>Celular, Monitor, Notebook, Teclado e Mouse, Suporte, Fone</p>
                     </section>
                 </article>
-                <article>
-                    <h2>Dados do colaborador</h2>
-                    <section class="colaborador-info">
-                        <div class="colaborador-details">
-                            <p><strong>ID Caixa:</strong>01</p>
-                            <p><strong>Colaborador:</strong>Sophia Vieira Fantini</p>
-                            <p><strong>Email:</strong>sophia.fantini@amorsaude.com</p>
-                            <p><strong>Cargo:</strong>Estagiário</p>
-                            <p><strong>Departamento:</strong>BackOffice - Documentações</p>
-                            <p><strong>CPF:</strong>398.365.638-22</p>
-                            <p><strong>Data da Entrada:</strong>05/08/2024</p>
-                            <p><strong>Centro de Custo:</strong>12005 - BackOffice</p>
-                        </div>
-                    </section>
-                    <h2>Dados equipamentos</h2>
-                    <section class="equipamentos-info">
-                        <div class="equipamento">
-                            <p><strong>Tipo:</strong>Notebook Win-11 i5-1235U 8GB</p>
-                            <p><strong>Marca/Modelo:</strong>Lenovo V15 G3 IAP</p>
-                            <p class="serial"><strong>S/N:</strong>PE0C2WYY</p>
-                            <p><strong>Patrimônio:</strong>1556</p>
-                        </div>
-                        <div class="equipamento">
-                            <p><strong>Tipo:</strong>Fone</p>
-                            <p><strong>Marca/Modelo:</strong>Logitech H390</p>
-                            <p class="serial"><strong>S/N:</strong>2412AY00K6F9</p>
-                            <p><strong>Patrimônio:</strong>1197</p>
-                        </div>
-                        <div class="equipamento">
-                            <p><strong>Tipo:</strong>Suporte</p>
-                            <p><strong>Marca/Modelo:</strong>Aluminio</p>
-                            <p class="serial"><strong>S/N:</strong>(Não fornecido)</p>
-                            <p><strong>Patrimônio:</strong>1196</p>
-                        </div>
-                        <div class="equipamento">
-                            <p><strong>Tipo:</strong>Teclado e Mouse</p>
-                            <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
-                            <p class="serial"><strong>S/N:</strong>2347CE268058</p>
-                            <p><strong>Patrimônio:</strong>1554</p>
-                        </div>
-                    </section>
-                    <section class="ticket">
-                        <p><strong>ID Ticket:</strong>#52291</p>
-                        <p><strong>Equipamentos:</strong>Headset, Mouse, Notebook 8G, Suporte para notebook, Teclado</p>
-                    </section>
-                </article>
+
                 <article>
                     <h2>Dados do colaborador</h2>
                     <section class="colaborador-info">
@@ -535,52 +477,7 @@
                         <p><strong>Equipamentos:</strong>Smartphone, Notebook, Teclado e Mouse, Fone</p>
                     </section>
                 </article>
-                <article>
-                    <h2>Dados do colaborador</h2>
-                    <section class="colaborador-info">
-                        <div class="colaborador-details">
-                            <p><strong>ID Caixa:</strong>83469</p>
-                            <p><strong>Colaborador:</strong>Cauã Fernado Bacilieri</p>
-                            <p><strong>Email:</strong></p>
-                            <p><strong>Cargo:</strong>Estagiaro</p>
-                            <p><strong>Departamento:</strong>BackOffice - Documentações</p>
-                            <p><strong>CPF:</strong>484.911.558-64</p>
-                            <p><strong>Data da Entrada:</strong>05/08/2024</p>
-                            <p><strong>Centro de Custo:</strong>12005 - BackOffice</p>
-                        </div>
-                    </section>
-                    <h2>Dados equipamentos</h2>
-                    <section class="equipamentos-info">
-                        <div class="equipamento">
-                            <p><strong>Tipo:</strong>Notebook Win-11 i5-1235U 8GB</p>
-                            <p><strong>Marca/Modelo:</strong>Lenovo V15 G3 IAP</p>
-                            <p class="serial"><strong>S/N:</strong>PE0C4SMZ</p>
-                            <p><strong>Patrimônio:</strong>1548</p>
-                        </div>
-                        <div class="equipamento">
-                            <p><strong>Tipo:</strong>Teclado e Mouse</p>
-                            <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
-                            <p class="serial"><strong>S/N:</strong>2347CE26FD8 - 2344LZXBR4P8</p>
-                            <p><strong>Patrimônio:</strong>1557</p>
-                        </div>
-                        <div class="equipamento">
-                            <p><strong>Tipo:</strong>Suporte</p>
-                            <p><strong>Marca/Modelo:</strong>Aluminio</p>
-                            <p class="serial"><strong>S/N:</strong>(Não fornecido)</p>
-                            <p><strong>Patrimônio:</strong>1200</p>
-                        </div>
-                        <div class="equipamento">
-                            <p><strong>Tipo:</strong>Fone</p>
-                            <p><strong>Marca/Modelo:</strong>Logitech H390</p>
-                            <p class="serial"><strong>S/N:</strong>2316GGAT09</p>
-                            <p><strong>Patrimônio:</strong>1199</p>
-                        </div>
-                    </section>
-                    <section class="ticket">
-                        <p><strong>ID Ticket:</strong>#48557</p>
-                        <p><strong>Equipamentos:</strong>Headset, Mouse, Notebook 8G, Suporte para notebook, Teclado, Monitor</p>
-                    </section>
-                </article>
+
                 <article>
                     <h2>Dados do colaborador</h2>
                     <section class="colaborador-info">
