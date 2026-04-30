@@ -11,6 +11,7 @@
             <li><a href="dp_backoffice.php">BackOffice</a></li>
             <li><a href="dp_tech.php">Tech</a></li>
             <li><a href="dp_telemedicina.php">Telemedicina</a></li>
+            <li><a href="dp_experiecia_do_cliente.php">Experiência do Cliente</a></li>
             <li><a href="maquina_reserva.php">Maquina Reserva</a></li>
             <li><a href="monitores.php">Monitores</a></li>
             <li><a href="estoque.php">Estoque</a></li>
