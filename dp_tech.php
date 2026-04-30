@@ -16,6 +16,39 @@
     include 'header.php'
     ?>
     <main>
+	<article>
+    <h2>Dados do colaborador</h2>
+    <section class="colaborador-info">
+        <div class="colaborador-details">
+            <p><strong>Colaborador:</strong> Josiane Renata dos Santos da Mata</p>
+            <p><strong>Email:</strong> josiane.santos@amorsaude.com</p>
+            <p><strong>Cargo:</strong> (Não fornecido)</p>
+            <p><strong>Departamento:</strong> Produto</p>
+            <p><strong>CPF:</strong> (Não fornecido)</p>
+            <p><strong>Data da Entrada:</strong> (Não fornecido)</p>
+            <p><strong>Centro de Custo:</strong> 13013 - Produto</p>
+        </div>
+    </section>
+    <h2>Dados equipamentos</h2>
+    <section class="equipamentos-info">
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Monitor</p>
+            <p><strong>Marca/Modelo:</strong> LG 22MP410-B</p>
+            <p class="serial"><strong>S/N:</strong> 404AZYEAK426</p>
+            <p><strong>Patrimônio:</strong> 1563</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Fone</p>
+            <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+            <p class="serial"><strong>S/N:</strong> 2412AY00NUZ9</p>
+            <p><strong>Patrimônio:</strong> 1194</p>
+        </div>
+    </section>
+    <section class="ticket">
+        <p><strong>ID Ticket:</strong> #57356</p>
+        <p><strong>Equipamentos:</strong> Fone, Monitor</p>
+    </section>
+</article>
         <article>
             <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
