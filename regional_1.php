@@ -20,6 +20,302 @@ include 'header.php';
         <h1>COLABORADORES ATIVOS</h1>
     </header>
     <article>
+        <h2>DADOS DO COLABORADOR</h2>
+        <section class="colaborador-info">
+            <div class="colaborador-img"><img src="foto_colaboradores/Priscila%20Faqim.jpeg" alt="Foto de Priscila Moreira Faqim" class="foto"></div>
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong> Priscila Moreira Faquim</p>
+                <p><strong>Email:</strong>priscila.faqim@amorsaude.com</p>
+                <p><strong>Cargo:</strong>Consultor de Operações</p>
+                <p><strong>Departamento:</strong>Consultoria</p>
+                <p><strong>CPF:</strong>346.070.918-98</p>
+                <p><strong>Data de Entrada:</strong>8.jan.2024</p>
+                <p><strong>Centro de Custo:</strong>12006 - Regional 1</p>
+                <p><strong>Termo de Entrega de Equipamento:</strong></p>
+            </div>
+        </section>
+        <h2>DADOS DOS EQUIPAMENTOS</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Notebook Win-11 i5-1135G7 8GB</p>
+                <p><strong>Patrimônio:</strong> 477</p>
+                <p class="serial"><strong>S/N:</strong> BD35KZ3</p>
+                <p><strong>Marca/Modelo:</strong> Dell Vostro 15 3520</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Fone</p>
+                <p><strong>Patrimônio:</strong> 946</p>
+                <p class="serial"><strong>S/N:</strong> 2329A YOOB8808</p>
+                <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Suporte</p>
+                <p><strong>Patrimônio:</strong> 936</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Marca/Modelo:</strong> Aluminio</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                <p><strong>Patrimônio:</strong></p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Marca/Modelo:</strong> Dell KB121WT</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Monitor</p>
+                <p><strong>Patrimônio:</strong> 451</p>
+                <p class="serial"><strong>S/N:</strong> 308AZXC8A098</p>
+                <p><strong>Marca/Modelo:</strong> LG 22MP410</p>
+            </div>
+        </section>
+        <section class="ticket">
+            <p><strong>ID Ticket:</strong></p>
+            <p><strong>Equipamento:</strong> Notebook, Fone, Suporte, Teclado e Mouse, Monitor</p>
+        </section>
+    </article>
+    <article>
+        <h2>DADOS DO COLABORADOR</h2>
+        <section class="colaborador-info">
+            <div class="colaborador-img"><img src="foto_colaboradores/Luylla%20Magalhaes.jpeg" alt="Foto de Luylla Louise Magalhaes" class="foto"></div>
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong> Luylla Louise Magalhaes</p>
+                <p><strong>Email:</strong> luylla.magalhaes@amorsaude.com</p>
+                <p><strong>Cargo:</strong> Consultora De Operações</p>
+                <p><strong>Departamento:</strong> Consultoria</p>
+                <p><strong>CPF:</strong> 123.135.016-47</p>
+                <p><strong>Data de Entrada:</strong> 5-fev.2024</p>
+                <p><strong>Centro de Custo:</strong> 12007 - Regional 1</p>
+                <p><strong>Termo de Entrega de Equipamento:</strong></p>
+            </div>
+        </section>
+        <h2>DADOS DOS EQUIPAMENTOS</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Suporte</p>
+                <p><strong>Patrimônio:</strong> 948</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Marca/Modelo:</strong> Aluminio</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                <p><strong>Patrimônio:</strong> 479</p>
+                <p class="serial"><strong>S/N:</strong> 2232CE1CFB48</p>
+                <p><strong>Marca/Modelo:</strong> K270 - M185</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Notebook Win-11 i5-1135G7 8GB</p>
+                <p><strong>Patrimônio:</strong> 478</p>
+                <p class="serial"><strong>S/N:</strong> FB32JZ3</p>
+                <p><strong>Marca/Modelo:</strong> Dell Vostro 3520</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong></p>
+                <p><strong>Patrimônio:</strong></p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Marca/Modelo:</strong></p>
+            </div>
+        </section>
+        <section class="ticket">
+            <p><strong>ID Ticket:</strong></p>
+            <p><strong>Equipamento:</strong> Suporte, Teclado e Mouse, Notebook</p>
+        </section>
+    </article>
+    <article>
+        <h2>DADOS DO COLABORADOR</h2>
+        <section class="colaborador-info">
+            <div class="colaborador-img"><img src="foto_colaboradores/Juliana%20Magalhães.jpeg" alt="Foto de Juliana Braz Paula Magalhães" class="foto"></div>
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong> Juliana Braz Paula Magalhães</p>
+                <p><strong>Email:</strong> juliana.magalhaes@amorsaude.com</p>
+                <p><strong>Cargo:</strong> Consultor(a) de Operações Externo</p>
+                <p><strong>Departamento:</strong> Consultoria</p>
+                <p><strong>CPF:</strong> 018.694.713-50</p>
+                <p><strong>Data de Entrada:</strong> 8.jan.2024</p>
+                <p><strong>Centro de Custo:</strong> 12006 - Regional 1</p>
+                <p><strong>Termo de Entrega de Equipamento:</strong></p>
+            </div>
+        </section>
+        <h2>DADOS DOS EQUIPAMENTOS</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                <p><strong>Patrimônio:</strong> 482</p>
+                <p class="serial"><strong>S/N:</strong> 2232CE1CFB28 - 2230LZX1RAX8</p>
+                <p><strong>Marca/Modelo:</strong> K270 - M185</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Notebook Win-11 i5-1135G7 8GB</p>
+                <p><strong>Patrimônio:</strong> 483</p>
+                <p class="serial"><strong>S/N:</strong> 9832JZ3</p>
+                <p><strong>Marca/Modelo:</strong> Dell Vostro 3520</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Suporte</p>
+                <p><strong>Patrimônio:</strong> 937</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Marca/Modelo:</strong> Alumínio</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Fone</p>
+                <p><strong>Patrimônio:</strong> 938</p>
+                <p class="serial"><strong>S/N:</strong> 2332ME01YRP8</p>
+                <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+            </div>
+        </section>
+        <section class="ticket">
+            <p><strong>ID Ticket:</strong></p>
+            <p><strong>Equipamento:</strong> Teclado e Mouse, Notebook, Suporte, Fone</p>
+        </section>
+    </article>
+
+    <article>
+        <h2>DADOS DO COLABORADOR</h2>
+        <section class="colaborador-info">
+            <div class="colaborador-img"><img src="foto_colaboradores/Juliana%20de%20Oliveira%20Silvério.jpeg" alt="Foto de Juliana de Oliveira Silvério" class="foto"></div>
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong> Juliana de Oliveira Silvério</p>
+                <p><strong>Email:</strong> juliana.silverio@amorsaude.com</p>
+                <p><strong>Cargo:</strong> Consultor de Operação</p>
+                <p><strong>Departamento:</strong> Consultoria</p>
+                <p><strong>CPF:</strong> 293.701.128-47</p>
+                <p><strong>Centro de Custo:</strong> 12006 - Regional 1</p>
+                <p><strong>Termo de Entrega de Equipamento:</strong></p>
+            </div>
+        </section>
+        <h2>DADOS DOS EQUIPAMENTOS</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                <p><strong>Patrimônio:</strong> 459</p>
+                <p class="serial"><strong>S/N:</strong> 2232CE1CFB68 - 2230LZX1R9F8</p>
+                <p><strong>Marca/Modelo:</strong> K270 - M185</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Suporte</p>
+                <p><strong>Patrimônio:</strong> 923</p>
+                <p><strong>S/N:</strong></p>
+                <p><strong>Marca/Modelo:</strong> Aluminio</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Fone</p>
+                <p><strong>Patrimônio:</strong> 924</p>
+                <p class="serial"><strong>S/N:</strong> 2332ME01XL08</p>
+                <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Notebook Win-11 i5-1135G7 8GB</p>
+                <p><strong>Patrimônio:</strong> 294</p>
+                <p class="serial"><strong>S/N:</strong> HN3MOT3</p>
+                <p><strong>Marca/Modelo:</strong> Dell Vostro 15 3510</p>
+            </div>
+        </section>
+        <section class="ticket">
+            <p><strong>ID Ticket:</strong></p>
+            <p><strong>Equipamento:</strong> Teclado e Mouse, Suporte, Fone, Notebook</p>
+        </section>
+    </article>
+    <article>
+        <h2>DADOS DO COLABORADOR</h2>
+        <section class="colaborador-info">
+            <div class="colaborador-img">
+                <img src="foto_colaboradores/Artur%20Mello.jpeg" alt="Foto de Artur Ferreira Morais Mello" class="foto">
+            </div>
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong> Artur Ferreira Morais Mello</p>
+                <p><strong>Email:</strong> artur.mello@amorsaude.com</p>
+                <p><strong>Cargo:</strong> Consultor de Operações</p>
+                <p><strong>Departamento:</strong> Consultoria</p>
+                <p><strong>CPF:</strong> 397.945.948-90</p>
+                <p><strong>Centro de Custo:</strong> 12006 - Regional 1</p>
+                <p><strong>Termo de Entrega de Equipamento:</strong></p>
+            </div>
+        </section>
+
+        <h2>DADOS DOS EQUIPAMENTOS</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Fone</p>
+                <p><strong>Patrimônio:</strong> 783</p>
+                <p class="serial"><strong>S/N:</strong> 239829109</p>
+                <p><strong>Marca/Modelo:</strong> JabraHSCO015</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Monitor</p>
+                <p><strong>Patrimônio:</strong> 452</p>
+                <p class="serial"><strong>S/N:</strong> 308AZXC8A218</p>
+                <p><strong>Marca/Modelo:</strong> LG 22MP410</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Notebook Win-11 i5-1135G7 8GB</p>
+                <p><strong>Patrimônio:</strong> 381</p>
+                <p class="serial"><strong>S/N:</strong> HRFQXW3</p>
+                <p><strong>Marca/Modelo:</strong> Dell Vostro 15 3510</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Suporte</p>
+                <p><strong>Patrimônio:</strong> 828</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Marca/Modelo:</strong> Alumínio</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Celular</p>
+                <p><strong>Patrimônio:</strong> 1031</p>
+                <p class="serial"><strong>S/N:</strong> SVN8D86404</p>
+                <p><strong>Marca/Modelo:</strong> Moto E13</p>
+                <p><strong>IMEI 1:</strong> 359340981262667</p>
+                <p><strong>IMEI 2:</strong> 359340981262659</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                <p><strong>Patrimônio:</strong> 460</p>
+                <p class="serial"><strong>S/N:</strong> 2232CE1C7278 - 2227LZX8GVS8</p>
+                <p><strong>Marca/Modelo:</strong> K270 - M185</p>
+            </div>
+        </section>
+
+        <section class="ticket">
+            <p><strong>ID Ticket:</strong></p>
+            <p><strong>Equipamento:</strong> Fone, Monitor, Notebook, Suporte, Celular, Teclado e Mouse</p>
+        </section>
+    </article>
+    <article>
+        <h2>DADOS DO COLABORADOR</h2>
+        <section class="colaborador-info">
+            <div class="colaborador-img">
+                <img src="foto_colaboradores/Ana Caroline de Rezende Alves.jpeg" alt="Foto de Ana Caroline de Rezende Alves" class="foto" />
+            </div>
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong>Ana Caroline de Rezende Alves</p>
+                <p><strong>Email:</strong>ana.rezende@amorsaude.com</p>
+                <p><strong>Cargo:</strong>Assistente Administrativo</p>
+                <p><strong>Departamento:</strong>Administrativo</p>
+                <p><strong>CPF: </strong>123.456.789-00</p>
+                <p><strong>Centro de Custo: </strong>	11001 - Administração</p>
+                <p><strong>Termo de Entrega de Equipamento: </strong><a target="_blank" href="https://drive.google.com/file/d/1AlBHYhCkAKmvDf-caahft1cCDvN8cu25/view?usp=sharing">Termo 01</a></p>
+            </div>
+        </section>
+        <h2>DADOS DOS EQUIPAMENTOS</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Notebook</p>
+                <p><strong>Patrimônio:</strong>1234</p>
+                <p class="serial"><strong>S/N:</strong>SN12345678</p>
+                <p><strong>Marca/Modelo:</strong>HP EliteBook 840 G5</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Fone</p>
+                <p><strong>Patrimônio:</strong>5678</p>
+                <p class="serial"><strong>S/N:</strong>FN87654321</p>
+                <p><strong>Marca/Modelo:</strong>Logitech H390</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Mouse</p>
+                <p><strong>Patrimônio:</strong>91011</p>
+                <p class="serial"><strong>S/N:</strong>MOU123456</p>
+                <p><strong>Marca/Modelo:</strong>Logitech M185</p>
+            </div>
+        </section>
+    </article>
+    <article>
         <h2>Dados do colaborador</h2>
         <section class="colaborador-info">
             <div class="colaborador-img"><img src="foto_colaboradores/SEM FOTO.jpg" alt="Sem Foto" class="foto"></div>
@@ -83,7 +379,7 @@ include 'header.php';
     <article>
         <h2>Dados do colaborador</h2>
         <section class="colaborador-info">
-            <div class="colaborador-img"><img src="foto_colaboradores/SEM FOTO.jpg" alt="Sem Foto" class="foto"></div>
+            <div class="colaborador-img"><img src="foto_colaboradores/Lucilene%20Santos%20Matias.jpeg" alt="Sem Foto" class="foto"></div>
             <div class="colaborador-details">
                 <p><strong>Colaborador:</strong>Lucilene Santos Matias</p>
                 <p><strong>Email:</strong>lucilene.matias@amorsaude.com</p>
