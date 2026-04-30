@@ -28,6 +28,7 @@
             <a href="#" class="dropbtn">Estoque</a>
             <div class="dropdown-content">
                 <a href="maquina_reserva.php">Máquina Reserva</a>
+                <a href="máquinas%20de%20backup.php">Maquina Backups</a>
                 <a href="monitores.php">Monitores</a>
                 <a href="kits_prontos.php">Kits Prontos</a>
             </div>
