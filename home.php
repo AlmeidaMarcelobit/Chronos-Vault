@@ -17,7 +17,7 @@
         <aside>
             <nav>
                 <ul>
-                    <li><a href="">Home</a></li>
+                    <li><a href="home.php">Home</a></li>
                     <li><a href="">Operação</a></li>
                     <li><a href="">Atendimento ao Cliente</a></li>
                     <li><a href="">Pessoas e Cultura</a></li>
@@ -25,7 +25,7 @@
                     <li><a href="">CRM</a></li>
                     <li><a href="">Maquina Reserva</a></li>
                     <li><a href="estoque.php">Estoque</a></li>
-                    <li><a href="">Lista Centro de Custo</a></li>
+                    <li><a href="centro_custo.php">Lista Centro de Custo</a></li>
                 </ul>
             </nav>
         </aside>
