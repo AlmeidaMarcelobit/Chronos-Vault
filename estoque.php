@@ -285,12 +285,12 @@
                     <section class="colaborador-info">
                         <div class="colaborador-details">
                             <p><strong>ID Caixa:</strong>04</p>
-                            <p><strong>Colaborador:</strong>(Não fornecido)</p>
-                            <p><strong>Email:</strong>(Não fornecido)</p>
-                            <p><strong>Cargo:</strong>Assistente</p>
+                            <p><strong>Colaborador:</strong>Raíssa Martins de Lima</p>
+                            <p><strong>Email:</strong>raissa.lima@amorsaude.com</p>
+                            <p><strong>Cargo:</strong>Assistente de Retenção</p>
                             <p><strong>Departamento:</strong>Relacionamento com Cliente</p>
-                            <p><strong>CPF:</strong>(Não fornecido)</p>
-                            <p><strong>Data da Entrada:</strong>(Não fornecido)</p>
+                            <p><strong>CPF:</strong>374.117.888-80</p>
+                            <p><strong>Data da Entrada:</strong>19/08/2024</p>
                             <p><strong>Centro de Custo:</strong>72023 - Relacionamento com Cliente / Retenção</p>
                         </div>
                     </section>
@@ -331,12 +331,12 @@
                     <section class="colaborador-info">
                         <div class="colaborador-details">
                             <p><strong>ID Caixa:</strong>03</p>
-                            <p><strong>Colaborador:</strong>(Não fornecido)</p>
-                            <p><strong>Email:</strong>(Não fornecido)</p>
-                            <p><strong>Cargo:</strong>Assistente</p>
+                            <p><strong>Colaborador:</strong>Dayane Santos</p>
+                            <p><strong>Email:</strong>dayne.santos@amorsaude.com</p>
+                            <p><strong>Cargo:</strong>Assistente de Retenção</p>
                             <p><strong>Departamento:</strong>Relacionamento com Cliente</p>
-                            <p><strong>CPF:</strong>(Não fornecido)</p>
-                            <p><strong>Data da Entrada:</strong>(Não fornecido)</p>
+                            <p><strong>CPF:</strong>383.111.148-03</p>
+                            <p><strong>Data da Entrada:</strong>19/08/2024</p>
                             <p><strong>Centro de Custo:</strong>72023 - Relacionamento com Cliente / Retenção</p>
                         </div>
                     </section>
@@ -1402,6 +1402,7 @@
                             <p><strong>Departamento:</strong>Canais Digitais e Relacionamento</p>
                             <p><strong>CPF:</strong>070.824.316-94</p>
                             <p><strong>Centro de Custo:</strong>14003 - CRM</p>
+                            <p><strong>Data de Entrada: </strong>12/08/2024</p>
                             <p><strong>Termo de Entrega de Equipamento:</strong></p>
                         </div>
                     </section>
