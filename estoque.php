@@ -237,7 +237,7 @@ include 'header.php';
         <h2>Dados do colaborador</h2>
         <section class="colaborador-info">
             <div class="colaborador-details">
-                <p><strong>ID Caixa:</strong> </p>
+                <p><strong>ID Caixa:</strong>94067 </p>
                 <p><strong>Colaborador:</strong> Consultor 2</p>
                 <p><strong>Departamento:</strong> Consultoria</p>
                 <p><strong>Centro de Custo:</strong> 12006 - Regional 1</p>
@@ -300,7 +300,7 @@ include 'header.php';
         <h2>Dados do colaborador</h2>
         <section class="colaborador-info">
             <div class="colaborador-details">
-                <p><strong>ID Caixa:</strong> N/S</p>
+                <p><strong>ID Caixa:</strong>75321</p>
                 <p><strong>Colaborador:</strong> Assistente 02</p>
                 <p><strong>Departamento:</strong> </p>
                 <p><strong>Centro de Custo:</strong> 72023 - Relacionamento com Cliente / Retenção</p>
@@ -343,7 +343,7 @@ include 'header.php';
         <h2>Dados do colaborador</h2>
         <section class="colaborador-info">
             <div class="colaborador-details">
-                <p><strong>ID Caixa:</strong> </p>
+                <p><strong>ID Caixa:</strong> 46905</p>
                 <p><strong>Colaborador:</strong> Assistente 03</p>
                 <p><strong>Departamento:</strong></p>
                 <p><strong>Centro de Custo:</strong> 72023 - Relacionamento com Cliente / Retenção</p>
@@ -388,7 +388,7 @@ include 'header.php';
             <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg
 " alt="imagem de quem"></div>
             <div class="colaborador-details">
-                <p><strong>ID Caixa:</strong> </p>
+                <p><strong>ID Caixa:</strong> 18274</p>
                 <p><strong>Colaborador:</strong> Suporte 03</p>
                 <p><strong>Email:</strong></p>
                 <p><strong>Cargo:</strong> </p>
@@ -439,7 +439,7 @@ include 'header.php';
             <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg
 " alt="imagem de quem"></div>
             <div class="colaborador-details">
-                <p><strong>ID Caixa:</strong> #59103</p>
+                <p><strong>ID Caixa:</strong> 59103</p>
                 <p><strong>Colaborador:</strong></p>
                 <p><strong>Email:</strong></p>
                 <p><strong>Cargo:</strong> Assistente</p>
@@ -490,7 +490,7 @@ include 'header.php';
             <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg
 " alt="imagem de quem"></div>
             <div class="colaborador-details">
-                <p><strong>ID Caixa</strong>#34827</p>
+                <p><strong>ID Caixa:</strong>34827</p>
                 <p><strong>Colaborador:</strong></p>
                 <p><strong>Email:</strong></p>
                 <p><strong>Cargo:</strong> Contador</p>
@@ -540,6 +540,7 @@ include 'header.php';
             <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg
 " alt="imagem de quem"></div>
             <div class="colaborador-details">
+                <p><strong>ID Caixa: </strong> 69543</p>
                 <p><strong>Colaborador:</strong></p>
                 <p><strong>Email:</strong></p>
                 <p><strong>Cargo:</strong> Analista</p>
@@ -590,6 +591,7 @@ include 'header.php';
             <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg
 " alt="imagem de quem"></div>
             <div class="colaborador-details">
+                <p><strong>ID Caixa: </strong>71359</p>
                 <p><strong>Colaborador: </strong></p>
                 <p><strong>Email: </strong></p>
                 <p><strong>Cargo: </strong>Assistente</p>
@@ -637,6 +639,7 @@ include 'header.php';
             <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg
 " alt="imagem de quem"></div>
             <div class="colaborador-details">
+                <p><strong>ID Caixa: </strong>84720</p>
                 <p><strong>Colaborador: </strong></p>
                 <p><strong>Email: </strong></p>
                 <p><strong>Cargo: </strong>Assistente</p>
@@ -685,6 +688,7 @@ include 'header.php';
             <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg
 " alt="imagem de quem"></div>
             <div class="colaborador-details">
+                <p><strong>ID Caixa: </strong>23851</p>
                 <p><strong>Colaborador: </strong></p>
                 <p><strong>Email: </strong></p>
                 <p><strong>Cargo: </strong>Product Owner</p>
