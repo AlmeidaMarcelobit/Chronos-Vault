@@ -5,7 +5,7 @@
     <a href="departamentos/Operações.php.php">Operações</a>
     <a href="dp_pessoas_e_cultura.php">Pessoas e Cultura</a>
     <a href="dp_financeiro.php">Financeiro</a>
-    <a href="departamentos/maquina_reserva.php">Maquinas Reserva</a>
-    <a href="departamentos/estoque.php">Estoque</a>
+    <a href="maquina_reserva.php">Maquinas Reserva</a>
+    <a href="estoque.php">Estoque</a>
     <a href="centro_custo.php">Centro de Custo</a>
 </nav>
