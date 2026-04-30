@@ -1,36 +1,40 @@
 body {
     font-family: 'Bree Serif', serif;
     background-color: whitesmoke;
+    margin: 0;
+    padding: 0;
 }
 
 main {
     margin: 0 auto;
     max-width: 1080px;
     min-width: 640px;
-    padding: 0px;
+    padding: 0;
 }
 
 h1 {
     text-align: center;
+    margin-top: 20px;
 }
 
 article {
     border: 1px solid #ccc;
     background-color: white;
     border-radius: 5px;
-    box-shadow: #ccc;
-    padding: 10px;
-    margin-top: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 30px;
 }
-img{
+
+img {
     max-width: 90%;
     height: 291px;
     border-radius: 7px;
+    margin-bottom: 20px;
 }
-h2 {
-    margin-left: 10px;
-}
-h3{
+
+h2,
+h3 {
     margin-left: 10px;
 }
 
@@ -43,17 +47,22 @@ footer p {
     margin: 0;
 }
 
-.colaborador-verificar{
+/* Estilos adicionais para colaboradores */
+.colaborador-verificar {
     border: 1px solid #c21c1c;
 }
+
 .colaborador-info {
     display: flex;
+    align-items: center;
 }
-.colaborador-info a{
+
+.colaborador-info a {
     text-decoration: none;
     margin-left: 7px;
     color: #000;
 }
+
 .colaborador-img {
     flex: 0 0 22%;
 }
@@ -62,71 +71,77 @@ footer p {
     flex: 0 0 58%;
     font-size: 14px;
 }
-.equipamentos-info{
+
+/* Estilos adicionais para equipamentos */
+.equipamentos-info {
     display: flex;
     gap: 5px;
     box-sizing: border-box;
     flex-wrap: wrap;
+    margin-top: 20px;
 }
-.equipamento {
-    font-size: 12px;
-    margin-bottom: 10px;
-    padding: 0 0 0 10px;
-    border: 1px solid #ccc;
-    background-color: white;
-    border-radius: 6px;
-    flex: 0 0 18%;
-}
+
+.equipamento,
 .equipamento-danificados {
     font-size: 12px;
     margin-bottom: 10px;
-    padding: 0 0 0 10px;
-    border: 1px solid #eb3131;
-    background-color: white;
-    border-radius: 6px;
-    flex: 0 0 18%;
-}
-.serial{
-    text-transform: uppercase;
-}
-.ticket{
-    margin-bottom: 15px;
-    padding: 0 0 0 10px;;
+    padding: 10px;
     border: 1px solid #ccc;
     background-color: white;
-    border-radius: 5px;
+    border-radius: 6px;
+    flex: 0 0 calc(18% - 10px); /* Calcule a largura com margem entre os itens */
 }
+
+.equipamento-danificados {
+    border-color: #eb3131;
+}
+
+.serial {
+    text-transform: uppercase;
+}
+
+/* Estilos adicionais para o ticker */
+.ticket{
+    font-size: 12px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 6px;
+    flex: 0 0 calc(18% - 10px); /* Calcule a largura com margem entre os itens */
+}
+/* Estilos adicionais para o menu lateral */
 .sidebar-menu {
-    width: 200px;          /* Define a largura do menu lateral */
-    height: 100%;         /* Faz com que o menu ocupe 100% da altura da página */
-    position:fixed;     /* Fixa o menu na lateral da tela */
-    top: 0;               /* Alinha o menu ao topo da página */
-    left: 0;              /* Alinha o menu à esquerda da página */
-    background-color: #333; /* Define a cor de fundo do menu */
-    color: white;         /* Define a cor do texto do menu */
-    padding: 0px;        /* Adiciona padding ao menu */
-    box-shadow: 2px 0 5px rgba(0,0,0,0.5); /* Adiciona uma sombra ao menu */
-    box-sizing: border-box; /* Inclui padding e borda na largura e altura do menu */
+    width: 200px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    color: white;
+    padding: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
 }
 
 .sidebar-menu a {
-    color: white;         /* Define a cor do texto dos links */
-    text-decoration: none; /* Remove a sublinhado dos links */
-    display: block;       /* Faz com que cada link ocupe a largura total do menu */  
-    width: 100%;     /* Faz com que os links ocupem 100% da largura do menu */
-    padding: 10px 5px; /* Adiciona padding vertical e horizontal aos links */
-    box-sizing: border-box; /* Inclui padding e borda na largura dos links */
-    margin-top: 1px;
+    color: white;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    padding: 10px 5px;
+    box-sizing: border-box;
 }
 
 .sidebar-menu a:hover {
-    background-color: #575757; /* Define a cor de fundo dos links ao passar o mouse */
+    background-color: #575757;
 }
-.obs{
-    margin-bottom: 15px;
-    padding: 0 0 0 10px;;
+
+/* Estilos adicionais para observações */
+.obs {
+    font-size: 12px;
+    padding: 10px;
     border: 1px solid #ccc;
     background-color: white;
     border-radius: 5px;
 }
-
