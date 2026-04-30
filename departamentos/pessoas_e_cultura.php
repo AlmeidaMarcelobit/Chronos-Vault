@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet" />
     <title>Pessoas e Cultura</title>
 </head>
@@ -532,6 +533,62 @@
             <section class="ticket">
                 <p><strong>ID Ticket: </strong>#27813</p>
                 <p><strong>Equipamento: </strong>Monitor, Notebook, Teclado e Mouse, Suporte, Headset</p>
+            </section>
+        </article>
+        <article>
+            <h2>Dados do colaborador</h2>
+            <section class="colaborador-info">
+                <div class="colaborador-details">
+                    <p><strong>Colaborador:</strong> Edmar de Almeida</p>
+                    <p><strong>Email:</strong> edmar.almeida@amorsaude.com</p>
+                    <p><strong>Cargo:</strong> Assistente Administrativo</p>
+                    <p><strong>Departamento:</strong> Pessoas e Cultura</p>
+                    <p><strong>CPF:</strong> 421.735.398-76</p>
+                    <p><strong>Centro de custo:</strong>13007 - Departamento Pessoal</p>
+                    <p><strong>Termo de entrega de equipamento:</strong></p>
+                </div>
+            </section>
+
+            <h2>Dados equipamentos</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Notebook</p>
+                    <p><strong>Marca/Modelo:</strong> Dell/Vostro 15 3510 p112f</p>
+                    <p class="serial"><strong>S/N:</strong> p112f03</p>
+                    <p><strong>Patrimonio:</strong> 056</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Fone</p>
+                    <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+                    <p class="serial"><strong>S/N:</strong> 2125me0jypm</p>
+                    <p><strong>Patrimonio:</strong> 755</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Smartphone</p>
+                    <p><strong>Marca/Modelo:</strong> Samsung Galaxy A03</p>
+                    <p class="serial"><strong>S/N:</strong> r9xt2035jkk</p>
+                    <p><strong>IMEI 1:</strong> 354985980164119/01</p>
+                    <p><strong>IMEI 2:</strong> 355106270164110/01</p>
+                    <p><strong>Patrimonio:</strong> 756</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                    <p><strong>Marca/Modelo:</strong> Logitech MK270</p>
+                    <p class="serial"><strong>S/N:</strong> 2211ce0a2f89</p>
+                    <p><strong>Patrimonio:</strong> 181 - 570 </p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Suporte</p>
+                    <p><strong>Marca/Modelo:</strong></p>
+                    <p class="serial"><strong>S/N:</strong></p>
+                    <p><strong>Patrimonio:</strong></p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Tablete</p>
+                    <p><strong>Marca/Modelo:</strong> tb310xu</p>
+                    <p class="serial"><strong>S/N:</strong> hnd2bn2p</p>
+                    <p><strong>Patrimonio:</strong> 1552</p>
+                </div>
             </section>
         </article>
     </main>
