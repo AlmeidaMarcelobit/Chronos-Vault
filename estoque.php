@@ -150,6 +150,7 @@
             <p><strong>Patrimônio:</strong> 1154</p>
         </div>
         <div class="equipamento">
+            <p><strong>ID Caixa</strong>01</p>
             <p><strong>Tipo:</strong> Monitor</p>
             <p><strong>Marca/Modelo:</strong> LG22MP410-B</p>
             <p class="serial"><strong>S/N:</strong> 304AZCQ6Z283</p>
@@ -911,11 +912,9 @@
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>47658</p>
                     <p><strong>Colaborador:</strong>Paulo Victor Borges</p>
-                    <p><strong>Departamento:</strong>Consultoria</p>] <p><strong>Cargo: </strong>Consultor
-                        de Operações</p>
-                    <p>
-                        <stronf>CPF: </stronf>P370.549.518-67
-                    </p>
+                    <p><strong>Departamento:</strong>Consultoria</p
+                    <p><strong>Cargo: </strong>Consultor  de Operações</p>
+                    <p><strong>CPF: </strong>370.549.518-67</p>
                     <p><strong>Data da Entrada:</strong> 15/07/2024</p>
                     <p><strong>Centro de Custo:</strong>12007 - Regional 2</p>
                     <p><strong>Termo de Entrega de Equipamento:</strong></p>
@@ -1124,7 +1123,7 @@
         <article>
             <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg"
+                <div class="colaborador-img"><img class="foto" src="foto_colaboradores/Foto_Quem.jpg"
                                                   alt="imagem de quem"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>18274</p>
@@ -1173,7 +1172,7 @@
         <article>
             <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg"
+                <div class="colaborador-img"><img class="foto" src="foto_colaboradores/Foto_Quem.jpg"
                                                   alt="imagem de quem"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>59103</p>
@@ -1222,7 +1221,7 @@
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg"
+                <div class="colaborador-img"><img class="foto" src="foto_colaboradores/Foto_Quem.jpg"
                                                   alt="imagem de quem"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>34827</p>
@@ -1271,7 +1270,7 @@
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg"
+                <div class="colaborador-img"><img class="foto" src="foto_colaboradores/Foto_Quem.jpg"
                                                   alt="imagem de quem"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>69543</p>
@@ -1320,7 +1319,7 @@
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg"
+                <div class="colaborador-img"><img class="foto" src="foto_colaboradores/Foto_Quem.jpg"
                                                   alt="imagem de quem"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>71359</p>
@@ -1369,11 +1368,10 @@
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg"
-                                                  alt="imagem de quem"></div>
+                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg" alt="imagem de quem" class="foto"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>84720</p>
-                    <p><strong>Colaborador:</strong></p>
+                    <p><strong>Colaborador:</strong>Daila de Souza Silva Santos</p>
                     <p><strong>Email:</strong></p>
                     <p><strong>Cargo:</strong>Assistente</p>
                     <p><strong>Departamento:</strong>Canais Digitais e Relacionamento</p>
@@ -1418,7 +1416,7 @@
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg"
+                <div class="colaborador-img"><img class="foto" src="foto_colaboradores/Foto_Quem.jpg"
                                                   alt="imagem de quem"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>23851</p>
