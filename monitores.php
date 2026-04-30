@@ -14,16 +14,9 @@
         </header>
         <div class="container">
             <?php
-include 'header.php';
+            include 'header.php';
 ?>
             <main>
-                <article>
-                    <p><strong>Dono: </strong></p>
-                    <p><strong>Tipo:</strong>Monitor</p>
-                    <p><strong>Marca/Modelo:</strong>LG22MP410-B</p>
-                    <p class="serial"><strong>S/N:</strong>304AZCQ6Z283</p>
-                    <p><strong>Patrimônio:</strong>427</p>
-                </article>
                 <article>
                     <p><strong>Dono: </strong></p>
                     <p><strong>Tipo: </strong>Monitor</p>
@@ -32,5 +25,8 @@ include 'header.php';
                 </article>
             </main>
         </div>
+        <?php
+        include 'footer.php'
+        ?>
     </body>
 </html>
