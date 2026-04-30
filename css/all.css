@@ -32,16 +32,21 @@ header img {
 }
 main{
     background-color: #1e1e1e;
-    width: 880px;
+    width: 830px;
 }
 .ativo{
     text-align: center;
     justify-content: center;
     background-color: #61C1D0;
 }
+.desativados{
+    text-align: center;
+    justify-content: center;
+    background-color: #ec3939;
+}
 aside {
     background-color: #333;
-    width: 200px;
+    width: 250px;
     border-right: 1px solid #444; /* Simplificado para aplicar bordas em ambos os lados */
     box-sizing: border-box;
 }
