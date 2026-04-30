@@ -9,33 +9,71 @@
 </head>
 
 <body>
-<header><img src="icones/LOGO_RGB_AMORSAUDE_FINAL_HORIZONTAL.png" alt="LOGO AMORSAUDE"></header>
+<header>
+    <img src="icones/LOGO_RGB_AMORSAUDE_FINAL_HORIZONTAL.png" alt="LOGO AMORSAUDE">
+</header>
 <div class="container">
-    <aside>
-        <nav>
-            <ul>
-                <li><a href="home.php">Home</a></li>
-                <li><a href="">Operação</a></li>
-                <li><a href="">Atendimento ao Cliente</a></li>
-                <li><a href="">Pessoas e Cultura</a></li>
-                <li><a href="">Financeiro</a></li>
-                <li><a href="">CRM</a></li>
-                <li><a href="">Maquina Reserva</a></li>
-                <li><a href="#">Estoque</a></li>
-                <li><a href="centro_custo.php">Lista Centro de Custo</a></li>
-            </ul>
-        </nav>
-    </aside>
+<?php
+include 'header.php'
+?>
     <main>
+            <article>
+                <h2>Dados do colaborador</h2>
+                <section class="colaborador-info">
+                    <div class="colaborador-details">
+                        <p><strong>ID Caixa:</strong> 83469</p>
+                        <p><strong>Colaborador:</strong> Estagiario</p>
+                        <p><strong>Email:</strong> (Não fornecido)</p>
+                        <p><strong>Cargo:</strong> Estagiaro</p>
+                        <p><strong>Departamento:</strong> BackOffice - Documentações</p>
+                        <p><strong>CPF:</strong> (Não fornecido)</p>
+                        <p><strong>Data da Entrada:</strong> (Não fornecido)</p>
+                        <p><strong>Centro de Custo:</strong> 12005 - BackOffice</p>
+                        <p><strong>Substituição:</strong> (Não fornecido)</p>
+                    </div>
+                </section>
+                <h2>Dados equipamentos</h2>
+                <section class="equipamentos-info">
+                    <div class="equipamento">
+                        <p><strong>Tipo:</strong> Notebook Win-11 i5-1235U 8GB</p>
+                        <p><strong>Marca/Modelo:</strong> Lenovo V15 G3 IAP</p>
+                        <p class="serial"><strong>S/N:</strong> PE0C4SMZ</p>
+                        <p><strong>Patrimônio:</strong> 1548</p>
+                    </div>
+                    <div class="equipamento">
+                        <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                        <p><strong>Marca/Modelo:</strong> Logitech MK270</p>
+                        <p class="serial"><strong>S/N:</strong> 2347CE26FD8 - 2344LZXBR4P8</p>
+                        <p><strong>Patrimônio:</strong> 1557</p>
+                    </div>
+                    <div class="equipamento">
+                        <p><strong>Tipo:</strong> Suporte</p>
+                        <p><strong>Marca/Modelo:</strong> Aluminio</p>
+                        <p class="serial"><strong>S/N:</strong> (Não fornecido)</p>
+                        <p><strong>Patrimônio:</strong> 1200</p>
+                    </div>
+                    <div class="equipamento">
+                        <p><strong>Tipo:</strong> Fone</p>
+                        <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+                        <p class="serial"><strong>S/N:</strong> 2316GGAT09</p>
+                        <p><strong>Patrimônio:</strong> 1199</p>
+                    </div>
+                </section>
+                <section class="ticket">
+                    <p><strong>ID Ticket:</strong> #48557</p>
+                    <p><strong>Equipamentos:</strong> Headset, Mouse, Notebook 8G, Suporte para notebook, Teclado, Monitor</p>
+                </section>
+        </article>
         <article>
+            <p>loren <ips></ips></p>
             <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong> 27598</p>
                     <p><strong>Colaborador:</strong> Lucas Claudino de Oliveira Ramalho</p>
-                    <p><strong>Email:</strong> (Não fornecido)</p>
+                    <p><strong>Email:</strong> </p>
                     <p><strong>Cargo:</strong> Desenvolvedor Jr</p>
-                    <p><strong>Departamento:</strong> (Não fornecido)</p>
+                    <p><strong>Departamento:</strong> Desenvolvimento</p>
                     <p><strong>CPF:</strong> 702.183.482-90</p>
                     <p><strong>Data da Entrada:</strong> 01/07/2024</p>
                     <p><strong>Centro de Custo:</strong> 13012 - Desenvolvimento</p>
@@ -114,6 +152,9 @@
             <section class="ticket">
                 <p><strong>ID Ticket:</strong> #48427</p>
                 <p><strong>Equipamentos:</strong> Headset, Notebook 8G, Suporte para notebook, Teclado e Mouse, Celular, Monitor extra</p>
+            </section>
+            <section class="obs">
+                <p><strong>Observação</strong>Equipamento refrente a promoção</p>
             </section>
         </article>
         <article>
