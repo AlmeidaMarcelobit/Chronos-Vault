@@ -4,23 +4,23 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/all.css" />
     <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet" />
     <title>Atendimento ao Cliente</title>
 </head>
 
 <body>
+<header>
+    <img src="icones/LOGO_RGB_AMORSAUDE_FINAL_HORIZONTAL.png" alt="LOGO AMORSAUDE">
+</header>
+<div class="container">
     <?php
 		include 'header.php';
 		?>
         <main>
-
-            <header>
+            <header class="ativo">
                 <h1>COLABORADORES ATIVOS</h1>
             </header>
-
-            <main>
-
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
 
@@ -87,7 +87,7 @@
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
-                        <div class="colaborador-img"> <img src="foto_colaboradores/SEM FOTO.jpg" alt="Malinda Gonçalves de Oliveira"> </div>
+                        <div class="colaborador-img"> <img src="foto_colaboradores/SEM FOTO.jpg" alt="Malinda Gonçalves de Oliveira" class="foto"> </div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador: </strong>Malinda Gonçalves de Oliveira</p>
                             <p><strong>Email: </strong>malinda.oliveira@amorsaude.com</p>
@@ -440,9 +440,10 @@
                         <p><strong>Observação: </strong>Termo do colaborador não encontrado.</p>
                     </section>
                 </article>
-            </main>
+        </main>
+</div>
             <?php
-		include '../footer.php';
+		include 'footer.php';
 		?>
 </body>
 
