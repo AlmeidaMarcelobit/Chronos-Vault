@@ -3,7 +3,7 @@ body {
     background-color: whitesmoke;
 }
 
-.main {
+main {
     margin: 0 auto;
     max-width: 1080px;
     min-width: 640px;
@@ -20,7 +20,7 @@ article {
     border-radius: 5px;
     box-shadow: #ccc;
     padding: 10px;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 img{
     max-width: 90%;
@@ -59,7 +59,7 @@ footer p {
 }
 
 .colaborador-details {
-    flex: 0 0 60%;
+    flex: 0 0 58%;
     font-size: 14px;
 }
 .equipamentos-info{
@@ -122,5 +122,11 @@ footer p {
 .sidebar-menu a:hover {
     background-color: #575757; /* Define a cor de fundo dos links ao passar o mouse */
 }
-
+.obs{
+    margin-bottom: 15px;
+    padding: 0 0 0 10px;;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 5px;
+}
 
