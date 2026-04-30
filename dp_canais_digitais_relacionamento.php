@@ -72,4 +72,4 @@ include 'header.php';
         include 'footer.php'
         ?>
     </body>
-2</html>
+</html>
