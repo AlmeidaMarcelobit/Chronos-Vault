@@ -26,7 +26,6 @@
                     <li><a href="">Maquina Reserva</a></li>
                     <li><a href="departamentos/estoque.php">Estoque</a></li>
                     <li><a href="">Lista Centro de Custo</a></li>
-                </ul>
             </nav>
         </aside>
         <main>
