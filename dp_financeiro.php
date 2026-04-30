@@ -381,7 +381,7 @@
                     <p><strong>Tipo: </strong>Notebook</p>
                     <p><strong>Patrimônio: </strong>142</p>
                     <p class="serial"><strong>S/N: </strong>D714sn3</p>
-                    <p><strong>Marca/Modelo: </strong>Dell Vostro 15 510</p>
+                    <p><strong>Marca/Modelo: </strong>Dell Vostro 15 3510</p>
                 </div>
                 <div class="equipamento">
                     <p><strong>Tipo: </strong>Teclado e Mouse</p>
