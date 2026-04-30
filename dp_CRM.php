@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="css/principal.css">
     <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet" />
     <title>CRM</title>
 </head>
@@ -11,7 +11,6 @@
 <header>
     <img src="icones/LOGO_RGB_AMORSAUDE_FINAL_HORIZONTAL.png" alt="LOGO AMORSAUDE">
 </header>
-<div class="container">
     <?php
     include 'header.php';
     ?>
@@ -244,7 +243,6 @@
             </section>
         </article>
     </main>
-</div>
 <?php
 include 'footer.php'
 ?>

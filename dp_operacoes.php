@@ -5,20 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="css/principal.css">
     <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
     <title>Operação</title>
 </head>
 
 <body>
     <header><img src="icones/LOGO_RGB_AMORSAUDE_FINAL_HORIZONTAL.png" alt="LOGO AMORSAUDE"></header>
-    <div class="container">
         <?php
 include 'header.php';
 ?>
             <main>
                 <header class="ativo">
-                    <h1>COLABORADORES ATIVOS</h1></header>
+                    <h1>COLABORADORES ATIVOS</h1>
+                </header>
                 <article>
                     <h2>Dados do colaborador</h2>
                     <section class="colaborador-info">
@@ -802,7 +802,6 @@ include 'header.php';
                     </section>
                 </article>
             </main>
-    </div>
     <?php
 include 'footer.php';
 ?>

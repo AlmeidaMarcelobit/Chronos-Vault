@@ -1,0 +1,224 @@
+/* Dropdown e menu */
+.dropdown:hover .dropdown-content,
+.menu a {
+    display: block;
+}
+
+/* Estilos principais */
+main, nav {
+    background-color: #1c1c1c; /* Fundo escuro */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.menu a, footer, header {
+    padding: 10px;
+}
+
+.ativo, .desativados, footer, header {
+    text-align: center;
+}
+
+*, footer p {
+    margin: 0;
+}
+
+*, body, header {
+    box-sizing: border-box;
+}
+
+* {
+    padding: 0;
+}
+
+/* Corpo e fonte */
+body {
+    font-family: Roboto, sans-serif;
+    background-color: #121212; /* Escuro para o fundo */
+    color: #e0e0e0; /* Texto claro */
+}
+
+/* Cabeçalho */
+header {
+    background-color: #2c2c2c; /* Cinza escuro */
+    border-bottom: 1px solid #333; /* Linha inferior */
+}
+
+header img {
+    max-width: 1080px;
+    height: 130px;
+}
+
+/* Menu */
+.menu {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+.menu li {
+    position: relative;
+}
+
+.menu a {
+    color: #e0e0e0; /* Texto claro */
+    text-decoration: none;
+}
+
+/* Dropdown */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: #333; /* Escuro para o fundo do dropdown */
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, .2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #fff; /* Texto claro */
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #555; /* Escuro para o item ao passar o mouse */
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #444; /* Cor do botão do dropdown */
+}
+
+/* Estado ativo e desativado */
+.ativo {
+    justify-content: center;
+    background-color: #d32f2f; /* Vermelho intenso */
+}
+
+.desativados {
+    justify-content: center;
+    background-color: #b71c1c; /* Vermelho mais escuro */
+}
+
+/* Rodapé e tickets */
+.ticket, footer {
+    background-color: #1c1c1c; /* Escuro para o fundo */
+}
+
+article {
+    padding: 20px;
+    margin-bottom: 0;
+    border-bottom: 1px dashed #666; /* Cinza mais claro */
+}
+
+footer {
+    border-top: 1px solid #444; /* Linha superior do rodapé */
+}
+
+/* Informações do colaborador */
+.colaborador-verificar {
+    border: 1px solid #d32f2f; /* Vermelho intenso */
+}
+
+.colaborador-info {
+    display: flex;
+    align-items: inherit;
+}
+
+.equipamentos-info {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+img.foto {
+    height: 197px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+}
+
+/* Equipamento e tickets */
+.equipamento, .ticket {
+    font-size: 14px;
+    margin-bottom: 10px;
+    border: 1px solid #444; /* Cinza escuro */
+    padding: 10px;
+}
+
+.equipamento {
+    margin-right: 10px;
+    border-radius: 6px;
+    flex: 0 0 calc(25% - 10px);
+    box-sizing: border-box;
+}
+
+.equipamento-danificados {
+    font-size: 14px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #d32f2f; /* Vermelho intenso */
+    border-radius: 6px;
+    flex: 0 0 calc(18% - 10px);
+    box-sizing: border-box;
+}
+
+/* Estilos de texto */
+.serial, h2, h3 {
+    text-transform: uppercase;
+}
+
+.ticket {
+    border-radius: 6px;
+    flex: 0 0 calc(18% - 10px);
+}
+
+/* Informações dos notebooks */
+.notebooks-info {
+    display: flex;
+    align-items: center;
+}
+
+.img {
+    margin-right: 20px;
+}
+
+.notebooks-info img {
+    height: 191px;
+    width: 150px;
+}
+
+/* Detalhes do colaborador */
+.colaborador-info a {
+    text-decoration: none;
+    margin-left: 7px;
+    color: #e0e0e0; /* Texto claro */
+}
+
+.colaborador-img {
+    flex: 0 0 18%;
+    font-size: 16px;
+}
+
+.colaborador-details {
+    flex: 0 0 82%;
+    font-size: 16px;
+}
+
+/* Status de estoque */
+.in-stock {
+    background-color: #4caf50; /* Verde para estoque disponível */
+}
+
+.off {
+    background-color: #eb3131; /* Vermelho para estoque indisponível */
+}
+
+/* Observações */
+.obs {
+    font-size: 14px;
+    padding: 10px;
+    border: 1px solid #444; /* Cinza escuro */
+    background-color: #1c1c1c; /* Escuro para o fundo */
+    border-radius: 5px;
+}
