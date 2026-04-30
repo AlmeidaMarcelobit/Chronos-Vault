@@ -15,28 +15,64 @@ include 'header.php';
 
 <!--80 REIAS LIVIA DIVIDA-->
 <main>
-    <details>
-        <summary>
-            Notebook Reserva.
-        </summary>
+
         <article>       
-            <section class="notebooks">
+            <section class="notebooks-info">
                 <div class="img">
-                <img src="../icones/laptop.png" alt="">
-            </div>
-            <div class="equipamento">
-                    <p><strong>Tipo:</strong>Notebook Win-10 i5-7200 8GB</p>
-                    <p><strong>Patrimonio:</strong>36</p>
+                <img src="../icones/laptop.png" alt="icone laptop">
+                </div>
+                <div class="equipamento-details">
+                    <p><strong>Nome: </strong> Reserva-01</p>
+                    <p><strong>Tipo: </strong>Notebook Win-10 i5-7200 8GB</p>
+                    <p><strong>Patrimonio: </strong>36</p>
                     <p><strong>Marca\Modelo: </strong>Dell Inspiron 15 3567</p>
                     <p class="serial"><strong>S/N: </strong>JQD14W2</p>
+                </div>
+            </section></article>
+    <article>
+        <section class="notebooks-info">
+            <div class="img">
+                <img src="../icones/laptop.png" alt="icone laptop">
+            </div>
+            <div class="equipamento-details">
+                <p><strong>Nome: </strong>Reserva - 05</p>
+                <p><strong>Tipo: </strong>Notebook Win-10 i3-7020U 8GB</p>
+                <p><strong>Patrimonio: </strong>153</p>
+                <p><strong>Marca\Modelo: </strong>Dell Inspiron 15 3567</p>
+                <p class="serial"><strong>S/N: </strong>DQK44W2</p>
+                <p><strong>Alocada: </strong>Janaina Françoza</p>
             </div>
         </section>
-        <section class="monitor">
-
-        </section>
+    </article>
+    <article>
+            <section class="notebooks-info">
+                <div class="img">
+                    <img src="../icones/laptop.png" alt="icone laptop">
+                </div>
+                <div class="equipamento-details">
+                    <p><strong>Nome: </strong> Reserva - 03</p>
+                    <p><strong>Tipo: </strong>Notebook Win-10 i3-6006U 8GB</p>
+                    <p><strong>Patrimonio: </strong>50</p>
+                    <p><strong>Marca\Modelo: </strong>Dell Inspiron 15 3567</p>
+                    <p class="serial"><strong>S/N: </strong>7QMMDQ2</p>
+                </div>
+            </section>
         </article>
- 
-    </details>
+    <article>
+        <section class="notebooks-info">
+            <div class="img">
+                <img src="../icones/laptop.png" alt="icone laptop">
+            </div>
+            <div class="equipamento-details">
+                <p><strong>Nome: </strong>Reserva-  06</p>
+                <p><strong>Tipo: </strong>Notebook Win-7 i3-7020U 4GB</p>
+                <p><strong>Patrimonio: </strong>19</p>
+                <p><strong>Marca\Modelo: </strong>Dell inspiron 3584</p>
+                <p class="serial"><strong>S/N: </strong>6F53R23</p>
+            </div>
+        </section>
+    </article>
+
 </main>
 
 </body>

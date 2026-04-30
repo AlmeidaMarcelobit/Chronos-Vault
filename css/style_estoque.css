@@ -26,9 +26,32 @@ article {
     padding: 20px;
     margin-top: 30px;
 }
-.notebooks{
-    width: 40px;
-    height: auto;
+/* Estilos adicionais para notebook */
+.notebooks-info {
+    display: flex;
+    align-items: center;
+}
+.img{
+    margin-right: 20px;
+ }
+.notebooks-info img{
+    height: 191px;
+    width: 150px;
+}
+
+.colaborador-info a {
+    text-decoration: none;
+    margin-left: 7px;
+    color: #000;
+}
+
+.colaborador-img {
+    flex: 0 0 22%;
+}
+
+.colaborador-details {
+    flex: 0 0 58%;
+    font-size: 14px;
 }
 
 /* Estilos adicionais para o menu lateral */
