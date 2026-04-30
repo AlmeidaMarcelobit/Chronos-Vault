@@ -31,6 +31,35 @@
             <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
                 <div class="colaborador-details">
+                    <p><strong>ID Caixa:</strong> 27598</p>
+                    <p><strong>Colaborador:</strong> Lucas Claudino de Oliveira Ramalho</p>
+                    <p><strong>Email:</strong> (Não fornecido)</p>
+                    <p><strong>Cargo:</strong> Desenvolvedor Jr</p>
+                    <p><strong>Departamento:</strong> (Não fornecido)</p>
+                    <p><strong>CPF:</strong> 702.183.482-90</p>
+                    <p><strong>Data da Entrada:</strong> 01/07/2024</p>
+                    <p><strong>Centro de Custo:</strong> 13012 - Desenvolvimento</p>
+                    <p><strong>Substituição:</strong> Bruno Oliveira</p>
+                </div>
+            </section>
+            <h2>Dados equipamentos</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Notebook Win-11 i5-1135G7 16GB</p>
+                    <p><strong>Marca/Modelo:</strong> Dell Latitude 3420</p>
+                    <p class="serial"><strong>S/N:</strong> 571781747</p>
+                    <p><strong>Patrimônio:</strong> 258</p>
+                </div>
+            </section>
+            <section class="ticket">
+                <p><strong>ID Ticket:</strong> #32126</p>
+                <p><strong>Equipamentos:</strong> Notebook</p>
+            </section>
+        </article>
+        <article>
+            <h2>Dados do colaborador</h2>
+            <section class="colaborador-info">
+                <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong> 16035</p>
                     <p><strong>Colaborador:</strong> Jade Rodrigues</p>
                     <p><strong>Email:</strong> jade.rodrigues@amorsaude.com</p>
