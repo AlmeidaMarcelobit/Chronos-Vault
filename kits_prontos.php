@@ -1,3 +1,5 @@
+<!doctype html>
+<html lang="pt-br">
 <head xmlns="http://www.w3.org/1999/html">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -15,7 +17,50 @@
     ?>
             <main>
 
-
+                <article>
+                    <h2>Dados do colaborador</h2>
+                    <section class="colaborador-info">
+                        <div class="colaborador-details">
+                            <p><strong>Colaborador: </strong>Gabriele Marin Soare</p>
+                            <p><strong>Email: </strong>gabriele.marin@amorsaude.com</p>
+                            <p><strong>Cargo: </strong>Consultor de Operações</p>
+                            <p><strong>Departamento: </strong>Consultoria</p>
+                            <p><strong>CPF: </strong>453.937.658-60</p>
+                            <p><strong>Data da Entrando: </strong>19/08/2024</p>
+                            <p><strong>Substituição: </strong>Aline Oliveira</p>
+                            <p><strong>Centro de Custo: </strong>12006 - Regional 1</p>
+                        </div>
+                    </section>
+                    <h2>Dados equipamentos</h2>
+                    <section class="equipamentos-info">
+                        <div class="equipamento">
+                            <p><strong>Tipo:</strong>Notebook</p>
+                            <p><strong>Marca/Modelo:</strong>Lenovo v15 g2</p>
+                            <p class="serial"><strong>S/N:</strong>pe09xvkr</p>
+                            <p><strong>Patrimonio:</strong>225</p>
+                        </div>
+                        <div class="equipamento">
+                            <p><strong>Tipo:</strong>Headset</p>
+                            <p><strong>Marca/Modelo:</strong>jabra HSC0016</p>
+                            <p class="serial"><strong>S/N:</strong>273963767</p>
+                            <p><strong>Patrimonio:</strong>670</p>
+                        </div>
+                        <div class="equipamento">
+                            <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                            <p><strong>Marca/Modelo:</strong>Logitech K270 - M185</p>
+                            <p class="serial"><strong>S/N:</strong>2234CE1821AB</p>
+                            <p><strong>Patrimonio:</strong>339</p>
+                        </div>
+                        <div class="equipamento">
+                            <p><strong>Tipo:</strong>Smartphone</p>
+                            <p><strong>Marca/Modelo:</strong>Galaxy A03</p>
+                            <p class="serial"><strong>S/N:</strong>r9xta0edmwa</p>
+                            <p><strong>Patrimonio:</strong>668</p>
+                            <p><strong>IMEI 1:</strong>350916877000847/01</p>
+                            <p><strong>IMEI 2:</strong>354654237000845/01</p>
+                        </div>
+                    </section>
+                </article>
                 <article>
                     <h2>Dados do colaborador</h2>
                     <section class="colaborador-info">
@@ -323,12 +368,12 @@
                     <section class="colaborador-info">
                         <div class="colaborador-details">
                             <p><strong>ID Caixa:</strong>02</p>
-                            <p><strong>Colaborador:</strong>(Não fornecido)</p>
-                            <p><strong>Email:</strong>(Não fornecido)</p>
-                            <p><strong>Cargo:</strong>Consultor</p>
-                            <p><strong>Departamento:</strong>Operação</p>
-                            <p><strong>CPF:</strong>(Não fornecido)</p>
-                            <p><strong>Data da Entrada:</strong>(Não fornecido)</p>
+                            <p><strong>Colaborador:</strong>Murilo Venturoso Tinazzo</p>
+                            <p><strong>Email:</strong>murilo.tinazzo@amorsaude.com</p>
+                            <p><strong>Cargo:</strong>Consultor de Operações</p>
+                            <p><strong>Departamento:</strong>Consultoria</p>
+                            <p><strong>CPF:</strong>334.823.378-02</p>
+                            <p><strong>Data da Entrada:</strong>19/08/2024</p>
                             <p><strong>Centro de Custo:</strong>12006 - Regional 1</p>
                         </div>
                     </section>
