@@ -14,21 +14,9 @@
         <img src="icones/LOGO_RGB_AMORSAUDE_FINAL_HORIZONTAL.png" alt="LOGO AMORSAUDE">
     </header>
     <div class="container">
-        <aside>
-            <nav>
-                <ul>
-                    <li><a href="home.php">Home</a></li>
-                    <li><a href="">Operação</a></li>
-                    <li><a href="">Atendimento ao Cliente</a></li>
-                    <li><a href="">Pessoas e Cultura</a></li>
-                    <li><a href="">Financeiro</a></li>
-                    <li><a href="">CRM</a></li>
-                    <li><a href="">Maquina Reserva</a></li>
-                    <li><a href="estoque.php">Estoque</a></li>
-                    <li><a href="centro_custo.php">Lista Centro de Custo</a></li>
-                </ul>
-            </nav>
-        </aside>
+        <?php
+        include 'header.php'
+        ?>
         <main>
             <article>
                 <h1></h1>
@@ -36,9 +24,9 @@
             </article>
         </main>
     </div>
-    <footer>
-        <p>&copy; Reservado APEX.inc</p>
-    </footer>
+    <?php
+    include 'footer.php'
+    ?>
 <!--16GB 2Rx8 PC4 2400T-SE1--11-->
 </body>
 </html>
