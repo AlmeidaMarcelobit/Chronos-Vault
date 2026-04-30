@@ -79,7 +79,7 @@
                             <p><strong>Marca/Modelo:</strong> LG22MP410-B</p>
                         </div>
                     </section>
-                    <section class="observacao">
+                    <section class="obs">
                         <p><strong>Observação: </strong>Termo do colaborador não encontrado.</p>
 
                     </section>
@@ -435,7 +435,7 @@
                             <p><strong>IMEI:</strong> 350916876993414/01, 354654236993412/01</p>
                         </div>
                     </section>
-                    <section class="observacao">
+                    <section class="obs">
                         <p><strong>Observação: </strong>Termo do colaborador não encontrado.</p>
                     </section>
                 </article>
