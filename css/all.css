@@ -34,6 +34,11 @@ main{
     background-color: #1e1e1e;
     width: 880px;
 }
+.ativo{
+    text-align: center;
+    justify-content: center;
+    background-color: #61C1D0;
+}
 aside {
     background-color: #333;
     width: 200px;
@@ -67,7 +72,7 @@ aside ul li a {
 }
 article {
     padding: 20px;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
     border-bottom: 1px dashed #575757;
 }
 
@@ -98,9 +103,6 @@ footer p {
     color: #e0e0e0;
 }
 
-.colaborador-img {
-    flex: 0 0 22%;
-}
 
 .colaborador-details {
     flex: 20 0 50%;
@@ -112,10 +114,9 @@ footer p {
     flex-wrap: wrap;
     margin-top: 10px;
 }
-img {
-    max-width: 90%;
-    height: 250px;
-    border-radius: 7px;
+img.foto {
+    height: 167px;
+    border-radius: 4px;
     margin-bottom: 2px;
 }
 .equipamento {
