@@ -12,60 +12,124 @@
 <header>
     <img src="icones/LOGO_RGB_AMORSAUDE_FINAL_HORIZONTAL.png" alt="LOGO AMORSAUDE">
 </header>
-<div class="container">
-<?php
-include 'header.php'
-?>
-    <main>
-            <article>
-                <h2>Dados do colaborador</h2>
-                <section class="colaborador-info">
-                    <div class="colaborador-details">
-                        <p><strong>ID Caixa:</strong> 83469</p>
-                        <p><strong>Colaborador:</strong> Estagiario</p>
-                        <p><strong>Email:</strong> (Não fornecido)</p>
-                        <p><strong>Cargo:</strong> Estagiaro</p>
-                        <p><strong>Departamento:</strong> BackOffice - Documentações</p>
-                        <p><strong>CPF:</strong> (Não fornecido)</p>
-                        <p><strong>Data da Entrada:</strong> (Não fornecido)</p>
-                        <p><strong>Centro de Custo:</strong> 12005 - BackOffice</p>
-                        <p><strong>Substituição:</strong> (Não fornecido)</p>
-                    </div>
-                </section>
-                <h2>Dados equipamentos</h2>
-                <section class="equipamentos-info">
-                    <div class="equipamento">
-                        <p><strong>Tipo:</strong> Notebook Win-11 i5-1235U 8GB</p>
-                        <p><strong>Marca/Modelo:</strong> Lenovo V15 G3 IAP</p>
-                        <p class="serial"><strong>S/N:</strong> PE0C4SMZ</p>
-                        <p><strong>Patrimônio:</strong> 1548</p>
-                    </div>
-                    <div class="equipamento">
-                        <p><strong>Tipo:</strong> Teclado e Mouse</p>
-                        <p><strong>Marca/Modelo:</strong> Logitech MK270</p>
-                        <p class="serial"><strong>S/N:</strong> 2347CE26FD8 - 2344LZXBR4P8</p>
-                        <p><strong>Patrimônio:</strong> 1557</p>
-                    </div>
-                    <div class="equipamento">
-                        <p><strong>Tipo:</strong> Suporte</p>
-                        <p><strong>Marca/Modelo:</strong> Aluminio</p>
-                        <p class="serial"><strong>S/N:</strong> (Não fornecido)</p>
-                        <p><strong>Patrimônio:</strong> 1200</p>
-                    </div>
-                    <div class="equipamento">
-                        <p><strong>Tipo:</strong> Fone</p>
-                        <p><strong>Marca/Modelo:</strong> Logitech H390</p>
-                        <p class="serial"><strong>S/N:</strong> 2316GGAT09</p>
-                        <p><strong>Patrimônio:</strong> 1199</p>
-                    </div>
-                </section>
-                <section class="ticket">
-                    <p><strong>ID Ticket:</strong> #48557</p>
-                    <p><strong>Equipamentos:</strong> Headset, Mouse, Notebook 8G, Suporte para notebook, Teclado, Monitor</p>
-                </section>
+<div class="container"> <?php
+    include 'header.php'
+    ?> <main>
+        <article>
+            <h2>Dados do colaborador</h2>
+            <section class="colaborador-info">
+                <div class="colaborador-details">
+                    <p><strong>ID Caixa:</strong>52187</p>
+                    <p><strong>Colaborador:</strong> </p>
+                    <p><strong>Email:</strong> </p>
+                    <p><strong>Cargo:</strong> Consultora de Operações</p>
+                    <p><strong>Departamento:</strong> Operação</p>
+                    <p><strong>CPF:</strong> </p>
+                    <p><strong>Subtituição: </strong>Jade Rodrigues</p>
+                    <p><strong>Data da Entrada:</strong> </p>
+                    <p><strong>Centro de Custo:</strong> 12006 - Regional 1</p>
+                </div>
+            </section>
+            <h2>Dados equipamentos</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Smartphone</p>
+                    <p><strong>Marca/Modelo:</strong> Galaxy A03s</p>
+                    <p class="serial"><strong>S/N:</strong> r9xt9088nbh</p>
+                    <p><strong>Patrimônio:</strong> 647</p>
+                    <p><strong>IMEI 1:</strong> 353541243428394/01</p>
+                    <p><strong>IMEI 2:</strong> 354183763428394/01</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Notebook</p>
+                    <p><strong>Marca/Modelo:</strong> Lenovo V15 G2</p>
+                    <p class="serial"><strong>S/N:</strong> PE09eek</p>
+                    <p><strong>Patrimônio:</strong> 212</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                    <p><strong>Marca/Modelo:</strong> Logitech MK270</p>
+                    <p class="serial"><strong>S/N:</strong> 2243CE258139 - 2240LZN1KF38</p>
+                    <p><strong>Patrimônio:</strong> 364</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Fone</p>
+                    <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+                    <p class="serial"><strong>S/N:</strong> 2330YA032628</p>
+                    <p><strong>Patrimônio:</strong> 985</p>
+                </div>
+            </section>
+            <h3>Equipamento danificado</h3>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Fone</p>
+                    <p><strong>Marca/Modelo:</strong> Jabra HSC015</p>
+                    <p class="serial"><strong>S/N:</strong> 22283153100317</p>
+                    <p><strong>Patrimônio:</strong> 792</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Fone</p>
+                    <p><strong>Marca/Modelo:</strong> Jabra</p>
+                    <p class="serial"><strong>S/N:</strong> 260310937</p>
+                    <p><strong>Patrimônio:</strong> 529</p>
+                </div>
+            </section>
+            <section class="ticket">
+                <p><strong>ID Ticket:</strong> (Não fornecido)</p>
+                <p><strong>Equipamentos:</strong> Smartphone, Notebook, Teclado e Mouse, Fone</p>
+            </section>
         </article>
         <article>
-            <p>loren <ips></ips></p>
+            <h2>Dados do colaborador</h2>
+            <section class="colaborador-info">
+                <div class="colaborador-details">
+                    <p><strong>ID Caixa:</strong> 83469</p>
+                    <p><strong>Colaborador:</strong> Estagiario</p>
+                    <p><strong>Email:</strong> (Não fornecido)</p>
+                    <p><strong>Cargo:</strong> Estagiaro</p>
+                    <p><strong>Departamento:</strong> BackOffice - Documentações</p>
+                    <p><strong>CPF:</strong> (Não fornecido)</p>
+                    <p><strong>Data da Entrada:</strong> (Não fornecido)</p>
+                    <p><strong>Centro de Custo:</strong> 12005 - BackOffice</p>
+                    <p><strong>Substituição:</strong> (Não fornecido)</p>
+                </div>
+            </section>
+            <h2>Dados equipamentos</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Notebook Win-11 i5-1235U 8GB</p>
+                    <p><strong>Marca/Modelo:</strong> Lenovo V15 G3 IAP</p>
+                    <p class="serial"><strong>S/N:</strong> PE0C4SMZ</p>
+                    <p><strong>Patrimônio:</strong> 1548</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                    <p><strong>Marca/Modelo:</strong> Logitech MK270</p>
+                    <p class="serial"><strong>S/N:</strong> 2347CE26FD8 - 2344LZXBR4P8</p>
+                    <p><strong>Patrimônio:</strong> 1557</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Suporte</p>
+                    <p><strong>Marca/Modelo:</strong> Aluminio</p>
+                    <p class="serial"><strong>S/N:</strong> (Não fornecido)</p>
+                    <p><strong>Patrimônio:</strong> 1200</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Fone</p>
+                    <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+                    <p class="serial"><strong>S/N:</strong> 2316GGAT09</p>
+                    <p><strong>Patrimônio:</strong> 1199</p>
+                </div>
+            </section>
+            <section class="ticket">
+                <p><strong>ID Ticket:</strong> #48557</p>
+                <p><strong>Equipamentos:</strong> Headset, Mouse, Notebook 8G, Suporte para notebook,
+                    Teclado, Monitor</p>
+            </section>
+        </article>
+        <article>
+            <p>loren <ips></ips>
+            </p>
             <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
                 <div class="colaborador-details">
@@ -151,7 +215,8 @@ include 'header.php'
             </section>
             <section class="ticket">
                 <p><strong>ID Ticket:</strong> #48427</p>
-                <p><strong>Equipamentos:</strong> Headset, Notebook 8G, Suporte para notebook, Teclado e Mouse, Celular, Monitor extra</p>
+                <p><strong>Equipamentos:</strong> Headset, Notebook 8G, Suporte para notebook, Teclado e
+                    Mouse, Celular, Monitor extra</p>
             </section>
             <section class="obs">
                 <p><strong>Observação</strong>Equipamento refrente a promoção</p>
@@ -393,7 +458,8 @@ include 'header.php'
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <div class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Lucimara Silva Zampollo.jpg" alt="Foto de Lucimara Silva Zampollo" class="foto"></div>
+                <div class="colaborador-img"><img src="foto_colaboradores/Lucimara Silva Zampollo.jpg"
+                                                  alt="Foto de Lucimara Silva Zampollo" class="foto"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>52931</p>
                     <p><strong>Colaborador:</strong>Lucimara Silva Zampollo</p>
@@ -654,9 +720,11 @@ include 'header.php'
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>47658</p>
                     <p><strong>Colaborador:</strong>Paulo Victor Borges</p>
-                    <p><strong>Departamento:</strong>Consultoria</p>]
-                    <p><strong>Cargo: </strong>Consultor de Operações</p>
-                    <p><stronf>CPF: </stronf>P370.549.518-67</p>
+                    <p><strong>Departamento:</strong>Consultoria</p>] <p><strong>Cargo: </strong>Consultor
+                        de Operações</p>
+                    <p>
+                        <stronf>CPF: </stronf>P370.549.518-67
+                    </p>
                     <p><strong>Data da Entrada:</strong> 15/07/2024</p>
                     <p><strong>Centro de Custo:</strong>12007 - Regional 2</p>
                     <p><strong>Termo de Entrega de Equipamento:</strong></p>
@@ -709,7 +777,8 @@ include 'header.php'
             </section>
             <section class="ticket">
                 <p><strong>ID Ticket:</strong>#37401</p>
-                <p><strong>Equipamentos:</strong>Fone, Suporte, Teclado e Mouse, Notebook Win-11 i5-1235U 8GB, Celular, Monitor, Fonte</p>
+                <p><strong>Equipamentos:</strong>Fone, Suporte, Teclado e Mouse, Notebook Win-11 i5-1235U
+                    8GB, Celular, Monitor, Fonte</p>
             </section>
         </article>
         <article>
@@ -771,7 +840,8 @@ include 'header.php'
             </section>
             <section class="ticket">
                 <p><strong>ID Ticket:</strong>#33188</p>
-                <p><strong>Equipamentos:</strong>Fone, Teclado e Mouse, Suporte, Carregador Motorola, Fonte, Notebook Win-11 i5-1235U 8GB, Smatphone</p>
+                <p><strong>Equipamentos:</strong>Fone, Teclado e Mouse, Suporte, Carregador Motorola,
+                    Fonte, Notebook Win-11 i5-1235U 8GB, Smatphone</p>
             </section>
         </article>
         <article>
@@ -813,7 +883,8 @@ include 'header.php'
             </section>
             <section class="ticket">
                 <p><strong>ID Ticket:</strong>#30511</p>
-                <p><strong>Equipamentos:</strong>Notebook Win-11 i5-1235U 8GB, Teclado e Mouse, Suporte, Headset</p>
+                <p><strong>Equipamentos:</strong>Notebook Win-11 i5-1235U 8GB, Teclado e Mouse, Suporte,
+                    Headset</p>
             </section>
         </article>
         <article>
@@ -855,13 +926,15 @@ include 'header.php'
             </section>
             <section class="ticket">
                 <p><strong>ID Ticket:</strong>#30511</p>
-                <p><strong>Equipamentos:</strong>Notebook Win-11 i5-1235U 8GB, Teclado e Mouse, Suporte, Headset</p>
+                <p><strong>Equipamentos:</strong>Notebook Win-11 i5-1235U 8GB, Teclado e Mouse, Suporte,
+                    Headset</p>
             </section>
         </article>
         <article>
             <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg" alt="imagem de quem"></div>
+                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg"
+                                                  alt="imagem de quem"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>18274</p>
                     <p><strong>Colaborador:</strong>Suporte 03</p>
@@ -902,13 +975,15 @@ include 'header.php'
             </section>
             <section class="ticket">
                 <p><strong>ID Ticket:</strong>#31581</p>
-                <p><strong>Equipamento:</strong>Headset, Notebook 8G, Suporte para notebook, Teclado e Mouse</p>
+                <p><strong>Equipamento:</strong>Headset, Notebook 8G, Suporte para notebook, Teclado e
+                    Mouse</p>
             </section>
         </article>
         <article>
             <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg" alt="imagem de quem"></div>
+                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg"
+                                                  alt="imagem de quem"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>59103</p>
                     <p><strong>Colaborador:</strong></p>
@@ -949,13 +1024,15 @@ include 'header.php'
             </section>
             <section class="ticket">
                 <p><strong>ID Ticket:</strong>48446</p>
-                <p><strong>Equipamento:</strong>Headset, Notebook 8G, Suporte para notebook, Teclado e Mouse, Monitor</p>
+                <p><strong>Equipamento:</strong>Headset, Notebook 8G, Suporte para notebook, Teclado e
+                    Mouse, Monitor</p>
             </section>
         </article>
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg" alt="imagem de quem"></div>
+                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg"
+                                                  alt="imagem de quem"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>34827</p>
                     <p><strong>Colaborador:</strong></p>
@@ -996,13 +1073,15 @@ include 'header.php'
             </section>
             <section class="ticket">
                 <p><strong>ID Ticket:</strong>#42705</p>
-                <p><strong>Equipamentos:</strong>Headset, Notebook 8G, Suporte para notebook, Teclado e Mouse, Monitor.</p>
+                <p><strong>Equipamentos:</strong>Headset, Notebook 8G, Suporte para notebook, Teclado e
+                    Mouse, Monitor.</p>
             </section>
         </article>
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg" alt="imagem de quem"></div>
+                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg"
+                                                  alt="imagem de quem"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>69543</p>
                     <p><strong>Colaborador:</strong></p>
@@ -1043,13 +1122,15 @@ include 'header.php'
             </section>
             <section class="ticket">
                 <p><strong>ID Ticket:</strong>#42722</p>
-                <p><strong>Equipamentos:</strong>Headset, Notebook 8G, Suporte para notebook, Teclado e Mouse, Monitor.</p>
+                <p><strong>Equipamentos:</strong>Headset, Notebook 8G, Suporte para notebook, Teclado e
+                    Mouse, Monitor.</p>
             </section>
         </article>
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg" alt="imagem de quem"></div>
+                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg"
+                                                  alt="imagem de quem"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>71359</p>
                     <p><strong>Colaborador:</strong></p>
@@ -1090,13 +1171,15 @@ include 'header.php'
             </section>
             <section class="ticket">
                 <p><strong>ID Ticket:</strong>#42745</p>
-                <p><strong>Equipamento:</strong>Headset, Mouse, Notebook 8G, Suporte para notebook, Teclado, Monitor</p>
+                <p><strong>Equipamento:</strong>Headset, Mouse, Notebook 8G, Suporte para notebook,
+                    Teclado, Monitor</p>
             </section>
         </article>
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg" alt="imagem de quem"></div>
+                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg"
+                                                  alt="imagem de quem"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>84720</p>
                     <p><strong>Colaborador:</strong></p>
@@ -1137,13 +1220,15 @@ include 'header.php'
             </section>
             <section class="ticket">
                 <p><strong>ID Ticket:</strong>#39154</p>
-                <p><strong>Equipamento:</strong>Monitor, Headset, Mouse, Notebook 8G, Suporte para notebook, Teclado</p>
+                <p><strong>Equipamento:</strong>Monitor, Headset, Mouse, Notebook 8G, Suporte para
+                    notebook, Teclado</p>
             </section>
         </article>
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg" alt="imagem de quem"></div>
+                <div class="colaborador-img"><img src="foto_colaboradores/Foto_Quem.jpg"
+                                                  alt="imagem de quem"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>23851</p>
                     <p><strong>Colaborador:</strong></p>
@@ -1184,12 +1269,12 @@ include 'header.php'
             </section>
             <section class="ticket">
                 <p><strong>ID Ticket:</strong>#39154</p>
-                <p><strong>Equipamento:</strong>Headset, Mouse, Notebook 8G, Suporte para notebook, Teclado</p>
+                <p><strong>Equipamento:</strong>Headset, Mouse, Notebook 8G, Suporte para notebook,
+                    Teclado</p>
             </section>
         </article>
     </main>
-</div>
-<?php
+</div> <?php
 include 'footer.php';
 ?>
 </body>
