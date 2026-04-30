@@ -112,9 +112,9 @@ include 'header.php';
             </div>
             <div>
                 <p><strong>Nome: </strong>Reserva-08</p>
-                <p><strong>Tipo: </strong>Notebook Win-10 </p>
+                <p><strong>Tipo: </strong>Notebook Win-10 i3-6006U 8GB</p>
                 <p><strong>Patrimônio: </strong>267</p>
-                <p><strong> Marca\ Modelo: </strong>Dell Insspiron 15-3567</p>
+                <p><strong> Marca\ Modelo: </strong>Dell Inspiron 15-3567</p>
                 <p class="serial"><strong>S/N: </strong>15vvfp2</p>
                 <p><strong>Alocados: </strong></p>
             </div>
