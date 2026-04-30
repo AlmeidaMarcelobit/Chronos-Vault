@@ -24,8 +24,9 @@
                     <li><a href="">Financeiro</a></li>
                     <li><a href="">CRM</a></li>
                     <li><a href="">Maquina Reserva</a></li>
-                    <li><a href="departamentos/estoque.php">Estoque</a></li>
+                    <li><a href="estoque.php">Estoque</a></li>
                     <li><a href="">Lista Centro de Custo</a></li>
+                </ul>
             </nav>
         </aside>
         <main>
