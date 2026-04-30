@@ -48,8 +48,7 @@ header img {
     max-width: 1080px;
     height: 130px;
 }
-
-/* Menu */
+/*menu*/
 .menu {
     list-style: none;
     display: flex;
@@ -64,7 +63,6 @@ header img {
     color: #e0e0e0; /* Texto claro */
     text-decoration: none;
 }
-
 /* Dropdown */
 .dropdown-content {
     display: none;
@@ -86,14 +84,33 @@ header img {
     background-color: #555; /* Escuro para o item ao passar o mouse */
 }
 
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
 .dropdown:hover .dropbtn {
     background-color: #444; /* Cor do botão do dropdown */
 }
 
+/* Submenu */
+.dropdown .dropdown-content .dropdown {
+    position: relative;
+}
+
+.dropdown .dropdown-content .dropdown-content {
+    top: 0;
+    left: 100%;
+    margin-left: 1px;
+    display: none;
+}
+
+.dropdown-content .dropdown:hover .dropdown-content {
+    display: block;
+}
 /* Estado ativo e desativado */
 .ativo {
     justify-content: center;
-    background-color: #d32f2f; /* Vermelho intenso */
+    background-color: #51a9f8; /* Vermelho intenso */
 }
 
 .desativados {
