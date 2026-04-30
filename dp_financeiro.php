@@ -17,27 +17,23 @@
     include 'header.php';
     ?>
     <main>
+
         <header class="ativo">
             <h1>COLABORADORES ATIVOS</h1>
         </header>
         <article>
-            <h2>DADOS DO COLABORADOR</h2>
+            <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/FABRICIO FREITAS.jpeg" alt="Foto de Francisco Fabricio De Lima Freitas" class="foto" /></div>
+                <div class="colaborador-img"><img class="foto" src="foto_colaboradores/Foto_Quem.jpg" alt="imagem de quem"></div>
                 <div class="colaborador-details">
-                    <p><strong>Colaborador: </strong>Francisco Fabricio De Lima Freitas</p>
-                    <p><strong>Email: </strong>fabricio.freitas@amorsaude.com</p>
-                    <p><strong>Cargo: </strong>Gerente Financeiro</p>
-                    <p><strong>Departamento: </strong>Financeiro</p>
-                    <p><strong>CPF: </strong>582.444.093-04</p>
-                    <p><strong>Data da Entrada: </strong>06.maio.2024</p>
-                    <p><strong>Data da Saida: </strong>31.maio.2024</p>
-                    <p><strong>Centro de Custo: </strong>13000 - Financeiro</p>
-                    <p><strong>Subtituição: </strong>Roger Almeida</p>
-                    <p>
-                        <strong>Termo de Entrega do Equipamento: </strong><a href="https://drive.google.com/file/d/17ozw0_TG7lOQbbrdgo8frO5b4ef4PTEC/view?usp=sharing" target="_blank">Termo 01</a>
-                        <a href="https://drive.google.com/file/d/1-MWQ-KQGaTNB5aYQEspkwerq9isaMsrm/view?usp=sharing" target="_blank">Termo 02</a>
-                    </p>
+                    <p><strong>Colaborador:</strong>Felipe Cando Oliveira</p>
+                    <p><strong>Email:</strong>felipe.oliveira@amorsaude.com</p>
+                    <p><strong>Cargo:</strong>Gerente Financeiro</p>
+                    <p><strong>Departamento:</strong>Financeiro</p>
+                    <p><strong>CPF:</strong>392.754.808-18</p>
+                    <p><strong>Centro de Custo:</strong>13000 - Dir. Financeira</p>
+                    <p><strong>Subtituição:</strong>Francisco Fabrício</p>
+                    <p><strong>Termo de entrega de equipamento:</strong></p>
                 </div>
             </section>
             <h2>DADOS DOS EQUIPAMENTOS</h2>
@@ -67,13 +63,22 @@
                     <p><strong>Marca/Modelo: </strong>Ideapad3 15AL6</p>
                 </div>
                 <div class="equipamento">
-                    <p><strong>Tipo: </strong>Monitor</p>
+                    <p><strong>Tipo: </strong>Suporte</p>
                     <p><strong>Patrimônio: </strong>1015</p>
                     <p class="serial"><strong>S/N: </strong></p>
                     <p><strong>Marca/Modelo: </strong>Alumínio</p>
                 </div>
+                <div class="equipamento">
+                    <p><strong>Tipo: </strong>Celuar</p>
+                    <p><strong>Patrimônio: </strong>843</p>
+                    <p class="serial"><strong>S/N: </strong>UI5HVE5P7T</p>
+                    <p><strong>Marca/Modelo: </strong>Moto E22</p>
+                    <p><strong>IMEI 1: </strong>355165984901415</p>
+                    <p><strong>IMEI 2: </strong>355165984901423</p>
+                </div>
             </section>
         </article>
+
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
@@ -120,10 +125,6 @@
                     <p><strong>Patrimônio: </strong>1018</p>
                     <p class="serial"><strong>S/N: </strong>42P69B8</p>
                     <p><strong>Marca/Modelo: </strong>PA-1650-74</p>
-                </div>
-                <div class="equipamento">
-                    <p><strong>Tipo: </strong>Chip</p>
-                    <p><strong>Numero: </strong>16 99749-7166</p>
                 </div>
             </section>
             <section class="ticket">
@@ -586,6 +587,63 @@
             </section>
             <section class="obs">
                 <p><strong>Observação:</strong>Sem Termo Assinaddo</p>
+            </section>
+        </article>
+        <header class="desativados">
+            <h1>COLABORADORES DESATIVADOS</h1>
+        </header>
+        <article>
+            <h2>DADOS DO COLABORADOR</h2>
+            <section class="colaborador-info">
+                <div class="colaborador-img"><img src="foto_colaboradores/FABRICIO FREITAS.jpeg" alt="Foto de Francisco Fabricio De Lima Freitas" class="foto" /></div>
+                <div class="colaborador-details">
+                    <p><strong>Colaborador: </strong>Francisco Fabricio De Lima Freitas</p>
+                    <p><strong>Email: </strong>fabricio.freitas@amorsaude.com</p>
+                    <p><strong>Cargo: </strong>Gerente Financeiro</p>
+                    <p><strong>Departamento: </strong>Financeiro</p>
+                    <p><strong>CPF: </strong>582.444.093-04</p>
+                    <p><strong>Data da Entrada: </strong>06.maio.2024</p>
+                    <p><strong>Data da Saida: </strong>31.maio.2024</p>
+                    <p><strong>Centro de Custo: </strong>13000 - Financeiro</p>
+                    <p><strong>Subtituição: </strong>Roger Almeida</p>
+                    <p>
+                        <strong>Termo de Entrega do Equipamento: </strong><a href="https://drive.google.com/file/d/17ozw0_TG7lOQbbrdgo8frO5b4ef4PTEC/view?usp=sharing" target="_blank">Termo 01</a>
+                        <a href="https://drive.google.com/file/d/1-MWQ-KQGaTNB5aYQEspkwerq9isaMsrm/view?usp=sharing" target="_blank">Termo 02</a>
+                    </p>
+                </div>
+            </section>
+            <h2>DADOS DOS EQUIPAMENTOS</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo: </strong>Teclado e Mouse</p>
+                    <p><strong>Patrimônio: </strong>1525</p>
+                    <p class="serial"><strong>S/N: </strong>2232ce1d0218</p>
+                    <p><strong>Marca/Modelo: </strong>Logitech MK270</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo: </strong>Celular</p>
+                    <p><strong>Patrimônio: </strong>843</p>
+                    <p class="serial"><strong>S/N: </strong>UI5HVE5P7T</p>
+                    <p><strong>Marca/Modelo: </strong>Moto E22</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo: </strong>Headset</p>
+                    <p><strong>Patrimônio: </strong>600</p>
+                    <p class="serial"><strong>S/N: </strong>2654439793</p>
+                    <p><strong>Marca/Modelo: </strong>Jabra HSC016</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo: </strong>Notebook Win-10 Ryzen5-5500u</p>
+                    <p><strong>Patrimônio: </strong>189</p>
+                    <p class="serial"><strong>S/N: </strong>PE09FTTP</p>
+                    <p><strong>Marca/Modelo: </strong>Ideapad3 15AL6</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo: </strong>Monitor</p>
+                    <p><strong>Patrimônio: </strong>1015</p>
+                    <p class="serial"><strong>S/N: </strong></p>
+                    <p><strong>Marca/Modelo: </strong>Alumínio</p>
+                </div>
             </section>
         </article>
     </main>
