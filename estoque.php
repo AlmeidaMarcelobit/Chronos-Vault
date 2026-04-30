@@ -15,6 +15,199 @@
 <div class="container"> <?php
     include 'header.php'
     ?> <main>
+	<article>
+    <h2>Dados do colaborador</h2>
+    <section class="colaborador-info">
+        <div class="colaborador-details">
+            <p><strong>ID Caixa:</strong> 04</p>
+            <p><strong>Colaborador:</strong> (Não fornecido)</p>
+            <p><strong>Email:</strong> (Não fornecido)</p>
+            <p><strong>Cargo:</strong> Assistente</p>
+            <p><strong>Departamento:</strong> Relacionamento com Cliente</p>
+            <p><strong>CPF:</strong> (Não fornecido)</p>
+            <p><strong>Data da Entrada:</strong> (Não fornecido)</p>
+            <p><strong>Centro de Custo:</strong> 72023 - Relacionamento com Cliente / Retenção</p>
+        </div>
+    </section>
+    <h2>Dados equipamentos</h2>
+    <section class="equipamentos-info">
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Notebook Win-11 i5-1235U 8GB</p>
+            <p><strong>Marca/Modelo:</strong> Lenovo V15 G3 IAP</p>
+            <p class="serial"><strong>S/N:</strong> PE9012326044-82UM0007BR-PE0CB4ZP</p>
+            <p><strong>Patrimônio:</strong> 1555</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Fone</p>
+            <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+            <p class="serial"><strong>S/N:</strong> 2412AYOONXEB</p>
+            <p><strong>Patrimônio:</strong> 1164</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Teclado e Mouse</p>
+            <p><strong>Marca/Modelo:</strong> Logitech MK270</p>
+            <p class="serial"><strong>S/N:</strong> 2347CE268038 - 2344LZXBR4M8</p>
+            <p><strong>Patrimônio:</strong> 1560 - 1195</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Suporte</p>
+            <p><strong>Marca/Modelo:</strong> (Não fornecido)</p>
+            <p class="serial"><strong>S/N:</strong> (Não fornecido)</p>
+            <p><strong>Patrimônio:</strong> (Não fornecido)</p>
+        </div>
+    </section>
+    <section class="ticket">
+        <p><strong>ID Ticket:</strong> #55872</p>
+        <p><strong>Equipamentos:</strong> Headset, Mouse, Notebook 8G, Suporte para notebook, Teclado</p>
+    </section>
+</article>
+
+	<article>
+    <h2>Dados do colaborador</h2>
+    <section class="colaborador-info">
+        <div class="colaborador-details">
+            <p><strong>ID Caixa:</strong> 03</p>
+            <p><strong>Colaborador:</strong> (Não fornecido)</p>
+            <p><strong>Email:</strong> (Não fornecido)</p>
+            <p><strong>Cargo:</strong> Assistente</p>
+            <p><strong>Departamento:</strong> Relacionamento com Cliente</p>
+            <p><strong>CPF:</strong> (Não fornecido)</p>
+            <p><strong>Data da Entrada:</strong> (Não fornecido)</p>
+            <p><strong>Centro de Custo:</strong> 72023 - Relacionamento com Cliente / Retenção</p>
+        </div>
+    </section>
+    <h2>Dados equipamentos</h2>
+    <section class="equipamentos-info">
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Notebook Win-11 i5-1235U 8GB</p>
+            <p><strong>Marca/Modelo:</strong> Lenovo V15 G3 IAP</p>
+            <p class="serial"><strong>S/N:</strong> PE9014216040-82UM0007BR-PE0C2WXT</p>
+            <p><strong>Patrimônio:</strong> 1564</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Fone</p>
+            <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+            <p class="serial"><strong>S/N:</strong> 2412AYooNX68</p>
+            <p><strong>Patrimônio:</strong> 1143</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Teclado e Mouse</p>
+            <p><strong>Marca/Modelo:</strong> Logitech MK270</p>
+            <p class="serial"><strong>S/N:</strong> 2320CE1626C8 - 2240LZN1KF18</p>
+            <p><strong>Patrimônio:</strong> 447 - 1142</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Suporte</p>
+            <p><strong>Marca/Modelo:</strong> Aluminio</p>
+            <p class="serial"><strong>S/N:</strong> (Não fornecido)</p>
+            <p><strong>Patrimônio:</strong> 1144</p>
+        </div>
+    </section>
+    <section class="ticket">
+        <p><strong>ID Ticket:</strong> #55866</p>
+        <p><strong>Equipamentos:</strong> Headset, Mouse, Notebook 8G, Suporte para notebook, Teclado</p>
+    </section>
+</article>
+
+	<article>
+    <h2>Dados do colaborador</h2>
+    <section class="colaborador-info">
+        <div class="colaborador-details">
+            <p><strong>ID Caixa:</strong> 02</p>
+            <p><strong>Colaborador:</strong> (Não fornecido)</p>
+            <p><strong>Email:</strong> (Não fornecido)</p>
+            <p><strong>Cargo:</strong> Consultor</p>
+            <p><strong>Departamento:</strong> Operação</p>
+            <p><strong>CPF:</strong> (Não fornecido)</p>
+            <p><strong>Data da Entrada:</strong> (Não fornecido)</p>
+            <p><strong>Centro de Custo:</strong> 12006 - Regional 1</p>
+        </div>
+    </section>
+    <h2>Dados equipamentos</h2>
+    <section class="equipamentos-info">
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Notebook Win-11 i5-1235U 8GB</p>
+            <p><strong>Marca/Modelo:</strong> Lenovo V15 G3 IAP</p>
+            <p class="serial"><strong>S/N:</strong> PE0C2WYM-82UM007BR-JKCN42WW</p>
+            <p><strong>Patrimônio:</strong> 1558</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Teclado e Mouse</p>
+            <p><strong>Marca/Modelo:</strong> Logitech MK279</p>
+            <p class="serial"><strong>S/N:</strong> 2344LZXBR448 - 2347CE268068</p>
+            <p><strong>Patrimônio:</strong> 1120 - 1559</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Fone</p>
+            <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+            <p class="serial"><strong>S/N:</strong> 2412AY00NR38</p>
+            <p><strong>Patrimônio:</strong> 1153</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Suporte</p>
+            <p><strong>Marca/Modelo:</strong> Aluminio</p>
+            <p class="serial"><strong>S/N:</strong> (Não fornecido)</p>
+            <p><strong>Patrimônio:</strong> 1154</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Monitor</p>
+            <p><strong>Marca/Modelo:</strong> LG22MP410-B</p>
+            <p class="serial"><strong>S/N:</strong> 304AZCQ6Z283</p>
+            <p><strong>Patrimônio:</strong> 427</p>
+        </div>
+    </section>
+    <section class="ticket">
+        <p><strong>ID Ticket:</strong> #52554</p>
+        <p><strong>Equipamentos:</strong> Celular, Monitor, Notebook, Teclado e Mouse, Suporte, Fone</p>
+    </section>
+</article>
+
+        <article>
+            <h2>Dados do colaborador</h2>
+            <section class="colaborador-info">
+                <div class="colaborador-details">
+                    <p><strong>ID Caixa:</strong> 01</p>
+                    <p><strong>Colaborador:</strong> (Não fornecido)</p>
+                    <p><strong>Email:</strong> (Não fornecido)</p>
+                    <p><strong>Cargo:</strong> Estagiário</p>
+                    <p><strong>Departamento:</strong> BackOffice - Documentações</p>
+                    <p><strong>CPF:</strong> (Não fornecido)</p>
+                    <p><strong>Data da Entrada:</strong> (Não fornecido)</p>
+                    <p><strong>Centro de Custo:</strong> 12005 - BackOffice</p>
+                </div>
+            </section>
+            <h2>Dados equipamentos</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Notebook Win-11 i5-1235U 8GB</p>
+                    <p><strong>Marca/Modelo:</strong> Lenovo V15 G3 IAP</p>
+                    <p class="serial"><strong>S/N:</strong> PE0C2WYY</p>
+                    <p><strong>Patrimônio:</strong> 1556</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Fone</p>
+                    <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+                    <p class="serial"><strong>S/N:</strong> 2412AY00K6F9</p>
+                    <p><strong>Patrimônio:</strong> 1197</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Suporte</p>
+                    <p><strong>Marca/Modelo:</strong> Aluminio</p>
+                    <p class="serial"><strong>S/N:</strong> (Não fornecido)</p>
+                    <p><strong>Patrimônio:</strong> 1196</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                    <p><strong>Marca/Modelo:</strong> Logitech MK270</p>
+                    <p class="serial"><strong>S/N:</strong> 2347CE268058</p>
+                    <p><strong>Patrimônio:</strong> 1554</p>
+                </div>
+            </section>
+            <section class="ticket">
+                <p><strong>ID Ticket:</strong> #52291</p>
+                <p><strong>Equipamentos:</strong> Headset, Mouse, Notebook 8G, Suporte para notebook, Teclado</p>
+            </section>
+        </article>
         <article>
             <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
@@ -128,8 +321,6 @@
             </section>
         </article>
         <article>
-            <p>loren <ips></ips>
-            </p>
             <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
                 <div class="colaborador-details">
