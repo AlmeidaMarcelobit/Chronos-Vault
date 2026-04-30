@@ -236,7 +236,7 @@ include 'header.php';
                   </div>
               </section>
               <section class="obs">
-                  <p><strong>Observação:</strong>Dados do Monitor Faltando</p>
+                  <p><strong>Observação:</strong>Dados do Monitor e Suporte Faltando</p>
               </section>
       </article>
 
