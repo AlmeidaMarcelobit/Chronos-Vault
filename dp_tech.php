@@ -10,7 +10,7 @@
 
 <body>
 <header>
-    <img src="icones/LOGO_RGB_AMORSAUDE_FINAL_HORIZONTAL.png" alt="LOGO AMORSAUDE">
+    <img src="icones/logo_amorsaude.png" alt="LOGO AMORSAUDE">
 </header>
 <?php
 include 'header.php'
@@ -149,7 +149,6 @@ include 'header.php'
                 <p><strong>Data do desligamento: </strong></p>
                 <p><strong>Centro de Custo:</strong>13012 - Desenvolvimento</p>
                 <p><strong>Termo de Entrega do Equipamento:</strong></p>
-                <p><strong>Subtituição:</strong>William Koller</p>
             </div>
         </section>
         <h2>Dados equipamentos</h2>

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<header><img src="icones/LOGO_RGB_AMORSAUDE_FINAL_HORIZONTAL.png" alt="LOGO AMORSAUDE"></header>
+<header><img src="icones/logo_amorsaude.png" alt="LOGO AMORSAUDE"></header>
 <div class="container">
     <?php
     include 'header.php';
@@ -270,6 +270,12 @@
                     <p><strong>Patrimônio:</strong>917</p>
                     <p class="serial"><strong>S/N:</strong></p>
                     <p><strong>Marca/Modelo:</strong>Alumínio</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Monitor</p>
+                    <p><strong>Patrimônio:</strong>1463</p>
+                    <p class="serial"><strong>S/N:</strong>401AZFM5Y043</p>
+                    <p><strong>Marca/Modelo:</strong>LG 22MP410-B</p>
                 </div>
             </section>
             <section class="ticket">
