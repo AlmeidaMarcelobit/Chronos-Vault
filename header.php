@@ -16,25 +16,31 @@
                         <a href="regional_2.php">Regional 2</a>
                     </div>
                 </div>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Tecnologia</a>
+                    <div class="dropdown-content">
+                        <a href="dp_produtos.php">Produtos</a>
+                        <a href="dp_dados.php">Dados</a>
+                    </div>
+                </div>
                 <a href="dp_crm.php">CRM</a>
                 <a href="dp_financeiro.php">Financeiro</a>
                 <a href="dp_inteligencia_de_negocios.php">Inteligência de Negócios</a>
                 <a href="dp_pessoas_e_cultura.php">Pessoas e Cultura</a>
-                <a href="dp_tech.php">Tecnologia</a>
                 <a href="dp_telemedicina.php">Telemedicina</a>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Estoque</a>
+                    <div class="dropdown-content">
+                        <a href="máquinas reserva.php">Máquina Reserva</a>
+                        <a href="máquinas%20de%20backup.php">Maquina Backups</a>
+                        <a href="monitores.php">Monitores</a>
+                        <a href="fones.php">Fones</a>
+                        <a href="kits_prontos.php">Kits Prontos</a>
+                    </div>
+                </li>
+                <li><a href="centro_custo.php">Lista Centro de Custo</a></li>
+                <li><a href="observacao.html">Observação</a></li>
             </div>
         </li>
-        <li class="dropdown">
-            <a href="#" class="dropbtn">Estoque</a>
-            <div class="dropdown-content">
-                <a href="máquinas reserva.php">Máquina Reserva</a>
-                <a href="máquinas%20de%20backup.php">Maquina Backups</a>
-                <a href="monitores.php">Monitores</a>
-                <a href="fones.php">Fones</a>
-                <a href="kits_prontos.php">Kits Prontos</a>
-            </div>
-        </li>
-        <li><a href="centro_custo.php">Lista Centro de Custo</a></li>
-        <li><a href="observacao.html">Observação</a></li>
     </ul>
 </nav>
