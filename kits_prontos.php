@@ -1284,6 +1284,12 @@ include 'header.php'
                 <p class="serial"><strong>S/N:</strong></p>
                 <p><strong>Patrimonio:</strong>1329</p>
             </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Monitor</p>
+                <p><strong>Marca/Modelo:</strong>LG 22MP410-B</p>
+                <p class="serial"><strong>S/N:</strong>402azth6r033</p>
+                <p><strong>Patrimonio:</strong>1569</p>
+            </div>
         </section>
         <section class="ticket">
             <p><strong>ID Ticket:</strong>48446</p>
@@ -1340,6 +1346,12 @@ include 'header.php'
                 <p class="serial"><strong>S/N:</strong>2347CE2704D8</p>
                 <p><strong>Patrimonio:</strong>1545</p>
             </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Monitor</p>
+                <p><strong>Marca/Modelo:</strong>LG 22MP410-B</p>
+                <p class="serial"><strong>S/N:</strong>403AZDB84034</p>
+                <p><strong>Patrimonio:</strong>1572</p>
+            </div>
         </section>
         <section class="ticket">
             <p><strong>ID Ticket:</strong>#42722</p>
@@ -1395,6 +1407,12 @@ include 'header.php'
                 <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
                 <p class="serial"><strong>S/N:</strong>2347CE2704e8</p>
                 <p><strong>Patrimonio:</strong>1547</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Monitor</p>
+                <p><strong>Marca/Modelo:</strong>LG 22MP410-P</p>
+                <p class="serial"><strong>S/N:</strong>4402AZTH8V665</p>
+                <p><strong>Patrimonio:</strong>1571</p>
             </div>
         </section>
         <section class="ticket">
@@ -1454,6 +1472,12 @@ include 'header.php'
                 <p><strong>Patrimônio:</strong>1541</p>
                 <p><strong>S/N:</strong>PE9014223078</p>
                 <p><strong>Marca/Modelo:</strong>Lenovo V15 G3 AIP</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Monitor</p>
+                <p><strong>Marca/Modelo:</strong>LG 22MP410-B</p>
+                <p><strong>S/N:</strong>402AZGF8U743</p>
+                <p><strong>Patrimônio:</strong>1570</p>
             </div>
         </section>
         <section class="ticket">
