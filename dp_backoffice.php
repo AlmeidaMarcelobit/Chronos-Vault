@@ -14,6 +14,9 @@
 include 'header.php'
 ?>
 <main>
+    <header class="ativo">
+        <h1>COLABORADORES ATIVOS</h1>
+    </header>
     <article>
         <h2>Dados do colaborador</h2>
         <section class="colaborador-info">
