@@ -74,9 +74,6 @@ include 'header.php';
             <p><strong>ID Ticket:</strong>#13006</p>
             <p><strong>Equipamento:</strong>Monitor</p>
         </section>
-        <section class="obs">
-            <p><strong>Obserservação:</strong>Termo do colaborador não encontrado</p>
-        </section>
     </article>
     <article>
         <h2>DADOS DO COLABORADOR</h2>
@@ -134,9 +131,6 @@ include 'header.php';
         <section class="ticket">
             <p><strong>ID Ticket:</strong>#37472</p>
             <p><strong>Equipamento:</strong>Headset, Notebook, Monitor, Suporte, Telcado e Mouse</p>
-        </section>
-        <section class="obs">
-            <p><strong>Oberservação:</strong>Solicitar termo para Bruna Brizzoti</p>
         </section>
     </article>
     <article>
@@ -247,9 +241,6 @@ include 'header.php';
         <section class="ticket">
             <p><strong>ID Ticket:</strong>#28137</p>
             <p><strong>Equipamento:</strong>Teclado e Mouse, Fone, Notebook, Suporte</p>
-        </section>
-        <section class="obs">
-            <p><strong>Oberservação:</strong>Sem termo dos equipamentos apenas, Somente termo do suporte encontrado</p>
         </section>
     </article>
     <article>
@@ -368,9 +359,6 @@ include 'header.php';
             <p><strong>ID Ticket:</strong>#24560</p>
             <p><strong>Equipamento:</strong>Celular, Monitor, Suporte, Teclado e Mouse, Fone, Notebook</p>
         </section>
-        <section class="obs">
-            <p><strong>Oberservação:</strong>Sem termo do monitor</p>
-        </section>
     </article>
     <article>
         <h2>DADOS DO COLABORADOR</h2>
@@ -415,9 +403,6 @@ include 'header.php';
                 <p><strong>IMEI 2:</strong>354654236991887/01</p>
                 <p><strong>Marca/Modelo:</strong>Galaxy A03</p>
             </div>
-        </section>
-        <section class="obs">
-            <p><strong>Observação:</strong>Verificar qual Teclado e Mouse esta usando</p>
         </section>
     </article>
     <article>

@@ -21,7 +21,6 @@ include 'header.php'
         <h2>Dados do colaborador</h2>
         <section class="colaborador-info">
             <div class="colaborador-details">
-                <p><strong>ID Caixa:</strong>83469</p>
                 <p><strong>Colaborador:</strong>Cauã Fernado Bacilieri</p>
                 <p><strong>Email:</strong></p>
                 <p><strong>Cargo:</strong>Estagiaro</p>
@@ -67,7 +66,6 @@ include 'header.php'
         <h2>Dados do colaborador</h2>
         <section class="colaborador-info">
             <div class="colaborador-details">
-                <p><strong>ID Caixa:</strong>01</p>
                 <p><strong>Colaborador:</strong>Sophia Vieira Fantini</p>
                 <p><strong>Email:</strong>sophia.fantini@amorsaude.com</p>
                 <p><strong>Cargo:</strong>Estagiário</p>
@@ -242,29 +240,6 @@ include 'header.php'
         <h2>Dados do colaborador</h2>
         <section class="colaborador-info">
             <div class="colaborador-details">
-                <p><strong>Colaborador:</strong>Yasmin Silva</p>
-            </div>
-        </section>
-        <h2>Dados equipamentos</h2>
-        <section class="equipamentos-info">
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Fone</p>
-                <p><strong>Marca/Modelo:</strong>Logitech H390</p>
-                <p class="serial"><strong>S/N:</strong>23298GG15AB8</p>
-                <p><strong>Patrimônio:</strong>906</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Teclado e Mouse</p>
-                <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
-                <p class="serial"><strong>S/N:</strong>2232CE1C72B8</p>
-                <p><strong>Patrimônio:</strong>1456</p>
-            </div>
-        </section>
-    </article>
-    <article>
-        <h2>Dados do colaborador</h2>
-        <section class="colaborador-info">
-            <div class="colaborador-details">
                 <p><strong>Colaborador:</strong>Bianca Inácio</p>
             </div>
         </section>
@@ -371,6 +346,118 @@ include 'header.php'
             </div>
         </section>
     </article>
+        <header class="desativados">
+            <h1>COLABORADORES DESATIVADOS</h1>
+        </header>
+        <article>
+            <h2>Dados do colaborador</h2>
+            <section class="colaborador-info">
+                <div class="colaborador-img">
+                    <img class="foto" src="foto_colaboradores/Yasmin%20Silva.jpeg" alt="Foto do Yasmin Campos da Silva">
+                </div>
+                <div class="colaborador-details">
+                    <p><strong>Colaborador:</strong>Yasmin Campos da Silva </p>
+                    <p><strong>Departamento:</strong>Backoffice</p>
+                    <p><strong>Cargo: </strong>Assistente de Operações</p>
+                    <p><strong>Data da entranda: </strong>25.03.2022</p>
+                    <p><strong>Data do desligamento: </strong>19.08.2024</p>
+                    <p><strong>Centro de Custo:</strong>12005 - Backoffice</p>
+                </div>
+            </section>
+            <h2>Dados equipamentos</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Notebook</p>
+                    <p><strong>Marca/Modelo:</strong>Lenovo IdeaPad 3 15ALC6</p>
+                    <p class="serial"><strong>S/N:</strong>PE9012429087</p>
+                    <p><strong>Patrimônio:</strong>106</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Fone</p>
+                    <p><strong>Marca/Modelo:</strong>Logitech H390</p>
+                    <p class="serial"><strong>S/N:</strong>23298GG15AB8</p>
+                    <p><strong>Patrimônio:</strong>906</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                    <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
+                    <p class="serial"><strong>S/N:</strong>2232CE1C72B8</p>
+                    <p><strong>Patrimônio:</strong>1456</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Suporte</p>
+                    <p><strong>Marca/Modelo:</strong>Aluminio</p>
+                    <p class="serial"><strong>S/N:</strong></p>
+                    <p><strong>Patrimônio:</strong></p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Monitor</p>
+                    <p><strong>Marca/Modelo:</strong>Dell P2018H</p>
+                    <p class="serial"><strong>S/N:</strong>BR-00CPG1-TVB00-9CA-11Eu-A08</p>
+                    <p><strong>Patrimônio:</strong>002</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Celular</p>
+                    <p><strong>Marca/Modelo:</strong>Samsung A03</p>
+                    <p class="serial"><strong>S/N:</strong>r9qt402fxwy</p>
+                    <p><strong>Patrimônio:</strong>510</p>
+                    <p><strong>IMEI 1:</strong>351989271794777/01</p>
+                    <p><strong>IMEI 2: </strong>353297231794772/01</p>
+                </div>
+            </section>
+        </article>
+        <article>
+            <h2>Dados do colaborador</h2>
+            <section class="colaborador-info">
+                <div class="colaborador-img">
+                    <img class="foto" src="foto_colaboradores/Helena%20Bugliani.jpeg" alt="Foto do Helena Silva Bugliani">
+                </div>
+                <div class="colaborador-details">
+                    <p><strong>Colaborador:</strong>Helena Silva Bugliani </p>
+                    <p><strong>Cargo:</strong>Analista de Documentações</p>
+                    <p><strong>Departamento:</strong>Backoffice</p>
+                    <p><strong>CPF:</strong>422.795.258-10</p>
+                    <p><strong>Data da admissão:</strong>28.01.2019</p>
+                    <p><strong>Data da desligamento:</strong>19.08.2024</p>
+                    <p><strong>Centro de Custo:</strong>12005 - Backoffice</p>
+                </div>
+            </section>
+            <h2>Dados equipamentos</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Notebook Win-11 i5-1035G1 8GB</p>
+                    <p><strong>Marca/Modelo:</strong>Dell Vostro 15 3510</p>
+                    <p class="serial"><strong>S/N:</strong>GRFQXW3</p>
+                    <p><strong>Patrimônio:</strong>382</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Celular</p>
+                    <p><strong>Marca/Modelo:</strong>Samsung Galaxy A10s</p>
+                    <p class="serial"><strong>S/N:</strong>r9xr500mwvm</p>
+                    <p><strong>Patrimônio:</strong>566</p>
+                    <p><strong>IMEI 1: </strong>350879696004905/01</p>
+                    <p><strong>IMEI 2: </strong>359753826004906/01</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                    <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
+                    <p class="serial"><strong>S/N:</strong>2243ce1fb369 - 2240lzx5glw8</p>
+                    <p><strong>Patrimônio:</strong>372</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Monitor</p>
+                    <p><strong>Marca/Modelo:</strong>LG 22MP410-B</p>
+                    <p class="serial"><strong>S/N:</strong>303AZQV96524</p>
+                    <p><strong>Patrimônio:</strong>390</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Suporte</p>
+                    <p><strong>Marca/Modelo:</strong>Aluminio</p>
+                    <p class="serial"><strong>S/N:</strong></p>
+                    <p><strong>Patrimônio:</strong>364</p>
+                </div>
+            </section>
+        </article>
 </main>
 <?php
 include 'footer.php'

@@ -21,6 +21,47 @@ include 'header.php'
     </header>
     <article>
         <h2>Dados do colaborador</h2>
+        <section>
+            <div>
+                <p><strong>Colaborador:</strong>Daniel Braz</p>
+                <p><strong>E-mail:</strong></p>
+                <p><strong>Cargo:</strong>Consultor de Operações</p>
+                <p><strong>Departamento:</strong>Desenvolvimento</p>
+                <p><strong>CPF:</strong>125.722.706-84</p>
+                <p><strong>Data da Entrada:</strong>19/08/2024</p>
+                <p><strong>Centro de Custo:</strong>13012 - Desenvolvimento</p>
+                <p><strong></strong></p>
+            </div>
+        </section>
+        <h2>Dados equipamentos</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Notebook</p>
+                <p><strong>Marca/Modelo:</strong>Lenovo v15 G3 IAP</p>
+                <p class="serial"><strong>S/N:</strong>peock1k8</p>
+                <p><strong>Patrimonio:</strong>1576</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Suporte</p>
+                <p><strong>Marca/Modelo:</strong>Aluminio</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Patrimonio:</strong>893</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
+                <p class="serial"><strong>S/N:</strong>2347CE267D98</p>
+                <p><strong>Patrimonio:</strong>1575</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Fone</p>
+                <p><strong>Marca/Modelo:</strong>Dell WH1022</p>
+                <p class="serial"><strong>S/N:</strong>VN-ORMH97-LXN00-43S-07NK-AO1</p>
+                <p><strong>Patrimonio:</strong>1167</p>
+            </div>
+    </article>
+    <article>
+        <h2>Dados do colaborador</h2>
         <section class="colaborador-info">
             <div class="colaborador-details">
                 <p><strong>Colaborador:</strong> Josiane Renata dos Santos da Mata</p>

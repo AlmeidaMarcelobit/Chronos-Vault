@@ -105,6 +105,58 @@ include 'header.php';
             </div>
         </section>
     </article>
+    <header class="desativados">
+        <h1>COLABORADORES DESATIVADOS</h1>
+    </header>
+    <article>
+        <section class="colaborador-info">
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong>Dione Antonio dos Santos</p>
+                <p><strong>Email:</strong>dione.antonio@amorsaude.com</p>
+                <p><strong>Cargo:</strong>Analista de desemprenho</p>
+                <p><strong>Departamento:</strong>Inteligencia de negocios</p>
+                <p><strong>CPF:</strong>470.351.168-18</p>
+                <p><strong>Data da admissão: </strong>04.04.2022</p>
+                <p><strong>Data da desligamento:</strong>19.08.2024</p>
+                <p><strong>Centro de Custo:</strong>12010 - Inteligencia de negocios</p>
+            </div>
+        </section>
+        <h2>Dados equipamentos</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Notebook Win-11 i7-13650HX 16GB SSD-512GB</p>
+                <p><strong>Marca/Modelo:</strong>Dell Vostro 153510p</p>
+                <p class="serial"><strong>S/N:</strong>j7lyxp3</p>
+                <p><strong>Patrimônio:</strong>40</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Fone</p>
+                <p><strong>Marca/Modelo:</strong>Logitech H390</p>
+                <p class="serial"><strong>S/N:</strong>2125me0k0568</p>
+                <p><strong>Patrimônio:</strong>770</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Celular</p>
+                <p><strong>Marca/Modelo:</strong>Samsung Galaxy A10s</p>
+                <p class="serial"><strong>S/N:</strong>r9xr500q4ne</p>
+                <p><strong>Patrimônio:</strong>771</p>
+                <p><strong>IMEI 1:</strong>350879696029266/01</p>
+                <p><strong>IMEI 2:</strong>359753826029267/01</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                <p><strong>Marca/Modelo:</strong>Logitech MK279</p>
+                <p class="serial"><strong>S/N:</strong>2232CE1C72C8</p>
+                <p><strong>Patrimônio:</strong>1482</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Monitor</p>
+                <p><strong>Marca/Modelo:</strong>LG 22MP410-B</p>
+                <p class="serial"><strong>S/N:</strong>303AZUJ2V814</p>
+                <p><strong>Patrimônio:</strong>243</p>
+            </div>
+        </section>
+    </article>
 </main>
 <?php
 include 'footer.php'

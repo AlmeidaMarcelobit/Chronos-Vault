@@ -133,9 +133,6 @@ include 'header.php';
                 <p><strong>Marca/Modelo:</strong>LG22MP410-B</p>
             </div>
         </section>
-        <section class="obs">
-            <p><strong>Observação:</strong>Termo do colaborador não encontrado.</p>
-        </section>
     </article>
     <article>
         <h2>DADOS DO COLABORADOR</h2>
@@ -259,7 +256,8 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Assistente de Atendimento ao Cliente</p>
                 <p><strong>Departamento:</strong>Atendimento ao Cliente</p>
                 <p><strong>CPF:</strong>317.842.138-61</p>
-                <p><strong>Data de Entrada:</strong>20.maio.2024</p>
+                <p><strong>Data de entrada:</strong>20.maio.2024</p>
+                <p><strong>Data do desligamento:</strong>01.07.2024</p>
                 <p><strong>Centro de Custo:</strong>12002 - Sac</p>
                 <p><strong>Termo Entrega de Equipamento:</strong><a href="https://drive.google.com/file/d/1P91Ap2ChcQo8j63x4rqExjj8R6jFzefY/view?usp=sharing" target="_blank">Termo 01</a></p>
             </div>
@@ -477,9 +475,6 @@ include 'header.php';
                 <p><strong>Marca/Modelo:</strong>Galaxy A03</p>
                 <p><strong>IMEI:</strong>350916876993414/01, 354654236993412/01</p>
             </div>
-        </section>
-        <section class="obs">
-            <p><strong>Observação:</strong>Termo do colaborador não encontrado.</p>
         </section>
     </article>
     <h1 class="desativados">Colaboradores deativados</h1>

@@ -179,9 +179,7 @@
                 <p><strong>ID Ticket:</strong>#31744</p>
                 <p><strong>Equipamento:</strong>Headset, Notebook, Monitor, Suporte, Telcado e Mouse</p>
             </section>
-            <section class="obs">
-                <p><strong>Observação:</strong>Sem dados do Monitor</p>
-            </section>
+
         </article>
         <article>
             <h2>DADOS DO COLABORADOR</h2>
@@ -226,9 +224,7 @@
                     <p><strong>Marca/Modelo:</strong>galaxy a03</p>
                 </div>
             </section>
-            <section class="obs">
-                <p><strong>Observação:</strong>Não possui termo do Monitor</p>
-            </section>
+
         </article>
         <article>
             <h2>DADOS DO COLABORADOR</h2>
@@ -544,9 +540,7 @@
                     <p><strong>IMEI 2:</strong>359753826004823</p>
                 </div>
             </section>
-            <section class="obs">
-                <p><strong>Observação:</strong>Sem Termo Assinaddo</p>
-            </section>
+
         </article>
         <article>
             <h2>DADOS DO COLABORADOR</h2>
@@ -629,9 +623,6 @@
             <section class="ticket">
                 <p><strong>ID Ticket:</strong>#23734</p>
                 <p><strong>Equipamentos:</strong>Teclado e Mouse, Notebook Win-10 i5-1135G7, Suporte</p>
-            </section>
-            <section class="obs">
-                <p><strong>Observação:</strong>Sem Termo Assinaddo</p>
             </section>
         </article>
         <header class="desativados">

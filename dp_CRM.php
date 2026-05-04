@@ -235,9 +235,6 @@ include 'header.php';
                 <p><strong>Marca/Modelo:</strong>Vostro 3520</p>
             </div>
         </section>
-        <section class="obs">
-            <p><strong>Observação:</strong>Dados do Monitor e Suporte Faltando</p>
-        </section>
     </article>
 </main>
 <?php
