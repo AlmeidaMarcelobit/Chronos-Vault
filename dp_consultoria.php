@@ -267,54 +267,6 @@ include 'header.php';
     <header class="ativo">
         <h1>COLABORADORES DESATIVADOS</h1>
         <h2>Regional 1</h2>
-    </header>
-    <article>
-        <h2>DADOS DO COLABORADOR</h2>
-
-        <section class="colaborador-info">
-            <div class="colaborador-img"><img src="foto_colaboradores/Aline%20Oliveira.jpg" alt="Foto de Aline Camilo de Oliveira" class="foto"></div>
-            <div class="colaborador-details">
-                <p><strong>Colaborador:</strong>Aline Camilo de Oliveira</p>
-                <p><strong>Email: </strong>aline.oliveira@amorsaude.com</p>
-                <p><strong>Cargo: </strong>Consultor de Operação</p>
-                <p><strong>Departamento: </strong>Consultoria</p>
-                <p><strong>CPF: </strong>445.597.828-30</p>
-                <p><strong>Data de Entrada:</strong>14/dez/2023</p>
-                <p><strong>Centro de Custo:</strong>12006 - Regional 1</p>
-                <p><strong>Termo de Entrega de Equipamento:</strong><a target="_blank" href=""></a></p>
-            </div>
-        </section>
-        <h2>Dados equipamentos</h2>
-        <section class="equipamentos-info">
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Notebook</p>
-                <p><strong>Marca/Modelo:</strong>Lenovo v15 g2</p>
-                <p class="serial"><strong>S/N:</strong>pe09xvkr</p>
-                <p><strong>Patrimonio:</strong>225</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Headset</p>
-                <p><strong>Marca/Modelo:</strong>jabra HSC0016</p>
-                <p class="serial"><strong>S/N:</strong>273963767</p>
-                <p><strong>Patrimonio:</strong>670</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Teclado e Mouse</p>
-                <p><strong>Marca/Modelo:</strong>Logitech K270 - M185</p>
-                <p class="serial"><strong>S/N:</strong>2234CE1821AB</p>
-                <p><strong>Patrimonio:</strong>339</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Smartphone</p>
-                <p><strong>Marca/Modelo:</strong>Galaxy A03</p>
-                <p class="serial"><strong>S/N:</strong>r9xta0edmwa</p>
-                <p><strong>Patrimonio:</strong>668</p>
-                <p><strong>IMEI 1:</strong>350916877000847/01</p>
-                <p><strong>IMEI 2:</strong>354654237000845/01</p>
-            </div>
-        </section>
-    </article>
-
 </main>
 <?php
 include 'footer.php';
