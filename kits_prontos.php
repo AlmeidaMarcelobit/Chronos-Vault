@@ -30,6 +30,75 @@ include 'header.php'
             <div class="colaborador-img">
                 <img
                         src="foto_colaboradores/Sem%20Foto.jpg"
+                        alt=""
+                        class="foto de Verena Spãdão"
+                />
+            </div>
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong>Verena Spãdão</p>
+                <p><strong>Email:</strong>verena.spadao@amorsaude.com</p>
+                <p><strong>Cargo:</strong>Analista de Pessoas e Cultura</p>
+                <p><strong>Departamento:</strong>Pessoas & Cultura</p>
+                <p><strong>CPF:</strong>439.861.948-86</p>
+                <p><strong>Data da admissão:</strong>02.09.2024</p>
+                <p><strong>Data da desligamento:</strong></p>
+                <p><strong>Centro de Custo:</strong>13006 - Pessoas & Cultura</p>
+                <p><strong>Termo de Entrega do Equipamento:</strong>Leandro Tosta Montenegro</p>
+                <p><strong>Subtituição:</strong></p>
+            </div>
+        </div>
+        <h2>Dados equipamentos</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Notebook</p>
+                <p><strong>Marca/Modelo:</strong>250</p>
+                <p class="serial"><strong>S/N:</strong>1SFQXW3</p>
+                <p><strong>Patrimonio:</strong>:Dell Vostro 15 3510</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Fone</p>
+                <p><strong>Marca/Modelo:</strong>1023</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Patrimonio:</strong>Logitech H390</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                <p><strong>Marca/Modelo:</strong>304</p>
+                <p class="serial"><strong>S/N:</strong>2243CE255CD8</p>
+                <p><strong>Patrimonio:</strong>MK270</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Suporte</p>
+                <p><strong>Marca/Modelo:</strong>Alumínio</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Patrimonio:</strong>850</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Celular</p>
+                <p><strong>Marca/Modelo:</strong>Samsung A03</p>
+                <p class="serial"><strong>S/N:</strong>R9XW20CHJVB</p>
+                <p><strong>Patrimonio:</strong>1024</p>
+                <p><strong>IMEI 1:</strong>358302235393186/01</p>
+                <p><strong>IMEI 2:</strong>359796405393182/01</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Monitor</p>
+                <p><strong>Marca/Modelo:</strong>307</p>
+                <p class="serial"><strong>S/N:</strong>304AZZX6R709</p>
+                <p><strong>Patrimonio:</strong>LG MP410-P</p>
+            </div>
+        </section>
+        <section class="ticket">
+            <p><strong>ID Ticket:</strong></p>
+            <p><strong>Equipamentos:</strong></p>
+        </section>
+    </article>
+    <article>
+        <h2>DADOS DO COLABORADOR</h2>
+        <div class="colaborador-info">
+            <div class="colaborador-img">
+                <img
+                        src="foto_colaboradores/Sem%20Foto.jpg"
                         alt="Foto de Monica Gonçalves Soares"
                         class="foto"
                 />
@@ -41,8 +110,8 @@ include 'header.php'
                 <p><strong>Cargo:</strong>Recepcionista</p>
                 <p><strong>Departamento:</strong>Financeiro</p>
                 <p><strong>CPF:</strong>305.937.958-06</p>
-                <p><strong>Data da Entrada:</strong>19.08.2024</p>
-                <p><strong>Data da Saida:</strong></p>
+                <p><strong>Data da admissão: </strong>19.08.2024</p>
+                <p><strong>Data da desligamento: </strong></p>
                 <p><strong>Centro de Custo:</strong>13000 - Dir. Financ</p>
                 <p><strong>Termo de Entrega do Equipamento:</strong></p>
                 <p><strong>Subtituição:</strong>Lucimara</p>
@@ -372,7 +441,7 @@ include 'header.php'
                 <p><strong>Cargo:</strong>Assistente de Retenção</p>
                 <p><strong>Departamento:</strong>Relacionamento com Cliente</p>
                 <p><strong>CPF:</strong>374.117.888-80</p>
-                <p><strong>Data da Entrada:</strong>19/08/2024</p>
+                <p><strong>Data da admissão: </strong>19/08/2024</p>
                 <p>
                     <strong>Centro de Custo:</strong>72023 - Relacionamento com
                     Cliente / Retenção
@@ -428,7 +497,7 @@ include 'header.php'
                 <p><strong>Cargo:</strong>Assistente de Retenção</p>
                 <p><strong>Departamento:</strong>Relacionamento com Cliente</p>
                 <p><strong>CPF:</strong>383.111.148-03</p>
-                <p><strong>Data da Entrada:</strong>19/08/2024</p>
+                <p><strong>Data da admissão: </strong>19/08/2024</p>
                 <p>
                     <strong>Centro de Custo:</strong>72023 - Relacionamento com
                     Cliente / Retenção
@@ -484,7 +553,7 @@ include 'header.php'
                 <p><strong>Cargo:</strong>Consultor de Operações</p>
                 <p><strong>Departamento:</strong>Consultoria</p>
                 <p><strong>CPF:</strong>334.823.378-02</p>
-                <p><strong>Data da Entrada:</strong>19/08/2024</p>
+                <p><strong>Data da admissão: </strong>19/08/2024</p>
                 <p><strong>Centro de Custo:</strong>12006 - Regional 1</p>
             </div>
         </section>
@@ -545,7 +614,7 @@ include 'header.php'
                 <p><strong>Departamento:</strong>Operação</p>
                 <p><strong>CPF:</strong></p>
                 <p><strong>Subtituição:</strong>Jade Rodrigues</p>
-                <p><strong>Data da Entrada:</strong></p>
+                <p><strong>Data da admissão: </strong></p>
                 <p><strong>Centro de Custo:</strong>12006 - Regional 1</p>
             </div>
         </section>
@@ -615,7 +684,7 @@ include 'header.php'
                 <p><strong>Cargo:</strong>Desenvolvedor Jr</p>
                 <p><strong>Departamento:</strong>Desenvolvimento</p>
                 <p><strong>CPF:</strong>702.183.482-90</p>
-                <p><strong>Data da Entrada:</strong>01/07/2024</p>
+                <p><strong>Data da admissão: </strong>01/07/2024</p>
                 <p><strong>Centro de Custo:</strong>13012 - Desenvolvimento</p>
                 <p><strong>Substituição:</strong>Bruno Oliveira</p>
             </div>
@@ -710,7 +779,7 @@ include 'header.php'
                 <p><strong>Cargo:</strong>Gerente Regional De Operações</p>
                 <p><strong>Departamento:</strong>Dir. Operações</p>
                 <p><strong>CPF:</strong>251.829.328-04</p>
-                <p><strong>Data da Entrada:</strong>13/Janeiro/2022</p>
+                <p><strong>Data da admissão: </strong>13/Janeiro/2022</p>
                 <p><strong>Centro de Custo:</strong>12000 - Dir. Operações</p>
             </div>
         </section>
@@ -773,7 +842,7 @@ include 'header.php'
                 <p><strong>Departamento:</strong>Telemedicina</p>
                 <p><strong>CPF:</strong>460.375.988-60</p>
                 <p><strong>Substituição:</strong>Lorraine Moreno Machado</p>
-                <p><strong>Data da Entrada:</strong>19/02/2024</p>
+                <p><strong>Data da admissão: </strong>19/02/2024</p>
                 <p><strong>Centro de Custo:</strong>22001 - Consulta Assistida</p>
             </div>
         </section>
@@ -960,7 +1029,7 @@ include 'header.php'
                 <p><strong>Email:</strong>sandra.oliveira@amorsaude.com</p>
                 <p><strong>Cargo:</strong>Gerente de Pessoas</p>
                 <p><strong>Departamento:</strong>Pessoas e Cultura</p>
-                <p><strong>Data da saida:</strong>20.06.2024</p>
+                <p><strong>Data da desligamento: </strong>20.06.2024</p>
                 <p><strong>CPF:</strong>175.483.388-80</p>
                 <p>
                     <strong>Centro de Custo:</strong>13021 - Gerência Pessoas e

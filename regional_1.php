@@ -448,7 +448,7 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Consultor de Operações</p>
                 <p><strong>Departamento:</strong>Consultoria</p>
                 <p><strong>CPF:</strong>120.120.005-42</p>
-                <p><strong>Data da Entrada:</strong>03.junho.2023</p>
+                <p><strong>Data da admissão: </strong>03.junho.2023</p>
                 <p><strong>Centro de Custo:</strong>12006 - Regional 1</p>
                 <p><strong>Termo de Entrega de Equipamento:</strong><a target="_blank" href="https://drive.google.com/file/d/10dVFCjbNg71AmPb8Om59NuucWTcJC-BI/view?usp=sharing">Termo 01</a></p>
             </div>
@@ -515,7 +515,7 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Consultor de Operações</p>
                 <p><strong>Departamento:</strong>Consultoria</p>
                 <p><strong>CPF:</strong>369.193.928-79</p>
-                <p><strong>Data da Entrada:</strong>19.fevereiro.2024</p>
+                <p><strong>Data da admissão: </strong>19.fevereiro.2024</p>
                 <p><strong>Centro de Custo:</strong>12006 - Regional 1</p>
                 <p><strong>Termo de Entrega do Equipamento:</strong><a href="https://drive.google.com/file/d/13OpRnON_1kSbFogspHcirKaCHkX6q5tL/view?usp=sharing" target="_blank">Termo 01</a><a target="_blank" href="https://drive.google.com/file/d/11fwKsZC5zSPetsbwsZLRzB5TtMVg0qXD/view?usp=sharing">Termo 02</a></p>
                 <p><strong>Subtituição:</strong>Thais Medina</p>
@@ -635,8 +635,8 @@ include 'header.php';
                 <p><strong>Cargo: </strong>Consultor de Operação</p>
                 <p><strong>Departamento: </strong>Consultoria</p>
                 <p><strong>CPF: </strong>445.597.828-30</p>
-                <p><strong>Data da entrada:</strong>14.12.2023</p>
-                <p><strong>Data da saida:</strong>20.06.2024</p>
+                <p><strong>Data da admissão: </strong>14.12.2023</p>
+                <p><strong>Data da desligamento: </strong>20.06.2024</p>
                 <p><strong>Centro de Custo:</strong>12006 - Regional 1</p>
                 <p><strong>Termo de Entrega de Equipamento:</strong><a target="_blank" href=""></a></p>
             </div>

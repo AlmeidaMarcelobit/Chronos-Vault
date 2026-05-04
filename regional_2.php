@@ -27,7 +27,7 @@ include 'header.php';
                             <p><strong>Colaborador:</strong>Paulo Victor Borges</p>
                             <p><strong>Departamento:</strong>Consultoria</p><strong>Cargo:</strong>Consultor de Operações</p>
                             <p><strong>CPF:</strong>370.549.518-67</p>
-                            <p><strong>Data da Entrada:</strong>15/07/2024</p>
+                            <p><strong>Data da admissão: </strong>15/07/2024</p>
                             <p><strong>Centro de Custo:</strong>12007 - Regional 2</p>
                             <p><strong>Termo de Entrega de Equipamento:</strong></p>
                         </div>
@@ -94,7 +94,7 @@ include 'header.php';
                             <p><strong>Cargo:</strong>Consultor de Operações</p>
                             <p><strong>Departamento:</strong>Consultoria</p>
                             <p><strong>CPF:</strong>402.847.248-23</p>
-                            <p><strong>Data da Entrada:</strong>18.março.2024</p>
+                            <p><strong>Data da admissão: </strong>18.março.2024</p>
                             <p><strong>Centro de Custo:</strong>12007 - Regional 2</p>
                             <p><strong>Termo de Entrega do Equipamento:</strong><a href="">Not Found</a></p>
                             <p><strong>Subtituição:</strong>Igor Hentique de Baggis</p>
@@ -148,7 +148,7 @@ include 'header.php';
                             <p><strong>Cargo:</strong>Consultor de Operações</p>
                             <p><strong>Departamento:</strong>Consultoria</p>
                             <p><strong>CPF:</strong>343.695.638-44</p>
-                            <p><strong>Data da Entrada:</strong>1.abril.2024</p>
+                            <p><strong>Data da admissão: </strong>1.abril.2024</p>
                             <p><strong>Centro de Custo:</strong>12007 - Regional 2</p>
                             <p><strong>Termo de Entrega do Equipamento:</strong><a target="_blank" href="https://drive.google.com/file/d/1-S0Lso3PpwbYK2gmbXc6M0sCmw_7XzI2/view?usp=sharing">Termo 01</a></p>
                             <p><strong>Subtituição:</strong>Ipatinga</p>
@@ -209,7 +209,7 @@ include 'header.php';
                             <p><strong>Cargo:</strong>Consultor de Operações</p>
                             <p><strong>Departamento:</strong>Consultoria</p>
                             <p><strong>CPF:</strong>115.150.016-01</p>
-                            <p><strong>Data da Entrada:</strong>19.fevereiro.2024</p>
+                            <p><strong>Data da admissão: </strong>19.fevereiro.2024</p>
                             <p><strong>Centro de Custo:</strong>12007 - Regional 2</p>
                             <p><strong>Termo de Entrega do Equipamento:</strong>
                                 <a href=""></a>
@@ -257,7 +257,7 @@ include 'header.php';
                             <p><strong>Cargo:</strong>Consultor De Operações</p>
                             <p><strong>Departamento:</strong>Consultoria</p>
                             <p><strong>CPF:</strong>445.240.258-55</p>
-                            <p><strong>Data da Entrada:</strong>19.fevereiro.2024</p>
+                            <p><strong>Data da admissão: </strong>19.fevereiro.2024</p>
                             <p><strong>Centro de Custo:</strong>12007 - Regional 2</p>
                             <p><strong>Termo de Entrega do Equipamento:</strong><a href="https://drive.google.com/file/d/13DQizjUgY2n-DjW35oT49xKebNZ9TJdI/view?usp=sharing" target="_blank">Termo 01</a></p>
                             <p><strong>Subtituição:</strong>Tharinne Pedreschi</p>
@@ -314,7 +314,7 @@ include 'header.php';
                             <p><strong>Cargo:</strong>Consultora de Operações</p>
                             <p><strong>Departamento:</strong>Operação</p>
                             <p><strong>CPF:</strong>435.810.868-75</p>
-                            <p><strong>Data da Entrada:</strong>(Não fornecido)</p>
+                            <p><strong>Data da admissão: </strong>(Não fornecido)</p>
                             <p><strong>Data da Desligamento</strong>02/07/2024</p>
                             <p><strong>Centro de Custo:</strong>33009 - Coordenação Clientes</p>
                         </div>
@@ -378,7 +378,7 @@ include 'header.php';
                             <p><strong>Cargo:</strong>Coordenadora de Operação</p>
                             <p><strong>Departamento:</strong>Regional 2</p>
                             <p><strong>CPF:</strong>418.310.088-74</p>
-                            <p><strong>Data da Entrada:</strong>04/09/2023</p>
+                            <p><strong>Data da admissão: </strong>04/09/2023</p>
                             <p><strong>Data do Desligamento:</strong>03/07/2024</p>
                             <p><strong>Centro de Custo:</strong>(Não fornecido)</p>
                         </div>
@@ -450,8 +450,8 @@ include 'header.php';
                             <p><strong>Cargo:</strong>Gerente Regional De Operações</p>
                             <p><strong>Departamento:</strong>Dir. Operações</p>
                             <p><strong>CPF:</strong>251.829.328-04</p>
-                            <p><strong>Data da Entrada:</strong>13/Janeiro/2022</p>
-                            <p><strong>Data da Saida:</strong></p>
+                            <p><strong>Data da admissão: </strong>13/Janeiro/2022</p>
+                            <p><strong>Data da desligamento: </strong></p>
                             <p><strong>Centro de Custo:</strong>12000 - Dir. Operações</p>
                         </div>
                     </section>
@@ -506,8 +506,8 @@ include 'header.php';
                             <p><strong>Cargo:</strong>Consultor de Operações</p>
                             <p><strong>Departamento:</strong>Consultoria</p>
                             <p><strong>CPF:</strong>464.476.338.19</p>
-                            <p><strong>Data da Entrada:</strong>17.06.2023</p>
-                            <p><strong>Data da Saida:</strong>09.08.2024</p>
+                            <p><strong>Data da admissão: </strong>17.06.2023</p>
+                            <p><strong>Data da desligamento: </strong>09.08.2024</p>
                             <p><strong>Centro de Custo:</strong>12007 - Regional 2</p>
                         </div>
                     </section>
