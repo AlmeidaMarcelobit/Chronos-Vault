@@ -1,4 +1,4 @@
 <footer>
-    <p class="reserva">&copy; Reservado APEX.inc</p>
-    <p class="version">12.4.0</p>
+    <p class="reserva">&copy; Reservado SkyTech.inc</p>
+    <p class="version">12.5.0</p>
 </footer>
