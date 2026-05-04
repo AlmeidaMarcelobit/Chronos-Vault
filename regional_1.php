@@ -271,7 +271,7 @@ include 'header.php';
                 <p><strong>Marca/Modelo:</strong> K270 - M185</p>
             </div>
         </section>
-        <section>
+        <section class="ticket">
             <p><strong>ID Ticket: </strong>#25747</p>
             <p><strong>Equipamento:</strong>Fone</p>
         </section>
@@ -576,7 +576,8 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Consultoria de Operações</p>
                 <p><strong>Departamento:</strong>Consultoria</p>
                 <p><strong>CPF:</strong>416.119.918-03</p>
-                <p><strong>Data de Entrada:</strong>20.Junho.2023</p>
+                <p><strong>Data de entrada:</strong>20.06.2023</p>
+                <p><strong>Data de saida:</strong>20.06.2024</p>
                 <p><strong>Centro de Custo:</strong>12006 - Regional 1</p>
                 <p><strong>Termo de Entrega de Equipamento:</strong><a target="_blank" href="https://drive.google.com/file/d/1d34HGEe8PYKtASlIKueaWKCjRPIMB2k3/view?usp=sharing">Termo 01</a><a href="https://drive.google.com/file/d/1EG7fOQGkXnlgIKX7TPjJexX35C780QMy/view?usp=sharing" target="_blank">Termo 02</a></p>
             </div>
@@ -634,7 +635,8 @@ include 'header.php';
                 <p><strong>Cargo: </strong>Consultor de Operação</p>
                 <p><strong>Departamento: </strong>Consultoria</p>
                 <p><strong>CPF: </strong>445.597.828-30</p>
-                <p><strong>Data de Entrada:</strong>14/dez/2023</p>
+                <p><strong>Data da entrada:</strong>14.12.2023</p>
+                <p><strong>Data da saida:</strong>20.06.2024</p>
                 <p><strong>Centro de Custo:</strong>12006 - Regional 1</p>
                 <p><strong>Termo de Entrega de Equipamento:</strong><a target="_blank" href=""></a></p>
             </div>

@@ -137,11 +137,7 @@ include 'header.php';
                         <p><strong>ID Ticket:</strong>#33188</p>
                         <p><strong>Equipamento:</strong>Headset, Notebook 8G, Suporte para notebook, Teclado e Mouse</p>
                     </section>
-                    <section class="obs">
-                        <p><strong>Observação:</strong>Termo do colaborador não encontrado.</p>
-                    </section>
                 </article>
-
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
@@ -202,9 +198,6 @@ include 'header.php';
                         <p><strong>ID Ticket:</strong>#21705</p>
                         <p><strong>Equipamentos:</strong>Teclado e Mouse, Suporte, Fone, Notebook, Celular, Monitor</p>
                     </section>
-                    <section class="obs">
-                        <p><strong>Observação:</strong>Termo do equipamentos kit basico nao encontrado apenas monitor.</p>
-                    </section>
                 </article>
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
@@ -252,9 +245,6 @@ include 'header.php';
                             <p class="serial"><strong>S/N:</strong>H245463</p>
                             <p><strong>Marca/Modelo:</strong>Dell P2018HC</p>
                         </div>
-                    </section>
-                    <section class="obs">
-                        <p><strong>Observação:</strong>Verificar dados do Suporte, Teclado e Mouse</p>
                     </section>
                 </article>
                 <article>
@@ -448,9 +438,6 @@ include 'header.php';
                     <section class="ticket">
                         <p><strong>ID Ticket:</strong>(Não fornecido)</p>
                         <p><strong>Equipamentos:</strong>Notebook, Fone, Suporte, Teclado e Mouse, Celular, Adaptador-Rede</p>
-                    </section>
-                    <section class="obs">
-                        <p><strong>Observação:</strong>O celular entregue a Amanda foi quebrado. Ela comprou um novo para substituí-lor</p>
                     </section>
                 </article>
                 <article>
