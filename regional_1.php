@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<header><img src="icones/LOGO_RGB_AMORSAUDE_FINAL_HORIZONTAL.png" alt="LOGO AMORSAUDE"></header>
+<header><img src="icones/logo_amorsaude.png" alt="LOGO AMORSAUDE"></header>
 <?php
 include 'header.php';
 ?>
@@ -234,9 +234,9 @@ include 'header.php';
         <section class="equipamentos-info">
             <div class="equipamento">
                 <p><strong>Tipo:</strong> Fone</p>
-                <p><strong>Patrimônio:</strong> 783</p>
-                <p class="serial"><strong>S/N:</strong> 239829109</p>
-                <p><strong>Marca/Modelo:</strong> JabraHSCO015</p>
+                <p><strong>Patrimônio:</strong> 976</p>
+                <p class="serial"><strong>S/N:</strong> 2330AY031E48</p>
+                <p><strong>Marca/Modelo:</strong> Logitech H390</p>
             </div>
             <div class="equipamento">
                 <p><strong>Tipo:</strong> Monitor</p>
@@ -271,7 +271,10 @@ include 'header.php';
                 <p><strong>Marca/Modelo:</strong> K270 - M185</p>
             </div>
         </section>
-
+        <section>
+            <p><strong>ID Ticket: </strong>#25747</p>
+            <p><strong>Equipamento:</strong>Fone</p>
+        </section>
         <section class="ticket">
             <p><strong>ID Ticket:</strong></p>
             <p><strong>Equipamento:</strong> Fone, Monitor, Notebook, Suporte, Celular, Teclado e Mouse</p>
