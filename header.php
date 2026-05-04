@@ -35,7 +35,7 @@
                         <a href="máquinas%20de%20backup.php">Maquina Backups</a>
                         <a href="monitores.php">Monitores</a>
                         <a href="fones.php">Fones</a>
-                        <a href="kits_prontos.php">Kits Prontos</a>
+                        <a href="back_kits_prontos.php">Kits Prontos</a>
                     </div>
                 </li>
                 <li><a href="centro_custo.php">Lista Centro de Custo</a></li>
