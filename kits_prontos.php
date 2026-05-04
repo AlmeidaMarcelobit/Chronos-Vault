@@ -84,47 +84,7 @@ include 'header.php'
             </div>
         </section>
     </article>
-    <article>
-        <h2>Dados do colaborador</h2>
-        <section>
-            <div>
-                <p><strong>Colaborador:</strong>Daniel Braz</p>
-                <p><strong>E-mail:</strong></p>
-                <p><strong>Cargo:</strong>Consultor de Operações</p>
-                <p><strong>Departamento:</strong>Desenvolvimento</p>
-                <p><strong>CPF:</strong>125.722.706-84</p>
-                <p><strong>Data da Entrada:</strong>19/08/2024</p>
-                <p><strong>Centro de Custo:</strong>13012 - Desenvolvimento</p>
-                <p><strong></strong></p>
-            </div>
-        </section>
-        <h2>Dados equipamentos</h2>
-        <section class="equipamentos-info">
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Notebook</p>
-                <p><strong>Marca/Modelo:</strong>Lenovo v15 G3 IAP</p>
-                <p class="serial"><strong>S/N:</strong>peock1k8</p>
-                <p><strong>Patrimonio:</strong>1576</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Suporte</p>
-                <p><strong>Marca/Modelo:</strong>Aluminio</p>
-                <p class="serial"><strong>S/N:</strong></p>
-                <p><strong>Patrimonio:</strong>893</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Teclado e Mouse</p>
-                <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
-                <p class="serial"><strong>S/N:</strong>2347CE267D98</p>
-                <p><strong>Patrimonio:</strong>1575</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Fone</p>
-                <p><strong>Marca/Modelo:</strong>Dell WH1022</p>
-                <p class="serial"><strong>S/N:</strong>VN-ORMH97-LXN00-43S-07NK-AO1</p>
-                <p><strong>Patrimonio:</strong>1167</p>
-            </div>
-    </article>
+
     <article>
         <h2>Dados do colaborador</h2>
         <section class="colaborador-info">
@@ -463,7 +423,7 @@ include 'header.php'
         <section class="colaborador-info">
             <div class="colaborador-details">
                 <p><strong>ID Caixa:</strong>03</p>
-                <p><strong>Colaborador:</strong>Dayane Santos</p>
+                <p><strong>Colaborador:</strong>Dayane Cristina Silva dos Santos</p>
                 <p><strong>Email:</strong>dayne.santos@amorsaude.com</p>
                 <p><strong>Cargo:</strong>Assistente de Retenção</p>
                 <p><strong>Departamento:</strong>Relacionamento com Cliente</p>
@@ -1000,6 +960,7 @@ include 'header.php'
                 <p><strong>Email:</strong>sandra.oliveira@amorsaude.com</p>
                 <p><strong>Cargo:</strong>Gerente de Pessoas</p>
                 <p><strong>Departamento:</strong>Pessoas e Cultura</p>
+                <p><strong>Data da saida:</strong>20.06.2024</p>
                 <p><strong>CPF:</strong>175.483.388-80</p>
                 <p>
                     <strong>Centro de Custo:</strong>13021 - Gerência Pessoas e
@@ -1114,7 +1075,8 @@ include 'header.php'
         <section class="colaborador-info">
             <div class="colaborador-details">
                 <p><strong>ID Caixa:</strong>75321</p>
-                <p><strong>Colaborador:</strong>Assistente 02</p>
+                <p><strong>Colaborador: </strong></p>
+                <p><strong>Cargo: </strong></p>
                 <p><strong>Departamento:</strong></p>
                 <p>
                     <strong>Centro de Custo:</strong>72023 - Relacionamento com
@@ -1162,7 +1124,7 @@ include 'header.php'
         <section class="colaborador-info">
             <div class="colaborador-details">
                 <p><strong>ID Caixa:</strong>46905</p>
-                <p><strong>Colaborador:</strong>Assistente 03</p>
+                <p><strong>Colaborador:</strong></p>
                 <p><strong>Departamento:</strong></p>
                 <p>
                     <strong>Centro de Custo:</strong>72023 - Relacionamento com
@@ -1255,10 +1217,7 @@ include 'header.php'
         </section>
         <section class="ticket">
             <p><strong>ID Ticket:</strong>#31581</p>
-            <p>
-                <strong>Equipamento:</strong>Headset, Notebook 8G, Suporte para
-                notebook, Teclado e Mouse
-            </p>
+            <p><strong>Equipamento:</strong>Headset, Notebook 8G, Suporte para notebook, Teclado e Mouse</p>
         </section>
     </article>
     <article>
@@ -1273,14 +1232,13 @@ include 'header.php'
             </div>
             <div class="colaborador-details">
                 <p><strong>ID Caixa:</strong>59103</p>
-                <p><strong>Colaborador:</strong></p>
-                <p><strong>Email:</strong></p>
-                <p><strong>Cargo:</strong>Assistente</p>
-                <p><strong>Departamento:</strong>Canais digital e relacionamento</p>
+                <p><strong>Colaborador:</strong>Elton Severo</p>
+                <p><strong>Email:</strong>elton.severo@amorsaude.com</p>
+                <p><strong>Cargo:</strong>Assistente de Canais Digitais e Relacionamento</p>
+                <p><strong>Departamento:</strong>Telemedicina</p>
+                <p><strong>Data da entranda:</strong>05.08.2024</p>
                 <p><strong>CPF:</strong></p>
-                <p>
-                    <strong>Centro de Custo:</strong>22005 - Operação canais digitais
-                </p>
+                <p><strong>Centro de Custo:</strong>22005 - Operação canais digitais</p>
                 <p><strong>Termo de entrega de equipamento:</strong></p>
             </div>
         </section>
