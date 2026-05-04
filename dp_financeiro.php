@@ -631,6 +631,61 @@
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <div class="colaborador-info">
+                <div class="colaborador-img">
+                    <img src="foto_colaboradores/Sem%20Foto.jpg" alt="Foto de Monica Gonçalves Soares" class="foto" />
+                </div>
+                <div class="colaborador-details">
+                    <p><strong>Colaborador:</strong>Monica Gonçalves Soares</p>
+                    <p><strong>Email:</strong>monica.soares@amorsaude.com</p>
+                    <p><strong>Cargo:</strong>Recepcionista</p>
+                    <p><strong>Departamento:</strong>Financeiro</p>
+                    <p><strong>CPF:</strong>305.937.958-06</p>
+                    <p><strong>Data da admissão: </strong>19.08.2024</p>
+                    <p><strong>Data da desligamento: </strong></p>
+                    <p><strong>Centro de Custo:</strong>13000 - Dir. Financ</p>
+                    <p><strong>Termo de Entrega do Equipamento:</strong></p>
+                    <p><strong>Subtituição:</strong>Lucimara</p>
+                </div>
+            </div>
+            <h2>Dados equipamentos</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Suporte</p>
+                    <p><strong>Marca/Modelo:</strong>Aluminio</p>
+                    <p class="serial"><strong>S/N:</strong></p>
+                    <p><strong>Patrimonio:</strong>950</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                    <p><strong>Marca/Modelo:</strong>MK270</p>
+                    <p class="serial"><strong>S/N:</strong>2238CE66388</p>
+                    <p><strong>Patrimonio:</strong>362</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Notebook Win-10 i5-1135G7 8GB</p>
+                    <p><strong>Marca/Modelo:</strong>Dell Vostro 15 3510</p>
+                    <p class="serial"><strong>S/N:</strong>CSFQXW3</p>
+                    <p><strong>Patrimonio:</strong>383</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Fone</p>
+                    <p><strong>Marca/Modelo:</strong>Logitech H390</p>
+                    <p class="serial"><strong>S/N:</strong>2235ME00yaj9</p>
+                    <p><strong>Patrimonio:</strong>387</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Celular</p>
+                    <p><strong>Marca/Modelo:</strong>Samsung Galaxy A03</p>
+                    <p class="serial"><strong>S/N:</strong>R9Xw20CHGWN</p>
+                    <p><strong>Patrimonio:</strong></p>
+                    <p><strong>IMEI 1:</strong>35830223539235/01</p>
+                    <p><strong>IMEI 2:</strong>35976053925831/01</p>
+                </div>
+            </section>
+        </article>
+        <article>
+            <h2>DADOS DO COLABORADOR</h2>
+            <div class="colaborador-info">
                 <div class="colaborador-img"><img src="foto_colaboradores/Lucimara Silva Zampollo.jpg" alt="Foto de Lucimara Silva Zampollo" class="foto"></div>
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:</strong>52931</p>
