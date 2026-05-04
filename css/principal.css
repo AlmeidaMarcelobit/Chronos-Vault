@@ -6,7 +6,7 @@
 main,
 nav {
     background-color: #1c1c1c;
-    max-width: 1200px;
+    width: 1200px;
     margin: 0 auto;
 }
 .menu a,
@@ -63,7 +63,7 @@ header img {
 .dropdown:hover .dropdown-content {
     display: block;
 }
-.dropdown:hover .dropbtn {
+.dropdown:hover {
     background-color: #444;
 }
 .dropdown .dropdown-content .dropdown {
