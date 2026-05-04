@@ -270,64 +270,6 @@ include 'header.php';
     </header>
     <article>
         <h2>DADOS DO COLABORADOR</h2>
-        <section class="colaborador-info">
-            <div class="colaborador-img"><img src="foto_colaboradores/Bruna Emilio.jpg" alt="Foto de Daniel Morais Vieira" class="foto"></div>
-            <div class="colaborador-details">
-                <p><strong>Colaborador:</strong>Bruna Rafaela Emilio</p>
-                <p><strong>Email:</strong>bruna.emilio@amorsaude.com</p>
-                <p><strong>Cargo:</strong>Consultoria de Operações</p>
-                <p><strong>Departamento:</strong>Consultoria</p>
-                <p><strong>CPF:</strong>416.119.918-03</p>
-                <p><strong>Data de Entrada:</strong>20.Junho.2023</p>
-                <p><strong>Centro de Custo:</strong>12006 - Regional 1</p>
-                <p><strong>Termo de Entrega de Equipamento:</strong><a target="_blank" href="https://drive.google.com/file/d/1d34HGEe8PYKtASlIKueaWKCjRPIMB2k3/view?usp=sharing">Termo 01</a><a href="https://drive.google.com/file/d/1EG7fOQGkXnlgIKX7TPjJexX35C780QMy/view?usp=sharing"
-                                                                                                                                                                                                target="_blank">Termo 02</a></p>
-            </div>
-        </section>
-        <h2>DADOS DOS EQUIPAMENTOS</h2>
-        <section class="equipamentos-info">
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Teclado e Mouse</p>
-                <p><strong>Patrimônio:</strong>261</p>
-                <p class="serial"><strong>S/N:</strong>2243CE258149</p>
-                <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Suporte</p>
-                <p><strong>Patrimônio:</strong></p>
-                <p class="serial"><strong>S/N:</strong></p>
-                <p><strong>Marca/Modelo:</strong>Aluminio</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Notebook</p>
-                <p><strong>Patrimônio:</strong>165</p>
-                <p class="serial"><strong>S/N:</strong>PE09784e</p>
-                <p><strong>Marca/Modelo:</strong>Ideapad315alc6</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Headset</p>
-                <p><strong>Patrimônio:</strong>1010</p>
-                <p class="serial"><strong>S/N:</strong>881000466</p>
-                <p><strong>Marca/Modelo:</strong>Logitech MO3000</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Celular</p>
-                <p><strong>Patrimônio:</strong>794</p>
-                <p class="serial"><strong>S/N:</strong>RX8R90HDAAR</p>
-                <p><strong>Marca/Modelo:</strong>Galaxy AO3</p>
-                <p><strong>IMEI 1:</strong>354397910709045/01</p>
-                <p><strong>IMEI 2:</strong>354578130709048/01</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Adaptador de Rede</p>
-                <p><strong>Patrimônio:</strong>610</p>
-                <p class="serial"><strong>S/N:</strong></p>
-                <p><strong>Marca/Modelo:</strong>Generic</p>
-            </div>
-        </section>
-    </article>
-    <article>
-        <h2>DADOS DO COLABORADOR</h2>
 
         <section class="colaborador-info">
             <div class="colaborador-img"><img src="foto_colaboradores/Aline%20Oliveira.jpg" alt="Foto de Aline Camilo de Oliveira" class="foto"></div>
