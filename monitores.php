@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <link rel="stylesheet" href="css/principal.css" />
         <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet" />
-        <title>Telemedicina</title>
+        <title>Monitores</title>
     </head>
     <body>
         <header>
