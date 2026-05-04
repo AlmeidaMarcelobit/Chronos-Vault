@@ -39,7 +39,7 @@
                     </div>
                 </li>
                 <li><a href="centro_custo.php">Lista Centro de Custo</a></li>
-                <li><a href="observacao.html">Observação</a></li>
+                <li><a href="observacao.php">Observação</a></li>
             </div>
         </li>
     </ul>
