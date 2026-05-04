@@ -84,9 +84,6 @@ include 'header.php';
                         <p><strong>Equipamentos:</strong>Fone, Suporte, Teclado e Mouse, Notebook Win-11 i5-1235U 8GB, Celular, Monitor, Fonte</p>
                     </section>
                 </article>
-
-
-
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
@@ -306,8 +303,11 @@ include 'header.php';
                         </div>
                     </section>
                 </article>
-                <
 
+
+                <header class="desativados">
+                    <h1>COLABORADORES DESATIVADOS</h1>
+                </header>
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
@@ -450,7 +450,7 @@ include 'header.php';
                 <article>
                     <h2>Dados do colaborador</h2>
                     <section class="colaborador-info">
-                        <div class="colaborador-img"><img src="foto_colaboradores/leandro Hernandes.jpeg" alt="Foto de Leandro Alves Hernandes" class="foto"></div>
+                        <div class="colaborador-img"><img src="foto_colaboradores/Leandro%20Hernandes.jpeg" alt="Foto de Leandro hernandes" class="foto"></div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador:</strong>Leandro Alves Hernandes</p>
                             <p><strong>Email:</strong>leandro.hernandes@amorsaude.com</p>
@@ -495,6 +495,62 @@ include 'header.php';
                             <p><strong>Marca/Modelo:</strong>Alumínio</p>
                             <p class="serial"><strong>S/N:</strong>(Não fornecido)</p>
                             <p><strong>Patrimônio:</strong>822</p>
+                        </div>
+                    </section>
+                    <section class="ticket">
+                        <p><strong>ID Ticket:</strong>(Não fornecido)</p>
+                        <p><strong>Equipamentos:</strong>Teclado e Mouse, Notebook, Fone, Celular, Suporte</p>
+                    </section>
+                </article>
+                <h1>Colaboradores Desativados</h1>
+                <article>
+                    <h2>Dados do colaborador</h2>
+                    <section class="colaborador-info">
+                        <div class="colaborador-img"><img src="foto_colaboradores/Nicole%20Souza.jpeg" alt="Foto de Nicole Souza Cimento" class="foto"></div>
+                        <div class="colaborador-details">
+                            <p><strong>Colaborador:</strong>Nicole Souza Cimento</p>
+                            <p><strong>Email:</strong>nicole.souza@amorsaude.com</p>
+                            <p><strong>Cargo:</strong>Consultor de Operações</p>
+                            <p><strong>Departamento:</strong>Consultoria</p>
+                            <p><strong>CPF:</strong>464.476.338.19</p>
+                            <p><strong>Data da Entrada:</strong>17.06.2023</p>
+                            <p><strong>Data da Saida:</strong>09.08.2024</p>
+                            <p><strong>Centro de Custo:</strong>12007 - Regional 2</p>
+                        </div>
+                    </section>
+                    <h2>Dados equipamentos</h2>
+                    <section class="equipamentos-info">
+                        <div class="equipamento">
+                            <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                            <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
+                            <p class="serial"><strong>S/N:</strong>2243CE258429 - 2241LZX3P288</p>
+                            <p><strong>Patrimônio:</strong>282</p>
+                        </div>
+                        <div class="equipamento">
+                            <p><strong>Tipo:</strong>Notebook Win-10 i5-1135G7 8GB</p>
+                            <p><strong>Marca/Modelo:</strong>Dell Vostro 15 3510</p>
+                            <p class="serial"><strong>S/N:</strong>2P3MOT3</p>
+                            <p><strong>Patrimônio:</strong>271</p>
+                        </div>
+                        <div class="equipamento">
+                            <p><strong>Tipo:</strong>Fone</p>
+                            <p><strong>Marca/Modelo:</strong>Logitehc H390</p>
+                            <p class="serial"><strong>S/N:</strong>2309ME017VY8</p>
+                            <p><strong>Patrimônio:</strong>835</p>
+                        </div>
+                        <div class="equipamento">
+                            <p><strong>Tipo:</strong>Celular</p>
+                            <p><strong>Marca/Modelo:</strong>Motorola E13</p>
+                            <p class="serial"><strong>S/N:</strong>UJ5MVC3MT8</p>
+                            <p><strong>Patrimônio:</strong>846</p>
+                            <p><strong>IMEI 1:</strong>35934098125427</p>
+                            <p><strong>IMEI 2:</strong>359340981254284</p>
+                        </div>
+                        <div class="equipamento">
+                            <p><strong>Tipo:</strong>Suporte</p>
+                            <p><strong>Marca/Modelo:</strong>Alumínio</p>
+                            <p class="serial"><strong>S/N:</strong>(Não fornecido)</p>
+                            <p><strong>Patrimônio:</strong>1245</p>
                         </div>
                     </section>
                     <section class="ticket">
