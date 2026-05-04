@@ -566,7 +566,7 @@ include 'header.php';
     <article>
         <h2>DADOS DO COLABORADOR</h2>
         <section class="colaborador-info">
-            <div class="colaborador-img"><img src="foto_colaboradores/Bruna Emilio.jpg" alt="Foto de Daniel Morais Vieira" class="foto"></div>
+            <div class="colaborador-img"><img src="foto_colaboradores/Bruna Emilio.jpg" alt="Foto de Bruna Rafaela Emilio" class="foto"></div>
             <div class="colaborador-details">
                 <p><strong>Colaborador:</strong>Bruna Rafaela Emilio</p>
                 <p><strong>Email:</strong>bruna.emilio@amorsaude.com</p>
@@ -575,8 +575,7 @@ include 'header.php';
                 <p><strong>CPF:</strong>416.119.918-03</p>
                 <p><strong>Data de Entrada:</strong>20.Junho.2023</p>
                 <p><strong>Centro de Custo:</strong>12006 - Regional 1</p>
-                <p><strong>Termo de Entrega de Equipamento:</strong><a target="_blank" href="https://drive.google.com/file/d/1d34HGEe8PYKtASlIKueaWKCjRPIMB2k3/view?usp=sharing">Termo 01</a><a href="https://drive.google.com/file/d/1EG7fOQGkXnlgIKX7TPjJexX35C780QMy/view?usp=sharing"
-                                                                                                                                                                                                target="_blank">Termo 02</a></p>
+                <p><strong>Termo de Entrega de Equipamento:</strong><a target="_blank" href="https://drive.google.com/file/d/1d34HGEe8PYKtASlIKueaWKCjRPIMB2k3/view?usp=sharing">Termo 01</a><a href="https://drive.google.com/file/d/1EG7fOQGkXnlgIKX7TPjJexX35C780QMy/view?usp=sharing" target="_blank">Termo 02</a></p>
             </div>
         </section>
         <h2>DADOS DOS EQUIPAMENTOS</h2>
@@ -600,7 +599,7 @@ include 'header.php';
                 <p><strong>Marca/Modelo:</strong>Ideapad315alc6</p>
             </div>
             <div class="equipamento">
-                <p><strong>Tipo:</strong>Headset</p>
+                <p><strong>Tipo:</strong>Fone</p>
                 <p><strong>Patrimônio:</strong>1010</p>
                 <p class="serial"><strong>S/N:</strong>881000466</p>
                 <p><strong>Marca/Modelo:</strong>Logitech MO3000</p>
