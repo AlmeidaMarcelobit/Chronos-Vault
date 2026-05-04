@@ -18,6 +18,63 @@ include 'header.php'
         <h1>COLABORADORES ATIVOS</h1>
     </header>
     <article>
+        <h2>DADOS DO COLABORADOR</h2>
+        <div class="colaborador-info">
+            <div class="colaborador-img">
+                <img
+                        src="foto_colaboradores/"
+                        alt="Foto de Nicholas Esdras Lopes"
+                        class="foto"
+                />
+            </div>
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong> Nicholas Esdras Lopes</p>
+                <p><strong>Email:</strong> nicholas.lopes@amorsaude.com</p>
+                <p><strong>Cargo:</strong> Assistente de BackOffice</p>
+                <p><strong>Departamento:</strong> BackOffice - Treinamentos</p>
+                <p><strong>CPF:</strong> 462.083.518-80</p>
+                <p><strong>Data da admissão:</strong> 06.05.2024</p>
+                <p><strong>Data da desligamento:</strong></p>
+                <p><strong>Centro de Custo:</strong> 12005</p>
+                <p><strong>Termo de Entrega do Equipamento:</strong> Termo 01</p>
+                <p><strong>Subtituição:</strong> Letícia Godoy da Silva</p>
+            </div>
+        </div>
+        <h2>Dados equipamentos</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Notebook Win-10 i5-1035G1 8GB</p>
+                <p><strong>Marca/Modelo:</strong> Dell Inspiron 3501</p>
+                <p class="serial"><strong>S/N:</strong> 17N0513</p>
+                <p><strong>Patrimonio:</strong> 5</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Fone</p>
+                <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+                <p class="serial"><strong>S/N:</strong> 2329AY019B08</p>
+                <p><strong>Patrimonio:</strong> 953</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Suporte</p>
+                <p><strong>Marca/Modelo:</strong> Alumínio</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Patrimonio:</strong> 962</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Suporte</p>
+                <p><strong>Marca/Modelo:</strong> Alumínio</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Patrimonio:</strong> 962</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Teclado e Mouse</p>
+                <p><strong>Marca/Modelo:</strong> MK235 - M170</p>
+                <p class="serial"><strong>S/N:</strong> 2211CE0A2F69</p>
+                <p><strong>Patrimonio:</strong> 182-571</p>
+            </div>
+        </section>
+    </article>
+    <article>
         <h2>Dados do colaborador</h2>
         <section class="colaborador-info">
             <div class="colaborador-details">
@@ -458,6 +515,57 @@ include 'header.php'
                 </div>
             </section>
         </article>
+    <article>
+        <h2>DADOS DO COLABORADOR</h2>
+        <div class="colaborador-info">
+            <div class="colaborador-img">
+                <img
+                        src="foto_colaboradores/Bianca%20Inácio.jpeg"
+                        alt="Foto de Bianca Inacia da Silva"
+                        class="foto"
+                />
+            </div>
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong> Bianca Inacia da Silva</p>
+                <p><strong>Email:</strong> bianca.inacio@amorsaude.com</p>
+                <p><strong>Cargo:</strong> Assistente de Operações</p>
+                <p><strong>Departamento:</strong> Backoffice</p>
+                <p><strong>CPF:</strong> 480.094.538-03</p>
+                <p><strong>Data da admissão:</strong>17.05.2021</p>
+                <p><strong>Data da desligamento:</strong>19.08.2024</p>
+                <p><strong>Centro de Custo:</strong></p>
+                <p><strong>Termo de Entrega do Equipamento:</strong></p>
+            </div>
+        </div>
+        <h2>Dados equipamentos</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Notebook</p>
+                <p><strong>Marca/Modelo:</strong> Lenovo Ideapad3 15alc6</p>
+                <p class="serial"><strong>S/N:</strong> PE0973C9</p>
+                <p><strong>Patrimonio:</strong> 164</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Fone</p>
+                <p><strong>Marca/Modelo:</strong> Jabra HSC015</p>
+                <p class="serial"><strong>S/N:</strong> 00226785370W30K</p>
+                <p><strong>Patrimonio:</strong> 782</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Monitor</p>
+                <p><strong>Marca/Modelo:</strong> Dell P2018HC</p>
+                <p class="serial"><strong>S/N:</strong> 2CKH2W2</p>
+                <p><strong>Patrimonio:</strong> 024</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong> Celular</p>
+                <p><strong>Marca/Modelo:</strong> Motorola E13</p>
+                <p class="serial"><strong>S/N:</strong> ZF52455HVR</p>
+                <p><strong>Patrimonio:</strong> 866</p>
+            </div>
+        </section>
+    </article>
+
 </main>
 <?php
 include 'footer.php'
