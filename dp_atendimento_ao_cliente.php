@@ -87,7 +87,7 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Analista de Atendimento ao Cliente</p>
                 <p><strong>Departamento:</strong>Atendimento ao Cliente</p>
                 <p><strong>CPF:</strong>310.755.358-16</p>
-                <p><strong>Data da Entrada:</strong>1.abril.2024</p>
+                <p><strong>Data da admissão: </strong>1.abril.2024</p>
                 <p><strong>Centro de Custo:</strong>12002 - SAC</p>
                 <p><strong>Termo de Entrega Equipamento:</strong><a href="" target="_blank">Not Found</a></p>
             </div>
@@ -144,7 +144,7 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Coordenadora de Atendimento ao Cliente</p>
                 <p><strong>Departamento:</strong>Atendimento ao Cliente</p>
                 <p><strong>CPF:</strong>306257108-00</p>
-                <p><strong>Data da Entrada:</strong>03.junho.2024</p>
+                <p><strong>Data da admissão: </strong>03.junho.2024</p>
                 <p><strong>Centro de Custo:</strong>12002 - Sac</p>
                 <p><strong>Termo de Entrega do Equipamento:</strong><a href="https://drive.google.com/file/d/10cctxZiV4erSC3-DwEkn5AXSENxiNDot/view?usp=sharing" target="_blank">Termo 01</a></p>
             </div>
@@ -318,7 +318,7 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Gerente de Atendimento ao Cliente</p>
                 <p><strong>Departamento:</strong>Atendimento ao Cliente</p>
                 <p><strong>CPF:</strong>301.676.228-55</p>
-                <p><strong>Data da Entrada:</strong>15.janeiro.2024</p>
+                <p><strong>Data da admissão: </strong>15.janeiro.2024</p>
                 <p><strong>Centro de Custo:</strong>12000 - Dir. Operações</p>
                 <p><strong>Termo de Entrega Equipamento:</strong><a href="https://drive.google.com/file/d/14YY6vmFOSltrxa0obH1NLskBpwRVJstL/view?usp=sharing">Termo 1</a><a href="https://drive.google.com/file/d/13xJhJflVutP_85LyXhWE_mxYejbjpucZ/view?usp=sharing">Termo 2</a>
                     <a
@@ -370,7 +370,7 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Assistente de Atendimento ao Cliente</p>
                 <p><strong>Departamento:</strong>Atendimento ao Cliente</p>
                 <p><strong>CPF:</strong>439.325.638-75</p>
-                <p><strong>Data da Entrada:</strong>6.maio.2024</p>
+                <p><strong>Data da admissão: </strong>6.maio.2024</p>
                 <p><strong>Centro de Custo:</strong>12002 - Sac</p>
                 <p><strong>Subtituição:</strong>Dariane da Silva Romerio</p>
                 <p><strong>Termo de Entrega Equipamento:</strong><a href="https://drive.google.com/file/d/16f0SF4fQBqfhvBa9VhCOna86-_UQ7oDS/view?usp=sharing" target="_blank">Termo 1</a></p>
@@ -436,7 +436,7 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Assistente de CS</p>
                 <p><strong>Departamento:</strong>Atendimento ao Cliente</p>
                 <p><strong>CPF:</strong>463.628.768-14</p>
-                <p><strong>Data da Entrada:</strong>18.março.2024</p>
+                <p><strong>Data da admissão: </strong>18.março.2024</p>
                 <p><strong>Centro de Custo:</strong>12002 - SAC</p>
                 <p><strong>Termo de Entrega Equipamento:</strong><a href="">Not Found</a></p>
             </div>
@@ -490,8 +490,8 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Assistente de Retenção</p>
                 <p><strong>Departamento:</strong>Relacionamento com Cliente / Retenção</p>
                 <p><strong>CPF:</strong>313.083.518-01</p>
-                <p><strong>Data da Entrada:</strong>6.maio.2024</p>
-                <p><strong>Data da Saida:</strong></p>
+                <p><strong>Data da admissão: </strong>6.maio.2024</p>
+                <p><strong>Data da desligamento: </strong></p>
                 <p><strong>Centro de Custo:</strong>72023 - Relacionamento com Cliente / Retenção</p>
                 <p><strong>Termo de Entrega de Equipamento:</strong><a href="https://drive.google.com/file/d/161Tja8snGZyVOffp_SInly4cxM0Mlqi5/view?usp=sharing" target="_blank">Termo 01</a></p>
             </div>

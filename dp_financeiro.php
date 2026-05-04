@@ -137,7 +137,7 @@
                     <p><strong>Cargo:</strong>Anaslista Financeiro JR</p>
                     <p><strong>Departamento:</strong>Financeiro</p>
                     <p><strong>CPF:</strong>461.067.698-26</p>
-                    <p><strong>Data da Entrada:</strong>20.maio.2024</p>
+                    <p><strong>Data da admissão: </strong>20.maio.2024</p>
                     <p><strong>Centro de Custo:</strong>63001</p>
                     <p><strong>Termo de Entrega do Equipamento:</strong><a href="https://drive.google.com/file/d/1P32h-eZIwDYyl6ZieUBolZNPK-KYoV2l/view?usp=sharing" target="_blank">Termo 01</a></p>
                 </div>
@@ -236,7 +236,7 @@
                     <p><strong>Cargo:</strong>Anaslista Financeiro</p>
                     <p><strong>Departamento:</strong>Financeiro</p>
                     <p><strong>CPF:</strong>448.038.248-86</p>
-                    <p><strong>Data da Entrada:</strong>4.dezembro.2023</p>
+                    <p><strong>Data da admissão: </strong>4.dezembro.2023</p>
                     <p><strong>Centro de Custo:</strong>13001 - Financeiro</p>
                     <p><strong>Termo de Entrega do Equipamento:</strong><a href="https://drive.google.com/file/d/1d17t7DVPCzyYdCXBrrgaYWiZSTvQHABs/view?usp=sharing" target="_blank">Termo 01</a></p>
                 </div>
@@ -287,7 +287,7 @@
                     <p><strong>Cargo:</strong>Analista De Contas A Pagar Pl</p>
                     <p><strong>Departamento:</strong>Financeiro</p>
                     <p><strong>CPF:</strong>412.562.488-78</p>
-                    <p><strong>Data da Entrada:</strong>20.junho.2023</p>
+                    <p><strong>Data da admissão: </strong>20.junho.2023</p>
                     <p><strong>Centro de Custo:</strong>13001 - Financeiro</p>
                     <p><strong>Termo de Entrega do Equipamento:</strong><a target="_blank" href="https://drive.google.com/file/d/1F1yFWbjJ4CJpfXRvRNkV6GuPBfd6AgsJ/view?usp=sharing">Termo 01</a><a target="_blank" href="https://drive.google.com/file/d/1ND3ZszXO393AuFwsp5bgRauNXNYhcwtG/view?usp=sharing">Termo 02</a>
                         <a
@@ -399,7 +399,7 @@
                     <p><strong>Cargo:</strong>Analista Contábil Sr</p>
                     <p><strong>Departamento:</strong>Financeiro</p>
                     <p><strong>CPF:</strong>425.270.208-95</p>
-                    <p><strong>Data da Entrada:</strong>22.abril.2024</p>
+                    <p><strong>Data da admissão: </strong>22.abril.2024</p>
                     <p><strong>Centro de Custo:</strong>13001 - Financeiro</p>
                     <p><strong>Termo de Entrega do Equipamento:</strong><a target="_blank" href="https://drive.google.com/file/d/16HamVSCmvoZzHSIyMgGM2S06smrguRDK/view?usp=sharing">Termo 01</a></p>
                 </div>
@@ -448,7 +448,7 @@
                     <p><strong>Cargo:</strong>Analista Financeiro Jr</p>
                     <p><strong>Departamento:</strong>Financeiro</p>
                     <p><strong>CPF:</strong>104.448.606-65</p>
-                    <p><strong>Data da Entrada:</strong>22.abril.2024</p>
+                    <p><strong>Data da admissão: </strong>22.abril.2024</p>
                     <p><strong>Centro de Custo:</strong>63001 - Financeiro Soluções</p>
                     <p><strong>Termo de Entrega do Equipamento:</strong><a target="_blank" href="https://drive.google.com/file/d/11AyTvynn6bS_Ydq_cjTJ8tGlHmqCBrYB/view?usp=sharing">Termo 01</a></p>
                 </div>
@@ -639,8 +639,8 @@
                     <p><strong>Cargo:</strong>Recepcionista</p>
                     <p><strong>Departamento:</strong>Financeiro</p>
                     <p><strong>CPF:</strong>305.937.958-06</p>
-                    <p><strong>Data da Entrada:</strong>18.março.2024</p>
-                    <p><strong>Data da Saida:</strong>17.06.2024</p>
+                    <p><strong>Data da admissão: </strong>18.março.2024</p>
+                    <p><strong>Data da desligamento: </strong>17.06.2024</p>
                     <p><strong>Centro de Custo:</strong>13008 - Recepção</p>
                     <p><strong>Termo de Entrega do Equipamento:</strong></p>
                     <p><strong>Subtituição:</strong>Lethicia Martins</p>
@@ -692,8 +692,8 @@
                     <p><strong>Cargo:</strong>Gerente Financeiro</p>
                     <p><strong>Departamento:</strong>Financeiro</p>
                     <p><strong>CPF:</strong>582.444.093-04</p>
-                    <p><strong>Data da Entrada:</strong>06.maio.2024</p>
-                    <p><strong>Data da Saida:</strong>31.maio.2024</p>
+                    <p><strong>Data da admissão: </strong>06.maio.2024</p>
+                    <p><strong>Data da desligamento: </strong>31.maio.2024</p>
                     <p><strong>Centro de Custo:</strong>13000 - Financeiro</p>
                     <p><strong>Subtituição:</strong>Roger Almeida</p>
                     <p><strong>Termo de Entrega do Equipamento:</strong><a href="https://drive.google.com/file/d/17ozw0_TG7lOQbbrdgo8frO5b4ef4PTEC/view?usp=sharing" target="_blank">Termo 01</a><a href="https://drive.google.com/file/d/1-MWQ-KQGaTNB5aYQEspkwerq9isaMsrm/view?usp=sharing"

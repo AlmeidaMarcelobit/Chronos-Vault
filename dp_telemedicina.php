@@ -16,8 +16,9 @@
 include 'header.php';
 ?>
 <main>
-    <header class="ativo">
-        <h1>COLABORADORES DESATIVADOS</h1></header>
+    <header class="ativos">
+        <h1>COLABORADORES ATIVOS</h1>
+    </header>
     <article>
         <h2>DADOS DO COLABORADOR</h2>
         <section class="colaborador-info">
@@ -64,18 +65,88 @@ include 'header.php';
             <p><strong>Equipamento:</strong>Monitor, Headset, Mouse, Notebook 8G, Suporte para notebook, Teclado</p>
         </section>
     </article>
+    <header class="desativados">
+        <h1>COLABORADORES DESATIVADOS</h1>
+    </header>
+    <article>
+        <h2>DADOS DO COLABORADOR</h2>
+        <div class="colaborador-info">
+            <div class="colaborador-img">
+                <img
+                        src="foto_colaboradores/Claudia%20Dias.jpeg"
+                        alt="foto de Claudia Regina Vieria Dias"
+                        class="foto"
+                />
+            </div>
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong>Claudia Regina Vieria Dias</p>
+                <p><strong>Email:</strong>claudia.dias@amorsaude.com</p>
+                <p><strong>Cargo:</strong>Assistente Administrativo</p>
+                <p><strong>Departamento:</strong>Telemedicina</p>
+                <p><strong>CPF:</strong>162.236.378-70</p>
+                <p><strong>Data da admissão:</strong>15.05.2023</p>
+                <p><strong>Data da desligamento:</strong></p>
+                <p><strong>Centro de Custo:</strong>22001 - Consulta Assistida</p>
+                <p><strong>Termo de Entrega do Equipamento:</strong></p>
+            </div>
+        </div>
+        <h2>Dados equipamentos</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Notebook</p>
+                <p><strong>Marca/Modelo:</strong>Dell Inspiron 3501</p>
+                <p class="serial"><strong>S/N:</strong>P90F002</p>
+                <p><strong>Patrimonio:</strong>58</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Fone</p>
+                <p><strong>Marca/Modelo:</strong>Logitech H390</p>
+                <p class="serial"><strong>S/N:</strong>2235ME00Z1G9</p>
+                <p><strong>Patrimonio:</strong>389</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Celular</p>
+                <p><strong>Marca/Modelo:</strong>Samsung Galaxy A03</p>
+                <p class="serial"><strong>S/N:</strong>R9XW20CHLOF</p>
+                <p><strong>Patrimonio:</strong></p>
+                <p><strong>IMEI 1:</strong>358302235393566/01</p>
+                <p><strong>IMEI 2:</strong>359796405393562/01</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                <p><strong>Marca/Modelo:</strong>Dell MK 5221</p>
+                <p class="serial"><strong>S/N:</strong>CN-0NCRCC-LO300=34C-K1H2-A01</p>
+                <p><strong>Patrimonio:</strong>430</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Suporte</p>
+                <p><strong>Marca/Modelo:</strong>Aluminio</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Patrimonio:</strong>816</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Monitor</p>
+                <p><strong>Marca/Modelo:</strong>LG 22MP410-P</p>
+                <p class="serial"><strong>S/N:</strong>303AZJT96660</p>
+                <p><strong>Patrimonio:</strong>242</p>
+
+            </div>
+        </section>
+    </article>
     <article>
         <h2>Dados do colaborador</h2>
         <section class="colaborador-info">
-            <div class="colaborador-img"><img src="../foto_colaboradores/SEM%20FOTO.jpg" alt="Lucas Guidetti Rocha" class="foto"></div>
+            <div class="colaborador-img"><img src="foto_colaboradores/Sem%20Foto.jpg" alt="Lucas Guidetti Rocha" class="foto"></div>
             <div class="colaborador-details">
                 <p><strong>Colaborador:</strong>Lucas Guidetti Rocha</p>
                 <p><strong>Email:</strong>lucas.rocha@amorsaude.com</p>
                 <p><strong>Cargo:</strong>Assistente de Canais Digitais e Relacionamento</p>
                 <p><strong>Departamento:</strong>Telemedicina</p>
                 <p><strong>CPF:</strong>460.375.988-60</p>
+                <p><strong>Data da admissão:</strong>19.02.2024</p>
+                <p><strong>Data da desligamento:</strong>17.05.2024</p>
                 <p><strong>Substituição:</strong>Lorraine Moreno Machado</p>
-                <p><strong>Data da Entrada:</strong>19/02/2024</p>
+                <p><strong>Data da admissão: </strong>19/02/2024</p>
                 <p><strong>Centro de Custo:</strong>22001 - Consulta Assistida</p>
             </div>
         </section>
@@ -111,10 +182,6 @@ include 'header.php';
                 <p class="serial"><strong>S/N:</strong></p>
                 <p><strong>Patrimônio:</strong>935</p>
             </div>
-        </section>
-        <section class="ticket">
-            <p><strong>ID Ticket:</strong></p>
-            <p><strong>Equipamentos:</strong>Notebook, Teclado e Mouse, Fone, Suporte</p>
         </section>
     </article>
 </main>

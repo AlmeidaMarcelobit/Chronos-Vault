@@ -26,7 +26,7 @@ include 'header.php'
                 <p><strong>Cargo:</strong>Estagiaro</p>
                 <p><strong>Departamento:</strong>BackOffice - Documentações</p>
                 <p><strong>CPF:</strong>484.911.558-64</p>
-                <p><strong>Data da Entrada:</strong>05/08/2024</p>
+                <p><strong>Data da admissão: </strong>05/08/2024</p>
                 <p><strong>Centro de Custo:</strong>12005 - BackOffice</p>
             </div>
         </section>
@@ -71,7 +71,7 @@ include 'header.php'
                 <p><strong>Cargo:</strong>Estagiário</p>
                 <p><strong>Departamento:</strong>BackOffice - Documentações</p>
                 <p><strong>CPF:</strong>398.365.638-22</p>
-                <p><strong>Data da Entrada:</strong>05/08/2024</p>
+                <p><strong>Data da admissão: </strong>05/08/2024</p>
                 <p><strong>Centro de Custo:</strong>12005 - BackOffice</p>
             </div>
         </section>
@@ -116,7 +116,7 @@ include 'header.php'
                 <p><strong>Cargo:</strong>Coordenadora de Backoffice</p>
                 <p><strong>Departamento:</strong>Gerencia Operações</p>
                 <p><strong>CPF:</strong>430.792.958-62</p>
-                <p><strong>Data da Entrada:</strong>7/ago/2023</p>
+                <p><strong>Data da admissão: </strong>7/ago/2023</p>
                 <p><strong>Centro de Custo:</strong>12005 - BackOffice</p>
             </div>
         </section>
@@ -149,7 +149,7 @@ include 'header.php'
                 <p><strong>Cargo:</strong>Estagiária</p>
                 <p><strong>Departamento:</strong>BackOffice</p>
                 <p><strong>CPF:</strong>444.709.338-30</p>
-                <p><strong>Data da Entrada:</strong>8-jan.-2024</p>
+                <p><strong>Data da admissão: </strong>8-jan.-2024</p>
                 <p><strong>Centro de Custo:</strong>12005 - BackOffice</p>
             </div>
         </section>
@@ -223,7 +223,7 @@ include 'header.php'
                 <p><strong>Cargo:</strong>Analista De Processos Jr</p>
                 <p><strong>Departamento:</strong>Backoffice</p>
                 <p><strong>CPF:</strong>455.371.238-51</p>
-                <p><strong>Data da Entrada:</strong>17-jul.-2023</p>
+                <p><strong>Data da admissão: </strong>17-jul.-2023</p>
                 <p><strong>Centro de Custo:</strong></p>
             </div>
         </section>

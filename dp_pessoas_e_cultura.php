@@ -85,7 +85,7 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Assistente de Pessoas & Cultura</p>
                 <p><strong>Departamento:</strong>Pessoas & Cultura</p>
                 <p><strong>CPF:</strong>700.641.396-62</p>
-                <p><strong>Data da Entrada:</strong>20.maio.2024</p>
+                <p><strong>Data da admissão: </strong>20.maio.2024</p>
                 <p><strong>Centro de Custo:</strong>3006 - Pessoas & Cultura</p>
                 <p><strong>Termo de Entrega do Equipamento:</strong>Not Found</p>
             </div>
@@ -143,7 +143,7 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Analista de Pessoas & Cultura Júnior</p>
                 <p><strong>Departamento:</strong>Pessoas & Cultura</p>
                 <p><strong>CPF:</strong>385.498.628-94</p>
-                <p><strong>Data da Entrada:</strong>4.março.-2024</p>
+                <p><strong>Data da admissão: </strong>4.março.-2024</p>
                 <p><strong>Centro de Custo:</strong>13006 - Pessoas & Cultura</p>
                 <p><strong>Termo de Entrega do Equipamento:</strong><a href="https://drive.google.com/file/d/11sO6ZrjQjT_K3i-DTt2yyikSlsFpanIV/view?usp=sharing" target="_blank">Termo 01</a></p>
                 <p><strong>Subtituição:</strong>Bianca Duzzi</p>
@@ -205,7 +205,7 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Jovem Aprendiz</p>
                 <p><strong>Departamento:</strong>Pessoas e Cultura</p>
                 <p><strong>CPF:</strong>483.778.638-39</p>
-                <p><strong>Data da Entrada:</strong>8-mar.-2024</p>
+                <p><strong>Data da admissão: </strong>8-mar.-2024</p>
                 <p><strong>Centro de Custo:</strong>13006 - Pessoas & Cultura</p>
                 <p><strong>Termo de Entrega do Equipamento:</strong><a target="_blank" href="https://drive.google.com/file/d/17JQsopkgI79tGkk1N8o4Q__szryDzMmJ/view?usp=sharing">Termo 01</a></p>
                 <p><strong>Subtituição:</strong>Isabella Biscaro Vieira De Sousa</p>
@@ -253,7 +253,7 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Analista de Pessoas & Cultura Júnior</p>
                 <p><strong>Departamento:</strong>Pessoas & Cultura</p>
                 <p><strong>CPF:</strong>267.609.978-75</p>
-                <p><strong>Data da Entrada:</strong>4.março.-2024</p>
+                <p><strong>Data da admissão: </strong>4.março.-2024</p>
                 <p><strong>Centro de Custo:</strong>13006 - Pessoas & Cultura</p>
                 <p><strong>Termo de Entrega do Equipamento:</strong><a target="_blank" href="https://drive.google.com/file/d/16eRbIG0gkx9jsTtTQmuOqZ9nFbFFaUC8/view?usp=sharing">Termo 01</a><a target="_blank" href="https://drive.google.com/file/d/11Xj43b3nlQCNRc829MOOFqka7ijQf4Hw/view?usp=sharing">Termo 02</a></p>
             </div>
@@ -309,7 +309,7 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Analista de Pessoas & Cultura Sênior</p>
                 <p><strong>Departamento:</strong>Pessoas & Cultura</p>
                 <p><strong>CPF:</strong>411.412.878-62</p>
-                <p><strong>Data da Entrada:</strong>4.março.-2024</p>
+                <p><strong>Data da admissão: </strong>4.março.-2024</p>
                 <p><strong>Centro de Custo:</strong>13006 - Pessoas & Cultura</p>
                 <p><strong>Termo de Entrega do Equipamento:</strong><a target="_blank" href="https://drive.google.com/file/d/11xdalIwy5dhJ92ppko91rHodGkmNXOYz/view?usp=sharing">Termo 01</a></p>
             </div>
@@ -370,7 +370,7 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Analista de Pessoas & Cultura Júnior</p>
                 <p><strong>Departamento:</strong>Pessoas & Cultura</p>
                 <p><strong>CPF:</strong>439.857.398-46</p>
-                <p><strong>Data da Entrada:</strong>1.março.2024</p>
+                <p><strong>Data da admissão: </strong>1.março.2024</p>
                 <p><strong>Centro de Custo:</strong>13006 - Pessoas & Cultura</p>
                 <p><strong>Termo de Entrega do Equipamento:</strong><a href="https://drive.google.com/file/d/1HrG5BblltOOflAO7pSeuZwRzhXiaqHeF/view?usp=sharing" target="_blank">Termo 01</a></p>
                 <p><strong>Subtituição:</strong>Juliana Souza</p>
@@ -415,7 +415,7 @@ include 'header.php';
                 <p><strong>Cargo:</strong>Analista de Administração de Pessoal</p>
                 <p><strong>Departamento:</strong>Administração de Pessoal</p>
                 <p><strong>CPF:</strong>451.239.538-50</p>
-                <p><strong>Data da Entrada:</strong>1.março.2024</p>
+                <p><strong>Data da admissão: </strong>1.março.2024</p>
                 <p><strong>Centro de Custo:</strong>13006 - Pessoas & Cultura</p>
                 <p><strong>Termo de Entrega do Equipamento:</strong><a href="https://drive.google.com/file/d/10slIb4kWAnw1L2ASTU2rVx5TCJZ61_L8/view?usp=sharing" target="_blank">Termo 01</a></p>
             </div>

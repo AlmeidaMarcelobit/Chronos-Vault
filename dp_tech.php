@@ -28,7 +28,7 @@ include 'header.php'
                 <p><strong>Cargo:</strong>Consultor de Operações</p>
                 <p><strong>Departamento:</strong>Desenvolvimento</p>
                 <p><strong>CPF:</strong>125.722.706-84</p>
-                <p><strong>Data da Entrada:</strong>19/08/2024</p>
+                <p><strong>Data da admissão: </strong>19/08/2024</p>
                 <p><strong>Centro de Custo:</strong>13012 - Desenvolvimento</p>
                 <p><strong></strong></p>
             </div>
@@ -69,7 +69,7 @@ include 'header.php'
                 <p><strong>Cargo:</strong> (Não fornecido)</p>
                 <p><strong>Departamento:</strong> Produto</p>
                 <p><strong>CPF:</strong> (Não fornecido)</p>
-                <p><strong>Data da Entrada:</strong> (Não fornecido)</p>
+                <p><strong>Data da admissão: </strong> (Não fornecido)</p>
                 <p><strong>Centro de Custo:</strong> 13013 - Produto</p>
             </div>
         </section>
@@ -102,7 +102,7 @@ include 'header.php'
                 <p><strong>Cargo:</strong> Analista De Suporte Pl</p>
                 <p><strong>Departamento:</strong> Suporte</p>
                 <p><strong>CPF:</strong> 436.577.728-98</p>
-                <p><strong>Data da Entrada:</strong> 22-ago.-2023</p>
+                <p><strong>Data da admissão: </strong> 22-ago.-2023</p>
                 <p><strong>Centro de Custo:</strong> 13019 - Suporte</p>
             </div>
         </section>
@@ -153,7 +153,7 @@ include 'header.php'
                 <p><strong>Cargo:</strong>Desenvolvedor Sr</p>
                 <p><strong>Departamento:</strong>Desenvolvimento</p>
                 <p><strong>CPF:</strong>158. 353.667-10</p>
-                <p><strong>Data da Entrada:</strong>11/03/2024</p>
+                <p><strong>Data da admissão: </strong>11/03/2024</p>
                 <p><strong>Data do desligamento: </strong></p>
                 <p><strong>Centro de Custo:</strong>13012 - Desenvolvimento</p>
                 <p><strong>Termo de Entrega do Equipamento:</strong></p>
@@ -186,7 +186,7 @@ include 'header.php'
                 <p><strong>Cargo:</strong>Desenvolvedor Sr</p>
                 <p><strong>Departamento:</strong>Desenvolvimento</p>
                 <p><strong>CPF:</strong>068.190.919-66</p>
-                <p><strong>Data da Entrada:</strong>20/06/2023</p>
+                <p><strong>Data da admissão: </strong>20/06/2023</p>
                 <p><strong>Data do desligamento: </strong></p>
                 <p><strong>Centro de Custo:</strong>13012 - Desenvolvimento</p>
                 <p><strong>Termo de Entrega do Equipamento:</strong></p>
