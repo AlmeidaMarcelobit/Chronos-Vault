@@ -98,6 +98,32 @@ include 'header.php'
                 <p><strong></strong></p>
             </div>
         </section>
+        <h2>Dados equipamentos</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Notebook</p>
+                <p><strong>Marca/Modelo:</strong>Lenovo v15 G3 IAP</p>
+                <p class="serial"><strong>S/N:</strong>peock1k8</p>
+                <p><strong>Patrimonio:</strong>1576</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Suporte</p>
+                <p><strong>Marca/Modelo:</strong>Aluminio</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Patrimonio:</strong>893</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
+                <p class="serial"><strong>S/N:</strong>2347CE267D98</p>
+                <p><strong>Patrimonio:</strong>1575</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Fone</p>
+                <p><strong>Marca/Modelo:</strong>Dell WH1022</p>
+                <p class="serial"><strong>S/N:</strong>VN-ORMH97-LXN00-43S-07NK-AO1</p>
+                <p><strong>Patrimonio:</strong>1167</p>
+            </div>
     </article>
     <article>
         <h2>Dados do colaborador</h2>
