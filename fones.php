@@ -11,7 +11,7 @@
 </head>
 <body>
 <header>
-    <img alt="LOGO AMORSAUDE" src="icones/LOGO_RGB_AMORSAUDE_FINAL_HORIZONTAL.png"/>
+    <img alt="LOGO AMORSAUDE" src="icones/logo_amorsaude.png"/>
 </header>
 <?php
             include 'header.php';
