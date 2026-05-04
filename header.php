@@ -35,6 +35,6 @@
             </div>
         </li>
         <li><a href="centro_custo.php">Lista Centro de Custo</a></li>
-        <li><a href="documentos/dados%20duplicados.html">Dados Duplicados</a></li>
+        <li><a href="observacao.html">Observação</a></li>
     </ul>
 </nav>
