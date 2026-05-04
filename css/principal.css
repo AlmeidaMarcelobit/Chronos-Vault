@@ -153,9 +153,7 @@ img.foto {
     flex: 0 0 calc(18% - 10px);
     box-sizing: border-box;
 }
-.serial,
-h2,
-h3 {
+.serial, h2, h3 {
     text-transform: uppercase;
 }
 .ticket {
@@ -193,9 +191,11 @@ h3 {
     background-color: #eb3131;
 }
 .obs {
+    width: 624px;
     font-size: 14px;
     padding: 10px;
     border: 1px solid #444;
     background-color: #1c1c1c;
     border-radius: 5px;
+    margin: 1% 24% 1% 24%;
 }
