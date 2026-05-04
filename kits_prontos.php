@@ -298,9 +298,15 @@ include 'header.php'
         <section class="colaborador-info">
             <div class="colaborador-details">
                 <p><strong>ID Caixa:</strong>10</p>
+                <p><strong>Colaborador:</strong>Marco Aurelio Bizarri</p>
+                <p><strong>Email:</strong></p>
+                <p><strong>Cargo:</strong>Product Owner Jr</p>
                 <p><strong>Departamento:</strong>Produto</p>
-                <p><strong>Cargo:</strong>Product Owner</p>
-                <p><strong>Centro de Custo:</strong>13013</p>
+                <p><strong>CPF:</strong>412.562.488-78	</p>
+                <p><strong>Data de admissão:</strong>01.10.2024</p>
+                <p><strong>Data de desligamento:</strong></p>
+                <p><strong>Centro de Custo:</strong>13013 - Produto</p>
+                <p><strong>Termo de Entrega de Equipamento:</strong></p>
             </div>
         </section>
         <h2>Dados equipamentos</h2>
@@ -332,7 +338,7 @@ include 'header.php'
             </div>
         </section>
         <section class="ticket">
-            <p><strong>ID Ticket:</strong>60654</p>
+            <p><strong>ID Ticket:</strong>#60654, #72131</p>
             <p>
                 <strong>Equipamentos:</strong>Notebook, Mouse, Teclado, Headset,
                 Suporte
@@ -540,66 +546,6 @@ include 'header.php'
             <p>
                 <strong>Equipamentos:</strong>Headset, Mouse, Notebook 8G, Suporte
                 para notebook, Teclado
-            </p>
-        </section>
-    </article>
-    <article>
-        <h2>Dados do colaborador</h2>
-        <section class="colaborador-info">
-            <div class="colaborador-details">
-                <p><strong>ID Caixa:</strong>02</p>
-                <p><strong>Colaborador:</strong>Murilo Venturoso Tinazzo</p>
-                <p><strong>Email:</strong>murilo.tinazzo@amorsaude.com</p>
-                <p><strong>Cargo:</strong>Consultor de Operações</p>
-                <p><strong>Departamento:</strong>Consultoria</p>
-                <p><strong>CPF:</strong>334.823.378-02</p>
-                <p><strong>Data da admissão: </strong>19/08/2024</p>
-                <p><strong>Centro de Custo:</strong>12006 - Regional 1</p>
-            </div>
-        </section>
-        <h2>Dados equipamentos</h2>
-        <section class="equipamentos-info">
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Notebook Win-11 i5-1235U 8GB</p>
-                <p><strong>Marca/Modelo:</strong>Lenovo V15 G3 IAP</p>
-                <p class="serial">
-                    <strong>S/N:</strong>PE0C2WYM-82UM007BR-JKCN42WW
-                </p>
-                <p><strong>Patrimônio:</strong>1558</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Teclado e Mouse</p>
-                <p><strong>Marca/Modelo:</strong>Logitech MK279</p>
-                <p class="serial">
-                    <strong>S/N:</strong>2344LZXBR448 - 2347CE268068
-                </p>
-                <p><strong>Patrimônio:</strong>1120 - 1559</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Fone</p>
-                <p><strong>Marca/Modelo:</strong>Logitech H390</p>
-                <p class="serial"><strong>S/N:</strong>2412AY00NR38</p>
-                <p><strong>Patrimônio:</strong>1153</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Suporte</p>
-                <p><strong>Marca/Modelo:</strong>Aluminio</p>
-                <p class="serial"><strong>S/N:</strong>(Não fornecido)</p>
-                <p><strong>Patrimônio:</strong>1154</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>ID Caixa</strong>01</p>
-                <p><strong>Tipo:</strong>Monitor</p>
-                <p><strong>Marca/Modelo:</strong>LG22MP410-B</p>
-                <p class="serial"><strong>S/N:</strong>304AZCQ6Z283</p>
-                <p><strong>Patrimônio:</strong>427</p>
-            </div>
-        </section>
-        <section class="ticket">
-            <p><strong>ID Ticket:</strong>#52554</p>
-            <p>
-                <strong>Equipamentos:</strong>Celular, Monitor, Notebook, Teclado e
-                Mouse, Suporte, Fone
             </p>
         </section>
     </article>
@@ -1121,14 +1067,6 @@ include 'header.php'
                 <p><strong>Marca/Modelo:</strong>Lenovo V15 G3</p>
                 <p class="serial"><strong>S/N:</strong>PE9014315053</p>
                 <p><strong>Patrimonio:</strong>1522</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Smatphone</p>
-                <p><strong>Marca/Modelo:</strong>Moto E22</p>
-                <p class="serial"><strong>S/N:</strong>UI5MVA3PBL</p>
-                <p><strong>Patrimonio:</strong>1224</p>
-                <p><strong>IMEI 1:</strong>352800824221094</p>
-                <p><strong>IMEI 2:</strong>352800824221102</p>
             </div>
         </section>
         <section class="ticket">
