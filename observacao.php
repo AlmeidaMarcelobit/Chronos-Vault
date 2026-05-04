@@ -13,6 +13,7 @@
 <header>
     <img src="icones/logo_amorsaude.png" alt="LOGO AMORSAUDE">
 </header>
+<?php include 'header.php' ?>
 <article>
     <div class="objetivo">
         <h1>Objetivos</h1>
