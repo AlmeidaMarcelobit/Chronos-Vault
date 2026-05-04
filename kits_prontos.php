@@ -15,7 +15,7 @@
 <body>
 <header>
     <img
-            src="icones/LOGO_RGB_AMORSAUDE_FINAL_HORIZONTAL.png"
+            src="icones/logo_amorsaude.png"
             alt="LOGO AMORSAUDE"
     />
 </header>
