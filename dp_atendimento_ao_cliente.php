@@ -63,6 +63,14 @@ include 'header.php';
                 <p class="serial"><strong>S/N:</strong>CN-ONCRCC-LO300-331-K14W-A01</p>
                 <p><strong>Patrimonio:</strong>421</p>
             </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Celular</p>
+                <p><strong>Patrimônio:</strong>564</p>
+                <p class="serial"><strong>S/N:</strong>r9xt7020b3z</p>
+                <p><strong>Marca/Modelo:</strong>Galaxy A03</p>
+                <p><strong>IMEI 1:</strong>35498598887138401</p>
+                <p><strong>IMEI 2:</strong>35510627887138501</p>
+            </div>
         </section>
         <section class="ticket">
             <p><strong>ID Ticket:</strong>37860</p>
@@ -347,14 +355,6 @@ include 'header.php';
                 <p><strong>Marca/Modelo:</strong>Dell Vostro 3520</p>
             </div>
             <div class="equipamento">
-                <p><strong>Tipo:</strong>Celular</p>
-                <p><strong>Patrimônio:</strong>564</p>
-                <p class="serial"><strong>S/N:</strong>r9xt7020b3z</p>
-                <p><strong>Marca/Modelo:</strong>Galaxy A03</p>
-                <p><strong>IMEI 1:</strong>35498598887138401</p>
-                <p><strong>IMEI 2:</strong>35510627887138501</p>
-            </div>
-            <div class="equipamento">
                 <p><strong>Tipo:</strong>Suporte Monitor</p>
                 <p><strong>Patrimônio:</strong>1455</p>
                 <p class="serial"><strong>S/N:</strong></p>
@@ -481,6 +481,57 @@ include 'header.php';
         <section class="obs">
             <p><strong>Observação:</strong>Termo do colaborador não encontrado.</p>
         </section>
+    </article>
+    <h1 class="desativados">Colaboradores deativados</h1>
+    <article>
+        <h2>DADOS DO COLABORADOR</h2>
+        <div class="colaborador-info">
+            <div class="colaborador-img">
+                <img class="foto" src="foto_colaboradores/SEM%20FOTO.jpg" alt="Ana Cláudia Mata de Sousa Hermogenes">
+            </div>
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong>Ana Cláudia Mata de Sousa Hermogenes</p>
+                <p><strong>Email:</strong>ana.hermogenes@amorsaude.com</p>
+                <p><strong>Cargo:</strong>Assistente de Retenção</p>
+                <p><strong>Departamento:</strong>Relacionamento com Cliente / Retenção</p>
+                <p><strong>CPF:</strong>313.083.518-01</p>
+                <p><strong>Data da Entrada:</strong>6.maio.2024</p>
+                <p><strong>Data da Saida:</strong></p>
+                <p><strong>Centro de Custo:</strong>72023 - Relacionamento com Cliente / Retenção</p>
+                <p><strong>Termo de Entrega de Equipamento:</strong><a href="https://drive.google.com/file/d/161Tja8snGZyVOffp_SInly4cxM0Mlqi5/view?usp=sharing" target="_blank">Termo 01</a></p>
+            </div>
+        </div>
+        <h2>DADOS EQUIPAMENTOS</h2>
+        <div class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Notebook</p>
+                <p><strong>Patrimônio:</strong>1503</p>
+                <p class="serial"><strong>S/N:</strong>F3Y3F14</p>
+                <p><strong>Marca/Modelo:</strong>Dell Vostro 3520</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                <p><strong>Patrimônio:</strong>203</p>
+                <p class="serial"><strong>S/N:</strong>JNZYR0036</p>
+                <p><strong>Marca/Modelo:</strong>Logitech K235</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Suporte</p>
+                <p><strong>Patrimônio:</strong>987</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Marca/Modelo:</strong>Alumínio</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Headset</p>
+                <p><strong>Patrimônio:</strong>989</p>
+                <p class="serial"><strong>S/N:</strong>2330AY02D1AB</p>
+                <p><strong>Marca/Modelo:</strong>Logitech H390</p>
+            </div>
+        </div>
+        <div class="ticket">
+            <p><strong>ID Ticket:</strong>#30511</p>
+            <p><strong>Equipameto:</strong>Notebook, Teclado e Mouse, Suporte, Headset</p>
+        </div>
     </article>
 </main>
 <?php
