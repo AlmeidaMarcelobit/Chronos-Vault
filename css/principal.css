@@ -4,6 +4,48 @@
     padding: 0;
 }
 
+
+
+/* FOMATAÇÃO GERAL PARA TTITULOS E SERIAL */
+.serial,
+h2,
+h3 {
+    text-transform: uppercase;
+}
+
+main,
+nav {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+nav {
+    background-color: #1c1c1c;
+}
+
+.menu a,
+header {
+    padding: 10px;
+
+}
+
+body {
+    margin: 0 auto;
+    width: 55%;
+    min-width: 510px;
+    background-color: #fff;
+    color: #505050;
+    font-family: "Playwrite DE Grund", cursive;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    font-size: 0.8em;
+    margin: 0;
+    padding: 0;
+}
+
+
+
 /* FOMATAÇÃO GERAL PARA TTITULOS E SERIAL */
 .serial,
 h2,
@@ -14,9 +56,8 @@ h3 {
 body {
     margin: 0 auto;
     width: 55%;
-    min-width: 510px;
-    background-color: #fff;
-    color: #505050;
+    background-color: #121212;
+    color: #e0e0e0;
     font-family: "Playwrite DE Grund", cursive;
     font-optical-sizing: auto;
     font-weight: weight;
@@ -37,9 +78,19 @@ header img {
     height: 130px;
 }
 
+
 /* MENU  */
 nav {
     background-color: #EDEDEE;
+
+
+    /* MENU  */
+    nav {
+        background-color: #1c1c1c;
+
+    }
+
+
 }
 
 .menu {
@@ -59,7 +110,8 @@ nav {
 .menu li {
     position: relative;
 }
-.menu li a:hover{
+
+< .menu li a:hover {
     color: #E51519;
     text-transform: uppercase;
 }
@@ -69,8 +121,54 @@ header {
     padding: 10px;
 }
 
+.dropdown:hover .dropdown-content,
+.menu a {
+    display: block;
+}
+
+=======
+
+/* MENU  */
+nav {
+    background-color: #1c1c1c;
+}
+
+.menu {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+.menu a {
+    display: block;
+    color: #505050;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+.menu a {
+    display: block;
+}
+
+.menu li {
+    position: relative;
+}
+
+.menu li a:hover {
+    color: #E51519;
+    text-transform: uppercase;
+}
+
+.menu a,
+header {
+    padding: 10px;
+}
+
+
 /* MENU DROP DOW */
 .dropdown:hover .dropdown-content {
+
     display: block;
 }
 
@@ -84,26 +182,50 @@ header {
 }
 
 .dropdown-content a {
+
     color: #505050;
+
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
 
 .dropdown-content a:hover {
-    color: #E10003;
+    <<<<<<< HEAD <<<<<<< HEAD <<<<<<< HEAD color: #E10003;
+    =======background-color: #555;
+    > > > > > > > 08f7099 (13.0.0)=======color: #E10003;
+    > > > > > > > 60c6525 (13.1.0)=======color: #E10003;
+    > > > > > > > 0b1b11f7ef4e0b28c386fe1d194cac85e4b73fbf
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
+    <<<<<<< HEAD <<<<<<< HEAD <<<<<<< HEAD color: #E10003;
+}
+
+.dropdown:hover {
     color: #E10003;
+    =======
+}
+
+.dropdown:hover {
+    background-color: #444;
+    > > > > > > > 08f7099 (13.0.0)=======color: #E10003;
+}
+
+.dropdown:hover {
+    color: #E10003;
+    > > > > > > > 60c6525 (13.1.0)
+}
+
+=======color: #E10003;
 }
 
 .dropdown:hover {
     color: #E10003;
 }
 
-.dropdown .dropdown-content .dropdown {
+> > > > > > > 0b1b11f7ef4e0b28c386fe1d194cac85e4b73fbf .dropdown .dropdown-content .dropdown {
     position: relative;
 }
 
@@ -117,146 +239,367 @@ header {
 .dropdown-content .dropdown:hover .dropdown-content {
     display: block;
 }
+
+<<<<<<< HEAD <<<<<<< HEAD <<<<<<< HEAD <<<<<<< HEAD
+/* CONTEUDO */
+.ativo,
+===================== > > > > > > > 50aef2a (12.20.5)
+
 /* CONTEUDO */
 .ativo,
 .desativados {
-    justify-content: center;
-    background-color: #37B4C8;
-    border-radius: 0 0 10px 10px;
-    margin-bottom: 10px;
-    color:beige;
-}
+    =======
 
-.desativados {
-    background-color: #D53E36;
-    border-radius: 10px;
-    margin-top: 10px;
-}
+    /* CONTEUDO */
+    .ativo,
+    .desativados {
+        > > > > > > > 08f7099 (13.0.0) justify-content: center;
+        background-color: #37B4C8;
+        border-radius: 0 0 10px 10px;
+        margin-bottom: 10px;
+        color: beige;
+    }
 
-article {
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    border: 1px dashed #666;
-    background-color: #EDEDEE;
-    border-radius: 8px;
-    box-sizing: content-box;
-}
+    .desativados {
+        background-color: #D53E36;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
 
-.colaborador-info {
-    display: flex;
-    align-items: inherit;
-}
+    <<<<<<< HEAD > > > > > > > dd37b51 (12.18.1) article {
+        =======article {
+            > > > > > > > 08f7099 (13.0.0) padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            border: 1px dashed #666;
+            background-color: #EDEDEE;
+            border-radius: 8px;
+            box-sizing: content-box;
+        }
 
-img.foto {
-    height: 170px;
-    width: 175px;
-    border-radius: 7px;
-    margin-bottom: 2px;
-}
+        .colaborador-info {
+            display: flex;
+            align-items: inherit;
+        }
 
-.colaborador-details {
+        <<<<<<< HEAD <<<<<<< HEAD > > > > > > > ab50fde (12.12.0) .desativados {
+            justify-content: center;
+            <<<<<<< HEAD=======
 
-    margin-left: 10px;
-    margin-right: 10px;
-    font-size: 10px
-}
+            /* CONTEUDO */
+            .ativo,
+            .desativados {
+                justify-content: center;
+                > > > > > > > 0b1b11f7ef4e0b28c386fe1d194cac85e4b73fbf background-color: #37B4C8;
+                border-radius: 0 0 10px 10px;
+                margin-bottom: 10px;
+                color: beige;
+                <<<<<<< HEAD=======background-color: #b71c1c;
+                border-radius: 10px;
+                > > > > > > > ad7d512 (12.15.0)======= > > > > > > > 0b1b11f7ef4e0b28c386fe1d194cac85e4b73fbf
+            }
 
-.equipamentos-info {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    font-size: 10px;
-}
+            .desativados {
+                background-color: #D53E36;
+                border-radius: 10px;
+                margin-top: 10px;
 
-.equipamento {
-    font-size: 0.8em;
-    border: 1px solid #444;
-    flex: 4 4;
-    box-sizing: border-box;
-    border-radius: 6px;
-    padding: 7px 10px 7px 10px;
-}
+                <<<<<<< HEAD============== > > > > > > > 08f7099 (13.0.0) img.foto {
+                    height: 170px;
+                    width: 175px;
+                    border-radius: 7px;
+                    margin-bottom: 2px;
+                }
 
-.equipamento-danificados {
-    font-size: 0.8em;
-    border: 1.5px solid #969696;
-    background-color: #CF3931;
-    flex: 4 4;
-    box-sizing: border-box;
-    border-radius: 6px;
-    padding: 7px 10px 7px 10px;
-    color: #FFFFFF;
-}
+                .colaborador-details {
 
-.equipamento-not-devolvido {
-    font-size: 0.8em;
-    border: 1.5px solid #969696;
-    background-color: #CF3931;
-    color: #fff;
-    flex: 4 4;
-    box-sizing: border-box;
-    border-radius: 6px;
-    padding: 7px 10px 7px 10px;
-}
+                    margin-left: 10px;
+                    margin-right: 10px;
+                    font-size: 10px
+                }
 
-.ticket {
-    margin-top: 1%;
-    font-size: 0.8em;
-    background-color: #EDEDEE;
-    border: 1px solid #444;
-    padding: 7px 10px 7px 10px;
-    border-radius: 6px;
-}
+                .equipamentos-info {
+                    display: flex;
+                    gap: 10px;
+                    flex-wrap: wrap;
+                    font-size: 10px;
+                }
 
-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-radius: 10px 10px 0 0;
-    background-color: #EDEDEE;
-}
+                .equipamento {
+                    font-size: 0.8em;
+                    border: 1px solid #444;
+                    flex: 4 4;
+                    box-sizing: border-box;
+                    border-radius: 6px;
+                    padding: 7px 10px 7px 10px;
+                }
 
-footer p {
-    text-align: center;
-}
+                .equipamento-danificados {
+                    font-size: 0.8em;
+                    border: 1.5px solid #969696;
+                    background-color: #CF3931;
+                    flex: 4 4;
+                    box-sizing: border-box;
+                    border-radius: 6px;
+                    padding: 7px 10px 7px 10px;
+                    color: #FFFFFF;
+                }
 
-footer .reserva {
-    font-size: 0.9em;
-    text-align: center;
-    justify-items: center;
-}
+                .equipamento-not-devolvido {
+                    font-size: 0.8em;
+                    border: 1.5px solid #969696;
+                    background-color: #CF3931;
+                    color: #fff;
+                    flex: 4 4;
+                    box-sizing: border-box;
+                    border-radius: 6px;
+                    padding: 7px 10px 7px 10px;
+                }
 
-footer .version {
-    font-size: 0.9em;
-    color: #777;
-}
+                .ticket {
+                    margin-top: 1%;
+                    font-size: 0.8em;
+                    background-color: #EDEDEE;
+                    border: 1px solid #444;
+                    padding: 7px 10px 7px 10px;
+                    border-radius: 6px;
+                }
 
-.colaborador-verificar {
-    border: 1px solid #d32f2f;
-}
+                footer {
+                    <<<<<<< HEAD background-color: #1c1c1c;
+                    > > > > > > > dd37b51 (12.18.1)
+                }
 
-/* CSS para pagina notebook reserva*/
-.notebooks-info {
-    display: flex;
-    align-items: center;
-}
+                <<<<<<< HEAD=======
+            }
 
-.notebooks-info img {
-    height: 191px;
-    width: 150px;
-}
+            > > > > > > > 0b1b11f7ef4e0b28c386fe1d194cac85e4b73fbf article {
+                padding: 10px;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                border: 1px dashed #666;
+                background-color: #EDEDEE;
+                border-radius: 8px;
+                box-sizing: content-box;
+            }
 
-.colaborador-info a {
-    text-decoration: none;
-    margin-left: 7px;
-    color: #e0e0e0;
-}
-.in-stock {
-    background-color: #4caf50;
-}
+            .colaborador-info {
+                display: flex;
+                align-items: inherit;
+            }
 
-.off {
-    background-color: #eb3131;
-}
+            img.foto {
+                height: 170px;
+                width: 175px;
+                border-radius: 7px;
+                margin-bottom: 2px;
+            }
+
+            .colaborador-details {
+
+                margin-left: 10px;
+                margin-right: 10px;
+                font-size: 10px
+            }
+
+            .equipamentos-info {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                font-size: 10px;
+            }
+
+            .equipamento {
+                font-size: 0.8em;
+                border: 1px solid #444;
+                flex: 4 4;
+                box-sizing: border-box;
+                border-radius: 6px;
+                padding: 7px 10px 7px 10px;
+            }
+
+            .equipamento-danificados {
+                font-size: 0.8em;
+                border: 1.5px solid #969696;
+                background-color: #CF3931;
+                flex: 4 4;
+                box-sizing: border-box;
+                border-radius: 6px;
+                padding: 7px 10px 7px 10px;
+                color: #FFFFFF;
+            }
+
+            .equipamento-not-devolvido {
+                font-size: 0.8em;
+                border: 1.5px solid #969696;
+                background-color: #CF3931;
+                color: #fff;
+                flex: 4 4;
+                box-sizing: border-box;
+                border-radius: 6px;
+                padding: 7px 10px 7px 10px;
+            }
+
+            .ticket {
+                margin-top: 1%;
+                font-size: 0.8em;
+                background-color: #EDEDEE;
+                border: 1px solid #444;
+                padding: 7px 10px 7px 10px;
+                border-radius: 6px;
+            }
+
+            <<<<<<< HEAD======= > > > > > > > 08f7099 (13.0.0) footer {
+                ======= > > > > > > > 60c6525 (13.1.0)=======footer {
+                    > > > > > > > 0b1b11f7ef4e0b28c386fe1d194cac85e4b73fbf display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 10px;
+                    border-radius: 10px 10px 0 0;
+                    <<<<<<< HEAD <<<<<<< HEAD <<<<<<< HEAD background-color: #EDEDEE;
+                    ======= > > > > > > > ad7d512 (12.15.0)=======background-color: #EDEDEE;
+                    > > > > > > > 60c6525 (13.1.0)=======background-color: #EDEDEE;
+                    > > > > > > > 0b1b11f7ef4e0b28c386fe1d194cac85e4b73fbf
+                }
+
+                footer p {
+                    text-align: center;
+                }
+
+                footer .reserva {
+                    font-size: 0.9em;
+                    text-align: center;
+                    justify-items: center;
+                }
+
+                footer .version {
+                    font-size: 0.9em;
+                    color: #777;
+                }
+
+                .colaborador-verificar {
+                    border: 1px solid #d32f2f;
+                }
+
+                <<<<<<< HEAD <<<<<<< HEAD <<<<<<< HEAD <<<<<<< HEAD <<<<<<< HEAD======= > > > > > > > 08f7099 (13.0.0)
+
+                /* CSS para pagina notebook reserva*/
+                =======.colaborador-info {
+                    display: flex;
+                    align-items: inherit;
+                }
+
+                .equipamentos-info {
+                    display: flex;
+                    flex-wrap: wrap;
+                    margin-top: 10px;
+                }
+
+                img.foto {
+                    height: 170px;
+                    width: 175px;
+                    border-radius: 4px;
+                    margin-bottom: 2px;
+                }
+
+                .equipamento,
+                .equipamento-not-devolvido,
+                .ticket {
+                    margin-bottom: 5px;
+                    font-size: 12px;
+                    border: 1px solid #444;
+                    padding: 5px;
+                }
+
+                ======= > > > > > > > dd37b51 (12.18.1) .equipamento-not-devolvido,
+                .equipamento {
+                    border-radius: 6px;
+                    flex: 4 4;
+                    box-sizing: border-box;
+                }
+
+                .equipamento-not-devolvido {
+                    background-color: #773c3c;
+
+                }
+
+                .equipamento-danificados {
+                    font-size: 14px;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    border: 1px solid #d32f2f;
+                    border-radius: 6px;
+                    flex: 1 1 calc(15% - 20px);
+                    box-sizing: border-box;
+                }
+
+                .equipamento,
+                .equipamento-not-devolvido,
+                .ticket {
+                    font-size: 12px;
+                    padding: 5px;
+                    border: 1px solid #444;
+                    margin-top: 5px;
+                    margin-left: 1%;
+                }
+
+                .serial,
+                h2,
+                h3 {
+                    text-transform: uppercase;
+                }
+
+                .ticket {
+                    border-radius: 5px;
+                }
+
+                <<<<<<< HEAD > > > > > > > 27ca273 (12.11.2)=======
+                /* NOTEBOOK RESERVA */
+                > > > > > > > dd37b51 (12.18.1)=======
+                /* CSS para pagina notebook reserva*/
+                > > > > > > > 50aef2a (12.20.5)=======
+
+                /* CSS para pagina notebook reserva*/
+                > > > > > > > 0b1b11f7ef4e0b28c386fe1d194cac85e4b73fbf .notebooks-info {
+                    display: flex;
+                    align-items: center;
+                }
+
+                <<<<<<< HEAD <<<<<<< HEAD <<<<<<< HEAD======= > > > > > > > dd37b51 (12.18.1)======= > > > > > > > 08f7099 (13.0.0)======= > > > > > > > 0b1b11f7ef4e0b28c386fe1d194cac85e4b73fbf .notebooks-info img {
+                    height: 191px;
+                    width: 150px;
+                }
+
+                .colaborador-info a {
+                    text-decoration: none;
+                    margin-left: 7px;
+                    color: #e0e0e0;
+                }
+
+                <<<<<<< HEAD <<<<<<< HEAD <<<<<<< HEAD <<<<<<< HEAD <<<<<<< HEAD=======.colaborador-details {
+                    margin-left: 10px;
+                    margin-right: 10px;
+                }
+
+                > > > > > > > 986b365 (12.17.0)============== > > > > > > > 08f7099 (13.0.0)
+
+                /* CSS para pagina reserva */
+                > > > > > > > dd37b51 (12.18.1)======= > > > > > > > 60c6525 (13.1.0)======= > > > > > > > 0b1b11f7ef4e0b28c386fe1d194cac85e4b73fbf .in-stock {
+                    background-color: #4caf50;
+                }
+
+                .off {
+                    background-color: #eb3131;
+                    <<<<<<< HEAD <<<<<<< HEAD <<<<<<< HEAD
+                }
+
+                =======
+            }
+
+            > > > > > > > dd37b51 (12.18.1)=======
+        }
+
+        > > > > > > > 08f7099 (13.0.0)=======
+    }
+
+    > > > > > > > 0b1b11f7ef4e0b28c386fe1d194cac85e4b73fbf
