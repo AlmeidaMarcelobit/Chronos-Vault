@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns="http://www.w3.org/1999/html">
+<html lang="pt-br" xmlns="http: //www.w3.org/1999/html">
   <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/principal.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+    <link href="https: //fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
     <title>CRM</title>
   </head>
   <body>
@@ -22,31 +22,31 @@
             </div>
             <div class="colaborador-details">
               <p>
-                <strong>ID Caixa:</strong>23851
+                <strong>ID Caixa: </strong>23851
               </p>
               <p>
-                <strong>Colaborador:</strong>Emily Formagio de Souza
+                <strong>Colaborador: </strong>Emily Formagio de Souza
               </p>
               <p>
-                <strong>Email:</strong>emily.souza@amorsaude.com
+                <strong>Email: </strong>emily.souza@amorsaude.com
               </p>
               <p>
-                <strong>Cargo:</strong>Product Owner
+                <strong>Cargo: </strong>Product Owner
               </p>
               <p>
-                <strong>Departamento:</strong>Canais Digitais e Relacionamento
+                <strong>Departamento: </strong>Canais Digitais e Relacionamento
               </p>
               <p>
-                <strong>CPF:</strong>070.824.316-94
+                <strong>CPF: </strong>070.824.316-94
               </p>
               <p>
-                <strong>Centro de Custo:</strong>14003 - CRM
+                <strong>Centro de Custo: </strong>14003 - CRM
               </p>
               <p>
-                <strong>Data de Entrada:</strong>12/08/2024
+                <strong>Data de Entrada: </strong>12/08/2024
               </p>
               <p>
-                <strong>Termo de Entrega de Equipamento:</strong>
+                <strong>Termo de Entrega de Equipamento: </strong>
               </p>
             </div>
           </section>
@@ -54,79 +54,79 @@
           <section class="equipamentos-info">
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Fone
+                <strong>Tipo: </strong>Fone
               </p>
               <p>
-                <strong>Patrimônio:</strong>1237
+                <strong>Patrimônio: </strong>1237
               </p>
               <p class="serial">
-                <strong>S/N:</strong>233me034q78
+                <strong>S/N: </strong>233me034q78
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Logitech H390
-              </p>
-            </div>
-            <div class="equipamento">
-              <p>
-                <strong>Tipo:</strong>Teclado e Mouse
-              </p>
-              <p>
-                <strong>Patrimônio:</strong>1536
-              </p>
-              <p lass="serial">S/N: <strong></strong>2347ce270468 </p>
-              <p>
-                <strong>Marca/Modelo:</strong>Logitech MK270
+                <strong>Marca/Modelo: </strong>Logitech H390
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Suporte
+                <strong>Tipo: </strong>Teclado e Mouse
               </p>
               <p>
-                <strong>Patrimônio:</strong>1238
+                <strong>Patrimônio: </strong>1536
               </p>
+              <p lass="serial">S/N:  <strong></strong>2347ce270468 </p>
               <p>
-                <strong>S/N:</strong>
-              </p>
-              <p>
-                <strong>Marca/Modelo:</strong>Aluminio
+                <strong>Marca/Modelo: </strong>Logitech MK270
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Notebook
+                <strong>Tipo: </strong>Suporte
               </p>
               <p>
-                <strong>Patrimônio:</strong>1541
+                <strong>Patrimônio: </strong>1238
               </p>
               <p>
-                <strong>S/N:</strong>PE9014223078
+                <strong>S/N: </strong>
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Lenovo V15 G3 AIP
+                <strong>Marca/Modelo: </strong>Aluminio
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Monitor
+                <strong>Tipo: </strong>Notebook
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>LG 22MP410-B
+                <strong>Patrimônio: </strong>1541
               </p>
               <p>
-                <strong>S/N:</strong>402AZGF8U743
+                <strong>S/N: </strong>PE9014223078
               </p>
               <p>
-                <strong>Patrimônio:</strong>1570
+                <strong>Marca/Modelo: </strong>Lenovo V15 G3 AIP
+              </p>
+            </div>
+            <div class="equipamento">
+              <p>
+                <strong>Tipo: </strong>Monitor
+              </p>
+              <p>
+                <strong>Marca/Modelo: </strong>LG 22MP410-B
+              </p>
+              <p>
+                <strong>S/N: </strong>402AZGF8U743
+              </p>
+              <p>
+                <strong>Patrimônio: </strong>1570
               </p>
             </div>
           </section>
           <section class="ticket">
             <p>
-              <strong>ID Ticket:</strong>#39154
+              <strong>ID Ticket: </strong>#39154
             </p>
             <p>
-              <strong>Equipamento:</strong>Headset, Mouse, Notebook 8G, Suporte para notebook, Teclado
+              <strong>Equipamento: </strong>Headset, Mouse, Notebook 8G, Suporte para notebook, Teclado
             </p>
           </section>
         </article>
@@ -138,26 +138,26 @@
             </div>
             <div class="colaborador-details">
               <p>
-                <strong>Colaborador:</strong>Alexy Chiodi Divino
+                <strong>Colaborador: </strong>Alexy Chiodi Divino
               </p>
               <p>
-                <strong>Email:</strong>alexy.divino@amorsaude.com
+                <strong>Email: </strong>alexy.divino@amorsaude.com
               </p>
               <p>
-                <strong>Cargo:</strong>Gerente de CRM
+                <strong>Cargo: </strong>Gerente de CRM
               </p>
               <p>
-                <strong>Departamento:</strong>Dir. Marketing
+                <strong>Departamento: </strong>Dir. Marketing
               </p>
               <p>
-                <strong>CPF:</strong>402.811.958-89
+                <strong>CPF: </strong>402.811.958-89
               </p>
               <p>
-                <strong>Centro de Custo:</strong>14008 - Gerência de CRM
+                <strong>Centro de Custo: </strong>14008 - Gerência de CRM
               </p>
               <p>
-                <strong>Termo de Entrega de Equipamento:</strong>
-                <a target="_blank" href="https://drive.google.com/file/d/1AlBHYhCkAKmvDf-caahft1cCDvN8cu25/view?usp=sharing">Termo 01</a>
+                <strong>Termo de Entrega de Equipamento: </strong>
+                <a target="_blank" href="https: //drive.google.com/file/d/1AlBHYhCkAKmvDf-caahft1cCDvN8cu25/view?usp=sharing">Termo 01</a>
               </p>
             </div>
           </section>
@@ -165,64 +165,64 @@
           <section class="equipamentos-info">
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Notebook
+                <strong>Tipo: </strong>Notebook
               </p>
               <p>
-                <strong>Patrimônio:</strong>222
+                <strong>Patrimônio: </strong>222
               </p>
               <p class="serial">
-                <strong>S/N:</strong>92KLOV3
+                <strong>S/N: </strong>92KLOV3
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Dell Vostro 15 3510
+                <strong>Marca/Modelo: </strong>Dell Vostro 15 3510
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Fone
+                <strong>Tipo: </strong>Fone
               </p>
               <p>
-                <strong>Patrimônio:</strong>657
+                <strong>Patrimônio: </strong>657
               </p>
               <p class="serial">
-                <strong>S/N:</strong>274048218
+                <strong>S/N: </strong>274048218
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Jabra HSC016
+                <strong>Marca/Modelo: </strong>Jabra HSC016
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Mouse
+                <strong>Tipo: </strong>Mouse
               </p>
               <p>
-                <strong>Patrimônio:</strong>n/3
+                <strong>Patrimônio: </strong>n/3
               </p>
               <p class="serial">
-                <strong>S/N:</strong>n/3
+                <strong>S/N: </strong>n/3
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>M0300
+                <strong>Marca/Modelo: </strong>M0300
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Celular
+                <strong>Tipo: </strong>Celular
               </p>
               <p>
-                <strong>Patrimônio:</strong>663
+                <strong>Patrimônio: </strong>663
               </p>
               <p class="serial">
-                <strong>S/N:</strong>R9XTA03CT1N
+                <strong>S/N: </strong>R9XTA03CT1N
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Galaxy A03
+                <strong>Marca/Modelo: </strong>Galaxy A03
               </p>
               <p>
-                <strong>IMEI 1:</strong>350916876991657/01
+                <strong>IMEI 1: </strong>350916876991657/01
               </p>
               <p>
-                <strong>IMEI 2:</strong>354654236991655/01
+                <strong>IMEI 2: </strong>354654236991655/01
               </p>
             </div>
           </section>
@@ -235,27 +235,27 @@
             </div>
             <div class="colaborador-details">
               <p>
-                <strong>Colaborador:</strong>Caique Picolo Dal Picolo
+                <strong>Colaborador: </strong>Caique Picolo Dal Picolo
               </p>
               <p>
-                <strong>Email:</strong>caique.picolo@amorsaude.com
+                <strong>Email: </strong>caique.picolo@amorsaude.com
               </p>
               <p>
-                <strong>Cargo:</strong>Analista de Implatação Jr
+                <strong>Cargo: </strong>Analista de Implatação Jr
               </p>
               <p>
-                <strong>Departamento:</strong>CRM
+                <strong>Departamento: </strong>CRM
               </p>
               <p>
-                <strong>CPF:</strong>459.427.748-97
+                <strong>CPF: </strong>459.427.748-97
               </p>
               <p>
-                <strong>Centro de Custo:</strong>14003 - CRM
+                <strong>Centro de Custo: </strong>14003 - CRM
               </p>
               <p>
-                <strong>Termo de Entrega de Equipamento:</strong>
-                <a target="_blank" href="https://drive.google.com/file/d/1o6JpGhLuYQC9FPnO7YjdhqXTiZB6yst4/view?usp=sharing">Termo 01</a>
-                <a href="https://drive.google.com/file/d/11tWZC7UqtQN0ra3wzalKim6Q7P3skMM6/view?usp=sharing" target="_blank">Termo 02</a>
+                <strong>Termo de Entrega de Equipamento: </strong>
+                <a target="_blank" href="https: //drive.google.com/file/d/1o6JpGhLuYQC9FPnO7YjdhqXTiZB6yst4/view?usp=sharing">Termo 01</a>
+                <a href="https: //drive.google.com/file/d/11tWZC7UqtQN0ra3wzalKim6Q7P3skMM6/view?usp=sharing" target="_blank">Termo 02</a>
               </p>
             </div>
           </section>
@@ -263,44 +263,44 @@
           <section class="equipamentos-info">
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Fone
+                <strong>Tipo: </strong>Fone
               </p>
               <p>
-                <strong>Patrimônio:</strong>914
+                <strong>Patrimônio: </strong>914
               </p>
               <p class="serial">
-                <strong>S/N:</strong>2332ME01XL88
+                <strong>S/N: </strong>2332ME01XL88
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Logitech H390
+                <strong>Marca/Modelo: </strong>Logitech H390
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Notebook Win-11 i5-1135G7 8GB
+                <strong>Tipo: </strong>Notebook Win-11 i5-1135G7 8GB
               </p>
               <p>
-                <strong>Patrimônio:</strong>454
+                <strong>Patrimônio: </strong>454
               </p>
               <p class="serial">
-                <strong>S/N:</strong>1Q35KZ3
+                <strong>S/N: </strong>1Q35KZ3
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Vostro 3520
+                <strong>Marca/Modelo: </strong>Vostro 3520
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Teclado e Mouse
+                <strong>Tipo: </strong>Teclado e Mouse
               </p>
               <p>
-                <strong>Patrimônio:</strong>1534
+                <strong>Patrimônio: </strong>1534
               </p>
               <p class="serial">
-                <strong>S/N:</strong>2347CE270478
+                <strong>S/N: </strong>2347CE270478
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Logitech MK270
+                <strong>Marca/Modelo: </strong>Logitech MK270
               </p>
             </div>
           </section>
@@ -308,16 +308,16 @@
           <section class="equipamentos-info">
             <div class="equipamento-danificados">
               <p>
-                <strong>Tipo:</strong>Teclado e Mouse
+                <strong>Tipo: </strong>Teclado e Mouse
               </p>
               <p>
-                <strong>Patrimônio:</strong>447
+                <strong>Patrimônio: </strong>447
               </p>
               <p class="serial">
-                <strong>S/N:</strong>2316LZX3GEH8
+                <strong>S/N: </strong>2316LZX3GEH8
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Logitech K270 - M185
+                <strong>Marca/Modelo: </strong>Logitech K270 - M185
               </p>
             </div>
           </section>
@@ -330,25 +330,25 @@
             </div>
             <div class="colaborador-details">
               <p>
-                <strong>Colaborador:</strong>Victor Lima
+                <strong>Colaborador: </strong>Victor Lima
               </p>
               <p>
-                <strong>Email:</strong>victor.lima@amorsaude.com
+                <strong>Email: </strong>victor.lima@amorsaude.com
               </p>
               <p>
-                <strong>Cargo:</strong>Product Owner
+                <strong>Cargo: </strong>Product Owner
               </p>
               <p>
-                <strong>Departamento:</strong>CRM
+                <strong>Departamento: </strong>CRM
               </p>
               <p>
-                <strong>CPF:</strong>397.234.398-16
+                <strong>CPF: </strong>397.234.398-16
               </p>
               <p>
-                <strong>Centro de Custo:</strong>14003 - CRM
+                <strong>Centro de Custo: </strong>14003 - CRM
               </p>
               <p>
-                <strong>Termo de Entrega de Equipamento:</strong>
+                <strong>Termo de Entrega de Equipamento: </strong>
               </p>
             </div>
           </section>
@@ -356,87 +356,87 @@
           <section class="equipamentos-info">
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Teclado e Mouse
+                <strong>Tipo: </strong>Teclado e Mouse
               </p>
               <p>
-                <strong>Patrimônio:</strong>1514
+                <strong>Patrimônio: </strong>1514
               </p>
               <p class="serial">
-                <strong>S/N:</strong>2345CE4BA5A9
+                <strong>S/N: </strong>2345CE4BA5A9
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Logitech MK270
+                <strong>Marca/Modelo: </strong>Logitech MK270
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Suporte
+                <strong>Tipo: </strong>Suporte
               </p>
               <p>
-                <strong>Patrimônio:</strong>1003
+                <strong>Patrimônio: </strong>1003
               </p>
               <p class="serial">
-                <strong>S/N:</strong>
+                <strong>S/N: </strong>
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Alumínio
+                <strong>Marca/Modelo: </strong>Alumínio
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Headset
+                <strong>Tipo: </strong>Headset
               </p>
               <p>
-                <strong>Patrimônio:</strong>629
+                <strong>Patrimônio: </strong>629
               </p>
               <p class="serial">
-                <strong>S/N:</strong>00275336253
+                <strong>S/N: </strong>00275336253
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Jabra HSC016
+                <strong>Marca/Modelo: </strong>Jabra HSC016
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Notebook
+                <strong>Tipo: </strong>Notebook
               </p>
               <p>
-                <strong>Patrimônio:</strong>235
+                <strong>Patrimônio: </strong>235
               </p>
               <p class="serial">
-                <strong>S/N:</strong>1JLQXW3
+                <strong>S/N: </strong>1JLQXW3
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Dell Vostro 15 3510
+                <strong>Marca/Modelo: </strong>Dell Vostro 15 3510
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Smartphone
+                <strong>Tipo: </strong>Smartphone
               </p>
               <p>
-                <strong>Patrimônio:</strong>698
+                <strong>Patrimônio: </strong>698
               </p>
               <p class="serial">
-                <strong>S/N:</strong>r9xta0d3v7h
+                <strong>S/N: </strong>r9xta0d3v7h
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Galaxy A03
+                <strong>Marca/Modelo: </strong>Galaxy A03
               </p>
               <p>
-                <strong>IMEI 1:</strong>352081309576480/01
+                <strong>IMEI 1: </strong>352081309576480/01
               </p>
               <p>
-                <strong>IMEI 2:</strong>357299759576488/01
+                <strong>IMEI 2: </strong>357299759576488/01
               </p>
             </div>
           </section>
           <section class="ticket">
             <p>
-              <strong>ID Ticket:</strong>#32926
+              <strong>ID Ticket: </strong>#32926
             </p>
             <p>
-              <strong>Equipamento:</strong>Suporte, Teclado e Mouse
+              <strong>Equipamento: </strong>Suporte, Teclado e Mouse
             </p>
           </section>
         </article>
@@ -448,25 +448,25 @@
             </div>
             <div class="colaborador-details">
               <p>
-                <strong>Colaborador:</strong>Emanuela Santos
+                <strong>Colaborador: </strong>Emanuela Santos
               </p>
               <p>
-                <strong>Email:</strong>emanuela.santos@amorsaude.com
+                <strong>Email: </strong>emanuela.santos@amorsaude.com
               </p>
               <p>
-                <strong>Cargo:</strong>Especialista Hubspot
+                <strong>Cargo: </strong>Especialista Hubspot
               </p>
               <p>
-                <strong>Departamento:</strong>CRM
+                <strong>Departamento: </strong>CRM
               </p>
               <p>
-                <strong>CPF:</strong>114.084.899-29
+                <strong>CPF: </strong>114.084.899-29
               </p>
               <p>
-                <strong>Centro de Custo:</strong>14003 - CRM
+                <strong>Centro de Custo: </strong>14003 - CRM
               </p>
               <p>
-                <strong>Termo de Entrega de Equipamento:</strong>
+                <strong>Termo de Entrega de Equipamento: </strong>
               </p>
             </div>
           </section>
@@ -474,50 +474,50 @@
           <section class="equipamentos-info">
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Notebook
+                <strong>Tipo: </strong>Notebook
               </p>
               <p>
-                <strong>Patrimônio:</strong>77
+                <strong>Patrimônio: </strong>77
               </p>
               <p class="serial">
-                <strong>S/N:</strong>4NVVKW3
+                <strong>S/N: </strong>4NVVKW3
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Dell Vostro 15 3510
+                <strong>Marca/Modelo: </strong>Dell Vostro 15 3510
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Fone
+                <strong>Tipo: </strong>Fone
               </p>
               <p>
-                <strong>Patrimônio:</strong>388
+                <strong>Patrimônio: </strong>388
               </p>
               <p class="serial">
-                <strong>S/N:</strong>2235ME OOy619
+                <strong>S/N: </strong>2235ME OOy619
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Logitech H390
+                <strong>Marca/Modelo: </strong>Logitech H390
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Celular
+                <strong>Tipo: </strong>Celular
               </p>
               <p>
-                <strong>Patrimônio:</strong>
+                <strong>Patrimônio: </strong>
               </p>
               <p class="serial">
-                <strong>S/N:</strong>R9XW3007nka
+                <strong>S/N: </strong>R9XW3007nka
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Galaxy A03
+                <strong>Marca/Modelo: </strong>Galaxy A03
               </p>
               <p>
-                <strong>IMEI 1:</strong>3583022335554944/01
+                <strong>IMEI 1: </strong>3583022335554944/01
               </p>
               <p>
-                <strong>IMEI 2:</strong>359796405554940/01
+                <strong>IMEI 2: </strong>359796405554940/01
               </p>
             </div>
           </section>
@@ -530,25 +530,25 @@
             </div>
             <div class="colaborador-details">
               <p>
-                <strong>Colaborador:</strong>Beatriz Rezende
+                <strong>Colaborador: </strong>Beatriz Rezende
               </p>
               <p>
-                <strong>Email:</strong>beatriz.rezende@amorsaude.com
+                <strong>Email: </strong>beatriz.rezende@amorsaude.com
               </p>
               <p>
-                <strong>Cargo:</strong>Especialista Hubspot
+                <strong>Cargo: </strong>Especialista Hubspot
               </p>
               <p>
-                <strong>Departamento:</strong>CRM
+                <strong>Departamento: </strong>CRM
               </p>
               <p>
-                <strong>CPF:</strong>446.206.208-66
+                <strong>CPF: </strong>446.206.208-66
               </p>
               <p>
-                <strong>Centro de Custo:</strong>14003 - CRM
+                <strong>Centro de Custo: </strong>14003 - CRM
               </p>
               <p>
-                <strong>Termo de Entrega de Equipamento:</strong>
+                <strong>Termo de Entrega de Equipamento: </strong>
               </p>
             </div>
           </section>
@@ -556,44 +556,44 @@
           <section class="equipamentos-info">
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Teclado e Mouse
+                <strong>Tipo: </strong>Teclado e Mouse
               </p>
               <p>
-                <strong>Patrimônio:</strong>446
+                <strong>Patrimônio: </strong>446
               </p>
               <p class="serial">
-                <strong>S/N:</strong>
+                <strong>S/N: </strong>
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Logitech K270 - M185
+                <strong>Marca/Modelo: </strong>Logitech K270 - M185
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Fone
+                <strong>Tipo: </strong>Fone
               </p>
               <p>
-                <strong>Patrimônio:</strong>913
+                <strong>Patrimônio: </strong>913
               </p>
               <p class="serial">
-                <strong>S/N:</strong>2329GG15AAB
+                <strong>S/N: </strong>2329GG15AAB
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Logitech H390
+                <strong>Marca/Modelo: </strong>Logitech H390
               </p>
             </div>
             <div class="equipamento">
               <p>
-                <strong>Tipo:</strong>Notebook
+                <strong>Tipo: </strong>Notebook
               </p>
               <p>
-                <strong>Patrimônio:</strong>458
+                <strong>Patrimônio: </strong>458
               </p>
               <p class="serial">
-                <strong>S/N:</strong>2316LXX3GEJ8
+                <strong>S/N: </strong>2316LXX3GEJ8
               </p>
               <p>
-                <strong>Marca/Modelo:</strong>Vostro 3520
+                <strong>Marca/Modelo: </strong>Vostro 3520
               </p>
             </div>
           </section>
