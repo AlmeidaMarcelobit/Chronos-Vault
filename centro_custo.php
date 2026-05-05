@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <title>Centro de Custo</title>
     <link rel="stylesheet" href="css/style_cc.css">
-    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+<header>
+        <img src="icones/logo_amorsaude.png" alt="LOGO AMORSAUDE">
+</header>
 <?php
-include 'header.php';
+include 'header.html';
 ?>
 <main>
     <h2>DADOS CENTROS DE CUSTO</h2>
@@ -691,6 +693,9 @@ include 'header.php';
             <td>99996 - Rateio</td>
         </tr>
     </table>
+    <?php 
+    include 'footer.html'
+    ?>
 </body>
 
 </html>
