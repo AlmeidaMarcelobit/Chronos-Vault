@@ -187,6 +187,7 @@
         <p><strong>Cargo:</strong>Analista de Implatação Jr</p>
         <p><strong>Departamento:</strong>CRM</p>
         <p><strong>CPF:</strong>459.427.748-97</p>
+        <p><strong>Data da admissão:</strong> 11.12.2023</p>
         <p><strong>Centro de Custo:</strong>14003 - CRM</p>
         <p><strong>Data da admissão:</strong>11.12.2023</p>
       </div>
@@ -319,11 +320,12 @@
     <section class="colaborador-info">
       <div class="colaborador-img"><img class="foto" src="../foto_colaboradores/Beatriz Rezende.jpeg" alt="Beatriz Rezende"></div>
       <div class="colaborador-details">
-        <p><strong>Colaborador:</strong>Beatriz Rezende</p>
+        <p><strong>Colaborador:</strong> Beatriz Vaz Rezende</p>
         <p><strong>Email:</strong>beatriz.rezende@amorsaude.com</p>
         <p><strong>Cargo:</strong>Especialista Hubspot</p>
         <p><strong>Departamento:</strong>CRM</p>
         <p><strong>CPF:</strong>446.206.208-66</p>
+        <p><strong>Data da admissão:</strong> 11.12.2023</p>
         <p><strong>Centro de Custo:</strong>14003 - CRM</p>
         <p><strong>Data da admissão:</strong>11.12.2023</p>
       </div>
