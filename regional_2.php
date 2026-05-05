@@ -305,6 +305,76 @@ include 'header.php';
                     <h1>COLABORADORES DESATIVADOS</h1>
                 </header>
                 <article>
+    <h2>DADOS DO COLABORADOR</h2>
+    <div class="colaborador-info">
+        <div class="colaborador-img">
+            <img
+                src="foto_colaboradores/Graziele Ambrosio.jpg"
+                alt="foto Graziele Ambrosio "
+                class="foto"
+            />
+        </div>
+        <div class="colaborador-details">
+            <p><strong>Colaborador:</strong> Graziele Giacon Ambrosio</p>
+            <p><strong>Email:</strong> graziele.ambrosio@amorsaude.com</p>
+            <p><strong>Cargo:</strong> Consultora de Operações</p>
+            <p><strong>Departamento:</strong> Consultoria</p>
+            <p><strong>CPF:</strong> 217.069.478-10</p>
+            <p><strong>Data da admissão:</strong>13.01.2023</p>
+            <p><strong>Data da desligamento:</strong></p>
+            <p><strong>Centro de Custo:</strong> 12007 - Regional 2</p>
+            <p><strong>Termo de Entrega do Equipamento:</strong></p>
+            <p><strong>Substituição:</strong></p>
+        </div>
+    </div>
+    <h2>Dados equipamentos</h2>
+    <section class="equipamentos-info">
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Notebook Win-10 i5-1135g7 8GB</p>
+            <p><strong>Marca/Modelo:</strong> Dell Vostro 15 3510</p>
+            <p class="serial"><strong>S/N:</strong> 32KLOV3</p>
+            <p><strong>Patrimonio:</strong> 215</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Celular</p>
+            <p><strong>Marca/Modelo:</strong> Samsung Galaxy A03</p>
+            <p class="serial"><strong>S/N:</strong> r9xta0ecf7k</p>
+            <p><strong>Patrimonio:</strong> 661</p>
+            <p><strong>IMEI 1:</strong> 350916876987754/01</p>
+            <p><strong>IMEI 2:</strong> 354654236987752/01</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Fone</p>
+            <p><strong>Marca/Modelo:</strong> Jabra HSC016</p>
+            <p class="serial"><strong>S/N:</strong> 273966069</p>
+            <p><strong>Patrimonio:</strong> 650</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Teclado e Mouse</p>
+            <p><strong>Marca/Modelo:</strong> Logitech MK270</p>
+            <p class="serial"><strong>S/N:</strong> 2250CE0D0A29 - 2240LZX5M588</p>
+            <p><strong>Patrimonio:</strong> 72 - 706</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Suporte</p>
+            <p><strong>Marca/Modelo:</strong> Aluminio</p>
+            <p class="serial"><strong>S/N:</strong></p>
+            <p><strong>Patrimonio:</strong> 704</p>
+        </div>
+        <div class="equipamento">
+            <p><strong>Tipo:</strong> Monitor</p>
+            <p><strong>Marca/Modelo:</strong> LG-22MP410-B</p>
+            <p class="serial"><strong>S/N:</strong> 303AZSP94390</p>
+            <p><strong>Patrimonio:</strong> 399</p>
+        </div>
+    </section>
+    <section class="ticket">
+        <p><strong>ID Ticket:</strong></p>
+        <p><strong>Equipamentos:</strong></p>
+    </section>
+</article>
+
+                <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
                         <div class="colaborador-img"><img src="foto_colaboradores/Jade%20Rodrigues.jpeg" alt="Foto de Daniel Morais Vieira" class="foto"></div>
@@ -495,7 +565,6 @@ include 'header.php';
                         <p><strong>Equipamentos:</strong>Teclado e Mouse, Notebook, Fone, Celular, Suporte</p>
                     </section>
                 </article>
-                <h1>Colaboradores Desativados</h1>
                 <article>
                     <h2>Dados do colaborador</h2>
                     <section class="colaborador-info">

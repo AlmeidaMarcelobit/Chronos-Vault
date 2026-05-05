@@ -693,7 +693,6 @@ include 'header.php';
     </article>
     <article>
         <h2>DADOS DO COLABORADOR</h2>
-
         <section class="colaborador-info">
             <div class="colaborador-img"><img src="foto_colaboradores/Aline%20Oliveira.jpg" alt="Foto de Aline Camilo de Oliveira" class="foto"></div>
             <div class="colaborador-details">
