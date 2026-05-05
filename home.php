@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="css/principal.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+    <link href="https: //fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
     <title>Home</title>
 </head>
 
