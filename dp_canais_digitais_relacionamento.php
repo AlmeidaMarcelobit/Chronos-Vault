@@ -27,8 +27,8 @@
           <div class="colaborador-img">
             <img
               class="foto"
-              src="foto_colaboradores/Foto_Quem.jpg"
-              alt="imagem de quem"
+              src="foto_colaboradores/SEM FOTO.jpg"
+              alt="Foto de Elton Severo"
             />
           </div>
           <div class="colaborador-details">
@@ -81,7 +81,7 @@
           </div>
         </section>
         <section class="ticket">
-          <p><strong>ID Ticket: </strong>48446</p>
+          <p><strong>ID Ticket: </strong>#48446</p>
           <p>
             <strong>Equipamento: </strong>Headset, Notebook 8G, Suporte para
             notebook, Teclado e Mouse, Monitor
@@ -93,8 +93,8 @@
         <section class="colaborador-info">
           <div class="colaborador-img">
             <img
-              src="foto_colaboradores/Foto_Quem.jpg"
-              alt="imagem de quem"
+              src="foto_colaboradores/Daila Santos.jpeg"
+              alt="foto de Daila de Souza Silva Santos"
               class="foto"
             />
           </div>
