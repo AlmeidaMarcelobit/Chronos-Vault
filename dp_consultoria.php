@@ -11,7 +11,9 @@
   <body>
     <header>
       <img src="icones/logo_amorsaude.png" alt="LOGO AMORSAUDE">
-    </header> <?phpinclude 'header.php';?> <main>
+    </header> 
+    <?php include 'header.html'; ?>
+     <main>
       <header class="ativo">
         <h1>COLABORADORES ATIVOS</h1>
       </header>
@@ -416,5 +418,5 @@
       <header class="ativo">
         <h1>COLABORADORES DESATIVADOS</h1>
         <h2>Regional 1</h2>
-    </main> <?php include 'footer.php';?>
+    </main> <?php include 'footer.html';?>
   </body>
