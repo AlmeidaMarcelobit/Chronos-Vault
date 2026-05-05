@@ -25,8 +25,10 @@
                 <div class="dropdown">
                     <a href="#" class="dropbtn">Tecnologia</a>
                     <div class="dropdown-content">
-                        <a href="dp_produtos.php">Produtos</a>
-                        <a href="dp_dados.php">Dados</a>
+                        <a href="dp_tech_produtos.php">Produtos</a>
+                        <a href="dp_tech_dados.php">Dados</a>
+                        <a href="dp_tech_suporte.php">Suporte</a>
+                        <a href="dp_tech_dev.php">Desenvolvimento</a>
                     </div>
                 </div>
                 <a href="dp_telemedicina.php">Telemedicina</a>
