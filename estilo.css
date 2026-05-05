@@ -13,9 +13,12 @@ h1{
 article{
     border: 1px solid #ccc;
     background-color: whitesmoke;
+    border-radius: 5px;
+    box-shadow: #ccc;
 }
 h2{
     margin-left: 10px;
+    font-size: 10px;;
 }
 .flex{
     display: flex;
