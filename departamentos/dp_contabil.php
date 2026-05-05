@@ -80,6 +80,24 @@
     <h2>DADOS DOS EQUIPAMENTOS</h2>
     <section class="equipamentos-info">
       <div class="equipamento">
+        <p><strong>Tipo:</strong>Fone</p>
+        <p><strong>Patrimônio:</strong>Logitech H390</p>
+        <p class="serial"><strong>S/N:</strong>2330YA0265F8</p>
+        <p><strong>Marca/Modelo:</strong>975</p>
+      </div>
+      <div class="equipamento">
+        <p><strong>Tipo:</strong>Teclado e Mouse</p>
+        <p><strong>Patrimônio:</strong>1518</p>
+        <p class="serial"><strong>S/N:</strong>2345ce4ba508</p>
+        <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
+      </div>
+      <div class="equipamento">
+        <p><strong>Tipo:</strong>Notebook</p>
+        <p><strong>Patrimônio:</strong>142</p>
+        <p class="serial"><strong>S/N:</strong>D714sn3</p>
+        <p><strong>Marca/Modelo:</strong>Dell Vostro 15 3510</p>
+      </div>
+      <div class="equipamento">
         <p><strong>Tipo:</strong>Monitor</p>
         <p><strong>Patrimônio:</strong>1516</p>
         <p class="serial"><strong>S/N:</strong>401AZWS6F009</p>
@@ -90,24 +108,6 @@
         <p><strong>Patrimônio:</strong>1006</p>
         <p class="serial"><strong>S/N:</strong></p>
         <p><strong>Marca/Modelo:</strong>Aluminio</p>
-      </div>
-      <div class="equipamento">
-        <p><strong>Tipo:</strong>Notebook</p>
-        <p><strong>Patrimônio:</strong>142</p>
-        <p class="serial"><strong>S/N:</strong>D714sn3</p>
-        <p><strong>Marca/Modelo:</strong>Dell Vostro 15 3510</p>
-      </div>
-      <div class="equipamento">
-        <p><strong>Tipo:</strong>Teclado e Mouse</p>
-        <p><strong>Patrimônio:</strong>1518</p>
-        <p class="serial"><strong>S/N:</strong>2345ce4ba508</p>
-        <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
-      </div>
-      <div class="equipamento">
-        <p><strong>Tipo:</strong>Suporte</p>
-        <p><strong>Patrimônio:</strong>1006</p>
-        <p class="serial"><strong>S/N:</strong></p>
-        <p><strong>Marca/Modelo:</strong>Alumínio</p>
       </div>
     </section>
   </article>
