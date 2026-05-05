@@ -17,6 +17,7 @@
   <header class="ativo">
     <h1>COLABORADORES ATIVOS</h1>
   </header>
+    
   <article>
     <h2>DADOS DO COLABORADOR</h2>
     <div class="colaborador-info">
@@ -294,66 +295,6 @@
   <article>
     <h2>DADOS DO COLABORADOR</h2>
     <section class="colaborador-info">
-      <div class="colaborador-img"><img src="foto_colaboradores/Wendell Oliveira.jfif" alt="Foto de Wendell Alessandro Candido Oliveira" class="foto"></div>
-      <div class="colaborador-details">
-        <p><strong>Colaborador:</strong>Wendell Alessandro Candido Oliveira</p>
-        <p><strong>Email:</strong>wendell.oliveira@amorsaude.com</p>
-        <p><strong>Cargo:</strong>Analista de Pessoas & Cultura Sênior</p>
-        <p><strong>Departamento:</strong>Pessoas & Cultura</p>
-        <p><strong>CPF:</strong>411.412.878-62</p>
-        <p><strong>Data da admissão:</strong>04.03.2024</p>
-        <p><strong>Centro de Custo:</strong>13006 - Pessoas & Cultura</p>
-      </div>
-    </section>
-    <h2>DADOS EQUIPAMENTOS</h2>
-    <section class="equipamentos-info">
-      <div class="equipamento">
-        <p><strong>Tipo:</strong>Notebook</p>
-        <p><strong>Patrimônio:</strong>1446</p>
-        <p class="serial"><strong>S/N:</strong>B832JZ3</p>
-        <p><strong>Marca/Modelo:</strong>Dell Vostro 3520</p>
-      </div>
-      <div class="equipamento">
-        <p><strong>Tipo:</strong>Fone</p>
-        <p><strong>Patrimônio:</strong>966</p>
-        <p class="serial"><strong>S/N:</strong>2329AYO1A558</p>
-        <p><strong>Marca/Modelo:</strong>Logitech H390</p>
-      </div>
-      <div class="equipamento">
-        <p><strong>Tipo:</strong>Teclado e Mouse</p>
-        <p><strong>Patrimônio:</strong>1445</p>
-        <p class="serial"><strong>S/N:</strong>2232CE1CFB58</p>
-        <p><strong>Marca/Modelo:</strong>MK270</p>
-      </div>
-      <div class="equipamento">
-        <p><strong>Tipo:</strong>Suporte</p>
-        <p><strong>Patrimônio:</strong>967</p>
-        <p class="serial"><strong>S/N:</strong></p>
-        <p><strong>Marca/Modelo:</strong>Alumínio</p>
-      </div>
-      <div class="equipamento">
-        <p><strong>Tipo:</strong>Monitor</p>
-        <p><strong>Patrimônio:</strong>1517</p>
-        <p class="serial"><strong>S/N:</strong>312AZVN60015</p>
-        <p><strong>Marca/Modelo:</strong>LG 22MP410-B</p>
-      </div>
-      <div class="equipamento">
-        <p><strong>Tipo:</strong>Celular</p>
-        <p><strong>Patrimônio:</strong>968</p>
-        <p class="serial"><strong>S/N:</strong>ZF5248W28G</p>
-        <p><strong>IMEI 1:</strong>359340983540177/05</p>
-        <p><strong>IMEI 2:</strong>359340983540185/05</p>
-        <p><strong>Marca/Modelo:</strong></p>
-      </div>
-    </section>
-    <section class="ticket">
-      <p><strong>ID Ticket:</strong>#24560</p>
-      <p><strong>Equipamento:</strong>Celular, Monitor, Suporte, Teclado e Mouse, Fone, Notebook</p>
-    </section>
-  </article>
-  <article>
-    <h2>DADOS DO COLABORADOR</h2>
-    <section class="colaborador-info">
       <div class="colaborador-img"><img src="foto_colaboradores/Leticia Silva.jfif" alt="Foto de Letícia Godoy da Silva" class="foto"></div>
       <div class="colaborador-details">
         <p><strong>Colaborador:</strong>Letícia Godoy da Silva</p>
@@ -505,6 +446,67 @@
   <header class="desativados">
     <h1>COLABORADORES DESLIGADO</h1>
   </header>
+      <article>
+    <h2>DADOS DO COLABORADOR</h2>
+    <section class="colaborador-info">
+      <div class="colaborador-img"><img src="foto_colaboradores/Wendell Oliveira.jfif" alt="Foto de Wendell Alessandro Candido Oliveira" class="foto"></div>
+      <div class="colaborador-details">
+        <p><strong>Colaborador:</strong>Wendell Alessandro Candido Oliveira</p>
+        <p><strong>Email:</strong>wendell.oliveira@amorsaude.com</p>
+        <p><strong>Cargo:</strong>Analista de Pessoas & Cultura Sênior</p>
+        <p><strong>Departamento:</strong>Pessoas & Cultura</p>
+        <p><strong>CPF:</strong>411.412.878-62</p>
+        <p><strong>Data da admissão:</strong>04.03.2024</p>
+        <p><strong>Data da desligamento:</strong>01.10.2024</p>
+<p><strong>Centro de Custo:</strong>13006 - Pessoas & Cultura</p>
+      </div>
+    </section>
+    <h2>DADOS EQUIPAMENTOS</h2>
+    <section class="equipamentos-info">
+      <div class="equipamento">
+        <p><strong>Tipo:</strong>Notebook</p>
+        <p><strong>Patrimônio:</strong>1446</p>
+        <p class="serial"><strong>S/N:</strong>B832JZ3</p>
+        <p><strong>Marca/Modelo:</strong>Dell Vostro 3520</p>
+      </div>
+      <div class="equipamento">
+        <p><strong>Tipo:</strong>Fone</p>
+        <p><strong>Patrimônio:</strong>966</p>
+        <p class="serial"><strong>S/N:</strong>2329AYO1A558</p>
+        <p><strong>Marca/Modelo:</strong>Logitech H390</p>
+      </div>
+      <div class="equipamento">
+        <p><strong>Tipo:</strong>Teclado e Mouse</p>
+        <p><strong>Patrimônio:</strong>1445</p>
+        <p class="serial"><strong>S/N:</strong>2232CE1CFB58</p>
+        <p><strong>Marca/Modelo:</strong>MK270</p>
+      </div>
+      <div class="equipamento">
+        <p><strong>Tipo:</strong>Suporte</p>
+        <p><strong>Patrimônio:</strong>967</p>
+        <p class="serial"><strong>S/N:</strong></p>
+        <p><strong>Marca/Modelo:</strong>Alumínio</p>
+      </div>
+      <div class="equipamento">
+        <p><strong>Tipo:</strong>Monitor</p>
+        <p><strong>Patrimônio:</strong>1517</p>
+        <p class="serial"><strong>S/N:</strong>312AZVN60015</p>
+        <p><strong>Marca/Modelo:</strong>LG 22MP410-B</p>
+      </div>
+      <div class="equipamento">
+        <p><strong>Tipo:</strong>Celular</p>
+        <p><strong>Patrimônio:</strong>968</p>
+        <p class="serial"><strong>S/N:</strong>ZF5248W28G</p>
+        <p><strong>IMEI 1:</strong>359340983540177/05</p>
+        <p><strong>IMEI 2:</strong>359340983540185/05</p>
+        <p><strong>Marca/Modelo:</strong></p>
+      </div>
+    </section>
+    <section class="ticket">
+      <p><strong>ID Ticket:</strong>#24560</p>
+      <p><strong>Equipamento:</strong>Celular, Monitor, Suporte, Teclado e Mouse, Fone, Notebook</p>
+    </section>
+  </article>
   <article>
     <h2>Dados do colaborador</h2>
     <section class="colaborador-info">

@@ -17,7 +17,58 @@
     <header class="ativo">
         <h1>COLABORADORES ATIVOS</h1>
     </header>
+
+    <header class="desativados">
+        <h1>COLABORADORES DESATIVADOS</h1>
+    </header>
     <article>
+            <h2>Dados do colaborador</h2>
+            <section class="colaborador-info">
+                <div>
+                <img src="foto_colaboradores/Bruno Dias.jpeg" alt="foto de Bruno Dias" class="foto">
+                </div>
+                <div class="colaborador-details">
+                    <p><strong>Colaborador:</strong>Bruno de Moraes Dias</p>
+                    <p><strong>Email:</strong>bruno.dias@amorsaude.com</p>
+                    <p><strong>Cargo:</strong>Analista de Projetos Sr</p>
+                    <p><strong>Departamento:</strong>Projetos / Processos</p>
+                    <p><strong>CPF:</strong>345.319.798-42</p>
+                    <p><strong>Centro de Custo:</strong>13004</p>
+                </div>
+            </section>
+            <h2>Dados equipamentos</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Suporte</p>
+                    <p><strong>Marca/Modelo:</strong>Aluminio</p>
+                    <p class="serial"><strong>S/N:</strong></p>
+                    <p><strong>Patrimonio:</strong>820</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                    <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
+                    <p class="serial"><strong>S/N:</strong>224Ce258419 - 2241LX3P1G8</p>
+                    <p><strong>Patrimonio:</strong>281</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Notebook</p>
+                    <p><strong>Marca/Modelo:</strong>Dell Vostro 15 3510</p>
+                    <p class="serial"><strong>S/N:</strong>GP3MOT3</p>
+                    <p><strong>Patrimonio:</strong>267</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Fone</p>
+                    <p><strong>Marca/Modelo:</strong>Logitech H390</p>
+                    <p class="serial"><strong>S/N:</strong>2309ME01AQW9</p>
+                    <p><strong>Patrimonio:</strong>831</p>
+                </div>
+            </section>
+            <section class="ticket">
+                <p><strong>ID Ticket:</strong></p>
+                <p><strong>Equipamentos:</strong>Suporte, Teclado e Mouse, Notebook, Fone</p>
+            </section>
+        </article>
+        <article>
         <h2>DADOS DO COLABORADOR</h2>
         <div class="colaborador-info">
             <div class="colaborador-img"><img src="foto_colaboradores/Laura Paschoin.jpeg" alt="Foto de Laura Garcia Paschoin" class="foto"></div>
@@ -80,9 +131,6 @@
             <p><strong>Equipamentos:</strong>Teclado e Mouse, Suporte, Monitor, Notebook, Fone, Celular</p>
         </section>
     </article>
-    <header class="desativados">
-        <h1>COLABORADORES DESATIVADOS</h1>
-    </header>
 </main>
 <?php include 'footer.html' ?>
 </body>

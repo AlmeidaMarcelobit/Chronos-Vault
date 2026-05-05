@@ -17,6 +17,54 @@
   <header class="ativo">
     <h1>COLABORADORES ATIVOS</h1>
   </header>
+    <article>
+            <h2>Dados do colaborador</h2>
+            <section class="colaborador-info">
+                <div>
+                <img src="foto_colaboradores/Marco Bizarri.jpg" alt="foto de Marco Aurelio Bizarri" class="foto">
+                </div>
+                <div class="colaborador-details">
+                    <p><strong>Colaborador:</strong>Marco Aurelio Bizarri</p>
+                    <p><strong>Email:</strong>marco.bizarri@amorsaude.com</p>
+                    <p><strong>Cargo:</strong>Product Owner Jr</p>
+                    <p><strong>Departamento:</strong>Produto</p>
+                    <p><strong>CPF:</strong>412.562.488-78</p>
+                    <p><strong>Data de admissão:</strong>01.10.2024</p>
+                    <p><strong>Data de desligamento:</strong></p>
+                    <p><strong>Centro de Custo:</strong>13013 - Produto</p>
+                </div>
+            </section>
+            <h2>Dados equipamentos</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Notebook</p>
+                    <p><strong>Marca/Modelo:</strong>Lenovo V15 G3 IAP</p>
+                    <p class="serial"><strong>S/N:</strong>PE0CK1FF</p>
+                    <p><strong>Patrimônio:</strong>1568</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Fone</p>
+                    <p><strong>Marca/Modelo:</strong>Logitech H390</p>
+                    <p class="serial"><strong>S/N:</strong>2412AY00NY48</p>
+                    <p><strong>Patrimônio:</strong>1181</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Suprote</p>
+                    <p><strong>Marca/Modelo:</strong>Aluminio</p>
+                    <p><strong>Patrimônio:</strong>1145</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                    <p><strong>Marca\Modelo:</strong>Logitech MK270</p>
+                    <p class="serial"><strong>S/N:</strong>2344LZXBR3R8 - 2347CE267DB8</p>
+                    <p><strong>Patrimônio:</strong>1186 - 1176</p>
+                </div>
+            </section>
+            <section class="ticket">
+                <p><strong>ID Ticket:</strong>#60654, #72131</p>
+                <p><strong>Equipamentos:</strong>Notebook, Mouse, Teclado, Headset, Suporte</p>
+            </section>
+        </article>
   <article>
     <h2>Dados do colaborador</h2>
     <section class="colaborador-info">

@@ -1730,7 +1730,7 @@
 				<div class="colaborador-details">
 					<p><strong>Colaborador:</strong>Lauriele Santos</p>
 					<p><strong>Email:</strong>laurielesantos@amorsaude.com</p>
-					<p><strong>Cargo:</strong>Recepcionista</p>
+					<p><strong>Cargo:</strong>Assistente Financeiro</p>
 					<p><strong>Departamento:</strong>Facilities</p>
 					<p><strong>Data de Entrada:</strong>18.03.2024</p>
 					<p><strong>CPF:</strong>457.240.988-90</p>
