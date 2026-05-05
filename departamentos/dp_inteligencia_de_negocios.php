@@ -266,6 +266,7 @@
                 <p><strong>CPF:</strong>355.750.548-02</p>
                 <p><strong>Cargo:</strong>Coordenador de Inteligência de Negócios</p>
                 <p><strong>Departamento:</strong>Gerência Operações</p>
+                <p><strong>Data do desligamento:</strong>16.08.2024</p>
                 <p><strong>Centro de Custo:</strong>12017 - Gerência Operações</p>
             </div>
         </section>
