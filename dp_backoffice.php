@@ -6,15 +6,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
   <title>Backoffice</title>
 </head>
+
 <body>
   <header><img src="icones/logo_amorsaude.png" alt="LOGO AMORSAUDE" /></header>
-  <?php include 'header.html'?>
+  <?php include 'header.html' ?>
   <main>
-    <header class="ativo"><h1>COLABORADORES ATIVOS</h1></header>
+    <header class="ativo">
+      <h1>COLABORADORES ATIVOS</h1>
+    </header>
     <article>
       <h2>DADOS DO COLABORADOR</h2>
       <div class="colaborador-info">
@@ -22,8 +24,7 @@
           <img
             src="foto_colaboradores/"
             alt="Foto de Nicholas Esdras Lopes"
-            class="foto"
-          />
+            class="foto" />
         </div>
         <div class="colaborador-details">
           <p><strong>Colaborador:</strong>Nicholas Esdras Lopes</p>
@@ -411,7 +412,9 @@
         </div>
       </section>
     </article>
-    <header class="desativados"><h1>COLABORADORES DESATIVADOS</h1></header>
+    <header class="desativados">
+      <h1>COLABORADORES DESATIVADOS</h1>
+    </header>
     <article>
       <h2>Dados do colaborador</h2>
       <section class="colaborador-info">
@@ -419,8 +422,7 @@
           <img
             class="foto"
             src="foto_colaboradores/Yasmin%20Silva.jpeg"
-            alt="Foto do Yasmin Campos da Silva"
-          />
+            alt="Foto do Yasmin Campos da Silva" />
         </div>
         <div class="colaborador-details">
           <p><strong>Colaborador:</strong>Yasmin Campos da Silva</p>
@@ -482,8 +484,7 @@
           <img
             class="foto"
             src="foto_colaboradores/Helena%20Bugliani.jpeg"
-            alt="Foto do Helena Silva Bugliani"
-          />
+            alt="Foto do Helena Silva Bugliani" />
         </div>
         <div class="colaborador-details">
           <p><strong>Colaborador:</strong>Helena Silva Bugliani</p>
@@ -538,8 +539,7 @@
           <img
             src="foto_colaboradores/Bianca%20Inácio.jpeg"
             alt="Foto de Bianca Inacia da Silva"
-            class="foto"
-          />
+            class="foto" />
         </div>
         <div class="colaborador-details">
           <p><strong>Colaborador:</strong>Bianca Inacia da Silva</p>
@@ -581,6 +581,70 @@
         </div>
       </section>
     </article>
+    <article>
+      <h2>DADOS DO COLABORADOR</h2>
+      <div class="colaborador-info">
+        <div class="colaborador-img">
+          <img
+            src="foto_colaboradores/Tatiane Zeotti.jpeg"
+            alt="Foto de Tatiane Zeotti"
+            class="foto" />
+        </div>
+        <div class="colaborador-details">
+          <p><strong>Colaborador:</strong> Tatiane Zeotti</p>
+          <p><strong>Email:</strong> tatiane.zeotti@amorsaude.com</p>
+          <p><strong>Cargo:</strong> Assistente De Treinamentos</p>
+          <p><strong>Departamento:</strong> BackOffice</p>
+          <p><strong>CPF:</strong> 365.396.218-84</p>
+          <p><strong>Data de admissão:</strong> N/A</p>
+          <p><strong>Data de desligamento:</strong> 13/09/2024</p>
+          <p><strong>Centro de Custo:</strong> 12005 - BackOffice</p>
+          <p><strong>Substituição:</strong> N/A</p>
+        </div>
+      </div>
+      <h2>Dados Equipamentos</h2>
+      <section class="equipamentos-info">
+        <div class="equipamento">
+          <p><strong>Tipo:</strong> Notebook</p>
+          <p><strong>Marca/Modelo:</strong> Dell Vostro 15 3510</p>
+          <p class="serial"><strong>S/N:</strong> f1kl0v3</p>
+          <p><strong>Patrimônio:</strong> 233</p>
+        </div>
+
+        <div class="equipamento">
+          <p><strong>Tipo:</strong> Fone</p>
+          <p><strong>Marca/Modelo:</strong> Jabra HSC016</p>
+          <p class="serial"><strong>S/N:</strong> 273963714</p>
+          <p><strong>Patrimônio:</strong> 681</p>
+        </div>
+
+        <div class="equipamento">
+          <p><strong>Tipo:</strong> Teclado e Mouse</p>
+          <p><strong>Marca/Modelo:</strong> Logitech MK235</p>
+          <p class="serial"><strong>S/N Teclado:</strong> 2240ce0b4e19</p>
+          <p class="serial"><strong>S/N Mouse:</strong> 2240ce0b4e19</p>
+          <p><strong>Patrimônio:</strong> 377</p>
+        </div>
+
+        <div class="equipamento">
+          <p><strong>Tipo:</strong> Monitor</p>
+          <p><strong>Marca/Modelo:</strong> LG 22MP410-B</p>
+          <p class="serial"><strong>S/N:</strong> 303AZCQ93931</p>
+          <p><strong>Patrimônio:</strong> 394</p>
+        </div>
+        <div class="equipamento">
+          <p><strong>Tipo:</strong> Suporte</p>
+          <p><strong>Marca/Modelo:</strong> Alumínio</p>
+          <p class="serial"><strong>S/N:</strong> N/A</p>
+          <p><strong>Patrimônio:</strong> 369</p>
+        </div>
+      </section>
+      <section class="ticket">
+        <p><strong>ID Ticket:</strong> N/A</p>
+        <p><strong>Equipamentos:</strong> Notebook, Fone, Teclado e Mouse, Monitor, Suporte</p>
+      </section>
+    </article>
+
   </main>
   <?php include 'footer.html' ?>
 </body>
