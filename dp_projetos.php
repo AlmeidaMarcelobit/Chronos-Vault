@@ -32,8 +32,8 @@
                     <p><strong>Cargo: </strong> Analista de Projetos</p>
                     <p><strong>Departamento: </strong> Projetos Processos</p>
                     <p><strong>CPF: </strong> 432.486.208-70</p>
-                    <p><strong>Data de admissão: </strong> N/A</p>
-                    <p><strong>Data de desligamento: </strong> N/A</p>
+                    <p><strong>Data de admissão: </strong> 12.09.2022</p>
+                    <p><strong>Data de desligamento: </strong> 19.09.2024</p>
                     <p><strong>Centro de Custo: </strong> 13004 - Projetos / Processos</p>
                     <p><strong>Substituição: </strong> N/A</p>
                 </div>
