@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/principal.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+    <link href="https: //fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
     <title>Produtos</title>
   </head>
   <body>
@@ -23,25 +23,25 @@
           </div>
           <div class="colaborador-details">
             <p>
-              <strong>Colaborador:</strong>Josiane Renata dos Santos da Mata
+              <strong>Colaborador: </strong>Josiane Renata dos Santos da Mata
             </p>
             <p>
-              <strong>Email:</strong>josiane.santos@amorsaude.com
+              <strong>Email: </strong>josiane.santos@amorsaude.com
             </p>
             <p>
-              <strong>Cargo:</strong>(Não fornecido)
+              <strong>Cargo: </strong>(Não fornecido)
             </p>
             <p>
-              <strong>Departamento:</strong>Produto
+              <strong>Departamento: </strong>Produto
             </p>
             <p>
-              <strong>CPF:</strong>(Não fornecido)
+              <strong>CPF: </strong>(Não fornecido)
             </p>
             <p>
-              <strong>Data da admissão:</strong>(Não fornecido)
+              <strong>Data da admissão: </strong>(Não fornecido)
             </p>
             <p>
-              <strong>Centro de Custo:</strong>13013 - Produto
+              <strong>Centro de Custo: </strong>13013 - Produto
             </p>
           </div>
         </section>
@@ -49,39 +49,39 @@
         <section class="equipamentos-info">
           <div class="equipamento">
             <p>
-              <strong>Tipo:</strong>Monitor
+              <strong>Tipo: </strong>Monitor
             </p>
             <p>
-              <strong>Marca/Modelo:</strong>LG 22MP410-B
+              <strong>Marca/Modelo: </strong>LG 22MP410-B
             </p>
             <p class="serial">
-              <strong>S/N:</strong>404AZYEAK426
+              <strong>S/N: </strong>404AZYEAK426
             </p>
             <p>
-              <strong>Patrimônio:</strong>1563
+              <strong>Patrimônio: </strong>1563
             </p>
           </div>
           <div class="equipamento">
             <p>
-              <strong>Tipo:</strong>Fone
+              <strong>Tipo: </strong>Fone
             </p>
             <p>
-              <strong>Marca/Modelo:</strong>Logitech H390
+              <strong>Marca/Modelo: </strong>Logitech H390
             </p>
             <p class="serial">
-              <strong>S/N:</strong>2412AY00NUZ9
+              <strong>S/N: </strong>2412AY00NUZ9
             </p>
             <p>
-              <strong>Patrimônio:</strong>1194
+              <strong>Patrimônio: </strong>1194
             </p>
           </div>
         </section>
         <section class="ticket">
           <p>
-            <strong>ID Ticket:</strong>#57356
+            <strong>ID Ticket: </strong>#57356
           </p>
           <p>
-            <strong>Equipamentos:</strong>Fone, Monitor
+            <strong>Equipamentos: </strong>Fone, Monitor
           </p>
         </section>
       </article>
@@ -96,34 +96,34 @@
           </div>
           <div class="colaborador-details">
             <p>
-              <strong>ID Caixa:</strong>
+              <strong>ID Caixa: </strong>
             </p>
             <p>
-              <strong>Colaborador:</strong>Gabriela Bouchabki Martins
+              <strong>Colaborador: </strong>Gabriela Bouchabki Martins
             </p>
             <p>
-              <strong>Email:</strong>gabriela.martins@amorsaude.com
+              <strong>Email: </strong>gabriela.martins@amorsaude.com
             </p>
             <p>
-              <strong>Cargo:</strong>Product Owner
+              <strong>Cargo: </strong>Product Owner
             </p>
             <p>
-              <strong>Departamento:</strong>Produtos
+              <strong>Departamento: </strong>Produtos
             </p>
             <p>
-              <strong>CPF:</strong>346.189.228-93
+              <strong>CPF: </strong>346.189.228-93
             </p>
             <p>
-              <strong>Data da admissão:</strong>16.03.2022
+              <strong>Data da admissão: </strong>16.03.2022
             </p>
             <p>
-              <strong>Data da desligamento:</strong>28.12.23
+              <strong>Data da desligamento: </strong>28.12.23
             </p>
             <p>
-              <strong>Centro de Custo:</strong>13013 - Produto
+              <strong>Centro de Custo: </strong>13013 - Produto
             </p>
             <p>
-              <strong>Termo de Entrega do Equipamento:</strong>
+              <strong>Termo de Entrega do Equipamento: </strong>
             </p>
           </div>
         </div>
@@ -131,58 +131,58 @@
         <section class="equipamentos-info">
           <div class="equipamento">
             <p>
-              <strong>Tipo:</strong>
+              <strong>Tipo: </strong>
             </p>
             <p>
-              <strong>Marca/Modelo:</strong>
+              <strong>Marca/Modelo: </strong>
             </p>
             <p class="serial">
-              <strong>S/N:</strong>
+              <strong>S/N: </strong>
             </p>
             <p>
-              <strong>Patrimonio:</strong>
+              <strong>Patrimonio: </strong>
             </p>
           </div>
           <div class="equipamento">
             <p>
-              <strong>Tipo:</strong>Notebook
+              <strong>Tipo: </strong>Notebook
             </p>
             <p>
-              <strong>Marca/Modelo:</strong>Lenovo Thinkpad E14 Gen3
+              <strong>Marca/Modelo: </strong>Lenovo Thinkpad E14 Gen3
             </p>
             <p class="serial">
-              <strong>S/N:</strong>PE08jfp1
+              <strong>S/N: </strong>PE08jfp1
             </p>
             <p>
-              <strong>Patrimonio:</strong>079
+              <strong>Patrimonio: </strong>079
             </p>
           </div>
           <div class="equipamento">
             <p>
-              <strong>Tipo:</strong>Fone
+              <strong>Tipo: </strong>Fone
             </p>
             <p>
-              <strong>Marca/Modelo:</strong>Jabra HSC016
+              <strong>Marca/Modelo: </strong>Jabra HSC016
             </p>
             <p class="serial">
-              <strong>S/N:</strong>00205867021
+              <strong>S/N: </strong>00205867021
             </p>
             <p>
-              <strong>Patrimonio:</strong>738
+              <strong>Patrimonio: </strong>738
             </p>
           </div>
           <div class="equipamento">
             <p>
-              <strong>Tipo:</strong>Monitor
+              <strong>Tipo: </strong>Monitor
             </p>
             <p>
-              <strong>Marca/Modelo:</strong>Dell E1920HF
+              <strong>Marca/Modelo: </strong>Dell E1920HF
             </p>
             <p class="serial">
-              <strong>S/N:</strong>6816d83
+              <strong>S/N: </strong>6816d83
             </p>
             <p>
-              <strong>Patrimonio:</strong>069
+              <strong>Patrimonio: </strong>069
             </p>
           </div>
       </article>
