@@ -21,13 +21,17 @@
                 <h1>COLABORADORES ATIVOS</h1></header>
             <article>
                 <section class="colaborador-info">
+                    <div>
+                        <img class="foto" src="foto_colaboradores/Heitor%20De%20Paiva%20Boccato.jpeg" alt="foto de Heitor De Paiva Boccato">
+                    </div>
                     <div class="colaborador-details">
                         <p><strong>Colaborador: </strong>Heitor De Paiva Boccato</p>
-                        <p><strong>Email: </strong></p>
-                        <p><strong>Cargo: </strong>ANALISTA DE DESEMPENHO JR</p>
-                        <p><strong>Departamento: </strong></p>
+                        <p><strong>Email: </strong>heitor.boccato@amorsaude.com</p>
+                        <p><strong>Cargo: </strong>Analista de Desempenho Jr</p>
+                        <p><strong>Departamento: </strong>Inteligencia de Negocio</p>
                         <p><strong>CPF: </strong>470.351.168-18</p>
-                        <p><strong>Centro de Custo: </strong></p>Substituição
+                        <p><strong>Data de adminição:</strong>06.11.2023</p>
+                        <p><strong>Centro de Custo: </strong>12010 - Inteligência de Negócios</p>
                     </div>
                 </section>
                 <h2>Dados equipamentos</h2>
@@ -80,7 +84,6 @@
               <p><strong>Data de admissão: </strong> 03.06.2023</p>
               <p><strong>Data de desligamento: </strong> 02.09.2024</p>
               <p><strong>Centro de Custo: </strong> 12010 - Inteligência de Negócios</p>
-              <p><strong>Termo de Entrega de Equipamento: </strong></p>
           </div>
       </div>
 
@@ -121,6 +124,9 @@
     </article>
             <article>
                 <section class="colaborador-info">
+                    <div>
+                        <img src="foto_colaboradores/Maicon%20Facirolli.jpeg" alt="foto de Maicon Leone Alves Facirolli" class="foto">
+                    </div>
                     <div class="colaborador-details">
                         <p><strong>Colaborador: </strong>Maicon Leone Alves Facirolli</p>
                         <p><strong>Email: </strong>maicon.facirolli@amorsaude.com</p>
@@ -181,9 +187,12 @@
             </article>
             <article>
                 <section class="colaborador-info">
+                    <div>
+                        <img src="foto_colaboradores/Dione%20Antonio%20dos%20Santos.jpeg" alt="foto de Dione Antonio dos Santos" class="foto">
+                    </div>
                     <div class="colaborador-details">
                         <p><strong>Colaborador: </strong>Dione Antonio dos Santos</p>
-                        <p><strong>Email: </strong>dione.antonio@amorsaude.com</p>
+                        <p><strong>Email: </strong>dione.santos@amorsaude.com</p>
                         <p><strong>Cargo: </strong>Analista de desemprenho</p>
                         <p><strong>Departamento: </strong>Inteligencia de negocios</p>
                         <p><strong>CPF: </strong>470.351.168-18</p>
