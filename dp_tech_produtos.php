@@ -96,9 +96,6 @@
           </div>
           <div class="colaborador-details">
             <p>
-              <strong>ID Caixa: </strong>
-            </p>
-            <p>
               <strong>Colaborador: </strong>Gabriela Bouchabki Martins
             </p>
             <p>
@@ -121,9 +118,6 @@
             </p>
             <p>
               <strong>Centro de Custo: </strong>13013 - Produto
-            </p>
-            <p>
-              <strong>Termo de Entrega do Equipamento: </strong>
             </p>
           </div>
         </div>
