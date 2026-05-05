@@ -4,10 +4,12 @@
     padding: 0;
 }
 main,
-nav {
-    background-color:;
+nav{
     width: 1200px;
     margin: 0 auto;
+}
+nav {
+    background-color:#1c1c1c;
 }
 .menu a,
 header {
@@ -78,10 +80,13 @@ header img {
 .dropdown-content .dropdown:hover .dropdown-content {
     display: block;
 }
-article {
+article{
     padding: 20px;
-    margin-bottom: 0;
-    border-bottom: 1px dashed #666;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px dashed #666;
+    background-color:  #1c1c1c;
+    border-radius: 8px;
 }
 .ativo {
     justify-content: center;
