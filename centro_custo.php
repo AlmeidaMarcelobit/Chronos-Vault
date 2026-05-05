@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
-    <title>Centro de Custo</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+DE+Grund:wght@100..400&display=swap" rel="stylesheet">
+    <meta name="author" content="Marcelo de Araujo Almeida">
     <link rel="stylesheet" href="css/style_cc.css">
+    <title>Centro de Custo</title>
 </head>
-
 <body>
-<header>
-        <img src="icones/logo_amorsaude.png" alt="LOGO AMORSAUDE">
-</header>
-<?php
-include 'header.html';
-?>
+<header><img src="icones/logo_amorsaude.png" alt="LOGO AMORSAUDE"></header>
+<?php include 'header.html';?>
 <main>
     <h2>DADOS CENTROS DE CUSTO</h2>
     <table>
@@ -693,9 +692,8 @@ include 'header.html';
             <td>99996 - Rateio</td>
         </tr>
     </table>
-    <?php 
+    <?php
     include 'footer.html'
     ?>
 </body>
-
 </html>
