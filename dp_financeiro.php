@@ -231,65 +231,7 @@
                         <p><strong>Observação:</strong>Termo e daodos do monitor faltando</p>
                     </section>
                 </article>
-                <article>
-                    <section class="colaborador-info">
-                        <div class="colaborador-img"><img src="foto_colaboradores/Marco Bizarri.jpg" alt="Foto Marco Aurélio Bizarri" class="foto"></div>
-                        <div class="colaborador-details">
-                            <p><strong>Colaborador:</strong>Marco Aurélio Bizarri</p>
-                            <p><strong>Email:</strong>marcos.bizarri@amorsaude.com</p>
-                            <p><strong>Cargo:</strong>Analista De Contas A Pagar Pl</p>
-                            <p><strong>Departamento:</strong>Financeiro</p>
-                            <p><strong>CPF:</strong>412.562.488-78</p>
-                            <p><strong>Data da admissão:</strong>20.junho.2023</p>
-                            <p><strong>Centro de Custo:</strong>13001 - Financeiro</p>
-                            <p><strong>Termo de Entrega do Equipamento:</strong><a target="_blank" href="https://drive.google.com/file/d/1F1yFWbjJ4CJpfXRvRNkV6GuPBfd6AgsJ/view?usp=sharing">Termo 01</a><a target="_blank" href="https://drive.google.com/file/d/1ND3ZszXO393AuFwsp5bgRauNXNYhcwtG/view?usp=sharing">Termo 02</a>
-                                <a
-                                target="_blank" href="https://drive.google.com/file/d/11_MINhHVp_BLYAR-T0gWmafwG9p9fIrB/view?usp=sharing">Termo 03</a>
-                            </p>
-                        </div>
-                    </section>
-                    <section class="equipamentos-info">
-                        <div class="equipamento">
-                            <p><strong>Tipo:</strong>Kit Teclado/Mouse</p>
-                            <p><strong>Patrimônio:</strong>275</p>
-                            <p class="serial"><strong>S/N:</strong>2243CE258479</p>
-                            <p class="serial"><strong>S/N:</strong>2241LZX3PAK8</p>
-                            <p><strong>Marca/Modelo:</strong>Logitech/MK270</p>
-                        </div>
-                        <div class="equipamento">
-                            <p><strong>Tipo:</strong>Suporte Notebook</p>
-                            <p><strong>Patrimônio:</strong>815</p>
-                            <p class="serial"><strong>S/N:</strong></p>
-                            <p><strong>Marca/Modelo:</strong>Alumínio</p>
-                        </div>
-                        <div class="equipamento">
-                            <p><strong>Tipo:</strong>Notebook</p>
-                            <p><strong>Patrimônio:</strong>166</p>
-                            <p class="serial"><strong>S/N:</strong>pe09781x</p>
-                            <p><strong>Marca/Modelo:</strong>ideapad3 15alc6</p>
-                        </div>
-                        <div class="equipamento">
-                            <p><strong>Tipo:</strong>Headset</p>
-                            <p><strong>Patrimônio:</strong>1017</p>
-                            <p class="serial"><strong>S/N:</strong>2235ME00Z1J9</p>
-                            <p><strong>Marca/Modelo:</strong>LOGITECH / H390</p>
-                        </div>
-                        <div class="equipamento">
-                            <p><strong>Tipo:</strong>Smartphone</p>
-                            <p><strong>Patrimônio:</strong>1030</p>
-                            <p class="serial"><strong>S/N:</strong>r9xw3007pcm</p>
-                            <p><strong>IMEI 1:</strong>358302235552506/01</p>
-                            <p><strong>IMEI 2:</strong>359796405555202/01</p>
-                            <p><strong>Marca/Modelo:</strong>Galaxy A03 Core</p>
-                        </div>
-                        <div class="equipamento">
-                            <p><strong>Tipo:</strong>Suporte Monitor</p>
-                            <p><strong>Patrimônio:</strong>1452</p>
-                            <p class="serial"><strong>S/N:</strong></p>
-                            <p><strong>Marca/Modelo:</strong>Multi Suporte</p>
-                        </div>
-                    </section>
-                </article>
+                
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
@@ -598,6 +540,66 @@
                 <header class="desativados">
                     <h1>COLABORADORES DESLIGADO</h1>
                 </header>
+                <article>
+                    <section class="colaborador-info">
+                        <div class="colaborador-img"><img src="foto_colaboradores/Marco Bizarri.jpg" alt="Foto Marco Aurélio Bizarri" class="foto"></div>
+                        <div class="colaborador-details">
+                            <p><strong>Colaborador:</strong> Marco Aurélio Bizarri</p>
+                            <p><strong>Email:</strong> marcos.bizarri@amorsaude.com</p>
+                            <p><strong>Cargo:</strong> Analista De Contas A Pagar Pl</p>
+                            <p><strong>Departamento:</strong> Financeiro</p>
+                            <p><strong>CPF:</strong> 412.562.488-78</p>
+                            <p><strong>Data da admissão:</strong> 20.06.2023</p>
+                            <p><strong>Alteração de setor:</strong> Produtos - 01.10.2024</p>
+                            <p><strong>Centro de Custo:</strong> 13001 - Financeiro</p>
+                            <p><strong>Termo de Entrega do Equipamento:</strong><a target="_blank" href="https://drive.google.com/file/d/1F1yFWbjJ4CJpfXRvRNkV6GuPBfd6AgsJ/view?usp=sharing">Termo 01</a><a target="_blank" href="https://drive.google.com/file/d/1ND3ZszXO393AuFwsp5bgRauNXNYhcwtG/view?usp=sharing">Termo 02</a>
+                                <a
+                                target="_blank" href="https://drive.google.com/file/d/11_MINhHVp_BLYAR-T0gWmafwG9p9fIrB/view?usp=sharing">Termo 03</a>
+                            </p>
+                        </div>
+                    </section>
+                    <section class="equipamentos-info">
+                        <div class="equipamento">
+                            <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                            <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
+                            <p class="serial"><strong>Teclado S/N:</strong>2243ce258478</p>
+                            <p class="serial"><strong>Mouse S/N:</strong>2241lz3pak8</p>
+                            <p><strong>Patrimônio:</strong>275</p>
+                        </div>
+                        <div class="equipamento">
+                            <p><strong>Tipo:</strong>Suporte</p>
+                            <p><strong>Marca/Modelo:</strong>Alumínio</p>
+                            <p class="serial"><strong>S/N:</strong></p>
+                            <p><strong>Patrimônio:</strong>815</p>
+                        </div>
+                        <div class="equipamento">
+                            <p><strong>Tipo:</strong>Notebook</p>
+                            <p><strong>Marca/Modelo:</strong>ideapad3 15alc6</p>
+                            <p class="serial"><strong>S/N:</strong>pe09781x</p>
+                            <p><strong>Patrimônio:</strong>166</p>
+                        </div>
+                        <div class="equipamento">
+                            <p><strong>Tipo:</strong>Headset</p>
+                            <p><strong>Marca/Modelo:</strong>Logitech H390</p>
+                            <p class="serial"><strong>S/N:</strong>2235ME00Z1J9</p>
+                            <p><strong>Patrimônio:</strong>1017</p>
+                        </div>
+                        <div class="equipamento-not-devolvido">
+                            <p><strong>Tipo:</strong>Smartphone</p>
+                            <p><strong>Marca/Modelo:</strong>Galaxy A03 Core</p>
+                            <p class="serial"><strong>S/N:</strong>r9xw3007pcm</p>
+                            <p><strong>IMEI 1:</strong>358302235552506/01</p>
+                            <p><strong>IMEI 2:</strong>359796405555202/01</p>
+                            <p><strong>Patrimônio:</strong>1030</p>                           
+                        </div>
+                        <div class="equipamento-not-devolvido">
+                            <p><strong>Tipo:</strong>Suporte Monitor</p>
+                            <p><strong>Marca/Modelo:</strong>Multi Suporte</p>
+                            <p class="serial"><strong>S/N:</strong></p>
+                            <p><strong>Patrimônio:</strong>1452</p>
+                        </div>
+                    </section>
+                </article>
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
