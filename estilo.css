@@ -41,22 +41,42 @@ footer p {
 .colaborador-info {
     display: flex;
 }
-
+.colaborador-info a{
+    text-decoration: none;
+    margin-left: 7px;
+    color: #000;
+}
 .colaborador-img {
     flex: 0 0 22%;
 }
 
 .colaborador-details {
     flex: 0 0 60%;
+    font-size: 14px;
 }
+.equipamentos-info{
 
+    display: flex;
+    gap: 5px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+}
 .equipamento {
-    margin-bottom: 20px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    padding: 0 0 0 10px;
+    border: 1px solid #ccc;
+    background-color: whitesmoke;
+    border-radius: 6px;
+    flex: 0 0 18%;
+}
+.serial{
+    text-transform: uppercase;
+}
+.ticket{
+    margin-bottom: 15px;
     padding: 0 0 0 10px;;
     border: 1px solid #ccc;
     background-color: whitesmoke;
     border-radius: 5px;
-}
-.serial{
-    text-transform: uppercase;
 }
