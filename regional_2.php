@@ -247,6 +247,9 @@ include 'header.php';
                         </div>
                     </section>
                 </article>
+                <header class="desativados">
+                    <h1>COLABORADORES DESATIVADOS</h1>
+                </header>
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
@@ -299,11 +302,6 @@ include 'header.php';
                         </div>
                     </section>
                 </article>
-
-
-                <header class="desativados">
-                    <h1>COLABORADORES DESATIVADOS</h1>
-                </header>
                 <article>
     <h2>DADOS DO COLABORADOR</h2>
     <div class="colaborador-info">
