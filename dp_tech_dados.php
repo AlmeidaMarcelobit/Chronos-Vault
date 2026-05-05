@@ -22,7 +22,7 @@
             <article>
                 <h2>DADOS DO COLABORADOR</h2>
                 <div class="colaborador-info">
-                    <div class="colaborador-img"><img src="foto_colaboradores/lucas_mateus.jpg" alt="Foto de Lucas Mateus" class="foto"></div>
+                    <div class="colaborador-img"><img src="foto_colaboradores/Lucas%20Mateus.jpeg" alt="Foto de Lucas Mateus" class="foto"></div>
                     <div class="colaborador-details">
                         <p><strong>Colaborador: </strong>Lucas Mateus</p>
                         <p><strong>Email: </strong>lucas.mateus@amorsaude.com</p>
@@ -92,7 +92,7 @@
             <article>
                 <h2>DADOS DO COLABORADOR</h2>
                 <div class="colaborador-info">
-                    <div class="colaborador-img"><img src="foto_colaboradores/victor_ribeiro.jpg" alt="Foto de Victor Ribeiro da Silva Dantas" class="foto"></div>
+                    <div class="colaborador-img"><img src="foto_colaboradores/Victor%20Ribeiro%20da%20Silva%20Dantas.jpeg" alt="Foto de Victor Ribeiro da Silva Dantas" class="foto"></div>
                     <div class="colaborador-details">
                         <p><strong>Colaborador: </strong>Victor Ribeiro da Silva Dantas</p>
                         <p><strong>Email: </strong>victor.dantas@amorsaude.com</p>
@@ -140,7 +140,7 @@
             <article>
                 <h2>DADOS DO COLABORADOR</h2>
                 <div class="colaborador-info">
-                    <div class="colaborador-img"><img src="foto_colaboradores/murilo_samuel_borba.jpg" alt="Foto de Murilo Samuel Borba" class="foto"></div>
+                    <div class="colaborador-img"><img src="foto_colaboradores/SEM%20FOTO.jpg" alt="Foto de Murilo Samuel Borba" class="foto"></div>
                     <div class="colaborador-details">
                         <p><strong>Colaborador: </strong>Murilo Samuel Borba</p>
                         <p><strong>Email: </strong>murilo.borba@amorsaude.com</p>
@@ -150,7 +150,6 @@
                         <p><strong>Data de admissão: </strong>15.04.2024</p>
                         <p><strong>Data de desligamento: </strong>N/A</p>
                         <p><strong>Centro de Custo: </strong>13011 - Dados</p>
-                        <p><strong>Termo de Entrega do Equipamento: </strong>Sim</p>
                         <p><strong>Substituição: </strong>Davi Ribeiro</p>
                     </div>
                 </div>
@@ -191,7 +190,7 @@
             <article>
                 <h2>DADOS DO COLABORADOR</h2>
                 <div class="colaborador-info">
-                    <div class="colaborador-img"><img src="foto_colaboradores/gabriel_guilherme.jpg" alt="Foto de Gabriel Guilherme" class="foto"></div>
+                    <div class="colaborador-img"><img src="foto_colaboradores/Gabriel%20Guilherme.jpeg" alt="Foto de Gabriel Guilherme" class="foto"></div>
                     <div class="colaborador-details">
                         <p><strong>Colaborador: </strong>Gabriel Guilherme</p>
                         <p><strong>Email: </strong>gabriel.guilherme@amorsaude.com</p>
@@ -201,8 +200,6 @@
                         <p><strong>Data de admissão: </strong>02.01.2023</p>
                         <p><strong>Data de desligamento: </strong>06.03.2024</p>
                         <p><strong>Centro de Custo: </strong>13011 - Suporte</p>
-                        <p><strong>Termo de Entrega do Equipamento: </strong>Sim</p>
-                        <p><strong>Substituição: </strong>N/A</p>
                     </div>
                 </div>
                 <h2>Dados Equipamentos</h2>
@@ -250,7 +247,6 @@
                         <p><strong>Data da admissão: </strong></p>
                         <p><strong>Data da desligamento: </strong>28.09.2023</p>
                         <p><strong>Centro de Custo: </strong>13011 - Dados</p>
-                        <p><strong>Termo de Entrega do Equipamento: </strong></p>
                     </div>
                 </div>
                 <h2>Dados equipamentos</h2>
