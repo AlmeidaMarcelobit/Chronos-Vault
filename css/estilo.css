@@ -96,3 +96,31 @@ footer p {
     background-color: white;
     border-radius: 5px;
 }
+.sidebar-menu {
+    width: 200px;          /* Define a largura do menu lateral */
+    height: 100%;         /* Faz com que o menu ocupe 100% da altura da página */
+    position:fixed;     /* Fixa o menu na lateral da tela */
+    top: 0;               /* Alinha o menu ao topo da página */
+    left: 0;              /* Alinha o menu à esquerda da página */
+    background-color: #333; /* Define a cor de fundo do menu */
+    color: white;         /* Define a cor do texto do menu */
+    padding: 0px;        /* Adiciona padding ao menu */
+    box-shadow: 2px 0 5px rgba(0,0,0,0.5); /* Adiciona uma sombra ao menu */
+    box-sizing: border-box; /* Inclui padding e borda na largura e altura do menu */
+}
+
+.sidebar-menu a {
+    color: white;         /* Define a cor do texto dos links */
+    text-decoration: none; /* Remove a sublinhado dos links */
+    display: block;       /* Faz com que cada link ocupe a largura total do menu */  
+    width: 100%;     /* Faz com que os links ocupem 100% da largura do menu */
+    padding: 10px 5px; /* Adiciona padding vertical e horizontal aos links */
+    box-sizing: border-box; /* Inclui padding e borda na largura dos links */
+    margin-top: 1px;
+}
+
+.sidebar-menu a:hover {
+    background-color: #575757; /* Define a cor de fundo dos links ao passar o mouse */
+}
+
+
