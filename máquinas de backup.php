@@ -13,7 +13,7 @@
 <body>
 <header><img src="icones/logo_amorsaude.png" alt="LOGO AMORSAUDE"></header>
 <?php
-include 'header.php'
+include 'header.html'
 ?>
 <main>
     <article class="">
@@ -121,5 +121,6 @@ include 'header.php'
         </section>
     </article>
 </main>
+<?php include 'footer.html'?>
 </body>
 
