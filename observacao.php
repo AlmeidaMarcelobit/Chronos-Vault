@@ -13,7 +13,7 @@
 <header>
     <img src="icones/logo_amorsaude.png" alt="LOGO AMORSAUDE">
 </header>
-<?php include 'header.php' ?>
+<?php include 'header.html' ?>
 <article>
     <div class="objetivo">
         <h1>Objetivos</h1>
@@ -93,7 +93,7 @@
             <p>Colaboradora Lethicia Eliane Souza Martins esta sem o termo no monitor </p>
         </div>
 </article>
-<?php include 'footer.php' ?>
+<?php include 'footer.html' ?>
 </body>
 
 </html>
