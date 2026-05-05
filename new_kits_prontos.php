@@ -26,13 +26,6 @@ include 'header.php'
 <article>
     <h2>DADOS DO COLABORADOR</h2>
     <div class="colaborador-info">
-        <div class="colaborador-img">
-            <img
-                src="foto_colaboradores/"
-                alt=""
-                class="foto"
-            />
-        </div>
         <div class="colaborador-details">
             <p><strong>ID Caixa:</strong> 118</p>
             <p><strong>Colaborador:</strong> Emily Fernandes Lopes</p>
