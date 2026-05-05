@@ -17,6 +17,22 @@
             			<header class="ativo">
 				<h1>COLABORADORES ATIVOS</h1>
 			</header>
+            <article>
+  <h2>DADOS DO COLABORADOR</h2>
+  <div class="colaborador-info">
+    <div class="colaborador-img"> <img src="../foto_colaboradores" alt="" class="foto" > </div>
+    <div class="colaborador-details">
+      <p><strong>Colaborador:</strong>Ariane Herrera</p>
+      <p><strong>Email:</strong>ariane.herrera@amorsaude.com</p>
+      <p><strong>Cargo:</strong></p>
+      <p><strong>Departamento:</strong>Operações Plano</p>
+      <p><strong>CPF:</strong></p>
+      <p><strong>Data da admissão:</strong></p>
+      <p><strong>Data da desligamento:</strong></p>
+      <p><strong>Centro de Custo:</strong></p>
+    </div>
+  </div>
+</article>   
 <article>
     <h2>DADOS DO COLABORADOR</h2>
     <div class="colaborador-info">
