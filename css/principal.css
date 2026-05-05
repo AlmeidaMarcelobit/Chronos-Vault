@@ -93,6 +93,7 @@ header {
 }
 .desativados{
     background-color: #d32f2f;
+    border-radius: 10px;
 }
 article{
     padding: 10px;
@@ -151,7 +152,6 @@ footer .version {
     border: 1px solid #d32f2f;
 }
 .equipamento-not-devolvido, .equipamento {
-    margin-right: 10px;
     border-radius: 6px;
     flex: 4 4;
     box-sizing: border-box;
@@ -172,9 +172,10 @@ footer .version {
 .equipamento, .equipamento-not-devolvido,
 .ticket {
     font-size: 12px;
-    border: 1px solid #444;
     padding: 5px;
+    border: 1px solid #444;
     margin-top: 5px;
+    margin-left: 1%;
 }
 .serial, h2, h3 {
     text-transform: uppercase;
