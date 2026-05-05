@@ -20,6 +20,24 @@
         <h1>COLABORADORES ATIVOS</h1>
       </header>
       <article>
+        <h2>DADOS DO COLABORADOR</h2>
+        <div class="colaborador-info">
+            <div class="colaborador-img">
+                <img src="../foto_colaboradores" alt="" class="foto" >
+            </div>
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong>Larissa Izabela De Freitas</p>
+                <p><strong>Email:</strong>larissa.freitas@amorsaude.com</p>
+                <p><strong>Cargo:</strong>Analista Administrativo Pleno</p>
+                <p><strong>Departamento:</strong>Cirurgias</p>
+                <p><strong>CPF:</strong>470.350.438-37</p>
+                <p><strong>Data da admissão:</strong>04.03.2024</p>
+                <p><strong>Data da desligamento:</strong></p>
+                <p><strong>Centro de Custo:</strong>32001 - Administrativo</p>
+            </div>
+        </div>
+        </article>
+      <article>
     <h2>DADOS DO COLABORADOR</h2>
     <div class="colaborador-info">
         <div class="colaborador-img">
@@ -272,6 +290,7 @@
             <p><strong>Cargo: </strong>Assistente Administrativo</p>
             <p><strong>Departamento: </strong>Amorcirurgias</p>
             <p><strong>CPF: </strong>438.725.158-10</p>
+            <p><strong>Data da Promoção:</strong>23.01.2024</p>
             <p><strong>Centro de Custo: </strong>32001 - Administrativo</p>
           </div>
         </section>
