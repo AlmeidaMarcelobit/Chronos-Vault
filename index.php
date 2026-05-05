@@ -22,8 +22,7 @@
         ?>
         <main>
             <article>
-                <h1></h1>
-                <p>Este site foi desenvolvido para atender às necessidades de administração de inventário de equipamentos, gestão de dados e termos de responsabilidade. Aqui estão registradas informações detalhadas sobre cada equipamento atribuído a cada funcionário</p>
+<p>Este site foi desenvolvido para atender às necessidades de administração de inventário de equipamentos, gestão de dados e termos de responsabilidade. Aqui estão registradas informações detalhadas sobre cada equipamento atribuído a cada funcionário</p>
             </article>
         </main>
 
