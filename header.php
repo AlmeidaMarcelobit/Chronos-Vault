@@ -5,6 +5,7 @@
             <a href="#" class="dropbtn">Departamentos</a>
             <div class="dropdown-content">
                 <a href="dp_administrativo_laboratório.php">Administrativo Laboratório</a>
+                <a href="dp_amorcirurgias.php">AmorCirurgias</a>
                 <a href="dp_atendimento_ao_cliente.php">Atendimento ao Cliente</a>
                 <a href="dp_backoffice.php">BackOffice</a>
 
@@ -16,6 +17,11 @@
                         <a href="regional_2.php">Regional 2</a>
                     </div>
                 </div>
+                <a href="dp_crm.php">CRM</a>
+                <a href="dp_financeiro.php">Financeiro</a>
+                <a href="dp_inteligencia_de_negocios.php">Inteligência de Negócios</a>
+                <a href="dp_pessoas_e_cultura.php">Pessoas e Cultura</a>
+                <a href="dp_relacionamento_com_cliente.php">Relacionamento com Cliente</a>
                 <div class="dropdown">
                     <a href="#" class="dropbtn">Tecnologia</a>
                     <div class="dropdown-content">
@@ -23,10 +29,6 @@
                         <a href="dp_dados.php">Dados</a>
                     </div>
                 </div>
-                <a href="dp_crm.php">CRM</a>
-                <a href="dp_financeiro.php">Financeiro</a>
-                <a href="dp_inteligencia_de_negocios.php">Inteligência de Negócios</a>
-                <a href="dp_pessoas_e_cultura.php">Pessoas e Cultura</a>
                 <a href="dp_telemedicina.php">Telemedicina</a>
                 <li class="dropdown">
                     <a href="#" class="dropbtn">Estoque</a>
@@ -35,7 +37,7 @@
                         <a href="máquinas%20de%20backup.php">Maquina Backups</a>
                         <a href="monitores.php">Monitores</a>
                         <a href="fones.php">Fones</a>
-                        <a href="back_kits_prontos.php">Kits Prontos</a>
+                        <a href="new_kits_prontos.php">Kits Prontos</a>
                     </div>
                 </li>
                 <li><a href="centro_custo.php">Lista Centro de Custo</a></li>
