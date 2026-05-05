@@ -35,7 +35,6 @@
           <p><strong>Data da admissão: </strong>06.05.2024</p>
           <p><strong>Data da desligamento: </strong></p>
           <p><strong>Centro de Custo: </strong>12005</p>
-          <p><strong>Termo de Entrega do Equipamento: </strong>Termo 01</p>
           <p><strong>Subtituição: </strong>Letícia Godoy da Silva</p>
         </div>
       </div>
@@ -388,7 +387,7 @@
           <p><strong>Data da admissão: </strong></p>
           <p><strong>Data da desligamento: </strong></p>
           <p><strong>Centro de Custo: </strong>12005 - Backoffice</p>
-          <p><strong>Termo de Entrega do Equipamento: </strong></p>
+
           <p><strong>Subtituição: </strong></p>
         </div>
       </section>
@@ -540,13 +539,13 @@
       </section>
       <h2>Equipamento danificados</h2>
       <section class="equipamentos-info">
-        <div class="equipamento">
+        <div class="equipamento-danificados">
           <p><strong>Tipo:</strong> Fone</p>
           <p><strong>Marca/Modelo:</strong> Logitech H390</p>
           <p class="serial"><strong>S/N:</strong> 2321AY92309</p>
           <p><strong>Patrimônio:</strong> 830</p>
         </div>
-        <div class="equipamento">
+        <div class="equipamento-danificados">
           <p><strong>Tipo:</strong> Fone</p>
           <p><strong>Marca/Modelo:</strong> Jabra HSC016</p>
           <p class="serial"><strong>S/N:</strong> 265438192</p>
@@ -697,7 +696,6 @@
           <p><strong>Data da admissão: </strong>17.05.2021</p>
           <p><strong>Data da desligamento: </strong>19.08.2024</p>
           <p><strong>Centro de Custo: </strong></p>
-          <p><strong>Termo de Entrega do Equipamento: </strong></p>
         </div>
       </div>
       <h2>Dados equipamentos</h2>
