@@ -220,52 +220,7 @@
             <p><strong>Equipamento:</strong>Suporte, Teclado e Mouse, Notebook</p>
         </section>
     </article>
-    <article>
-        <h2>DADOS DO COLABORADOR</h2>
-        <section class="colaborador-info">
-            <div><img src="foto_colaboradores/Juliana%20Magalhães.jpeg" alt="Foto de Juliana Braz Paula Magalhães" class="foto"></div>
-            <div class="colaborador-details">
-                <p><strong>Colaborador:</strong>Juliana Braz Paula Magalhães</p>
-                <p><strong>Email:</strong>juliana.magalhaes@amorsaude.com</p>
-                <p><strong>Cargo:</strong>Consultora de Operações Externo</p>
-                <p><strong>Departamento:</strong>Consultoria</p>
-                <p><strong>CPF:</strong>018.694.713-50</p>
-                <p><strong>Data da admissão:</strong>08.01.2024</p>
-                <p><strong>Centro de Custo:</strong>12006 - Regional 1</p>
-            </div>
-        </section>
-        <h2>DADOS DOS EQUIPAMENTOS</h2>
-        <section class="equipamentos-info">
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Teclado e Mouse</p>
-                <p><strong>Patrimônio:</strong>482</p>
-                <p class="serial"><strong>S/N:</strong>2232CE1CFB28 - 2230LZX1RAX8</p>
-                <p><strong>Marca/Modelo:</strong>K270 - M185</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Notebook Win-11 i5-1135G7 8GB</p>
-                <p><strong>Patrimônio:</strong>483</p>
-                <p class="serial"><strong>S/N:</strong>9832JZ3</p>
-                <p><strong>Marca/Modelo:</strong>Dell Vostro 3520</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Suporte</p>
-                <p><strong>Patrimônio:</strong>937</p>
-                <p class="serial"><strong>S/N:</strong></p>
-                <p><strong>Marca/Modelo:</strong>Alumínio</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Fone</p>
-                <p><strong>Patrimônio:</strong>938</p>
-                <p class="serial"><strong>S/N:</strong>2332ME01YRP8</p>
-                <p><strong>Marca/Modelo:</strong>Logitech H390</p>
-            </div>
-        </section>
-        <section class="ticket">
-            <p><strong>ID Ticket:</strong></p>
-            <p><strong>Equipamento:</strong>Teclado e Mouse, Notebook, Suporte, Fone</p>
-        </section>
-    </article>
+    
     <article>
         <h2>DADOS DO COLABORADOR</h2>
         <section class="colaborador-info">
@@ -620,6 +575,52 @@
     <header class="desativados">
         <h1>COLABORADORES DESATIVADOS</h1>
     </header>
+    <article>
+        <h2>DADOS DO COLABORADOR</h2>
+        <section class="colaborador-info">
+            <div><img src="foto_colaboradores/Juliana%20Magalhães.jpeg" alt="Foto de Juliana Braz Paula Magalhães" class="foto"></div>
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong>Juliana Braz Paula Magalhães</p>
+                <p><strong>Email:</strong>juliana.magalhaes@amorsaude.com</p>
+                <p><strong>Cargo:</strong>Consultora de Operações Externo</p>
+                <p><strong>Departamento:</strong>Consultoria</p>
+                <p><strong>CPF:</strong>018.694.713-50</p>
+                <p><strong>Data da admissão:</strong>08.01.2024</p>
+                <p><strong>Centro de Custo:</strong>12006 - Regional 1</p>
+            </div>
+        </section>
+        <h2>DADOS DOS EQUIPAMENTOS</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                <p><strong>Patrimônio:</strong>482</p>
+                <p class="serial"><strong>S/N:</strong>2232CE1CFB28 - 2230LZX1RAX8</p>
+                <p><strong>Marca/Modelo:</strong>K270 - M185</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Notebook Win-11 i5-1135G7 8GB</p>
+                <p><strong>Patrimônio:</strong>483</p>
+                <p class="serial"><strong>S/N:</strong>9832JZ3</p>
+                <p><strong>Marca/Modelo:</strong>Dell Vostro 3520</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Suporte</p>
+                <p><strong>Patrimônio:</strong>937</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Marca/Modelo:</strong>Alumínio</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Fone</p>
+                <p><strong>Patrimônio:</strong>938</p>
+                <p class="serial"><strong>S/N:</strong>2332ME01YRP8</p>
+                <p><strong>Marca/Modelo:</strong>Logitech H390</p>
+            </div>
+        </section>
+        <section class="ticket">
+            <p><strong>ID Ticket:</strong></p>
+            <p><strong>Equipamento:</strong>Teclado e Mouse, Notebook, Suporte, Fone</p>
+        </section>
+    </article>
     <article>
         <h2>DADOS DO COLABORADOR</h2>
         <section class="colaborador-info">
