@@ -17,6 +17,24 @@
     <header class="ativo">
         <h1>COLABORADORES ATIVOS</h1>
     </header>
+    <article>
+        <h2>DADOS DO COLABORADOR</h2>
+        <div class="colaborador-info">
+            <div class="colaborador-img">
+                <img src="../foto_colaboradores" alt="" class="foto" >
+            </div>
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong>Felipe Gomes</p>
+                <p><strong>Email:</strong>felipe.gomes@amorsaude.com</p>
+                <p><strong>Cargo:</strong>Tech Lead</p>
+                <p><strong>Departamento:</strong>Gerência Tecnologia</p>
+                <p><strong>CPF:</strong></p>
+                <p><strong>Data da admissão:</strong></p>
+                <p><strong>Data da desligamento:</strong></p>
+                <p><strong>Centro de Custo:</strong>13015</p>
+            </div>
+        </div>
+        </article>
         <article>
         <h2>DADOS DO COLABORADOR</h2>
         <div class="colaborador-info">
