@@ -408,7 +408,8 @@
                     <p><strong>Cargo:</strong>Product Owner Jr</p>
                     <p><strong>Departamento:</strong>Produto</p>
                     <p><strong>CPF:</strong>412.562.488-78</p>
-                    <p><strong>Data de admissão:</strong>01.10.2024</p>
+                    <p><strong>Data de admissão:</strong>20.06.2023</p> 
+                    <p><strong>Data de promoção:</strong>01.10.2024</p>
                     <p><strong>Data de desligamento:</strong></p>
                     <p><strong>Centro de Custo:</strong>13013 - Produto</p>
                 </div>
