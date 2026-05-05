@@ -22,14 +22,16 @@
         <article>
             <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
+                <div>
+                    <img src="foto_colaboradores/Gabriele Marin Soare.jpeg" alt="foto Gabriele Marin Soare" class="foto">
+                </div>
                 <div class="colaborador-details">
-                    <p><strong>ID Caixa: </strong>100</p>
                     <p><strong>Colaborador: </strong>Gabriele Marin Soare</p>
                     <p><strong>Email: </strong>gabriele.marin@amorsaude.com</p>
                     <p><strong>Cargo: </strong>Consultor de Operações</p>
                     <p><strong>Departamento: </strong>Consultoria</p>
                     <p><strong>CPF: </strong>453.937.658-60</p>
-                    <p><strong>Data da Entrando: </strong>19/08/2024</p>
+                    <p><strong>Data da Entrando: </strong>19.08.2024</p>
                     <p><strong>Substituição: </strong>Aline Oliveira</p>
                     <p><strong>Centro de Custo: </strong>12006 - Regional 1</p>
                 </div>
@@ -67,14 +69,16 @@
         <article>
             <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
+                <div>
+                    <img src="foto_colaboradores/Murilo%20Venturoso.jpeg" alt="foto de Murilo Venturoso" class="foto">
+                </div>
                 <div class="colaborador-details">
-                    <p><strong>ID Caixa: </strong>02</p>
                     <p><strong>Colaborador: </strong>Murilo Venturoso Tinazzo</p>
                     <p><strong>Email: </strong>murilo.tinazzo@amorsaude.com</p>
                     <p><strong>Cargo: </strong>Consultor de Operações</p>
                     <p><strong>Departamento: </strong>12006 - Regional 1</p>
                     <p><strong>CPF: </strong>334.823.378-02</p>
-                    <p><strong>Data da admissão:  </strong>19/08/2024</p>
+                    <p><strong>Data da admissão:  </strong>19.08.2024</p>
                     <p><strong>Centro de Custo: </strong>12006 - Regional 1</p>
                 </div>
             </section>
@@ -134,16 +138,15 @@
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Priscila%20Faqim.jpeg" alt="Foto de Priscila Moreira Faqim" class="foto"></div>
+                <div><img src="foto_colaboradores/Priscila%20Faqim.jpeg" alt="Foto de Priscila Moreira Faqim" class="foto"></div>
                 <div class="colaborador-details">
                     <p><strong>Colaborador: </strong> Priscila Moreira Faquim</p>
                     <p><strong>Email: </strong>priscila.faqim@amorsaude.com</p>
                     <p><strong>Cargo: </strong>Consultor de Operações</p>
                     <p><strong>Departamento: </strong>Consultoria</p>
                     <p><strong>CPF: </strong>346.070.918-98</p>
-                    <p><strong>Data de Entrada: </strong>8.jan.2024</p>
+                    <p><strong>Data da admissão: </strong>08.01.2024</p>
                     <p><strong>Centro de Custo: </strong>12006 - Regional 1</p>
-                    <p><strong>Termo de Entrega de Equipamento: </strong></p>
                 </div>
             </section>
             <h2>DADOS DOS EQUIPAMENTOS</h2>
@@ -187,16 +190,15 @@
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Luylla%20Magalhaes.jpeg" alt="Foto de Luylla Louise Magalhaes" class="foto"></div>
+                <div><img src="foto_colaboradores/Luylla%20Magalhaes.jpeg" alt="Foto de Luylla Louise Magalhaes" class="foto"></div>
                 <div class="colaborador-details">
                     <p><strong>Colaborador: </strong> Luylla Louise Magalhaes</p>
                     <p><strong>Email: </strong> luylla.magalhaes@amorsaude.com</p>
                     <p><strong>Cargo: </strong> Consultora De Operações</p>
                     <p><strong>Departamento: </strong> Consultoria</p>
                     <p><strong>CPF: </strong> 123.135.016-47</p>
-                    <p><strong>Data de Entrada: </strong> 5-fev.2024</p>
+                    <p><strong>Data da admissão: </strong> 05.02.2024</p>
                     <p><strong>Centro de Custo: </strong> 12007 - Regional 1</p>
-                    <p><strong>Termo de Entrega de Equipamento: </strong></p>
                 </div>
             </section>
             <h2>DADOS DOS EQUIPAMENTOS</h2>
@@ -234,16 +236,15 @@
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Juliana%20Magalhães.jpeg" alt="Foto de Juliana Braz Paula Magalhães" class="foto"></div>
+                <div><img src="foto_colaboradores/Juliana%20Magalhães.jpeg" alt="Foto de Juliana Braz Paula Magalhães" class="foto"></div>
                 <div class="colaborador-details">
                     <p><strong>Colaborador: </strong> Juliana Braz Paula Magalhães</p>
                     <p><strong>Email: </strong> juliana.magalhaes@amorsaude.com</p>
-                    <p><strong>Cargo: </strong> Consultor(a) de Operações Externo</p>
+                    <p><strong>Cargo: </strong> Consultora de Operações Externo</p>
                     <p><strong>Departamento: </strong> Consultoria</p>
                     <p><strong>CPF: </strong> 018.694.713-50</p>
-                    <p><strong>Data de Entrada: </strong> 8.jan.2024</p>
+                    <p><strong>Data da admissão: </strong>08.01.2024</p>
                     <p><strong>Centro de Custo: </strong> 12006 - Regional 1</p>
-                    <p><strong>Termo de Entrega de Equipamento: </strong></p>
                 </div>
             </section>
             <h2>DADOS DOS EQUIPAMENTOS</h2>
@@ -282,53 +283,7 @@
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Juliana%20de%20Oliveira%20Silvério.jpeg" alt="Foto de Juliana de Oliveira Silvério" class="foto"></div>
-                <div class="colaborador-details">
-                    <p><strong>Colaborador: </strong> Juliana de Oliveira Silvério</p>
-                    <p><strong>Email: </strong> juliana.silverio@amorsaude.com</p>
-                    <p><strong>Cargo: </strong> Consultor de Operação</p>
-                    <p><strong>Departamento: </strong> Consultoria</p>
-                    <p><strong>CPF: </strong> 293.701.128-47</p>
-                    <p><strong>Centro de Custo: </strong> 12006 - Regional 1</p>
-                    <p><strong>Termo de Entrega de Equipamento: </strong></p>
-                </div>
-            </section>
-            <h2>DADOS DOS EQUIPAMENTOS</h2>
-            <section class="equipamentos-info">
-                <div class="equipamento">
-                    <p><strong>Tipo: </strong> Teclado e Mouse</p>
-                    <p><strong>Patrimônio: </strong> 459</p>
-                    <p class="serial"><strong>S/N: </strong> 2232CE1CFB68 - 2230LZX1R9F8</p>
-                    <p><strong>Marca/Modelo: </strong> K270 - M185</p>
-                </div>
-                <div class="equipamento">
-                    <p><strong>Tipo: </strong> Suporte</p>
-                    <p><strong>Patrimônio: </strong> 923</p>
-                    <p><strong>S/N: </strong></p>
-                    <p><strong>Marca/Modelo: </strong> Aluminio</p>
-                </div>
-                <div class="equipamento">
-                    <p><strong>Tipo: </strong> Fone</p>
-                    <p><strong>Patrimônio: </strong> 924</p>
-                    <p class="serial"><strong>S/N: </strong> 2332ME01XL08</p>
-                    <p><strong>Marca/Modelo: </strong> Logitech H390</p>
-                </div>
-                <div class="equipamento">
-                    <p><strong>Tipo: </strong> Notebook Win-11 i5-1135G7 8GB</p>
-                    <p><strong>Patrimônio: </strong> 294</p>
-                    <p class="serial"><strong>S/N: </strong> HN3MOT3</p>
-                    <p><strong>Marca/Modelo: </strong> Dell Vostro 15 3510</p>
-                </div>
-            </section>
-            <section class="ticket">
-                <p><strong>ID Ticket: </strong></p>
-                <p><strong>Equipamento: </strong> Teclado e Mouse, Suporte, Fone, Notebook</p>
-            </section>
-        </article>
-        <article>
-            <h2>DADOS DO COLABORADOR</h2>
-            <section class="colaborador-info">
-                <div class="colaborador-img">
+                <div>
                     <img src="foto_colaboradores/Artur%20Mello.jpeg" alt="Foto de Artur Ferreira Morais Mello" class="foto">
                 </div>
                 <div class="colaborador-details">
@@ -337,11 +292,10 @@
                     <p><strong>Cargo: </strong> Consultor de Operações</p>
                     <p><strong>Departamento: </strong> Consultoria</p>
                     <p><strong>CPF: </strong> 397.945.948-90</p>
+                    <p><strong>Data da admissão: </strong>08.01.2024</p>
                     <p><strong>Centro de Custo: </strong> 12006 - Regional 1</p>
-                    <p><strong>Termo de Entrega de Equipamento: </strong></p>
                 </div>
             </section>
-
             <h2>DADOS DOS EQUIPAMENTOS</h2>
             <section class="equipamentos-info">
                 <div class="equipamento">
@@ -395,52 +349,59 @@
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img">
-                    <img src="foto_colaboradores/Ana Caroline de Rezende Alves.jpeg" alt="Foto de Ana Caroline de Rezende Alves" class="foto" />
+                <div>
+                    <img src="foto_colaboradores/Ana%20Caroline%20Alves.jpeg" alt="Foto de Ana Caroline de Rezende Alves" class="foto" />
                 </div>
                 <div class="colaborador-details">
-                    <p><strong>Colaborador: </strong>Ana Caroline de Rezende Alves</p>
-                    <p><strong>Email: </strong>ana.rezende@amorsaude.com</p>
-                    <p><strong>Cargo: </strong>Assistente Administrativo</p>
-                    <p><strong>Departamento: </strong>Administrativo</p>
+                    <p><strong>Colaborador: </strong>Ana Caroline Alves</p>
+                    <p><strong>Email: </strong>anacaroline.alves@amorsaude.com</p>
+                    <p><strong>Cargo: </strong>Lider de Consultoria</p>
+                    <p><strong>Departamento: </strong>Consultoria</p>
                     <p><strong>CPF:  </strong>123.456.789-00</p>
-                    <p><strong>Centro de Custo:  </strong> 11001 - Administração</p>
-                    <p><strong>Termo de Entrega de Equipamento:  </strong><a target="_blank" href="https: //drive.google.com/file/d/1AlBHYhCkAKmvDf-caahft1cCDvN8cu25/view?usp=sharing">Termo 01</a></p>
+                    <p><strong>Data da admissão: </strong>06.04.2021</p>
+                    <p><strong>Centro de Custo:  </strong> 12006 - Regional 1</p>
                 </div>
             </section>
             <h2>DADOS DOS EQUIPAMENTOS</h2>
             <section class="equipamentos-info">
                 <div class="equipamento">
-                    <p><strong>Tipo: </strong>Notebook</p>
-                    <p><strong>Patrimônio: </strong>1234</p>
+                    <p><strong>Tipo: </strong>Notebook Win-11 i5-1135G7 8GB</p>
+                    <p><strong>Marca/Modelo: </strong>Dell Vostro 3520</p>
                     <p class="serial"><strong>S/N: </strong>SN12345678</p>
-                    <p><strong>Marca/Modelo: </strong>HP EliteBook 840 G5</p>
+                    <p><strong>Patrimônio: </strong>1234</p>
                 </div>
                 <div class="equipamento">
                     <p><strong>Tipo: </strong>Fone</p>
-                    <p><strong>Patrimônio: </strong>5678</p>
-                    <p class="serial"><strong>S/N: </strong>FN87654321</p>
                     <p><strong>Marca/Modelo: </strong>Logitech H390</p>
+                    <p class="serial"><strong>S/N: </strong>2332ME01XK88</p>
+                    <p><strong>Patrimônio: </strong>926</p>
                 </div>
                 <div class="equipamento">
-                    <p><strong>Tipo: </strong>Mouse</p>
-                    <p><strong>Patrimônio: </strong>91011</p>
-                    <p class="serial"><strong>S/N: </strong>MOU123456</p>
-                    <p><strong>Marca/Modelo: </strong>Logitech M185</p>
+                    <p><strong>Tipo: </strong>Teclado e Mouse</p>
+                    <p><strong>Patrimônio: </strong>Logitech MK270</p>
+                    <p class="serial"><strong>Teclado S/N: </strong>2232CE1CFFB78</p>
+                    <p class="serial"><strong>Mouse S/N: </strong>2230LZX1R9E8</p>
+                    <p><strong>Marca/Modelo: </strong>462</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo: </strong>Suporte</p>
+                    <p><strong>Patrimônio: </strong>927</p>
+                    <p class="serial"><strong>S/N: </strong></p>
+                    <p><strong>Marca/Modelo: </strong>Aluminio</p>
                 </div>
             </section>
         </article>
         <article>
             <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/SEM FOTO.jpg" alt="Sem Foto" class="foto"></div>
+                <div><img src="foto_colaboradores/SEM FOTO.jpg" alt="Sem Foto" class="foto"></div>
                 <div class="colaborador-details">
                     <p><strong>Colaborador: </strong>Tatiane Coelho da Luz</p>
                     <p><strong>Email: </strong>tatiane.luz@amorsaude.com</p>
                     <p><strong>Cargo: </strong>Consultor de Operações</p>
                     <p><strong>Departamento: </strong>Operações</p>
                     <p><strong>CPF: </strong>346.405.008-40</p>
-                    <p><strong>Data de Entrada: </strong>15/07/2024</p>
+                    <p><strong>Data da admissão: </strong>15.07.2024</p>
                     <p><strong>Substituição: </strong>Luiz Assumpção</p>
                     <p><strong>Centro de Custo: </strong>12006 - Regional 1</p>
                 </div>
@@ -494,7 +455,7 @@
         <article>
             <h2>Dados do colaborador</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Lucilene%20Santos%20Matias.jpeg" alt="Sem Foto" class="foto"></div>
+                <div><img src="foto_colaboradores/Lucilene%20Santos%20Matias.jpeg" alt="Sem Foto" class="foto"></div>
                 <div class="colaborador-details">
                     <p><strong>Colaborador: </strong>Lucilene Santos Matias</p>
                     <p><strong>Email: </strong>lucilene.matias@amorsaude.com</p>
@@ -554,16 +515,15 @@
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Yago Mariano.jfif" alt="Miguel Silverio" class="foto"></div>
+                <div><img src="foto_colaboradores/Yago Mariano.jfif" alt="Miguel Silverio" class="foto"></div>
                 <div class="colaborador-details">
                     <p><strong>Colaborador: </strong>Yago dos Anjos Mariano</p>
                     <p><strong>Email: </strong>yago.mariano@amorsaude.com</p>
                     <p><strong>Cargo: </strong>Consultor de Operações</p>
                     <p><strong>Departamento: </strong>Consultoria</p>
                     <p><strong>CPF: </strong>120.120.005-42</p>
-                    <p><strong>Data da admissão:  </strong>03.junho.2023</p>
+                    <p><strong>Data da admissão:  </strong>03.06.2023</p>
                     <p><strong>Centro de Custo: </strong>12006 - Regional 1</p>
-                    <p><strong>Termo de Entrega de Equipamento: </strong><a target="_blank" href="https: //drive.google.com/file/d/10dVFCjbNg71AmPb8Om59NuucWTcJC-BI/view?usp=sharing">Termo 01</a></p>
                 </div>
             </section>
             <h2>DADOS EQUIPAMENTOS</h2>
@@ -621,16 +581,15 @@
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Lucas Colbacho.jfif" alt="Foto de Lucas Colbacho" class="foto"></div>
+                <div><img src="foto_colaboradores/Lucas Colbacho.jfif" alt="Foto de Lucas Colbacho" class="foto"></div>
                 <div class="colaborador-details">
                     <p><strong>Colaborador: </strong>Lucas Colbacho</p>
                     <p><strong>Email: </strong>lucas.colbacho@amorsaude.com</p>
                     <p><strong>Cargo: </strong>Consultor de Operações</p>
                     <p><strong>Departamento: </strong>Consultoria</p>
                     <p><strong>CPF: </strong>369.193.928-79</p>
-                    <p><strong>Data da admissão:  </strong>19.fevereiro.2024</p>
+                    <p><strong>Data da admissão:  </strong>19.02.2024</p>
                     <p><strong>Centro de Custo: </strong>12006 - Regional 1</p>
-                    <p><strong>Termo de Entrega do Equipamento: </strong><a href="https: //drive.google.com/file/d/13OpRnON_1kSbFogspHcirKaCHkX6q5tL/view?usp=sharing" target="_blank">Termo 01</a><a target="_blank" href="https: //drive.google.com/file/d/11fwKsZC5zSPetsbwsZLRzB5TtMVg0qXD/view?usp=sharing">Termo 02</a></p>
                     <p><strong>Subtituição: </strong>Thais Medina</p>
                 </div>
             </section>
@@ -682,7 +641,7 @@
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Bruna Emilio.jpg" alt="Foto de Bruna Rafaela Emilio" class="foto"></div>
+                <div><img src="foto_colaboradores/Bruna Emilio.jpg" alt="Foto de Bruna Rafaela Emilio" class="foto"></div>
                 <div class="colaborador-details">
                     <p><strong>Colaborador: </strong>Bruna Rafaela Emilio</p>
                     <p><strong>Email: </strong>bruna.emilio@amorsaude.com</p>
@@ -692,7 +651,6 @@
                     <p><strong>Data de entrada: </strong>20.06.2023</p>
                     <p><strong>Data de saida: </strong>20.06.2024</p>
                     <p><strong>Centro de Custo: </strong>12006 - Regional 1</p>
-                    <p><strong>Termo de Entrega de Equipamento: </strong><a target="_blank" href="https: //drive.google.com/file/d/1d34HGEe8PYKtASlIKueaWKCjRPIMB2k3/view?usp=sharing">Termo 01</a><a href="https: //drive.google.com/file/d/1EG7fOQGkXnlgIKX7TPjJexX35C780QMy/view?usp=sharing" target="_blank">Termo 02</a></p>
                 </div>
             </section>
             <h2>DADOS DOS EQUIPAMENTOS</h2>
@@ -740,7 +698,7 @@
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Aline%20Oliveira.jpg" alt="Foto de Aline Camilo de Oliveira" class="foto"></div>
+                <div><img src="foto_colaboradores/Aline%20Oliveira.jpg" alt="Foto de Aline Camilo de Oliveira" class="foto"></div>
                 <div class="colaborador-details">
                     <p><strong>Colaborador: </strong>Aline Camilo de Oliveira</p>
                     <p><strong>Email:  </strong>aline.oliveira@amorsaude.com</p>
@@ -750,7 +708,7 @@
                     <p><strong>Data da admissão:  </strong>14.12.2023</p>
                     <p><strong>Data da desligamento:  </strong>20.06.2024</p>
                     <p><strong>Centro de Custo: </strong>12006 - Regional 1</p>
-                    <p><strong>Termo de Entrega de Equipamento: </strong><a target="_blank" href=""></a></p>
+                    <p><strong>Termo de Entrega de Equipamento: </strong><a target="_blank" href=""></a></p>x
                 </div>
             </section>
             <h2>Dados equipamentos</h2>
