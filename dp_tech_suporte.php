@@ -17,16 +17,19 @@
             <header class="ativo">
                 <h1>COLABORADORES ATIVOS</h1>
             </header>
-            <article></article>
+            <article>
                 <h2>Dados do colaborador</h2>
                 <section class="colaborador-info">
+                    <div>
+                        <img src="foto_colaboradores/Thiago%20Isaac%20da%20Silva.jpeg" alt="foto de Thiago Isaac da Silva" class="foto">
+                    </div>
                     <div class="colaborador-details">
                         <p><strong>Colaborador: </strong>Thiago Isaac da Silva</p>
                         <p><strong>Email: </strong>thiago.silva@amorsaude.com</p>
                         <p><strong>Cargo: </strong>Analista De Suporte Pl</p>
                         <p><strong>Departamento: </strong>Suporte</p>
                         <p><strong>CPF: </strong>436.577.728-98</p>
-                        <p><strong>Data da admissão: </strong>22-ago.-2023</p>
+                        <p><strong>Data da admissão: </strong>22.08.2023</p>
                         <p><strong>Centro de Custo: </strong>13019 - Suporte</p>
                     </div>
                 </section>
