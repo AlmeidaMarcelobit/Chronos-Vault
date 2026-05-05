@@ -42,18 +42,6 @@
         <section class="notebooks-info">
             <div class="img"><img src="icones/laptop.png" alt="icone laptop"></div>
             <div class="equipamento-details">
-                <p><strong>Centro de Custo:</strong>13019 - Suporte</p>
-                <p><strong>Tipo:</strong>Notebook Win-10 i5-1135G7 8GB</p>
-                <p><strong>Patrimonio:</strong>473</p>
-                <p><strong>Marca/Modelo:</strong>Dell Vostro 15 3510</p>
-                <p class="serial"><strong>S/N:</strong>GTZHNY3</p>
-            </div>
-        </section>
-    </article>
-    <article class="">
-        <section class="notebooks-info">
-            <div class="img"><img src="icones/laptop.png" alt="icone laptop"></div>
-            <div class="equipamento-details">
                 <p><strong>Centro de Custo:</strong>13006 - Pessoas & Cultura</p>
                 <p><strong>Tipo:</strong>Notebook Win-11 i7-1255U 16GB</p>
                 <p><strong>Patrimonio:</strong></p>
