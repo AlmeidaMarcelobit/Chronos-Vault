@@ -6313,14 +6313,14 @@ include 'header.php'
             <section class="colaborador-info">
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:  </strong>107</p>
-                    <p><strong>Colaborador: </strong></p>
+                    <p><strong>Colaborador: </strong>Leandro Rodrigues</p>
                     <p><strong>Email: </strong></p>
-                    <p><strong>Cargo: </strong></p>
-                    <p><strong>Departamento: </strong></p>
-                    <p><strong>CPF: </strong></p>
+                    <p><strong>Cargo: </strong>Assistente de Treinamentos</p>
+                    <p><strong>Departamento: </strong>BackOffice</p>
+                    <p><strong>CPF: </strong>381.953.408-30</p>
                     <p><strong>Data de entrada: </strong></p>
                     <p><strong>Data de saida: </strong></p>
-                    <p><strong>Centro de Custo: </strong>12006 - Regional 1</p>
+                    <p><strong>Centro de Custo: </strong>12005 - Backoffice</p>
                     <p><strong>Subtituição: </strong>Bruna Rafaela Emilio</p>
                     <p><strong>Termo de Entrega de Equipamento: </strong></p>
                 </div>
@@ -6996,43 +6996,42 @@ include 'header.php'
                 <div class="colaborador-details">
                     <p><strong>ID Caixa:  18604</strong></p>
                     <p><strong>Colaborador: </strong>Gabriel Rodrigues de Morais</p>
-                    <p><strong>Email: </strong></p>
+                    <p><strong>Email: </strong>gabriel.morais@amorsaude.com</p>
                     <p><strong>Cargo: </strong>Gerente de Pessoas</p>
                     <p><strong>Departamento: </strong>Pessoas e Cultura</p>
-                    <p><strong>Data da admissão: </strong></p>
+                    <p><strong>Data da admissão: </strong>07.10.2023</p>
                     <p><strong>Data da desligamento: </strong></p>
-                    <p><strong>CPF: </strong></p>
-                    <p><strong>Centro de Custo: </strong>13021 - Gerência Pessoas e Cultura</p>
+                    <p><strong>CPF: </strong>008.048.811-03</p>
+                    <p><strong>Centro de Custo: </strong>13029 - Dir. Pessoas e Cultura</p>
                     <p><strong>Subtituição: </strong>Sandra Andreia de Oliveira</p>
                 </div>
             </section>
             <h2>Dados equipamentos</h2>
             <section class="equipamentos-info">
                 <div class="equipamento">
-                    <p><strong>Tipo: </strong>Notebook</p>
-                    <p><strong>Marca/Modelo: </strong>Dell Vostro P11f</p>
-                    <p class="serial"><strong>S/N: </strong>JTJYXP3</p>
-                    <p><strong>Patrimonio: </strong>109</p>
+                    <p><strong>Tipo: </strong>Notebook Win-10 i7-1255u 16GB</p>
+                    <p><strong>Marca/Modelo: </strong>Dell Vostro 3510</p>
+                    <p class="serial"><strong>S/N: </strong>7972JZ3</p>
+                    <p><strong>Patrimonio: </strong>467</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo: </strong>Teclado e Mouse</p>
+                    <p><strong>Marca/Modelo: </strong>Logitech H390</p>
+                    <p class="serial"><strong>Teclado S/N: </strong>2347CE267FF8</p>
+                    <p class="serial"><strong>Mouse S/N: </strong>2344LZXBR4Q8</p>
+                    <p><strong>Patrimonio: </strong>2017</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo: </strong>Suporte</p>
+                    <p><strong>Marca/Modelo: </strong>Aluminio</p>
+                    <p class="serial"><strong>S/N: </strong></p>
+                    <p><strong>Patrimonio: </strong>1031</p>
                 </div>
                 <div class="equipamento">
                     <p><strong>Tipo: </strong>Fone</p>
-                    <p><strong>Marca/Modelo: </strong>Logitech H390</p>
-                    <p class="serial"><strong>S/N: </strong>2316ME02F888</p>
-                    <p><strong>Patrimonio: </strong>892</p>
-                </div>
-                <div class="equipamento">
-                    <p><strong>Tipo: </strong>Monitor</p>
-                    <p><strong>Marca/Modelo: </strong>LG222Mp410</p>
-                    <p class="serial"><strong>S/N: </strong>3074zafmod555</p>
-                    <p><strong>Patrimonio: </strong>472</p>
-                </div>
-                <div class="equipamento">
-                    <p><strong>Tipo: </strong>Celular</p>
-                    <p><strong>Marca/Modelo: </strong>Samsung Galaxy A03</p>
-                    <p class="serial"><strong>S/N: </strong>R9XT2013C3l</p>
-                    <p><strong>Patrimonio: </strong>538</p>
-                    <p><strong>IMEI 1: </strong>354985980030500/01</p>
-                    <p><strong>IMEI 2: </strong>355106270030501/01</p>
+                    <p><strong>Marca/Modelo: </strong>Dell WH1022</p>
+                    <p class="serial"><strong>S/N: </strong>VN-ORMH97-LXN00-43S-05N3-A01</p>
+                    <p><strong>Patrimonio: </strong>1043</p>
                 </div>
             </section>
             <section class="ticket">
