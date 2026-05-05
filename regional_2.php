@@ -12,7 +12,7 @@
 </head>
 <body>
 <header><img src="icones/logo_amorsaude.png" alt="LOGO AMORSAUDE"></header>
-<?php include 'header.html';?>
+<?php include 'departamentos/header.html';?>
 <main>
     <header class="ativo">
         <h1>COLABORADORES ATIVOS</h1>
@@ -645,6 +645,6 @@
         </section>
     </article>
 </main>
-<?php include 'footer.html'; ?>
+<?php include 'departamentos/footer.html'; ?>
 </body>
 </html>
