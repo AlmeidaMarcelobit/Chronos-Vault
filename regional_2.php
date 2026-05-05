@@ -534,61 +534,7 @@
             <p><strong>Equipamentos:</strong>Notebook, Fone, Suporte, Teclado e Mouse, Celular, Adaptador-Rede</p>
         </section>
     </article>
-    <article>
-        <h2>Dados do colaborador</h2>
-        <section class="colaborador-info">
-            <div class="colaborador-img"><img src="foto_colaboradores/Leandro%20Hernandes.jpeg" alt="Foto de Leandro hernandes" class="foto"></div>
-            <div class="colaborador-details">
-                <p><strong>Colaborador:</strong>Leandro Alves Hernandes</p>
-                <p><strong>Email:</strong>leandro.hernandes@amorsaude.com</p>
-                <p><strong>Cargo:</strong>Gerente Regional De Operações</p>
-                <p><strong>Departamento:</strong>Dir. Operações</p>
-                <p><strong>CPF:</strong>251.829.328-04</p>
-                <p><strong>Data da admissão:</strong>13.01.2022</p>
-                <p><strong>Data da desligamento:</strong></p>
-                <p><strong>Centro de Custo:</strong>12000 - Dir. Operações</p>
-            </div>
-        </section>
-        <h2>Dados equipamentos</h2>
-        <section class="equipamentos-info">
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Teclado e Mouse</p>
-                <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
-                <p class="serial"><strong>S/N:</strong>2243CE258169, 2240LZN1KFW8</p>
-                <p><strong>Patrimônio:</strong>259</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Notebook</p>
-                <p><strong>Marca/Modelo:</strong>Dell Vostro 15 3510</p>
-                <p class="serial"><strong>S/N:</strong>53KLOV3</p>
-                <p><strong>Patrimônio:</strong>216</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Fone</p>
-                <p><strong>Marca/Modelo:</strong>Jabra HSC016</p>
-                <p class="serial"><strong>S/N:</strong>273964312</p>
-                <p><strong>Patrimônio:</strong>651</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Celular</p>
-                <p><strong>Marca/Modelo:</strong>Galaxy A03</p>
-                <p class="serial"><strong>S/N:</strong>R9xta03gbwf</p>
-                <p><strong>Patrimônio:</strong>658</p>
-                <p><strong>IMEI 1:</strong>350916877030216/01</p>
-                <p><strong>IMEI 2:</strong>354654237030214/01</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Suporte</p>
-                <p><strong>Marca/Modelo:</strong>Alumínio</p>
-                <p class="serial"><strong>S/N:</strong>(Não fornecido)</p>
-                <p><strong>Patrimônio:</strong>822</p>
-            </div>
-        </section>
-        <section class="ticket">
-            <p><strong>ID Ticket:</strong>(Não fornecido)</p>
-            <p><strong>Equipamentos:</strong>Teclado e Mouse, Notebook, Fone, Celular, Suporte</p>
-        </section>
-    </article>
+    
     <article>
         <h2>Dados do colaborador</h2>
         <section class="colaborador-info">
