@@ -552,11 +552,6 @@
                             <p><strong>Data da admissão:</strong> 20.06.2023</p>
                             <p><strong>Alteração de setor:</strong> Produtos - 01.10.2024</p>
                             <p><strong>Centro de Custo:</strong> 13001 - Financeiro</p>
-                            <p><strong>Termo de Entrega do Equipamento:</strong><a target="_blank" href="https://drive.google.com/file/d/1F1yFWbjJ4CJpfXRvRNkV6GuPBfd6AgsJ/view?usp=sharing">Termo 01</a><a target="_blank" href="https://drive.google.com/file/d/1ND3ZszXO393AuFwsp5bgRauNXNYhcwtG/view?usp=sharing">Termo 02</a>
-                                <a
-                                target="_blank" href="https://drive.google.com/file/d/11_MINhHVp_BLYAR-T0gWmafwG9p9fIrB/view?usp=sharing">Termo 03</a>
-                            </p>
-                        </div>
                     </section>
                     <section class="equipamentos-info">
                         <div class="equipamento">
