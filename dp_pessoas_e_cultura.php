@@ -136,68 +136,6 @@ include 'header.php';
     <article>
         <h2>DADOS DO COLABORADOR</h2>
         <section class="colaborador-info">
-            <div class="colaborador-img"><img src="foto_colaboradores/Leandro%20Montenegro.jfif" alt="Foto de Leandro Tosta Montenegro" class="foto"></div>
-            <div class="colaborador-details">
-                <p><strong>Colaborador:</strong>Leandro Tosta Montenegro</p>
-                <p><strong>Email:</strong>leandro.montenegro@amorsaude.com</p>
-                <p><strong>Cargo:</strong>Analista de Pessoas & Cultura Júnior</p>
-                <p><strong>Departamento:</strong>Pessoas & Cultura</p>
-                <p><strong>CPF:</strong>385.498.628-94</p>
-                <p><strong>Data da admissão: </strong>4.março.-2024</p>
-                <p><strong>Centro de Custo:</strong>13006 - Pessoas & Cultura</p>
-                <p><strong>Termo de Entrega do Equipamento:</strong><a href="https://drive.google.com/file/d/11sO6ZrjQjT_K3i-DTt2yyikSlsFpanIV/view?usp=sharing" target="_blank">Termo 01</a></p>
-                <p><strong>Subtituição:</strong>Bianca Duzzi</p>
-            </div>
-        </section>
-        <h2>DADOS EQUIPAMENTOS</h2>
-        <section class="equipamentos-info">
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Notebook</p>
-                <p><strong>Patrimônio:</strong>250</p>
-                <p class="serial"><strong>S/N:</strong>1SFQXW3</p>
-                <p><strong>Marca/Modelo:</strong>Dell Vostro 15 3510</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Fone</p>
-                <p><strong>Patrimônio:</strong>1023</p>
-                <p class="serial"><strong>S/N:</strong></p>
-                <p><strong>Marca/Modelo:</strong>Logitech H390</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Teclado e Mouse</p>
-                <p><strong>Patrimônio:</strong>304</p>
-                <p class="serial"><strong>S/N:</strong>2243CE255CD8</p>
-                <p><strong>Marca/Modelo:</strong>MK270</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Suporte</p>
-                <p><strong>Patrimônio:</strong>850</p>
-                <p class="serial"><strong>S/N:</strong></p>
-                <p><strong>Marca/Modelo:</strong>Alumínio</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Monitor</p>
-                <p><strong>Patrimônio:</strong>307</p>
-                <p class="serial"><strong>S/N:</strong>304AZZX6R709</p>
-                <p><strong>Marca/Modelo:</strong>LG MP410</p>
-            </div>
-            <div class="equipamento">
-                <p><strong>Tipo:</strong>Celular</p>
-                <p><strong>Patrimônio:</strong>1024</p>
-                <p class="serial"><strong>S/N:</strong>R9XW20CHJVB</p>
-                <p><strong>IMEI 1:</strong>358302235393186/01</p>
-                <p><strong>IMEI 2:</strong>359796405393182/01</p>
-                <p><strong>Marca/Modelo:</strong>Galaxy A03</p>
-            </div>
-        </section>
-        <section class="ticket">
-            <p><strong>ID Ticket:</strong>#23022</p>
-            <p><strong>Equipamento:</strong>Noteebook Win-11 i5-1135G7 8GB, Fone, Teclado e Mouse, Suporte, Monitor, Celular</p>
-        </section>
-    </article>
-    <article>
-        <h2>DADOS DO COLABORADOR</h2>
-        <section class="colaborador-info">
             <div class="colaborador-img"><img src="foto_colaboradores/Ana Almeida.jfif" alt="Foto de Ana Clara Lourenço de Almeida" class="foto"></div>
             <div class="colaborador-details">
                 <p><strong>Colaborador:</strong>Ana Clara Lourenço de Almeida</p>
@@ -510,6 +448,71 @@ include 'header.php';
                 <p class="serial"><strong>S/N:</strong>hnd2bn2p</p>
                 <p><strong>Patrimonio:</strong>1552</p>
             </div>
+        </section>
+    </article>
+    <header class="desativados">
+        <h1>COLABORADORES DESLIGADO</h1>
+    </header>
+    <article>
+        <h2>DADOS DO COLABORADOR</h2>
+        <section class="colaborador-info">
+            <div class="colaborador-img"><img src="foto_colaboradores/Leandro%20Montenegro.jfif" alt="Foto de Leandro Tosta Montenegro" class="foto"></div>
+            <div class="colaborador-details">
+                <p><strong>Colaborador:</strong>Leandro Tosta Montenegro</p>
+                <p><strong>Email:</strong>leandro.montenegro@amorsaude.com</p>
+                <p><strong>Cargo:</strong>Analista de Pessoas & Cultura Júnior</p>
+                <p><strong>Departamento:</strong>Pessoas & Cultura</p>
+                <p><strong>CPF:</strong>385.498.628-94</p>
+                <p><strong>Data da admissão: </strong>4.março.-2024</p>
+                <p><strong>Centro de Custo:</strong>13006 - Pessoas & Cultura</p>
+                <p><strong>Termo de Entrega do Equipamento:</strong><a href="https://drive.google.com/file/d/11sO6ZrjQjT_K3i-DTt2yyikSlsFpanIV/view?usp=sharing" target="_blank">Termo 01</a></p>
+                <p><strong>Subtituição:</strong>Bianca Duzzi</p>
+            </div>
+        </section>
+        <h2>DADOS EQUIPAMENTOS</h2>
+        <section class="equipamentos-info">
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Notebook</p>
+                <p><strong>Patrimônio:</strong>250</p>
+                <p class="serial"><strong>S/N:</strong>1SFQXW3</p>
+                <p><strong>Marca/Modelo:</strong>Dell Vostro 15 3510</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Fone</p>
+                <p><strong>Patrimônio:</strong>1023</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Marca/Modelo:</strong>Logitech H390</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                <p><strong>Patrimônio:</strong>304</p>
+                <p class="serial"><strong>S/N:</strong>2243CE255CD8</p>
+                <p><strong>Marca/Modelo:</strong>MK270</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Suporte</p>
+                <p><strong>Patrimônio:</strong>850</p>
+                <p class="serial"><strong>S/N:</strong></p>
+                <p><strong>Marca/Modelo:</strong>Alumínio</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Monitor</p>
+                <p><strong>Patrimônio:</strong>307</p>
+                <p class="serial"><strong>S/N:</strong>304AZZX6R709</p>
+                <p><strong>Marca/Modelo:</strong>LG MP410</p>
+            </div>
+            <div class="equipamento">
+                <p><strong>Tipo:</strong>Celular</p>
+                <p><strong>Patrimônio:</strong>1024</p>
+                <p class="serial"><strong>S/N:</strong>R9XW20CHJVB</p>
+                <p><strong>IMEI 1:</strong>358302235393186/01</p>
+                <p><strong>IMEI 2:</strong>359796405393182/01</p>
+                <p><strong>Marca/Modelo:</strong>Galaxy A03</p>
+            </div>
+        </section>
+        <section class="ticket">
+            <p><strong>ID Ticket:</strong>#23022</p>
+            <p><strong>Equipamento:</strong>Noteebook Win-11 i5-1135G7 8GB, Fone, Teclado e Mouse, Suporte, Monitor, Celular</p>
         </section>
     </article>
 </main>

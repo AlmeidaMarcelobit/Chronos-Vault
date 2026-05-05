@@ -540,43 +540,6 @@
                     <p><strong>IMEI 2:</strong>359753826004823</p>
                 </div>
             </section>
-
-        </article>
-        <article>
-            <h2>DADOS DO COLABORADOR</h2>
-            <section class="colaborador-info">
-                <div class="colaborador-img"><img src="foto_colaboradores/Isabelle Castilho.jpeg" alt="Foto de Isabelle Carorile Salvadego Castilho" class="foto"></div>
-                <div class="colaborador-details">
-                    <p><strong>Colaborador:</strong>Isabelle Carorile Salvadego Castilho</p>
-                    <p><strong>Email:</strong>isabelle.castilho@amorsaude.com</p>
-                    <p><strong>Cargo:</strong>Estagiario Financeiro</p>
-                    <p><strong>Departamento:</strong>Financeiro</p>
-                    <p><strong>CPF:</strong>548.330.698-81</p>
-                    <p><strong>Centro de Custo:</strong>13001 - Financeiro</p>
-                    <p><strong>Termo de Entrega de Equipamento:</strong></p>
-                </div>
-            </section>
-            <h2>DADOS EQUIPAMENTOS</h2>
-            <section class="equipamentos-info">
-                <div class="equipamento">
-                    <p><strong>Tipo:</strong>Suporte</p>
-                    <p><strong>Marca/Modelo:</strong>Aluminio</p>
-                    <p><strong>S/N:</strong></p>
-                    <p><strong>Patrimonio:</strong>928</p>
-                </div>
-                <div class="equipamento">
-                    <p><strong>Tipo:</strong>Fone</p>
-                    <p><strong>Marca/Modelo:</strong>Logitech H390</p>
-                    <p><strong>S/N:</strong>2309ME013GS9</p>
-                    <p><strong>Patrimonio:</strong>833</p>
-                </div>
-                <div class="equipamento">
-                    <p><strong>Tipo:</strong>Notebook</p>
-                    <p><strong>Marca/Modelo:</strong>Dell Vostro 15</p>
-                    <p><strong>S/N:</strong>GFQN4T3</p>
-                    <p><strong>Patrimonio:</strong>270</p>
-                </div>
-            </section>
         </article>
         <article>
             <h2>DADOS DO COLABORADOR</h2>
@@ -625,9 +588,6 @@
                 <p><strong>Equipamentos:</strong>Teclado e Mouse, Notebook Win-10 i5-1135G7, Suporte</p>
             </section>
         </article>
-        <header class="desativados">
-            <h1>COLABORADORES DESATIVADOS</h1>
-        </header>
         <article>
             <h2>DADOS DO COLABORADOR</h2>
             <div class="colaborador-info">
@@ -680,6 +640,45 @@
                     <p><strong>Patrimonio:</strong></p>
                     <p><strong>IMEI 1:</strong>35830223539235/01</p>
                     <p><strong>IMEI 2:</strong>35976053925831/01</p>
+                </div>
+            </section>
+        </article>
+        <header class="desativados">
+            <h1>COLABORADORES DESLIGADO</h1>
+        </header>
+        <article>
+            <h2>DADOS DO COLABORADOR</h2>
+            <section class="colaborador-info">
+                <div class="colaborador-img"><img src="foto_colaboradores/Isabelle Castilho.jpeg" alt="Foto de Isabelle Carorile Salvadego Castilho" class="foto"></div>
+                <div class="colaborador-details">
+                    <p><strong>Colaborador:</strong>Isabelle Carorile Salvadego Castilho</p>
+                    <p><strong>Email:</strong>isabelle.castilho@amorsaude.com</p>
+                    <p><strong>Cargo:</strong>Estagiario Financeiro</p>
+                    <p><strong>Departamento:</strong>Financeiro</p>
+                    <p><strong>CPF:</strong>548.330.698-81</p>
+                    <p><strong>Centro de Custo:</strong>13001 - Financeiro</p>
+                    <p><strong>Termo de Entrega de Equipamento:</strong></p>
+                </div>
+            </section>
+            <h2>DADOS EQUIPAMENTOS</h2>
+            <section class="equipamentos-info">
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Suporte</p>
+                    <p><strong>Marca/Modelo:</strong>Aluminio</p>
+                    <p><strong>S/N:</strong></p>
+                    <p><strong>Patrimonio:</strong>928</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Fone</p>
+                    <p><strong>Marca/Modelo:</strong>Logitech H390</p>
+                    <p><strong>S/N:</strong>2309ME013GS9</p>
+                    <p><strong>Patrimonio:</strong>833</p>
+                </div>
+                <div class="equipamento">
+                    <p><strong>Tipo:</strong>Notebook</p>
+                    <p><strong>Marca/Modelo:</strong>Dell Vostro 15</p>
+                    <p><strong>S/N:</strong>GFQN4T3</p>
+                    <p><strong>Patrimonio:</strong>270</p>
                 </div>
             </section>
         </article>

@@ -18,6 +18,64 @@ include 'header.php';
 <main>
     <header class="ativo">
         <h1>COLABORADORES ATIVOS</h1></header>
+        <article>
+                <h2>DADOS DO COLABORADOR</h2>
+                <section class="colaborador-info">
+                    <div class="colaborador-img">
+                        <img class="foto" src="foto_colaboradores/Foto_Quem.jpg" alt="imagem de quem" />
+                    </div>
+                    <div class="colaborador-details">
+                        <p><strong>ID Caixa:</strong>23851</p>
+                        <p><strong>Colaborador:</strong>Emily Formagio de Souza</p>
+                        <p><strong>Email:</strong>emily.souza@amorsaude.com</p>
+                        <p><strong>Cargo:</strong>Product Owner</p>
+                        <p><strong>Departamento:</strong>Canais Digitais e Relacionamento</p>
+                        <p><strong>CPF:</strong>070.824.316-94</p>
+                        <p><strong>Centro de Custo:</strong>14003 - CRM</p>
+                        <p><strong>Data de Entrada:</strong>12/08/2024</p>
+                        <p><strong>Termo de Entrega de Equipamento:</strong></p>
+                    </div>
+                </section>
+                <h2>DADOS DOS EQUIPAMENTOS</h2>
+                <section class="equipamentos-info">
+                    <div class="equipamento">
+                        <p><strong>Tipo:</strong>Fone</p>
+                        <p><strong>Patrimônio:</strong>1237</p>
+                        <p class="serial"><strong>S/N:</strong>233me034q78</p>
+                        <p><strong>Marca/Modelo:</strong>Logitech H390</p>
+                    </div>
+                    <div class="equipamento">
+                        <p><strong>Tipo:</strong>Teclado e Mouse</p>
+                        <p><strong>Patrimônio:</strong>1536</p>
+                        <p lass="serial">S/N:<strong></strong>2347ce270468</p>
+                        <p><strong>Marca/Modelo:</strong>Logitech MK270</p>
+                    </div>
+                    <div class="equipamento">
+                        <p><strong>Tipo:</strong>Suporte</p>
+                        <p><strong>Patrimônio:</strong>1238</p>
+                        <p><strong>S/N:</strong></p>
+                        <p><strong>Marca/Modelo:</strong>Aluminio</p>
+                    </div>
+                    <div class="equipamento">
+                        <p><strong>Tipo:</strong>Notebook</p>
+                        <p><strong>Patrimônio:</strong>1541</p>
+                        <p><strong>S/N:</strong>PE9014223078</p>
+                        <p><strong>Marca/Modelo:</strong>Lenovo V15 G3 AIP</p>
+                    </div>
+                    <div class="equipamento">
+                        <p><strong>Tipo:</strong>Monitor</p>
+                        <p><strong>Marca/Modelo:</strong>LG 22MP410-B</p>
+                        <p><strong>S/N:</strong>402AZGF8U743</p>
+                        <p><strong>Patrimônio:</strong>1570</p>
+                    </div>
+                </section>
+                <section class="ticket">
+                    <p><strong>ID Ticket:</strong>#39154</p>
+                    <p>
+                        <strong>Equipamento:</strong>Headset, Mouse, Notebook 8G, Suporte para notebook, Teclado
+                    </p>
+                </section>
+            </article>
     <article>
         <h2>DADOS DO COLABORADOR</h2>
         <section class="colaborador-info">
