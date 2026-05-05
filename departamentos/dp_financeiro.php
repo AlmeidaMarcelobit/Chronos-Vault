@@ -7,6 +7,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 
+<<<<<<< HEAD
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1">
@@ -1355,20 +1356,50 @@
     <meta name="author" content="Marcelo de Araujo Almeida">
     <title>Financeiro</title>
 </head>
+=======
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="stylesheet" href="../css/principal.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Playwrite+DE+Grund:wght@100..400&display=swap"
+            rel="stylesheet">
+        <meta name="author" content="Marcelo de Araujo Almeida">
+        <title>Financeiro</title>
+    </head>
+>>>>>>> 52c8184 (14.1.0)
 
-<body>
-    <header><img src="../icones/logo_amorsaude.png" alt="LOGO AMORSAUDE"></header>
-    <div class="container">
-        <?php  include 'header.html'; ?>
+    <body>
+        <header><img src="../icones/logo_amorsaude.png" alt="LOGO AMORSAUDE"></header>
+        <div class="container">
+            <?php include 'header.html'; ?>
             <main>
                 <header class="ativo">
                     <h1>COLABORADORES ATIVOS</h1>
                 </header>
-                
+                <article>
+                    <h2>DADOS DO COLABORADOR</h2>
+                    <div class="colaborador-info">
+                        <div class="colaborador-img"> <img src="../foto_colaboradores" alt="" class="foto"> </div>
+                        <div class="colaborador-details">
+                            <p><strong>Colaborador:</strong> Camila Leite</p>
+                            <p><strong>Email:</strong> camilaleite@amorsaude.com</p>
+                            <p><strong>Cargo:</strong> Chief Financial Officer</p>
+                            <p><strong>Departamento:</strong>Financeira</p>
+                            <p><strong>CPF:</strong></p>
+                            <p><strong>Data da admissão:</strong></p>
+                            <p><strong>Data da desligamento:</strong></p>
+                            <p><strong>Centro de Custo:</strong> 13000</p>
+                        </div>
+                    </div>
+                </article>
                 <article>
                     <h2>Dados do colaborador</h2>
                     <section class="colaborador-info">
-                        <div class="colaborador-img"><img class="foto" src="../foto_colaboradores/Felipe Cando Oliveira.jpeg" alt="foto de Felipe Cando Oliveira"></div>
+                        <div class="colaborador-img"><img class="foto"
+                                src="../foto_colaboradores/Felipe Cando Oliveira.jpeg"
+                                alt="foto de Felipe Cando Oliveira"></div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador:</strong>Felipe Cando Oliveira</p>
                             <p><strong>Email:</strong>felipe.oliveira@amorsaude.com</p>
@@ -1425,7 +1456,8 @@
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
-                        <div class="colaborador-img"><img src="../foto_colaboradores/Lucas Pedro Pereira.jpeg" alt="Foto de Lucas Pedro Pereira" class="foto"></div>
+                        <div class="colaborador-img"><img src="../foto_colaboradores/Lucas Pedro Pereira.jpeg"
+                                alt="Foto de Lucas Pedro Pereira" class="foto"></div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador:</strong>Lucas Pedro Pereira</p>
                             <p><strong>Email:</strong>lucas.pereira@amorsaude.com</p>
@@ -1477,7 +1509,8 @@
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
-                        <div class="colaborador-img"><img src="../foto_colaboradores/Murillo Zanine.jpg" alt="Foto de Murillo Zanine" class="foto"></div>
+                        <div class="colaborador-img"><img src="../foto_colaboradores/Murillo Zanine.jpg"
+                                alt="Foto de Murillo Zanine" class="foto"></div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador:</strong>Murillo Zanine</p>
                             <p><strong>Email:</strong>murillo.zanine@amorsaude.com</p>
@@ -1490,7 +1523,7 @@
                     </section>
                     <h2>DADOS DOS EQUIPAMENTOS</h2>
                     <section class="equipamentos-info">
-                    <div class="equipamento">
+                        <div class="equipamento">
                             <p><strong>Tipo:</strong>Notebook</p>
                             <p><strong>Patrimônio:</strong>288</p>
                             <p class="serial"><strong>S/N:</strong>6hqn4t3</p>
@@ -1525,18 +1558,19 @@
                         <p><strong>Observação:</strong>Termo e daodos do monitor faltando</p>
                     </section>
                 </article>
-                
+
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
-                        <div class="colaborador-img"><img src="../foto_colaboradores/Claudia Ornela.jpg" alt="Foto de Claudia Ornela" class="foto"></div>
+                        <div class="colaborador-img"><img src="../foto_colaboradores/Claudia Ornela.jpg"
+                                alt="Foto de Claudia Ornela" class="foto"></div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador:</strong>Claudia Matos Ornela</p>
                             <p><strong>Email:</strong>claudia.ornela@amorsaude.com</p>
                             <p><strong>Cargo:</strong>Analista Financeiro Jr</p>
                             <p><strong>Departamento:</strong>Financeiro</p>
                             <p><strong>CPF:</strong>104.448.606-65</p>
-                            <p><strong>Data da admissão:</strong>22.04.2024</p>
+                            <p><strong>Data da admissão:</strong>13.05.2024</p>
                             <p><strong>Centro de Custo:</strong>63001 - Financeiro Soluções</p>
                         </div>
                     </section>
@@ -1592,17 +1626,19 @@
                         <p><strong>Equipamentos:</strong>Fone, Suporte, Teclado e Mouse, Notebook, Monitor</p>
                     </section>
                 </article>
-                
+
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
-                        <div class="colaborador-img"><img src="../foto_colaboradores/Lauriele Santos.jpeg" alt="Foto de Lauriele Santos" class="foto"></div>
+                        <div class="colaborador-img"><img src="../foto_colaboradores/Lauriele Santos.jpeg"
+                                alt="Foto de Lauriele Santos" class="foto"></div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador:</strong>Lauriele Santos</p>
                             <p><strong>Email:</strong>laurielesantos@amorsaude.com</p>
                             <p><strong>Cargo:</strong>Assistente Financeiro</p>
                             <p><strong>Departamento:</strong>Analista de Financeiro</p>
                             <p><strong>Data de Entrada:</strong>18.03.2024</p>
+                            <p><strong>Data da Promoção:</strong>01.10.2024</p>
                             <p><strong>CPF:</strong>457.240.988-90</p>
                             <p><strong>Centro de Custo:</strong>13001 - Financeiro</p>
                             <p><strong>Termo de Entrega de Equipamento:</strong></p>
@@ -1617,19 +1653,19 @@
                             <p><strong>Mouse S/N:</strong>2237LZN0LDT8</p>
                             <p><strong>Patrimonio:</strong>2016</p>
                         </div>
-						<div class="equipamento">
+                        <div class="equipamento">
                             <p><strong>Tipo:</strong>Notebook</p>
                             <p><strong>Patrimônio:</strong>206</p>
                             <p class="serial"><strong>S/N:</strong>PE09EEK5</p>
                             <p><strong>Marca/Modelo:</strong>Lenovo v15 82ME</p>
                         </div>
-						<div class="equipamento">
+                        <div class="equipamento">
                             <p><strong>Tipo:</strong>Headset</p>
                             <p><strong>Patrimônio:</strong>632</p>
                             <p class="serial"><strong>S/N:</strong>00254425932</p>
                             <p><strong>Marca/Modelo:</strong>jabra HSC0016</p>
                         </div>
-						<div class="equipamento">
+                        <div class="equipamento">
                             <p><strong>Tipo:</strong>Suporte</p>
                             <p><strong>Patrimônio:</strong>1163</p>
                             <p class="serial"><strong>S/N:</strong></p>
@@ -1637,11 +1673,14 @@
                         </div>
                     </section>
                 </article>
-                
+               
+
+
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <div class="colaborador-info">
-                        <div class="colaborador-img"><img src="../foto_colaboradores/Sem Foto.jpg" alt="Foto de Monica Gonçalves Soares" class="foto"></div>
+                        <div class="colaborador-img"><img src="../foto_colaboradores/Sem Foto.jpg"
+                                alt="Foto de Monica Gonçalves Soares" class="foto"></div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador:</strong>Monica Gonçalves Soares</p>
                             <p><strong>Email:</strong>monica.soares@amorsaude.com</p>
@@ -1695,8 +1734,71 @@
                 </header>
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
+                    <div class="colaborador-info">
+                        <div class="colaborador-img">
+                            <img src="../../bliblioteca de codigo/foto_colaboradores" alt="" class="foto">
+                        </div>
+                        <div class="colaborador-details">
+                            <p><strong>Colaborador:</strong> Luana Maciel</p>
+                            <p><strong>Email:</strong> luana.maciel@amorsaude.com</p>
+                            <p><strong>Cargo:</strong> Analista - Financeiro</p>
+                            <p><strong>Departamento:</strong> Financeiro</p>
+                            <p><strong>CPF:</strong></p>
+                            <p><strong>Data de admissão:</strong></p>
+                            <p><strong>Data de desligamento:</strong> /p>
+                            <p><strong>Centro de Custo:</strong> 13001</p>
+                        </div>
+                    </div>
+
+                    <h2>DADOS DOS EQUIPAMENTOS</h2>
+                    <section class="equipamentos-info">
+                        <div class="equipamento">
+                            <p><strong>Tipo:</strong> Fone</p>
+                            <p><strong>Marca/Modelo:</strong> Logitech H390</p>
+                            <p class="serial"><strong>S/N:</strong> 2399-829-109</p>
+                            <p><strong>Patrimônio:</strong> 799</p>
+                        </div>
+                    </section>
+                </article>
+                <article>
+                    <h2>DADOS DO COLABORADOR</h2>
+                    <div class="colaborador-info">
+                        <div class="colaborador-img"> <img src="../foto_colaboradores" alt="" class="foto"> </div>
+                        <div class="colaborador-details">
+                            <p><strong>Colaborador:</strong> Pricila Francoaze Carrile Santana</p>
+                            <p><strong>Email:</strong> pricila.santana@amorsaude.com</p>
+                            <p><strong>Cargo:</strong> Analista De Tesouraria Sr</p>
+                            <p><strong>Departamento:</strong> Financeiro</p>
+                            <p><strong>CPF:</strong> 300.611.718-24</p>
+                            <p><strong>Data da admissão:</strong> 01.08.2023</p>
+                            <p><strong>Data da desligamento:</strong></p>
+                            <p><strong>Centro de Custo:</strong> 13001</p>
+                        </div>
+                    </div>
+                </article>
+                <article>
+                    <h2>DADOS DO COLABORADOR</h2>
+                    <div class="colaborador-info">
+                        <div class="colaborador-img">
+                            <img src="../foto_colaboradores" alt="" class="foto">
+                        </div>
+                        <div class="colaborador-details">
+                            <p><strong>Colaborador:</strong> Victoria Novais</p>
+                            <p><strong>Email:</strong> victoria.novais@amorsaude.com</p>
+                            <p><strong>Cargo:</strong> Analista Financeiro</p>
+                            <p><strong>Departamento:</strong> Financeiro</p>
+                            <p><strong>CPF:</strong></p>
+                            <p><strong>Data da admissão:</strong></p>
+                            <p><strong>Data da desligamento:</strong></p>
+                            <p><strong>Centro de Custo:</strong>13001 - Financeiro</p>
+                        </div>
+                    </div>
+                </article>
+                <article>
+                    <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
-                        <div class="colaborador-img"><img src="../foto_colaboradores/Barbara Bidurin.jpeg" alt="Foto de Barbara Bidurin" class="foto"></div>
+                        <div class="colaborador-img"><img src="../foto_colaboradores/Barbara Bidurin.jpeg"
+                                alt="Foto de Barbara Bidurin" class="foto"></div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador:</strong>Barbara Bidurin</p>
                             <p><strong>Email:</strong>barbara.bidurin@amorsaude.com</p>
@@ -1741,7 +1843,8 @@
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
-                        <div class="colaborador-img"><img src="../foto_colaboradores/Gabriela Georgete.jpg" alt="Foto de Gabriela Georgete da Cruz" class="foto"></div>
+                        <div class="colaborador-img"><img src="../foto_colaboradores/Gabriela Georgete.jpg"
+                                alt="Foto de Gabriela Georgete da Cruz" class="foto"></div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador:</strong>Gabriela Georgete da Cruz</p>
                             <p><strong>Email:</strong>gabriela.georgete@amorsaude.com</p>
@@ -1792,7 +1895,8 @@
                 </article>
                 <article>
                     <section class="colaborador-info">
-                        <div class="colaborador-img"><img src="../foto_colaboradores/Marco Bizarri.jpg" alt="Foto Marco Aurélio Bizarri" class="foto"></div>
+                        <div class="colaborador-img"><img src="../foto_colaboradores/Marco Bizarri.jpg"
+                                alt="Foto Marco Aurélio Bizarri" class="foto"></div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador:</strong>Marco Aurélio Bizarri</p>
                             <p><strong>Email:</strong>marcos.bizarri@amorsaude.com</p>
@@ -1848,7 +1952,8 @@
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
-                        <div class="colaborador-img"><img src="../foto_colaboradores/Andreia Lopes.jpg" alt="Foto de Andreia Lopes" class="foto"></div>
+                        <div class="colaborador-img"><img src="../foto_colaboradores/Andreia Lopes.jpg"
+                                alt="Foto de Andreia Lopes" class="foto"></div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador:</strong>Andreia dos Anjos Lopes</p>
                             <p><strong>Email:</strong>lucas.pereira@amorsaude.com</p>
@@ -1892,13 +1997,15 @@
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
-                        <div class="colaborador-img"><img src="../foto_colaboradores/Isabelle Castilho.jpeg" alt="Foto de Isabelle Carorile Salvadego Castilho" class="foto"></div>
+                        <div class="colaborador-img"><img src="../foto_colaboradores/Isabelle Castilho.jpeg"
+                                alt="Foto de Isabelle Carorile Salvadego Castilho" class="foto"></div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador:</strong>Isabelle Carorile Salvadego Castilho</p>
                             <p><strong>Email:</strong>isabelle.castilho@amorsaude.com</p>
                             <p><strong>Cargo:</strong>Estagiario Financeiro</p>
                             <p><strong>Departamento:</strong>Financeiro</p>
                             <p><strong>CPF:</strong>548.330.698-81</p>
+                            <p><strong>Data da admissão:</strong>17.07.2023</p>
                             <p><strong>Centro de Custo:</strong>13001 - Financeiro</p>
                         </div>
                     </section>
@@ -1927,7 +2034,8 @@
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <div class="colaborador-info">
-                        <div class="colaborador-img"><img src="../foto_colaboradores/Lucimara Silva Zampollo.jpeg" alt="Foto de Lucimara Silva Zampollo" class="foto"></div>
+                        <div class="colaborador-img"><img src="../foto_colaboradores/Lucimara Silva Zampollo.jpeg"
+                                alt="Foto de Lucimara Silva Zampollo" class="foto"></div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador:</strong>Lucimara Silva Zampollo</p>
                             <p><strong>Email:</strong>lucimara.zampollo@amorsaude.com</p>
@@ -1979,7 +2087,8 @@
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
-                        <div class="colaborador-img"><img src="../foto_colaboradores/FABRICIO FREITAS.jpeg" alt="Foto de Francisco Fabricio De Lima Freitas" class="foto"></div>
+                        <div class="colaborador-img"><img src="../foto_colaboradores/FABRICIO FREITAS.jpeg"
+                                alt="Foto de Francisco Fabricio De Lima Freitas" class="foto"></div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador:</strong>Francisco Fabricio De Lima Freitas</p>
                             <p><strong>Email:</strong>fabricio.freitas@amorsaude.com</p>
@@ -2027,6 +2136,7 @@
                     </section>
                 </article>
             </main>
+<<<<<<< HEAD
             </div>
             <?php include 'footer.html'; ?>
 </body>
@@ -2034,6 +2144,11 @@
 </html>
 >>>>>>> 08f7099 (13.0.0)
 =======
+=======
+        </div>
+        <?php include 'footer.html'; ?>
+    </body>
+>>>>>>> 52c8184 (14.1.0)
 
 </html>
 >>>>>>> e7b6c1f (13.2.0)
