@@ -1,5 +1,6 @@
 body {
     font-family: 'Bree Serif', serif;
+    background-color: whitesmoke;
 }
 
 .main {
@@ -15,7 +16,7 @@ h1 {
 
 article {
     border: 1px solid #ccc;
-    background-color: whitesmoke;
+    background-color: white;
     border-radius: 5px;
     box-shadow: #ccc;
     padding: 10px;
@@ -72,7 +73,7 @@ footer p {
     margin-bottom: 10px;
     padding: 0 0 0 10px;
     border: 1px solid #ccc;
-    background-color: whitesmoke;
+    background-color: white;
     border-radius: 6px;
     flex: 0 0 18%;
 }
@@ -81,7 +82,7 @@ footer p {
     margin-bottom: 10px;
     padding: 0 0 0 10px;
     border: 1px solid #eb3131;
-    background-color: whitesmoke;
+    background-color: white;
     border-radius: 6px;
     flex: 0 0 18%;
 }
@@ -92,6 +93,6 @@ footer p {
     margin-bottom: 15px;
     padding: 0 0 0 10px;;
     border: 1px solid #ccc;
-    background-color: whitesmoke;
+    background-color: white;
     border-radius: 5px;
 }
