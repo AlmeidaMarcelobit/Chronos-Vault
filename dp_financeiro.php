@@ -23,17 +23,15 @@
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
-                        <div class="colaborador-img"><img class="foto" src="foto_colaboradores/Foto_Quem.jpg" alt="imagem de quem"></div>
+                        <div class="colaborador-img"><img class="foto" src="foto_colaboradores/SEM%20FOTO.jpg" alt="Foto de Arnaldo Rocha Junior"></div>
                         <div class="colaborador-details">
-                            <p><strong>ID Caixa: </strong>34827</p>
                             <p><strong>Colaborador: </strong>Arnaldo Rocha Junior</p>
                             <p><strong>Email: </strong>arnaldo.junior@amorsaude.com</p>
                             <p><strong>Cargo: </strong>Gerente Contábil</p>
                             <p><strong>Departamento: </strong>Contabilidade</p>
                             <p><strong>CPF: </strong>252.705.628-80</p>
-                            <p><strong>Data de entrada: </strong>05/08/2024</p>
+                            <p><strong>Data de entrada: </strong>05.08.2024</p>
                             <p><strong>Centro de Custo: </strong>13003 - Contábil</p>
-                            <p><strong>Termo de Entrega de Equipamento: </strong></p>
                         </div>
                     </section>
                     <h2>DADOS EQUIPAMENTOS</h2>
@@ -71,7 +69,7 @@
                 <article>
                     <h2>Dados do colaborador</h2>
                     <section class="colaborador-info">
-                        <div class="colaborador-img"><img class="foto" src="foto_colaboradores/Foto_Quem.jpg" alt="imagem de quem"></div>
+                        <div class="colaborador-img"><img class="foto" src="foto_colaboradores/Felipe%20Cando%20Oliveira.jpeg" alt="foto de Felipe Cando Oliveira"></div>
                         <div class="colaborador-details">
                             <p><strong>Colaborador: </strong>Felipe Cando Oliveira</p>
                             <p><strong>Email: </strong>felipe.oliveira@amorsaude.com</p>
@@ -79,8 +77,8 @@
                             <p><strong>Departamento: </strong>Financeiro</p>
                             <p><strong>CPF: </strong>392.754.808-18</p>
                             <p><strong>Centro de Custo: </strong>13000 - Dir. Financeira</p>
+                            <p><strong>Data de entrada: </strong>05.08.2024</p>
                             <p><strong>Subtituição: </strong>Francisco Fabrício</p>
-                            <p><strong>Termo de entrega de equipamento: </strong></p>
                         </div>
                     </section>
                     <h2>DADOS DOS EQUIPAMENTOS</h2>
@@ -135,9 +133,8 @@
                             <p><strong>Cargo: </strong>Anaslista Financeiro JR</p>
                             <p><strong>Departamento: </strong>Financeiro</p>
                             <p><strong>CPF: </strong>461.067.698-26</p>
-                            <p><strong>Data da admissão: </strong>20.maio.2024</p>
-                            <p><strong>Centro de Custo: </strong>63001</p>
-                            <p><strong>Termo de Entrega do Equipamento: </strong><a href="https: //drive.google.com/file/d/1P32h-eZIwDYyl6ZieUBolZNPK-KYoV2l/view?usp=sharing" target="_blank">Termo 01</a></p>
+                            <p><strong>Data da admissão: </strong>20.05.2024</p>
+                            <p><strong>Centro de Custo: </strong>63001 - Financeiro Soluções</p>
                         </div>
                     </section>
                     <h2>DADOS DOS EQUIPAMENTOS</h2>
@@ -154,7 +151,7 @@
                             <p class="serial"><strong>S/N</strong></p>
                             <p><strong>Marca/Modelo: </strong>Alumínio</p>
                         </div>
-                        <div class="equipamento">
+                        <div class="equipamento-danificados">
                             <p><strong>Tipo: </strong>Teclado e Mouse</p>
                             <p><strong>Patrimônio: </strong>1526</p>
                             <p class="serial"><strong>S/N: </strong>2345CE4B4F8</p>
@@ -189,9 +186,8 @@
                             <p><strong>Cargo: </strong>Anaslista Financeiro</p>
                             <p><strong>Departamento: </strong>Financeiro</p>
                             <p><strong>CPF: </strong>448.038.248-86</p>
-                            <p><strong>Data da admissão: </strong>4.dezembro.2023</p>
+                            <p><strong>Data da admissão: </strong>04.12.2023</p>
                             <p><strong>Centro de Custo: </strong>13001 - Financeiro</p>
-                            <p><strong>Termo de Entrega do Equipamento: </strong><a href="https: //drive.google.com/file/d/1d17t7DVPCzyYdCXBrrgaYWiZSTvQHABs/view?usp=sharing" target="_blank">Termo 01</a></p>
                         </div>
                     </section>
                     <h2>DADOS DOS EQUIPAMENTOS</h2>
@@ -232,59 +228,7 @@
                     </section>
                 </article>
                 
-                <article>
-                    <h2>DADOS DO COLABORADOR</h2>
-                    <section class="colaborador-info">
-                        <div class="colaborador-img"><img src="foto_colaboradores/Gabriela Georgete.jpg" alt="Foto de Gabriela Georgete da Cruz" class="foto"></div>
-                        <div class="colaborador-details">
-                            <p><strong>Colaborador: </strong>Gabriela Georgete da Cruz</p>
-                            <p><strong>Email: </strong>gabriela.georgete@amorsaude.com</p>
-                            <p><strong>Cargo: </strong>Analista Financeiro</p>
-                            <p><strong>Departamento: </strong>Financeiro</p>
-                            <p><strong>CPF: </strong>483.921.198-98</p>
-                            <p><strong>Data desligamento: </strong>30.08.2024</p>
-                            <p><strong>Centro de Custo: </strong>13001 - Financeiro</p>
-                            <p><strong>Subtituição</strong></p>
-                            <p><strong>Termo de Entrega do Equipamento: </strong><a href="https: //drive.google.com/file/d/11Z6dkCFMLnC5jozRz6gN614V6bnQWyGx/view?usp=sharing" target="_blank">Termo 01</a><a href="" target="_blank">Termo 02</a></p>
-                        </div>
-                    </section>
-                    <h2>DADOS DOS EQUIPAMENTOS</h2>
-                    <section class="equipamentos-info">
-                        <div class="equipamento">
-                            <p><strong>Tipo: </strong>Monitor</p>
-                            <p><strong>Patrimônio: </strong>1461</p>
-                            <p class="serial"><strong>S/N: </strong>401AZYE6G026</p>
-                            <p><strong>Marca/Modelo: </strong>LG 22MP410-B</p>
-                        </div>
-                        <div></div>
-                        <div class="equipamento">
-                            <p><strong>Tipo: </strong>Celular</p>
-                            <p><strong>Patrimônio: </strong>587</p>
-                            <p class="serial"><strong>S/N: </strong>r9xt700tzmv</p>
-                            <p><strong>Marca/Modelo: </strong>Samsung Galaxy A03</p>
-                            <p><strong>IMEI 1: </strong>354985988720169/01</p>
-                            <p><strong>IMEI 2: </strong>3551062787201601</p>
-                        </div>
-                        <div class="equipamento">
-                            <p><strong>Tipo: </strong>Notebook</p>
-                            <p><strong>Patrimônio: </strong>288</p>
-                            <p class="serial"><strong>S/N: </strong>6hqn4t3</p>
-                            <p><strong>Marca/Modelo: </strong>Dell Vostro 15 3510</p>
-                        </div>
-                        <div class="equipamento">
-                            <p><strong>Tipo: </strong>Teclado e Mouse</p>
-                            <p><strong>Patrimônio: </strong>289</p>
-                            <p class="serial"><strong>S/N: </strong>2243CE25D59</p>
-                            <p><strong>Marca/Modelo: </strong>Logitech MK270</p>
-                        </div>
-                        <div class="equipamento">
-                            <p><strong>Tipo: </strong>Suporte</p>
-                            <p><strong>Patrimônio: </strong>821</p>
-                            <p class="serial"><strong>S/N: </strong></p>
-                            <p><strong>Marca/Modelo: </strong>Alumínio</p>
-                        </div>
-                    </section>
-                </article>
+
                 <article>
                     <h2>DADOS DO COLABORADOR</h2>
                     <section class="colaborador-info">
@@ -295,9 +239,8 @@
                             <p><strong>Cargo: </strong>Analista Contábil Sr</p>
                             <p><strong>Departamento: </strong>Financeiro</p>
                             <p><strong>CPF: </strong>425.270.208-95</p>
-                            <p><strong>Data da admissão: </strong>22.abril.2024</p>
+                            <p><strong>Data da admissão: </strong>22.04.2024</p>
                             <p><strong>Centro de Custo: </strong>13001 - Financeiro</p>
-                            <p><strong>Termo de Entrega do Equipamento: </strong><a target="_blank" href="https: //drive.google.com/file/d/16HamVSCmvoZzHSIyMgGM2S06smrguRDK/view?usp=sharing">Termo 01</a></p>
                         </div>
                     </section>
                     <h2>DADOS DOS EQUIPAMENTOS</h2>
@@ -344,9 +287,8 @@
                             <p><strong>Cargo: </strong>Analista Financeiro Jr</p>
                             <p><strong>Departamento: </strong>Financeiro</p>
                             <p><strong>CPF: </strong>104.448.606-65</p>
-                            <p><strong>Data da admissão: </strong>22.abril.2024</p>
+                            <p><strong>Data da admissão: </strong>22.04.2024</p>
                             <p><strong>Centro de Custo: </strong>63001 - Financeiro Soluções</p>
-                            <p><strong>Termo de Entrega do Equipamento: </strong><a target="_blank" href="https: //drive.google.com/file/d/11AyTvynn6bS_Ydq_cjTJ8tGlHmqCBrYB/view?usp=sharing">Termo 01</a></p>
                         </div>
                     </section>
                     <h2>DADOS DOS EQUIPAMENTOS</h2>
@@ -365,9 +307,9 @@
                         </div>
                         <div class="equipamento">
                             <p><strong>Tipo: </strong>Teclado e Mouse</p>
-                            <p><strong>Patrimônio: </strong>1524</p>
-                            <p class="serial"><strong>S/N: </strong>2334CE2DA838</p>
-                            <p><strong>Marca/Modelo: </strong>Logitech MK270</p>
+                            <p><strong>Patrimônio: </strong>325</p>
+                            <p class="serial"><strong>S/N: </strong>h4ikb32121w</p>
+                            <p><strong>Marca/Modelo: </strong>Dell KB3121WT</p>
                         </div>
                         <div class="equipamento">
                             <p><strong>Tipo: </strong>Notebook Win-11 i5-1235U 8GB</p>
@@ -403,8 +345,8 @@
                             <p><strong>Cargo: </strong>Assistente Suprimentos</p>
                             <p><strong>Departamento: </strong>Financeiro</p>
                             <p><strong>CPF: </strong>364.431.038-66</p>
-                            <p><strong>Centro de Custo: </strong>13008 - Financeiro</p>
-                            <p><strong>Termo de Entrega de Equipamento: </strong></p>
+                            <p><strong>Centro de Custo: </strong>13001 - Financeiro</p>
+                            <p><strong>Data de entrada: </strong>15.05.2023</p>
                         </div>
                     </section>
                     <h2>DADOS DOS EQUIPAMENTOS</h2>
@@ -446,7 +388,7 @@
                             <p><strong>Email: </strong>laurielesantos@amorsaude.com</p>
                             <p><strong>Cargo: </strong>Recepcionista</p>
                             <p><strong>Departamento: </strong>Facilities</p>
-                            <p><strong>Data de Entrada: </strong>18.março.2024</p>
+                            <p><strong>Data de Entrada: </strong>18.03.2024</p>
                             <p><strong>CPF: </strong>457.240.988-90</p>
                             <p><strong>Centro de Custo: </strong>13008 - Recepção</p>
                             <p><strong>Termo de Entrega de Equipamento: </strong></p>
@@ -497,7 +439,6 @@
                             <p><strong>Data da admissão: </strong>19.08.2024</p>
                             <p><strong>Data da desligamento: </strong></p>
                             <p><strong>Centro de Custo: </strong>13000 - Dir. Financ</p>
-                            <p><strong>Termo de Entrega do Equipamento: </strong></p>
                             <p><strong>Subtituição: </strong>Lucimara</p>
                         </div>
                     </div>
@@ -540,6 +481,58 @@
                 <header class="desativados">
                     <h1>COLABORADORES DESLIGADO</h1>
                 </header>
+                <article>
+                    <h2>DADOS DO COLABORADOR</h2>
+                    <section class="colaborador-info">
+                        <div class="colaborador-img"><img src="foto_colaboradores/Gabriela Georgete.jpg" alt="Foto de Gabriela Georgete da Cruz" class="foto"></div>
+                        <div class="colaborador-details">
+                            <p><strong>Colaborador: </strong>Gabriela Georgete da Cruz</p>
+                            <p><strong>Email: </strong>gabriela.georgete@amorsaude.com</p>
+                            <p><strong>Cargo: </strong>Analista Financeiro</p>
+                            <p><strong>Departamento: </strong>Financeiro</p>
+                            <p><strong>CPF: </strong>483.921.198-98</p>
+                            <p><strong>Data admissção: </strong>05.10.2020</p>
+                            <p><strong>Data desligamento: </strong>30.08.2024</p>
+                            <p><strong>Centro de Custo: </strong>13001 - Financeiro</p>
+                        </div>
+                    </section>
+                    <h2>DADOS DOS EQUIPAMENTOS</h2>
+                    <section class="equipamentos-info">
+                        <div class="equipamento">
+                            <p><strong>Tipo: </strong>Monitor</p>
+                            <p><strong>Patrimônio: </strong>1461</p>
+                            <p class="serial"><strong>S/N: </strong>401AZYE6G026</p>
+                            <p><strong>Marca/Modelo: </strong>LG 22MP410-B</p>
+                        </div>
+                        <div></div>
+                        <div class="equipamento">
+                            <p><strong>Tipo: </strong>Celular</p>
+                            <p><strong>Patrimônio: </strong>587</p>
+                            <p class="serial"><strong>S/N: </strong>r9xt700tzmv</p>
+                            <p><strong>Marca/Modelo: </strong>Samsung Galaxy A03</p>
+                            <p><strong>IMEI 1: </strong>354985988720169/01</p>
+                            <p><strong>IMEI 2: </strong>3551062787201601</p>
+                        </div>
+                        <div class="equipamento">
+                            <p><strong>Tipo: </strong>Notebook</p>
+                            <p><strong>Patrimônio: </strong>288</p>
+                            <p class="serial"><strong>S/N: </strong>6hqn4t3</p>
+                            <p><strong>Marca/Modelo: </strong>Dell Vostro 15 3510</p>
+                        </div>
+                        <div class="equipamento">
+                            <p><strong>Tipo: </strong>Teclado e Mouse</p>
+                            <p><strong>Patrimônio: </strong>289</p>
+                            <p class="serial"><strong>S/N: </strong>2243CE25D59</p>
+                            <p><strong>Marca/Modelo: </strong>Logitech MK270</p>
+                        </div>
+                        <div class="equipamento">
+                            <p><strong>Tipo: </strong>Suporte</p>
+                            <p><strong>Patrimônio: </strong>821</p>
+                            <p class="serial"><strong>S/N: </strong></p>
+                            <p><strong>Marca/Modelo: </strong>Alumínio</p>
+                        </div>
+                    </section>
+                </article>
                 <article>
                     <section class="colaborador-info">
                         <div class="colaborador-img"><img src="foto_colaboradores/Marco Bizarri.jpg" alt="Foto Marco Aurélio Bizarri" class="foto"></div>
