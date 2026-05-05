@@ -519,7 +519,7 @@
                     <p><strong>Tipo: </strong>Notebook Win-11 i5-1235U 8GB</p>
                     <p><strong>Marca/Modelo: </strong>Lenovo V15 G3</p>
                     <p class="serial"><strong>S/N: </strong>CLBFD14</p>
-                    <p><strong>Patrimonio: </strong>1451/p>
+                    <p><strong>Patrimonio: </strong>1451</p>
                 </div>
                 <div class="equipamento">
                     <p><strong>Tipo: </strong>Fone</p>
