@@ -79,7 +79,7 @@ nav {
     margin-left: 1px;                           
     display: none;                              
 }                                               
-.dropdown-content .dropdown:hover .dropdown-cont
+.dropdown-content .dropdown:hover .dropdown-cont{
     display: block;                             
 }                                               
 article{
