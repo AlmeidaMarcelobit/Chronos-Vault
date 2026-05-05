@@ -86,6 +86,12 @@
             <p>Colaborador :Wendell Alessandro Candido Oliveira não possui termo assinado da entrega dos monitor</p>
         </div>
     </section>
+    <section class="data">
+        <h1>09.09.2024</h1>
+        <div class="obs">
+            <p><strong>Data: 16:12</strong></p>
+            <p>Colaboradora Lethicia Eliane Souza Martins esta sem o termo no monitor </p>
+        </div>
 </article>
 <?php include 'footer.php' ?>
 </body>
