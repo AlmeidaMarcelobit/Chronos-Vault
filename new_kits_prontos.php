@@ -90,7 +90,7 @@
     <header>
       <img src="icones/logo_amorsaude.png" alt="LOGO AMORSAUDE" />
     </header>
-    <?php include 'header.php'?>
+    <?php include 'header.html'?>
     <main>
       <article>
         <h2>DADOS DO COLABORADOR</h2>
@@ -5287,7 +5287,7 @@ include 'header.php'
         </section>
       </article>
     </main>
-    <?php include 'footer.php'; ?>
+    <?php include 'footer.html'; ?>
   </body>
 </html>
 >>>>>>> 29e227b (12.12.1)
