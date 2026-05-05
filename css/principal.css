@@ -14,8 +14,9 @@ h3 {
 body {
     margin: 0 auto;
     width: 55%;
-    background-color: #121212;
-    color: #e0e0e0;
+    min-width: 510px;
+    background-color: #fff;
+    color: #505050;
     font-family: "Playwrite DE Grund", cursive;
     font-optical-sizing: auto;
     font-weight: weight;
@@ -24,8 +25,7 @@ body {
 }
 
 header {
-    background-color: #2c2c2c;
-    border-bottom: 1px solid #333;
+    background-color: #EDEDEE;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -39,7 +39,7 @@ header img {
 
 /* MENU  */
 nav {
-    background-color: #1c1c1c;
+    background-color: #EDEDEE;
 }
 
 .menu {
@@ -50,12 +50,18 @@ nav {
 
 .menu a {
     display: block;
-    color: #e0e0e0;
+    color: #505050;
     text-decoration: none;
+    text-transform: uppercase;
+    font-size: 10px;
 }
 
 .menu li {
     position: relative;
+}
+.menu li a:hover{
+    color: #E51519;
+    text-transform: uppercase;
 }
 
 .menu a,
@@ -71,29 +77,30 @@ header {
 .dropdown-content {
     display: none;
     position: absolute;
-    background: #333;
+    background: #EDEDEE;
     min-width: 160px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
 .dropdown-content a {
-    color: #fff;
+    color: #505050;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
 
 .dropdown-content a:hover {
-    background-color: #555;
+    color: #E10003;
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
+    color: #E10003;
 }
 
 .dropdown:hover {
-    background-color: #444;
+    color: #E10003;
 }
 
 .dropdown .dropdown-content .dropdown {
@@ -114,14 +121,16 @@ header {
 .ativo,
 .desativados {
     justify-content: center;
-    background-color: #51a9f8;
+    background-color: #37B4C8;
     border-radius: 0 0 10px 10px;
-    border-bottom: 2px solid #444;
+    margin-bottom: 10px;
+    color:beige;
 }
 
 .desativados {
-    background-color: #d32f2f;
+    background-color: #D53E36;
     border-radius: 10px;
+    margin-top: 10px;
 }
 
 article {
@@ -129,8 +138,9 @@ article {
     margin-top: 5px;
     margin-bottom: 5px;
     border: 1px dashed #666;
-    background-color: #1c1c1c;
+    background-color: #EDEDEE;
     border-radius: 8px;
+    box-sizing: content-box;
 }
 
 .colaborador-info {
@@ -141,19 +151,22 @@ article {
 img.foto {
     height: 170px;
     width: 175px;
-    border-radius: 4px;
+    border-radius: 7px;
     margin-bottom: 2px;
 }
 
 .colaborador-details {
+
     margin-left: 10px;
     margin-right: 10px;
+    font-size: 10px
 }
 
 .equipamentos-info {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    font-size: 10px;
 }
 
 .equipamento {
@@ -168,17 +181,19 @@ img.foto {
 .equipamento-danificados {
     font-size: 0.8em;
     border: 1.5px solid #969696;
-    background-color: #471212;
+    background-color: #CF3931;
     flex: 4 4;
     box-sizing: border-box;
     border-radius: 6px;
     padding: 7px 10px 7px 10px;
+    color: #FFFFFF;
 }
 
 .equipamento-not-devolvido {
     font-size: 0.8em;
     border: 1.5px solid #969696;
-    background-color: #773c3c;
+    background-color: #CF3931;
+    color: #fff;
     flex: 4 4;
     box-sizing: border-box;
     border-radius: 6px;
@@ -188,24 +203,19 @@ img.foto {
 .ticket {
     margin-top: 1%;
     font-size: 0.8em;
-    background-color: #1c1c1c;
+    background-color: #EDEDEE;
     border: 1px solid #444;
     padding: 7px 10px 7px 10px;
     border-radius: 6px;
 }
 
-/* CSS para rodape do site */
 footer {
-    background-color: #1c1c1c;
-}
-
-footer {
-    border-top: 1px solid #444;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
     border-radius: 10px 10px 0 0;
+    background-color: #EDEDEE;
 }
 
 footer p {
@@ -243,8 +253,6 @@ footer .version {
     margin-left: 7px;
     color: #e0e0e0;
 }
-
-/* CSS para pagina reserva */
 .in-stock {
     background-color: #4caf50;
 }
