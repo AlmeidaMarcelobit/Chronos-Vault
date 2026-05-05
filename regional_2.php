@@ -2,10 +2,12 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="css/principal.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+DE+Grund:wght@100..400&display=swap" rel="stylesheet">
+    <meta name="author" content="Marcelo de Araujo Almeida">
     <title>Regional 2</title>
 </head>
 <body>
@@ -612,7 +614,7 @@
             </div>
             <div class="equipamento">
                 <p><strong>Tipo:</strong>Notebook Win-10 i5-1135G7 8GB</p>
-                <p><strong>Marca/Modelo: </strong>Dell Vostro 15 3510</p>
+                <p><strong>Marca/Modelo:</strong>Dell Vostro 15 3510</p>
                 <p class="serial"><strong>S/N:</strong>2P3MOT3</p>
                 <p><strong>Patrimônio:</strong>271</p>
             </div>
@@ -643,8 +645,6 @@
         </section>
     </article>
 </main>
-<?php
-include 'footer.html';
-?>
+<?php include 'footer.html'; ?>
 </body>
 </html>
