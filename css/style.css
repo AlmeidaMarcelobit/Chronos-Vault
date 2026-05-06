@@ -1,0 +1,300 @@
+/* Reset e estilos globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'SF Pro Text', -apple-system, BlinkMacSystemFont, monospace;
+    background-color: #0f0f0f;
+    color: #d4d4d4;
+    line-height: 1.5;
+}
+
+/* --- NAVEGAÇÃO (MENU) --- */
+nav {
+    background-color: #1a1a1a;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.menu {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.menu > li {
+    position: relative;
+}
+
+.menu li a {
+    display: block;
+    padding: 0.9rem 1.2rem;
+    color: #c0c0c0;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+.menu li a:hover {
+    color: #ffffff;
+    background-color: #252525;
+}
+
+/* Dropdown principal */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #1e1e1e;
+    min-width: 220px;
+    border: 1px solid #2e2e2e;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #c0c0c0 !important;
+    padding: 0.6rem 1.2rem !important;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.dropdown-content a:hover {
+    background-color: #252525 !important;
+    color: #ffffff !important;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Submenu nível 3 */
+.dropdown .dropdown {
+    position: relative;
+}
+
+.dropdown .dropdown .dropdown-content {
+    left: 100%;
+    top: 0;
+}
+
+/* MAIN e LAYOUT */
+.main {
+    max-width: 1400px;
+    margin: 1.5rem auto;
+    padding: 0 1.5rem;
+}
+
+/* HEADER */
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+header h1 {
+    font-family: 'Bree Serif', monospace;
+    font-size: 1.8rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: #e0e0e0;
+}
+
+/* ARTICLE (cada colaborador) */
+article {
+    background-color: #121212;
+    border: 1px solid #252525;
+    margin-bottom: 1.8rem;
+}
+
+article h2 {
+    background-color: #0a0a0a;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #c8c8c8;
+    border-left: 3px solid #555555;
+    margin: 0;
+    font-family: monospace;
+    letter-spacing: 0.5px;
+}
+
+/* Seção dados colaborador */
+.colaborador-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.8rem;
+    padding: 1.5rem;
+    border-bottom: 1px solid #1f1f1f;
+}
+
+.colaborador-img {
+    flex: 0 0 100px;
+}
+
+.foto {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #3a3a3a;
+    background-color: #0a0a0a;
+}
+
+.colaborador-details {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.3rem 1.2rem;
+}
+
+.colaborador-details p {
+    margin: 0.2rem 0;
+    font-size: 0.85rem;
+}
+
+.colaborador-details strong {
+    color: #a0a0a0;
+    min-width: 110px;
+    display: inline-block;
+    font-weight: 500;
+}
+
+.colaborador-details a {
+    color: #9a9a9a;
+    text-decoration: none;
+}
+
+.colaborador-details a:hover {
+    color: #c0c0c0;
+    text-decoration: underline;
+}
+
+/* Equipamentos grid */
+.equipamentos-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1px;
+    background-color: #1f1f1f;
+    padding: 0;
+}
+
+.equipamento {
+    background-color: #121212;
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.equipamento p {
+    margin: 0.3rem 0;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.equipamento strong {
+    color: #9a9a9a;
+    font-weight: 500;
+    min-width: 80px;
+    display: inline-block;
+}
+
+.serial {
+    font-family: monospace;
+    color: #b0b0b0;
+    font-size: 0.75rem;
+}
+
+/* Ticket seção */
+.ticket {
+    background-color: #0a0a0a;
+    margin: 1rem 1.5rem 1.5rem 1.5rem;
+    padding: 0.8rem 1.2rem;
+    border: 1px solid #252525;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.ticket p {
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.ticket p:first-child strong {
+    color: #888888;
+    font-weight: 500;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding: 1.2rem;
+    background-color: #0a0a0a;
+    border-top: 1px solid #1f1f1f;
+    font-size: 0.75rem;
+    color: #666666;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 800px) {
+    .main {
+        padding: 0 1rem;
+    }
+
+    .menu {
+        justify-content: flex-start;
+        overflow-x: auto;
+    }
+
+    .colaborador-info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .colaborador-details strong {
+        min-width: auto;
+        display: inline;
+    }
+
+    .ticket {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: left;
+    }
+
+    .dropdown-content {
+        position: static;
+    }
+
+    .dropdown .dropdown .dropdown-content {
+        left: 0;
+        margin-left: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .equipamentos-info {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 1.3rem;
+    }
+
+    article h2 {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu li a {
+        padding: 0.6rem 0.9rem;
+        font-size: 0.75rem;
+    }
+}
