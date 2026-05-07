@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<?php
+session_start();
 
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-</head>
+// Destruir todas as variáveis de sessão
+$_SESSION = array();
 
-<body>
+// Destruir a sessão
+session_destroy();
 
-</body>
-
-</html>
+// Redirecionar para a página de login
+header('Location: login.php');
+exit;
+?>
