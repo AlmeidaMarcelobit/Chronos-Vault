@@ -1,0 +1,307 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: #fff;
+    padding: 20px;
+}
+
+@media print {
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .page-break {
+        page-break-before: always;
+    }
+
+    .termo-container {
+        border: none !important;
+        padding: 15mm !important;
+    }
+}
+
+.termo-container {
+    max-width: 210mm;
+    margin: 0 auto;
+    padding: 25mm;
+    border: 1px solid #ddd;
+    background: white;
+    position: relative;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 15px;
+}
+
+.logo {
+    width: 150px;
+    margin-bottom: 15px;
+}
+
+.titulo {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.subtitulo {
+    font-size: 14px;
+    color: #666;
+}
+
+.section {
+    margin-bottom: 25px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.info-item {
+    margin-bottom: 10px;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #555;
+    font-size: 14px;
+}
+
+.info-value {
+    color: #333;
+    font-size: 15px;
+}
+
+.destaque {
+    background: #f8f9fa;
+    padding: 10px;
+    border-left: 4px solid #007bff;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.termo-text {
+    text-align: justify;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.clausula {
+    margin-bottom: 15px;
+}
+
+.clausula-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+/* Tabela de Equipamentos */
+.equipamentos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.equipamentos-table th {
+    background: #2c3e50;
+    color: white;
+    padding: 10px;
+    text-align: left;
+    font-size: 12px;
+}
+
+.equipamentos-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 11px;
+}
+
+.equipamentos-table tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.equipamentos-table tr:hover {
+    background: #e9ecef;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 09px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.assinaturas {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+}
+
+.assinatura {
+    width: 45%;
+    text-align: center;
+}
+
+.linha-assinatura {
+    border-top: 1px solid #333;
+    margin: 60px 0 10px 0;
+    width: 100%;
+}
+
+.nome-assinatura {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.cargo-assinatura {
+    font-size: 12px;
+    color: #666;
+}
+
+.data-assinatura {
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+.carimbo {
+    margin-top: 40px;
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    font-size: 12px;
+    border-top: 1px dashed #999;
+    padding-top: 10px;
+}
+
+.footer {
+    margin-top: 30px;
+    font-size: 10px;
+    color: #999;
+    text-align: center;
+}
+
+.btn-print {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.btn-print:hover {
+    background: #0056b3;
+}
+
+.btn-back {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.btn-back:hover {
+    background: #545b62;
+}
+
+.total-equipamentos {
+    background: #e9ecef;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 15px 0;
+    font-weight: bold;
+    text-align: center;
+}
+
+.qr-code {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 100px;
+    height: 100px;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    font-size: 10px;
+    color: #666;
+    text-align: center;
+    padding: 5px;
+}
+
+.observacoes {
+    background: #fff3cd;
+    padding: 15px;
+    border-left: 4px solid #ffc107;
+    margin: 15px 0;
+    font-size: 11px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.empty-state i {
+    font-size: 32px;
+    color: #6c757d;
+    margin-bottom: 10px;
+}
