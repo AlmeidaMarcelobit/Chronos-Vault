@@ -116,7 +116,7 @@ header('Content-Type: text/html; charset=UTF-8');
                     <th>Nº Série</th>
                     <th>Centro Custo</th>
                     <th>Status</th>
-                    <th>Data Atribuição</th>
+<!--                    <th>Data Atribuição</th>-->
                 </tr>
                 </thead>
                 <tbody>
@@ -149,7 +149,7 @@ header('Content-Type: text/html; charset=UTF-8');
                                     <?php echo getStatusTexto($equipamento['status']); ?>
                                 </span>
                         </td>
-                        <td><?php echo formatarData($equipamento['data_atribuicao']); ?></td>
+<!--                        <td>--><?php //echo formatarData($equipamento['data_atribuicao']); ?><!--</td>-->
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
