@@ -173,18 +173,18 @@ if ($colaboradores === false) {
                         <input type="text" id="centro_custo" name="centro_custo" 
                                value="<?php echo htmlspecialchars($_POST['centro_custo'] ?? ''); ?>" 
                                required class="form-control" 
-                               placeholder="Ex: TI001, ADM002"
+                               placeholder="Ex: 12001, 12002"
                                data-mask="cc">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="caixa"><i class="fas fa-box"></i> Caixa *</label>
+                    <label for="caixa"><i class="fas fa-box"></i> Caixa</label>
                     <input type="text" id="caixa" name="caixa"
                            value="<?php echo htmlspecialchars($_POST['caixa'] ?? ''); ?>"
-                           required class="form-control"
-                           placeholder="011">
-                    <small class="form-text">Código único de identificação do caixa</small>
+                           class="form-control"
+                           placeholder="Ex: 011, 025, etc.">
+                    <small class="form-text">Código de identificação do caixa (opcional)</small>
                 </div>
 
                     <div class="form-group">
@@ -335,7 +335,6 @@ if ($colaboradores === false) {
     const form = document.getElementById('form-equipamento');
     if (form) {
         form.addEventListener('submit', function(e) {
-            const caixa = document.getElementById('caixa').value.trim();
             const patrimonio = document.getElementById('patrimonio').value.trim();
             const tipo = document.getElementById('tipo').value;
             const statusRadio = document.querySelector('input[name="status"]:checked');
@@ -348,13 +347,6 @@ if ($colaboradores === false) {
 
             const status = statusRadio.value;
             const colaborador = document.getElementById('colaborador_id').value;
-
-            // Validação do campo CAIXA
-            if (caixa.length < 1) {
-                alert('O número da caixa é obrigatório.');
-                e.preventDefault();
-                return false;
-            }
 
             // Validação do campo PATRIMÔNIO
             if (patrimonio.length < 3) {
