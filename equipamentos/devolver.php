@@ -1,7 +1,12 @@
 <?php
 session_start();
 require_once '../includes/funcoes.php';
-verificarSessao();
+
+// Verificar se o usuário está logado
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: ../login.php');
+    exit;
+}
 
 $id = $_GET['id'] ?? null;
 if (!$id) {
@@ -49,10 +54,18 @@ if (!in_array($equipamento['status'], $statusPermitidos)) {
 
 // Obter informações do colaborador
 $colaboradorNome = 'N/A';
-if ($equipamento['colaborador_id'] && isset($colaboradores[$equipamento['colaborador_id'] - 1])) {
-    $colaborador = $colaboradores[$equipamento['colaborador_id'] - 1];
-    $colaboradorNome = $colaborador['nome'] . ' (' . $colaborador['departamento'] . ')';
+$colaboradorInfo = null;
+if ($equipamento['colaborador_id']) {
+    foreach ($colaboradores as $colaborador) {
+        if ($colaborador['id'] == $equipamento['colaborador_id']) {
+            $colaboradorInfo = $colaborador;
+            $colaboradorNome = $colaborador['nome'] . ' (' . $colaborador['departamento'] . ')';
+            break;
+        }
+    }
 }
+
+$erro = '';
 
 // Processar devolução
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -116,58 +129,121 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
+    <!-- ==================== HEADER ==================== -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <a href="../index.php">
+                    <i class="fas fa-laptop-house"></i>
+                    <h1>Sistema de Gestão</h1>
+                </a>
+            </div>
+            
+            <div class="user-menu">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
+                </div>
+                
+                <a href="../logout.php" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </a>
+            </div>
+        </div>
+        
+        <nav class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.php" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../colaboradores/index.php" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Colaboradores</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.php" class="nav-link active">
+                        <i class="fas fa-laptop"></i>
+                        <span>Equipamentos</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
     
-    <main class="container">
+    <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
+    <main class="main-container">
         <div class="page-header">
-            <h1><i class="fas fa-undo"></i> Devolver Equipamento</h1>
+            <div>
+                <h1><i class="fas fa-undo-alt"></i> Devolver Equipamento</h1>
+                <p class="page-subtitle">Confirme a devolução do equipamento ao estoque</p>
+            </div>
             <a href="index.php" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Voltar
+                <i class="fas fa-arrow-left"></i>
+                <span>Voltar</span>
             </a>
         </div>
         
         <div class="confirmation-card">
-            <h2>Confirmar Devolução</h2>
+            <h2><i class="fas fa-question-circle"></i> Confirmar Devolução</h2>
             
-            <div class="equipamento-details">
-                <h3>Detalhes do Equipamento</h3>
-                <div class="details-grid">
-                    <div class="detail-item">
-                        <span class="detail-label">Patrimônio:</span>
-                        <span class="detail-value"><?php echo htmlspecialchars($equipamento['patrimonio']); ?></span>
+            <!-- Detalhes do Equipamento -->
+            <div class="info-card equipment-details-card">
+                <h3><i class="fas fa-laptop"></i> Detalhes do Equipamento</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Patrimônio:</span>
+                        <span class="info-value"><?php echo htmlspecialchars($equipamento['patrimonio']); ?></span>
                     </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Tipo:</span>
-                        <span class="detail-value"><?php echo getTipoTexto($equipamento['tipo']); ?></span>
+                    <div class="info-item">
+                        <span class="info-label">Tipo:</span>
+                        <span class="info-value"><?php echo getTipoTexto($equipamento['tipo']); ?></span>
                     </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Marca/Modelo:</span>
-                        <span class="detail-value"><?php echo htmlspecialchars($equipamento['marca'] . ' ' . $equipamento['modelo']); ?></span>
+                    <div class="info-item">
+                        <span class="info-label">Marca/Modelo:</span>
+                        <span class="info-value"><?php echo htmlspecialchars($equipamento['marca'] . ' ' . $equipamento['modelo']); ?></span>
                     </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Status Atual:</span>
-                        <span class="status-badge status-inativo"><?php echo getStatusTexto($equipamento['status']); ?></span>
+                    <div class="info-item">
+                        <span class="info-label">Status Atual:</span>
+                        <span class="info-value">
+                            <span class="status-badge status-<?php echo $equipamento['status'] === 'alocado' ? 'inativo' : 'info'; ?>">
+                                <i class="fas fa-<?php echo $equipamento['status'] === 'alocado' ? 'user-check' : 'handshake'; ?>"></i>
+                                <?php echo getStatusTexto($equipamento['status']); ?>
+                            </span>
+                        </span>
                     </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Colaborador:</span>
-                        <span class="detail-value"><?php echo htmlspecialchars($colaboradorNome); ?></span>
+                    <div class="info-item">
+                        <span class="info-label">Colaborador:</span>
+                        <span class="info-value">
+                            <i class="fas fa-user"></i> <?php echo htmlspecialchars($colaboradorNome); ?>
+                        </span>
                     </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Data de Atribuição:</span>
-                        <span class="detail-value"><?php echo formatarData($equipamento['data_atribuicao'] ?? ''); ?></span>
+                    <div class="info-item">
+                        <span class="info-label">Data de Atribuição:</span>
+                        <span class="info-value"><?php echo formatarData($equipamento['data_atribuicao'] ?? ''); ?></span>
                     </div>
                     <?php if ($equipamento['status'] === 'emprestado' && isset($equipamento['data_devolucao_prevista'])): ?>
-                    <div class="detail-item">
-                        <span class="detail-label">Devolução Prevista:</span>
-                        <span class="detail-value"><?php echo formatarData($equipamento['data_devolucao_prevista']); ?></span>
+                    <div class="info-item">
+                        <span class="info-label">Devolução Prevista:</span>
+                        <span class="info-value"><?php echo formatarData($equipamento['data_devolucao_prevista']); ?></span>
                     </div>
                     <?php endif; ?>
                 </div>
             </div>
             
-            <form method="POST" action="" class="confirmation-form">
+            <!-- Formulário -->
+            <form method="POST" action="" class="confirmation-form" id="form-devolucao">
                 <div class="form-group">
-                    <label for="novo_status"><i class="fas fa-exchange-alt"></i> Novo Status após Devolução *</label>
+                    <label for="novo_status">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Novo Status após Devolução</span>
+                        <span class="required">*</span>
+                    </label>
                     <select id="novo_status" name="novo_status" required class="form-select">
                         <option value="estoque" selected>Em Estoque (disponível para uso)</option>
                         <option value="manutencao">Em Manutenção (precisa de conserto)</option>
@@ -177,19 +253,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 
                 <div class="form-group">
-                    <label for="observacoes"><i class="fas fa-sticky-note"></i> Observações da Devolução</label>
+                    <label for="observacoes">
+                        <i class="fas fa-sticky-note"></i>
+                        <span>Observações da Devolução</span>
+                    </label>
                     <textarea id="observacoes" name="observacoes" class="form-control" 
                               rows="3" placeholder="Condição do equipamento, motivos da devolução, problemas identificados..."></textarea>
                 </div>
                 
-                <?php if (isset($erro)): ?>
-                <div class="alert alert-error">
-                    <i class="fas fa-exclamation-circle"></i> <?php echo $erro; ?>
+                <?php if (!empty($erro)): ?>
+                <div class="alert-error-card">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span><?php echo $erro; ?></span>
                 </div>
                 <?php endif; ?>
                 
-                <div class="confirmation-info">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Atenção!</h4>
+                <!-- Card de Atenção -->
+                <div class="warning-card">
+                    <div class="warning-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>Atenção!</h4>
+                    </div>
                     <p>Ao devolver este equipamento:</p>
                     <ul>
                         <li>O vínculo com o colaborador <strong><?php echo htmlspecialchars($colaboradorNome); ?></strong> será removido</li>
@@ -202,229 +286,122 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </ul>
                 </div>
                 
-                <div class="confirmation-actions">
-                    <button type="submit" class="btn btn-danger">
-                        <i class="fas fa-check"></i> Confirmar Devolução
-                    </button>
-                    <a href="index.php" class="btn btn-secondary">
-                        <i class="fas fa-times"></i> Cancelar
-                    </a>
+                <div class="confirmation-checkbox">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="confirmCheckbox" required>
+                        <span class="checkbox-custom"></span>
+                        <span class="checkbox-text">Confirmo que estou ciente de que esta ação removerá o vínculo com o colaborador e alterará o status do equipamento.</span>
+                    </label>
                 </div>
                 
-                <div class="confirmation-checkbox">
-                    <label>
-                        <input type="checkbox" id="confirmCheckbox" required>
-                        Confirmo que estou ciente de que esta ação removerá o vínculo com o colaborador e alterará o status do equipamento.
-                    </label>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-danger" id="btnConfirmar" disabled>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Confirmar Devolução</span>
+                    </button>
+                    <a href="index.php" class="btn btn-secondary">
+                        <i class="fas fa-times"></i>
+                        <span>Cancelar</span>
+                    </a>
                 </div>
             </form>
         </div>
     </main>
-    
-    <?php include '../includes/footer.php'; ?>
-    
-    <script src="../js/script.js"></script>
-    
-    <script>
-    // Habilitar/desabilitar botão baseado no checkbox
-    document.addEventListener('DOMContentLoaded', function() {
-        const checkbox = document.getElementById('confirmCheckbox');
-        const submitBtn = document.querySelector('.btn-danger');
-        
-        if (checkbox && submitBtn) {
-            checkbox.addEventListener('change', function() {
-                submitBtn.disabled = !this.checked;
-            });
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-laptop-house"></i> Sistema de Gestão</h3>
+                <p>Controle de colaboradores e equipamentos</p>
+            </div>
             
-            // Desabilitar inicialmente
-            submitBtn.disabled = true;
-        }
+            <div class="footer-section">
+                <h3>Links Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="../index.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="../colaboradores/index.php"><i class="fas fa-users"></i> Colaboradores</a></li>
+                    <li><a href="index.php"><i class="fas fa-laptop"></i> Equipamentos</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Estatísticas</h3>
+                <?php
+                $total_equipamentos = count(lerArquivoJSON('../data/equipamentos.json'));
+                $equipamentos_data = lerArquivoJSON('../data/equipamentos.json');
+                $equipamentos_estoque = 0;
+                foreach ($equipamentos_data as $e) {
+                    if (($e['status'] ?? '') === 'estoque') $equipamentos_estoque++;
+                }
+                ?>
+                <div class="footer-stats">
+                    <div class="footer-stat">
+                        <span class="stat-number"><?php echo $total_equipamentos; ?></span>
+                        <span class="stat-label">Equipamentos</span>
+                    </div>
+                    <div class="footer-stat">
+                        <span class="stat-number"><?php echo $equipamentos_estoque; ?></span>
+                        <span class="stat-label">Em Estoque</span>
+                    </div>
+                    <div class="footer-stat">
+                        <span class="stat-number"><?php echo count($colaboradores); ?></span>
+                        <span class="stat-label">Colaboradores</span>
+                    </div>
+                </div>
+            </div>
+        </div>
         
-        // Validação do formulário
-        const form = document.querySelector('.confirmation-form');
-        if (form) {
-            form.addEventListener('submit', function(e) {
-                const novoStatus = document.getElementById('novo_status').value;
-                const confirmado = document.getElementById('confirmCheckbox').checked;
-                
-                if (!confirmado) {
-                    alert('Você precisa confirmar que está ciente das consequências desta ação.');
-                    e.preventDefault();
-                    return false;
-                }
-                
-                if (novoStatus === '') {
-                    alert('Selecione o novo status do equipamento.');
-                    e.preventDefault();
-                    return false;
-                }
-                
-                return true;
-            });
-        }
-    });
+        <div class="footer-bottom">
+            <p>Sistema de Gestão &copy; <?php echo date('Y'); ?> - Todos os direitos reservados</p>
+            <p class="footer-version">Última atualização: <?php echo date('d/m/Y H:i'); ?></p>
+        </div>
+    </footer>
+
+    <script>
+        // Habilitar/desabilitar botão baseado no checkbox
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkbox = document.getElementById('confirmCheckbox');
+            const submitBtn = document.getElementById('btnConfirmar');
+            
+            if (checkbox && submitBtn) {
+                checkbox.addEventListener('change', function() {
+                    submitBtn.disabled = !this.checked;
+                });
+            }
+            
+            // Validação do formulário
+            const form = document.getElementById('form-devolucao');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    const novoStatus = document.getElementById('novo_status').value;
+                    const confirmado = document.getElementById('confirmCheckbox').checked;
+                    
+                    if (!confirmado) {
+                        alert('Você precisa confirmar que está ciente das consequências desta ação.');
+                        e.preventDefault();
+                        return false;
+                    }
+                    
+                    if (novoStatus === '') {
+                        alert('Selecione o novo status do equipamento.');
+                        e.preventDefault();
+                        return false;
+                    }
+                    
+                    return true;
+                });
+            }
+        });
+        
+        // Fechar alerta após 5 segundos
+        setTimeout(function() {
+            const alert = document.querySelector('.global-alert');
+            if (alert) {
+                alert.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => alert.remove(), 300);
+            }
+        }, 5000);
     </script>
-    
-    <style>
-    .confirmation-card {
-        background: white;
-        border-radius: var(--border-radius);
-        padding: 30px;
-        box-shadow: var(--box-shadow);
-        margin-top: 20px;
-    }
-    
-    .confirmation-card h2 {
-        color: var(--danger-color);
-        margin-bottom: 20px;
-        text-align: center;
-    }
-    
-    .equipamento-details {
-        margin: 30px 0;
-        padding: 20px;
-        background: #f8f9fa;
-        border-radius: var(--border-radius);
-    }
-    
-    .equipamento-details h3 {
-        color: var(--dark-color);
-        margin-bottom: 15px;
-    }
-    
-    .details-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 15px;
-    }
-    
-    .detail-item {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-    
-    .detail-label {
-        font-size: 12px;
-        color: var(--gray-color);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    
-    .detail-value {
-        font-weight: 500;
-        color: var(--dark-color);
-    }
-    
-    .confirmation-info {
-        margin: 20px 0;
-        padding: 15px;
-        background: #fff3cd;
-        border-radius: var(--border-radius);
-        border-left: 4px solid #ffc107;
-    }
-    
-    .confirmation-info h4 {
-        color: #856404;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .confirmation-info ul {
-        margin: 10px 0 0 20px;
-        color: #856404;
-    }
-    
-    .confirmation-info li {
-        margin-bottom: 5px;
-    }
-    
-    .confirmation-actions {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-        margin: 30px 0;
-    }
-    
-    .confirmation-checkbox {
-        text-align: center;
-        padding: 15px;
-        background: #f8f9fa;
-        border-radius: var(--border-radius);
-        margin-top: 20px;
-    }
-    
-    .confirmation-checkbox label {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        cursor: pointer;
-        text-align: left;
-    }
-    
-    .status-badge {
-        display: inline-block;
-        padding: 4px 10px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    
-    .status-ativo {
-        background: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-    }
-    
-    .status-inativo {
-        background: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-    }
-    
-    .status-info {
-        background: #d1ecf1;
-        color: #0c5460;
-        border: 1px solid #bee5eb;
-    }
-    
-    .status-warning {
-        background: #fff3cd;
-        color: #856404;
-        border: 1px solid #ffeaa7;
-    }
-    
-    .status-danger {
-        background: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-    }
-    
-    .btn-danger:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-    
-    @media (max-width: 768px) {
-        .confirmation-checkbox label {
-            flex-direction: column;
-            text-align: center;
-            gap: 5px;
-        }
-        
-        .confirmation-actions {
-            flex-direction: column;
-        }
-        
-        .confirmation-actions .btn {
-            width: 100%;
-        }
-    }
-    </style>
 </body>
 </html>

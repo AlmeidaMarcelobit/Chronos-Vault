@@ -1,7 +1,12 @@
 <?php
 session_start();
 require_once '../includes/funcoes.php';
-verificarSessao();
+
+// Verificar se o usuário está logado
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: ../login.php');
+    exit;
+}
 
 $id = $_GET['id'] ?? null;
 if (!$id) {
@@ -103,11 +108,13 @@ if ($equipamento['colaborador_id']) {
     }
 }
 
+$erros = [];
+
 // Processar finalização da manutenção
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $resultado = trim($_POST['resultado'] ?? '');
     $custo = !empty($_POST['custo']) ? str_replace(['.', ','], ['', '.'], $_POST['custo']) : null;
-    $destino = $_POST['destino'] ?? 'colaborador'; // Padrão para colaborador se houver vínculo
+    $destino = $_POST['destino'] ?? 'colaborador';
     $colaboradorId = $_POST['colaborador_id'] ?? $equipamento['colaborador_id'] ?? null;
     
     // Se devolução automática está ativada, forçar destino para colaborador
@@ -117,8 +124,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     // Validações
-    $erros = [];
-    
     if (empty($resultado)) {
         $erros[] = 'Informe o resultado da manutenção.';
     }
@@ -184,255 +189,367 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
+    <!-- ==================== HEADER ==================== -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <a href="../index.php">
+                    <i class="fas fa-laptop-house"></i>
+                    <h1>Sistema de Gestão</h1>
+                </a>
+            </div>
+            
+            <div class="user-menu">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
+                </div>
+                
+                <a href="../logout.php" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </a>
+            </div>
+        </div>
+        
+        <nav class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.php" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../colaboradores/index.php" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Colaboradores</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.php" class="nav-link active">
+                        <i class="fas fa-laptop"></i>
+                        <span>Equipamentos</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
     
-    <main class="container">
+    <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
+    <main class="main-container">
         <div class="page-header">
-            <h1><i class="fas fa-tools"></i> Finalizar Manutenção</h1>
+            <div>
+                <h1><i class="fas fa-tools"></i> Finalizar Manutenção</h1>
+                <p class="page-subtitle">Registre o resultado da manutenção e defina o destino do equipamento</p>
+            </div>
             <a href="index.php" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Voltar
+                <i class="fas fa-arrow-left"></i>
+                <span>Voltar</span>
             </a>
         </div>
         
-        <div class="card">
-            <div class="card-header">
-                <h3><i class="fas fa-laptop"></i> Equipamento</h3>
-            </div>
-            <div class="card-body">
-                <div class="info-grid">
-                    <div class="info-item">
-                        <span class="info-label">Patrimônio:</span>
-                        <span class="info-value"><?php echo htmlspecialchars($equipamento['patrimonio']); ?></span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Tipo:</span>
-                        <span class="info-value"><?php echo getTipoTexto($equipamento['tipo']); ?></span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Marca/Modelo:</span>
-                        <span class="info-value"><?php echo htmlspecialchars($equipamento['marca'] . ' ' . $equipamento['modelo']); ?></span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Centro de Custo:</span>
-                        <span class="info-value"><?php echo htmlspecialchars($equipamento['centro_custo']); ?></span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Status Atual:</span>
-                        <span class="info-value">
-                            <span class="status-badge status-warning">
-                                <i class="fas fa-tools"></i> <?php echo getStatusTexto($equipamento['status']); ?>
-                            </span>
-                        </span>
-                    </div>
-                    <?php if ($colaboradorAtualInfo): ?>
-                    <div class="info-item">
-                        <span class="info-label">Vinculado a:</span>
-                        <span class="info-value">
-                            <i class="fas fa-user"></i> <?php echo htmlspecialchars($colaboradorAtualInfo['nome']); ?>
-                        </span>
-                    </div>
-                    <?php endif; ?>
+        <!-- Card do Equipamento -->
+        <div class="info-card equipment-info-card">
+            <h3><i class="fas fa-laptop"></i> Equipamento</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Patrimônio:</span>
+                    <span class="info-value"><?php echo htmlspecialchars($equipamento['patrimonio']); ?></span>
                 </div>
-                
-                <?php if ($ultimaManutencao): ?>
-                <div class="manutencao-info mt-3">
-                    <h4><i class="fas fa-wrench"></i> Informações da Manutenção</h4>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <span class="info-label">Data de Envio:</span>
-                            <span class="info-value">
-                                <?php 
-                                if (!empty($ultimaManutencao['data_envio'])) {
-                                    echo formatarData($ultimaManutencao['data_envio']);
-                                } else {
-                                    echo 'Data não registrada';
-                                }
-                                ?>
-                            </span>
-                        </div>
-                        <?php if (!empty($ultimaManutencao['data_envio'])): ?>
-                        <div class="info-item">
-                            <span class="info-label">Tempo em Manutenção:</span>
-                            <span class="info-value">
-                                <?php 
-                                $dataEnvio = new DateTime($ultimaManutencao['data_envio']);
-                                $agora = new DateTime();
-                                $diferenca = $agora->diff($dataEnvio);
-                                
-                                $tempo = '';
-                                if ($diferenca->y > 0) $tempo .= $diferenca->y . ' ano(s) ';
-                                if ($diferenca->m > 0) $tempo .= $diferenca->m . ' mês(es) ';
-                                if ($diferenca->d > 0) $tempo .= $diferenca->d . ' dia(s) ';
-                                if ($diferenca->h > 0) $tempo .= $diferenca->h . ' hora(s) ';
-                                if ($diferenca->i > 0) $tempo .= $diferenca->i . ' minuto(s) ';
-                                
-                                echo $tempo ?: 'Menos de 1 minuto';
-                                ?>
-                            </span>
-                        </div>
-                        <?php endif; ?>
-                        <?php if (!empty($ultimaManutencao['problema'])): ?>
-                        <div class="info-item full-width">
-                            <span class="info-label">Problema Reportado:</span>
-                            <span class="info-value"><?php echo htmlspecialchars($ultimaManutencao['problema']); ?></span>
-                        </div>
-                        <?php endif; ?>
-                        <?php if (isset($ultimaManutencao['manter_com_colaborador']) && $ultimaManutencao['manter_com_colaborador']): ?>
-                        <div class="info-item full-width">
-                            <span class="info-label">Configuração:</span>
-                            <span class="info-value">
-                                <i class="fas fa-check-circle text-success"></i> 
-                                <strong>Devolução automática ativada</strong> - Equipamento será devolvido ao colaborador atual.
-                            </span>
-                        </div>
-                        <?php endif; ?>
-                    </div>
+                <div class="info-item">
+                    <span class="info-label">Tipo:</span>
+                    <span class="info-value"><?php echo getTipoTexto($equipamento['tipo']); ?></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Marca/Modelo:</span>
+                    <span class="info-value"><?php echo htmlspecialchars($equipamento['marca'] . ' ' . $equipamento['modelo']); ?></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Centro de Custo:</span>
+                    <span class="info-value"><?php echo htmlspecialchars($equipamento['centro_custo']); ?></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Status Atual:</span>
+                    <span class="info-value">
+                        <span class="status-badge status-warning">
+                            <i class="fas fa-tools"></i> <?php echo getStatusTexto($equipamento['status']); ?>
+                        </span>
+                    </span>
+                </div>
+                <?php if ($colaboradorAtualInfo): ?>
+                <div class="info-item">
+                    <span class="info-label">Vinculado a:</span>
+                    <span class="info-value">
+                        <i class="fas fa-user"></i> <?php echo htmlspecialchars($colaboradorAtualInfo['nome']); ?>
+                    </span>
                 </div>
                 <?php endif; ?>
             </div>
         </div>
         
-        <form method="POST" action="" class="mt-4">
-            <div class="card">
-                <div class="card-header">
-                    <h3><i class="fas fa-clipboard-check"></i> Resultado da Manutenção</h3>
+        <!-- Informações da Manutenção -->
+        <?php if ($ultimaManutencao): ?>
+        <div class="info-card maintenance-info-card">
+            <h3><i class="fas fa-wrench"></i> Informações da Manutenção</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Data de Envio:</span>
+                    <span class="info-value">
+                        <?php 
+                        if (!empty($ultimaManutencao['data_envio'])) {
+                            echo formatarData($ultimaManutencao['data_envio']);
+                        } else {
+                            echo 'Data não registrada';
+                        }
+                        ?>
+                    </span>
                 </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <label for="resultado">Descrição do Serviço Realizado *</label>
-                        <textarea id="resultado" name="resultado" class="form-control" 
-                                  rows="4" placeholder="Descreva em detalhes o que foi feito na manutenção, peças trocadas, testes realizados, diagnóstico final..."
-                                  required><?php echo htmlspecialchars($_POST['resultado'] ?? ''); ?></textarea>
-                        <small class="form-text">Informe todos os procedimentos realizados durante a manutenção.</small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="custo">Custo da Manutenção (R$)</label>
-                        <div class="input-group" style="max-width: 300px;">
-                            <span class="input-group-text">R$</span>
-                            <input type="text" id="custo" name="custo" 
-                                   class="form-control" 
-                                   placeholder="0,00"
-                                   value="<?php echo htmlspecialchars($_POST['custo'] ?? ''); ?>">
-                        </div>
-                        <small class="form-text">Informe o custo total da manutenção (opcional).</small>
-                    </div>
+                <?php if (!empty($ultimaManutencao['data_envio'])): ?>
+                <div class="info-item">
+                    <span class="info-label">Tempo em Manutenção:</span>
+                    <span class="info-value">
+                        <?php 
+                        $dataEnvio = new DateTime($ultimaManutencao['data_envio']);
+                        $agora = new DateTime();
+                        $diferenca = $agora->diff($dataEnvio);
+                        
+                        $tempo = '';
+                        if ($diferenca->y > 0) $tempo .= $diferenca->y . ' ano(s) ';
+                        if ($diferenca->m > 0) $tempo .= $diferenca->m . ' mês(es) ';
+                        if ($diferenca->d > 0) $tempo .= $diferenca->d . ' dia(s) ';
+                        if ($diferenca->h > 0) $tempo .= $diferenca->h . ' hora(s) ';
+                        if ($diferenca->i > 0) $tempo .= $diferenca->i . ' minuto(s) ';
+                        
+                        echo $tempo ?: 'Menos de 1 minuto';
+                        ?>
+                    </span>
+                </div>
+                <?php endif; ?>
+                <?php if (!empty($ultimaManutencao['problema'])): ?>
+                <div class="info-item full-width">
+                    <span class="info-label">Problema Reportado:</span>
+                    <span class="info-value"><?php echo htmlspecialchars($ultimaManutencao['problema']); ?></span>
+                </div>
+                <?php endif; ?>
+                <?php if (isset($ultimaManutencao['manter_com_colaborador']) && $ultimaManutencao['manter_com_colaborador']): ?>
+                <div class="info-item full-width">
+                    <span class="info-label">Configuração:</span>
+                    <span class="info-value">
+                        <i class="fas fa-check-circle" style="color: var(--success);"></i> 
+                        <strong>Devolução automática ativada</strong> - Equipamento será devolvido ao colaborador atual.
+                    </span>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php endif; ?>
+        
+        <!-- Formulário -->
+        <form method="POST" action="" class="form-card" id="form-manutencao">
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label for="resultado">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Descrição do Serviço Realizado</span>
+                        <span class="required">*</span>
+                    </label>
+                    <textarea id="resultado" name="resultado" class="form-control" 
+                              rows="4" placeholder="Descreva em detalhes o que foi feito na manutenção, peças trocadas, testes realizados, diagnóstico final..."
+                              required><?php echo htmlspecialchars($_POST['resultado'] ?? ''); ?></textarea>
+                    <small class="form-text">Informe todos os procedimentos realizados durante a manutenção.</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="custo">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Custo da Manutenção (R$)</span>
+                    </label>
+                    <input type="text" id="custo" name="custo" 
+                           class="form-control money-mask" 
+                           placeholder="0,00"
+                           value="<?php echo htmlspecialchars($_POST['custo'] ?? ''); ?>">
+                    <small class="form-text">Informe o custo total da manutenção (opcional).</small>
                 </div>
             </div>
             
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h3><i class="fas fa-map-marker-alt"></i> Destino do Equipamento</h3>
-                </div>
-                <div class="card-body">
-                    <?php if ($devolverAutomaticamente && $colaboradorDevolucao): ?>
-                        <div class="alert alert-success">
-                            <h4><i class="fas fa-check-circle"></i> Devolução Automática</h4>
-                            <p>
-                                Este equipamento foi configurado para <strong>devolução automática</strong>.
-                                Ele será devolvido automaticamente para:
-                            </p>
-                            <div class="destino-info">
-                                <i class="fas fa-user fa-2x"></i>
-                                <div>
-                                    <h5><?php echo htmlspecialchars($colaboradorDevolucao['nome']); ?></h5>
-                                    <p class="mb-0"><?php echo htmlspecialchars($colaboradorDevolucao['departamento']); ?></p>
-                                </div>
-                            </div>
-                            <input type="hidden" name="destino" value="colaborador">
-                            <input type="hidden" name="colaborador_id" value="<?php echo $colaboradorDevolucao['id']; ?>">
+            <!-- Destino do Equipamento -->
+            <div class="form-group">
+                <label><i class="fas fa-map-marker-alt"></i> Destino do Equipamento *</label>
+                
+                <?php if ($devolverAutomaticamente && $colaboradorDevolucao): ?>
+                    <div class="auto-return-card">
+                        <div class="auto-return-header">
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Devolução Automática</strong>
                         </div>
-                    <?php else: ?>
-                        <div class="form-group">
-                            <div class="radio-options">
-                                <?php if ($colaboradorAtualInfo): ?>
-                                <label class="radio-option">
-                                    <input type="radio" name="destino" value="colaborador" 
-                                           <?php echo (!isset($_POST['destino']) || $_POST['destino'] === 'colaborador') ? 'checked' : ''; ?>>
-                                    <span>
-                                        <i class="fas fa-user-check"></i> Devolver para Colaborador
-                                    </span>
-                                    <small class="form-text">
+                        <p>Este equipamento foi configurado para <strong>devolução automática</strong>.</p>
+                        <p>Ele será devolvido automaticamente para:</p>
+                        <div class="destino-info">
+                            <i class="fas fa-user-circle"></i>
+                            <div>
+                                <strong><?php echo htmlspecialchars($colaboradorDevolucao['nome']); ?></strong>
+                                <small><?php echo htmlspecialchars($colaboradorDevolucao['departamento']); ?></small>
+                            </div>
+                        </div>
+                        <input type="hidden" name="destino" value="colaborador">
+                        <input type="hidden" name="colaborador_id" value="<?php echo $colaboradorDevolucao['id']; ?>">
+                    </div>
+                <?php else: ?>
+                    <div class="radio-options">
+                        <?php if ($colaboradorAtualInfo): ?>
+                        <label class="radio-option">
+                            <input type="radio" name="destino" value="colaborador" 
+                                   <?php echo (!isset($_POST['destino']) || $_POST['destino'] === 'colaborador') ? 'checked' : ''; ?>
+                                   onchange="toggleNovoColaboradorField()">
+                            <div class="radio-content">
+                                <i class="fas fa-user-check"></i>
+                                <div>
+                                    <span class="radio-title">Devolver para Colaborador</span>
+                                    <small class="radio-description">
                                         Devolver para <?php echo htmlspecialchars($colaboradorAtualInfo['nome']); ?> 
                                         (<?php echo htmlspecialchars($colaboradorAtualInfo['departamento']); ?>)
                                     </small>
-                                </label>
-                                <?php endif; ?>
-                                
-                                <label class="radio-option">
-                                    <input type="radio" name="destino" value="estoque"
-                                           <?php echo (isset($_POST['destino']) && $_POST['destino'] === 'estoque') ? 'checked' : ''; ?>>
-                                    <span>
-                                        <i class="fas fa-warehouse"></i> Colocar em Estoque
-                                    </span>
-                                    <small class="form-text">O equipamento ficará disponível no estoque para futura atribuição.</small>
-                                </label>
-                                
-                                <?php if (!$colaboradorAtualInfo): ?>
-                                <label class="radio-option">
-                                    <input type="radio" name="destino" value="novo_colaborador"
-                                           <?php echo (isset($_POST['destino']) && $_POST['destino'] === 'novo_colaborador') ? 'checked' : ''; ?>>
-                                    <span>
-                                        <i class="fas fa-user-plus"></i> Atribuir para Novo Colaborador
-                                    </span>
-                                    <small class="form-text">Atribuir o equipamento para um colaborador diferente.</small>
-                                </label>
-                                <?php endif; ?>
+                                </div>
                             </div>
-                        </div>
+                        </label>
+                        <?php endif; ?>
                         
-                        <div id="novo-colaborador-field" style="display: none;">
-                            <div class="form-group">
-                                <label for="colaborador_id">Selecionar Novo Colaborador *</label>
-                                <select id="colaborador_id" name="colaborador_id" class="form-control">
-                                    <option value="">Selecione um colaborador...</option>
-                                    <?php foreach ($colaboradores as $colaborador): ?>
-                                    <option value="<?php echo $colaborador['id']; ?>"
-                                        <?php echo (isset($_POST['colaborador_id']) && $_POST['colaborador_id'] == $colaborador['id']) ? 'selected' : ''; ?>>
-                                        <?php echo htmlspecialchars($colaborador['nome'] . ' - ' . $colaborador['departamento']); ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
+                        <label class="radio-option">
+                            <input type="radio" name="destino" value="estoque"
+                                   <?php echo (isset($_POST['destino']) && $_POST['destino'] === 'estoque') ? 'checked' : ''; ?>
+                                   onchange="toggleNovoColaboradorField()">
+                            <div class="radio-content">
+                                <i class="fas fa-warehouse"></i>
+                                <div>
+                                    <span class="radio-title">Colocar em Estoque</span>
+                                    <small class="radio-description">O equipamento ficará disponível no estoque para futura atribuição.</small>
+                                </div>
                             </div>
+                        </label>
+                        
+                        <?php if (!$colaboradorAtualInfo): ?>
+                        <label class="radio-option">
+                            <input type="radio" name="destino" value="novo_colaborador"
+                                   <?php echo (isset($_POST['destino']) && $_POST['destino'] === 'novo_colaborador') ? 'checked' : ''; ?>
+                                   onchange="toggleNovoColaboradorField()">
+                            <div class="radio-content">
+                                <i class="fas fa-user-plus"></i>
+                                <div>
+                                    <span class="radio-title">Atribuir para Novo Colaborador</span>
+                                    <small class="radio-description">Atribuir o equipamento para um colaborador diferente.</small>
+                                </div>
+                            </div>
+                        </label>
+                        <?php endif; ?>
+                    </div>
+                    
+                    <div id="novo-colaborador-field" style="display: none;">
+                        <div class="form-group" style="margin-top: var(--spacing-md);">
+                            <label for="colaborador_id">
+                                <i class="fas fa-user"></i>
+                                <span>Selecionar Novo Colaborador</span>
+                                <span class="required">*</span>
+                            </label>
+                            <select id="colaborador_id" name="colaborador_id" class="form-select">
+                                <option value="">-- Selecione um colaborador --</option>
+                                <?php foreach ($colaboradores as $colaborador): ?>
+                                <option value="<?php echo $colaborador['id']; ?>"
+                                    <?php echo (isset($_POST['colaborador_id']) && $_POST['colaborador_id'] == $colaborador['id']) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($colaborador['nome'] . ' - ' . $colaborador['departamento']); ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
-                    <?php endif; ?>
-                </div>
+                    </div>
+                <?php endif; ?>
             </div>
             
+            <!-- Erros -->
             <?php if (!empty($erros)): ?>
-            <div class="alert alert-danger">
-                <h4><i class="fas fa-exclamation-triangle"></i> Erros encontrados:</h4>
-                <ul>
-                    <?php foreach ($erros as $erro): ?>
-                    <li><?php echo htmlspecialchars($erro); ?></li>
-                    <?php endforeach; ?>
-                </ul>
+            <div class="alert-error-card">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div class="alert-content">
+                    <strong>Erros encontrados:</strong>
+                    <ul>
+                        <?php foreach ($erros as $erro): ?>
+                        <li><?php echo htmlspecialchars($erro); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
             </div>
             <?php endif; ?>
             
-            <div class="form-actions mt-4">
-                <button type="submit" class="btn btn-success btn-lg">
-                    <i class="fas fa-check-circle"></i> Finalizar Manutenção
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Finalizar Manutenção</span>
                 </button>
-                <a href="index.php" class="btn btn-secondary">Cancelar</a>
+                <a href="index.php" class="btn btn-secondary">
+                    <i class="fas fa-times"></i>
+                    <span>Cancelar</span>
+                </a>
             </div>
         </form>
     </main>
-    
-    <?php include '../includes/footer.php'; ?>
-    
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        <?php if (!$devolverAutomaticamente): ?>
-        const destinoColaborador = document.querySelector('input[name="destino"][value="colaborador"]');
-        const destinoEstoque = document.querySelector('input[name="destino"][value="estoque"]');
-        const destinoNovoColaborador = document.querySelector('input[name="destino"][value="novo_colaborador"]');
-        const novoColaboradorField = document.getElementById('novo-colaborador-field');
-        const colaboradorSelect = document.getElementById('colaborador_id');
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-laptop-house"></i> Sistema de Gestão</h3>
+                <p>Controle de colaboradores e equipamentos</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Links Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="../index.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="../colaboradores/index.php"><i class="fas fa-users"></i> Colaboradores</a></li>
+                    <li><a href="index.php"><i class="fas fa-laptop"></i> Equipamentos</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Estatísticas</h3>
+                <?php
+                $total_equipamentos = count(lerArquivoJSON('../data/equipamentos.json'));
+                $equipamentos_data = lerArquivoJSON('../data/equipamentos.json');
+                $equipamentos_manutencao = 0;
+                foreach ($equipamentos_data as $e) {
+                    if (($e['status'] ?? '') === 'manutencao') $equipamentos_manutencao++;
+                }
+                ?>
+                <div class="footer-stats">
+                    <div class="footer-stat">
+                        <span class="stat-number"><?php echo $total_equipamentos; ?></span>
+                        <span class="stat-label">Equipamentos</span>
+                    </div>
+                    <div class="footer-stat">
+                        <span class="stat-number"><?php echo $equipamentos_manutencao; ?></span>
+                        <span class="stat-label">Em Manutenção</span>
+                    </div>
+                    <div class="footer-stat">
+                        <span class="stat-number"><?php echo count($colaboradores); ?></span>
+                        <span class="stat-label">Colaboradores</span>
+                    </div>
+                </div>
+            </div>
+        </div>
         
-        // Função para mostrar/ocultar campo de novo colaborador
+        <div class="footer-bottom">
+            <p>Sistema de Gestão &copy; <?php echo date('Y'); ?> - Todos os direitos reservados</p>
+            <p class="footer-version">Última atualização: <?php echo date('d/m/Y H:i'); ?></p>
+        </div>
+    </footer>
+
+    <script>
         function toggleNovoColaboradorField() {
-            if (destinoNovoColaborador && destinoNovoColaborador.checked) {
+            const novoColaboradorRadio = document.querySelector('input[name="destino"][value="novo_colaborador"]');
+            const novoColaboradorField = document.getElementById('novo-colaborador-field');
+            const colaboradorSelect = document.getElementById('colaborador_id');
+            
+            if (novoColaboradorRadio && novoColaboradorRadio.checked) {
                 novoColaboradorField.style.display = 'block';
                 if (colaboradorSelect) colaboradorSelect.required = true;
             } else {
@@ -441,202 +558,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
         
-        // Inicializar estado
-        if (destinoNovoColaborador) {
-            toggleNovoColaboradorField();
-            
-            // Adicionar listeners para mudanças
-            destinoColaborador.addEventListener('change', toggleNovoColaboradorField);
-            destinoEstoque.addEventListener('change', toggleNovoColaboradorField);
-            destinoNovoColaborador.addEventListener('change', toggleNovoColaboradorField);
-        }
-        <?php endif; ?>
-        
         // Formatar campo de custo
         const custoInput = document.getElementById('custo');
         if (custoInput) {
             custoInput.addEventListener('input', function(e) {
                 let value = e.target.value.replace(/\D/g, '');
-                value = (value / 100).toFixed(2);
-                value = value.replace('.', ',');
+                if (value) {
+                    value = (parseInt(value) / 100).toFixed(2);
+                    value = value.replace('.', ',');
+                }
                 e.target.value = value;
             });
         }
-    });
+        
+        // Inicializar estado do campo de novo colaborador
+        <?php if (!$devolverAutomaticamente): ?>
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleNovoColaboradorField();
+            
+            const radios = document.querySelectorAll('input[name="destino"]');
+            radios.forEach(radio => {
+                radio.addEventListener('change', toggleNovoColaboradorField);
+            });
+        });
+        <?php endif; ?>
+        
+        // Fechar alerta após 5 segundos
+        setTimeout(function() {
+            const alert = document.querySelector('.global-alert');
+            if (alert) {
+                alert.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => alert.remove(), 300);
+            }
+        }, 5000);
     </script>
-    
-    <style>
-    .info-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 15px;
-        margin-bottom: 20px;
-    }
-    
-    .info-item {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .info-item.full-width {
-        grid-column: 1 / -1;
-    }
-    
-    .info-label {
-        font-weight: 600;
-        color: #666;
-        font-size: 0.9em;
-        margin-bottom: 5px;
-    }
-    
-    .info-value {
-        color: #333;
-        font-size: 1.1em;
-    }
-    
-    .radio-options {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .radio-option {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        padding: 20px;
-        border: 2px solid #dee2e6;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-    
-    .radio-option:hover {
-        border-color: #6c757d;
-        background-color: #f8f9fa;
-    }
-    
-    .radio-option input[type="radio"]:checked + span {
-        color: var(--primary-color);
-        font-weight: 600;
-    }
-    
-    .radio-option input[type="radio"]:checked {
-        accent-color: var(--primary-color);
-    }
-    
-    .radio-option span {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 1.1em;
-    }
-    
-    .form-text {
-        color: #6c757d;
-        font-size: 0.875em;
-        margin-top: 5px;
-    }
-    
-    .manutencao-info {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-        border-left: 4px solid var(--warning-color);
-    }
-    
-    .manutencao-info h4 {
-        color: var(--warning-color);
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .alert-success {
-        background-color: #d4edda;
-        border-color: #c3e6cb;
-        color: #155724;
-        padding: 20px;
-        border-radius: 8px;
-        border-left: 4px solid #28a745;
-    }
-    
-    .alert-success h4 {
-        color: #155724;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .destino-info {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-top: 15px;
-        padding: 15px;
-        background: white;
-        border-radius: 8px;
-    }
-    
-    .form-actions {
-        display: flex;
-        gap: 15px;
-        padding: 20px 0;
-        border-top: 1px solid #dee2e6;
-    }
-    
-    .mt-3 {
-        margin-top: 1rem !important;
-    }
-    
-    .mt-4 {
-        margin-top: 1.5rem !important;
-    }
-    
-    .btn-lg {
-        padding: 12px 30px;
-        font-size: 1.1em;
-    }
-    
-    .mb-0 {
-        margin-bottom: 0 !important;
-    }
-    
-    @media (max-width: 768px) {
-        .info-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .form-actions {
-            flex-direction: column;
-        }
-        
-        .btn-lg {
-            width: 100%;
-        }
-    }
-    
-    .status-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        padding: 4px 10px;
-        border-radius: 20px;
-        font-size: 0.9em;
-        font-weight: 500;
-    }
-    
-    .status-warning {
-        background: #fff3cd;
-        color: #856404;
-        border: 1px solid #ffeaa7;
-    }
-    
-    .text-success {
-        color: #28a745 !important;
-    }
-    </style>
 </body>
 </html>

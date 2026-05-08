@@ -1,7 +1,12 @@
 <?php
 session_start();
 require_once '../includes/funcoes.php';
-verificarSessao();
+
+// Verificar se o usuário está logado
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: ../login.php');
+    exit;
+}
 
 $id = $_GET['id'] ?? null;
 $tipo = $_GET['tipo'] ?? 'alocado'; // 'alocado' ou 'emprestado'
@@ -41,7 +46,6 @@ if ($equipamentoIndex === null) {
 }
 
 // Verificar se o equipamento pode ser atribuído
-// Só equipamentos "Em Estoque" podem ser alocados/emprestados diretamente
 if ($equipamento['status'] !== 'estoque') {
     $_SESSION['mensagem'] = 'Este equipamento não pode ser ' . ($tipo === 'emprestado' ? 'emprestado' : 'alocado') . 
                             '! Status atual: ' . getStatusTexto($equipamento['status']) . 
@@ -50,6 +54,8 @@ if ($equipamento['status'] !== 'estoque') {
     header('Location: index.php');
     exit;
 }
+
+$erro = '';
 
 // Processar atribuição
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -112,21 +118,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
+    <!-- ==================== HEADER ==================== -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <a href="../index.php">
+                    <i class="fas fa-laptop-house"></i>
+                    <h1>Sistema de Gestão</h1>
+                </a>
+            </div>
+            
+            <div class="user-menu">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
+                </div>
+                
+                <a href="../logout.php" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </a>
+            </div>
+        </div>
+        
+        <nav class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.php" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../colaboradores/index.php" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Colaboradores</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.php" class="nav-link active">
+                        <i class="fas fa-laptop"></i>
+                        <span>Equipamentos</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
     
-    <main class="container">
+    <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
+    <main class="main-container">
         <div class="page-header">
-            <h1><i class="fas fa-<?php echo $tipo === 'emprestado' ? 'handshake' : 'user-check'; ?>"></i> 
-                <?php echo $tipo === 'emprestado' ? 'Emprestar' : 'Alocar'; ?> Equipamento
-            </h1>
+            <div>
+                <h1>
+                    <i class="fas fa-<?php echo $tipo === 'emprestado' ? 'handshake' : 'user-check'; ?>"></i>
+                    <?php echo $tipo === 'emprestado' ? 'Emprestar' : 'Alocar'; ?> Equipamento
+                </h1>
+                <p class="page-subtitle">
+                    <?php echo $tipo === 'emprestado' ? 'Realize um empréstimo temporário' : 'Realize uma alocação permanente'; ?> do equipamento
+                </p>
+            </div>
             <a href="index.php" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Voltar
+                <i class="fas fa-arrow-left"></i>
+                <span>Voltar</span>
             </a>
         </div>
         
-        <div class="form-container">
-            <div class="equipamento-info">
-                <h3>Equipamento a ser <?php echo $tipo === 'emprestado' ? 'emprestado' : 'alocado'; ?>:</h3>
+        <div class="form-card-container">
+            <!-- Informações do Equipamento -->
+            <div class="info-card equipment-info-card">
+                <h3><i class="fas fa-laptop"></i> Equipamento a ser <?php echo $tipo === 'emprestado' ? 'emprestado' : 'alocado'; ?>:</h3>
                 <div class="info-grid">
                     <div class="info-item">
                         <span class="info-label">Patrimônio:</span>
@@ -155,10 +215,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
             
-            <form method="POST" action="" class="form-card">
+            <!-- Formulário de Atribuição -->
+            <form method="POST" action="" class="form-card" id="form-atribuicao">
                 <div class="form-group">
-                    <label for="colaborador_id"><i class="fas fa-user"></i> Selecionar Colaborador *</label>
-                    <select id="colaborador_id" name="colaborador_id" required class="form-select">
+                    <label for="colaborador_id">
+                        <i class="fas fa-user"></i>
+                        <span>Selecionar Colaborador</span>
+                        <span class="required">*</span>
+                    </label>
+                    <select id="colaborador_id" name="colaborador_id" required class="form-select select-colaborador">
                         <option value="">-- Selecione um colaborador --</option>
                         <?php if (empty($colaboradores)): ?>
                         <option value="" disabled>Nenhum colaborador cadastrado</option>
@@ -180,34 +245,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <?php if ($tipo === 'emprestado'): ?>
                 <div class="form-group">
-                    <label for="data_devolucao"><i class="fas fa-calendar-alt"></i> Data Prevista de Devolução</label>
+                    <label for="data_devolucao">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Data Prevista de Devolução</span>
+                    </label>
                     <input type="date" id="data_devolucao" name="data_devolucao" 
                            class="form-control"
                            min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>">
                     <small class="form-text">Opcional - Defina uma data para o empréstimo</small>
                 </div>
+                <?php endif; ?>
                 
                 <div class="form-group">
-                    <label for="observacoes"><i class="fas fa-sticky-note"></i> Observações do Empréstimo</label>
+                    <label for="observacoes">
+                        <i class="fas fa-sticky-note"></i>
+                        <span>Observações da <?php echo $tipo === 'emprestado' ? 'Empréstimo' : 'Alocação'; ?></span>
+                    </label>
                     <textarea id="observacoes" name="observacoes" class="form-control" 
-                              rows="3" placeholder="Motivo do empréstimo, condições especiais, local de uso..."></textarea>
+                              rows="3" placeholder="<?php echo $tipo === 'emprestado' ? 'Motivo do empréstimo, condições especiais, local de uso...' : 'Observações sobre a alocação...'; ?>"></textarea>
                 </div>
-                <?php else: ?>
-                <div class="form-group">
-                    <label for="observacoes"><i class="fas fa-sticky-note"></i> Observações da Alocação</label>
-                    <textarea id="observacoes" name="observacoes" class="form-control" 
-                              rows="3" placeholder="Observações sobre a alocação..."></textarea>
+                
+                <?php if (!empty($erro)): ?>
+                <div class="alert-error-card">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span><?php echo $erro; ?></span>
                 </div>
                 <?php endif; ?>
                 
-                <?php if (isset($erro)): ?>
-                <div class="alert alert-error">
-                    <i class="fas fa-exclamation-circle"></i> <?php echo $erro; ?>
-                </div>
-                <?php endif; ?>
-                
+                <!-- Card de Confirmação -->
                 <div class="warning-card">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Confirmação</h4>
+                    <div class="warning-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>Confirmação</h4>
+                    </div>
                     <p>Ao <?php echo $tipo === 'emprestado' ? 'emprestar' : 'alocar'; ?> este equipamento:</p>
                     <ul>
                         <li>O status será alterado para <strong>"<?php echo getStatusTexto($tipo); ?>"</strong></li>
@@ -223,15 +293,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <div class="form-actions">
                     <button type="submit" class="btn btn-<?php echo $tipo === 'emprestado' ? 'info' : 'success'; ?>">
-                        <i class="fas fa-<?php echo $tipo === 'emprestado' ? 'handshake' : 'check-circle'; ?>"></i> 
-                        <?php echo $tipo === 'emprestado' ? 'Confirmar Empréstimo' : 'Confirmar Alocação'; ?>
+                        <i class="fas fa-<?php echo $tipo === 'emprestado' ? 'handshake' : 'check-circle'; ?>"></i>
+                        <span><?php echo $tipo === 'emprestado' ? 'Confirmar Empréstimo' : 'Confirmar Alocação'; ?></span>
                     </button>
                     <a href="index.php" class="btn btn-secondary">
-                        <i class="fas fa-times"></i> Cancelar
+                        <i class="fas fa-times"></i>
+                        <span>Cancelar</span>
                     </a>
                 </div>
             </form>
             
+            <!-- Card Informativo -->
             <div class="info-card">
                 <h4><i class="fas fa-info-circle"></i> Informações</h4>
                 <?php if ($tipo === 'emprestado'): ?>
@@ -240,116 +312,89 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p>Após a devolução, o equipamento retornará ao estoque.</p>
                 <?php else: ?>
                 <p><strong>Alocação:</strong> Atribuição permanente do equipamento a um colaborador.</p>
-                <p>O equipamento será marcado como "Alocado para Colaborador" e ficará vinculado ao colaborador até ser devolvido ao estoque.</p>
+                <p>O equipamento será marcado como "Alocado" e ficará vinculado ao colaborador até ser devolvido ao estoque.</p>
                 <p>O colaborador selecionado receberá este equipamento em seu perfil.</p>
                 <?php endif; ?>
             </div>
         </div>
     </main>
-    
-    <?php include '../includes/footer.php'; ?>
-    
-    <script src="../js/script.js"></script>
-    
-    <style>
-    .warning-card {
-        margin: 20px 0;
-        padding: 15px;
-        background: #fff3cd;
-        border-radius: var(--border-radius);
-        border-left: 4px solid #ffc107;
-    }
-    
-    .warning-card h4 {
-        color: #856404;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .warning-card ul {
-        margin: 10px 0 0 20px;
-        color: #856404;
-    }
-    
-    .warning-card li {
-        margin-bottom: 5px;
-    }
-    
-    .info-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-        margin-top: 10px;
-    }
-    
-    .info-item {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-    
-    .info-label {
-        font-size: 12px;
-        color: var(--gray-color);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    
-    .info-value {
-        font-weight: 500;
-        color: var(--dark-color);
-    }
-    
-    .status-badge {
-        display: inline-block;
-        padding: 4px 10px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    
-    .status-ativo {
-        background: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-    }
-    
-    .status-inativo {
-        background: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-    }
-    
-    .status-info {
-        background: #d1ecf1;
-        color: #0c5460;
-        border: 1px solid #bee5eb;
-    }
-    
-    .status-warning {
-        background: #fff3cd;
-        color: #856404;
-        border: 1px solid #ffeaa7;
-    }
-    
-    .status-danger {
-        background: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-    }
-    
-    .form-text.text-danger {
-        color: #dc3545 !important;
-    }
-    
-    .form-text.text-danger a {
-        color: #dc3545;
-        text-decoration: underline;
-    }
-    </style>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-laptop-house"></i> Sistema de Gestão</h3>
+                <p>Controle de colaboradores e equipamentos</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Links Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="../index.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="../colaboradores/index.php"><i class="fas fa-users"></i> Colaboradores</a></li>
+                    <li><a href="index.php"><i class="fas fa-laptop"></i> Equipamentos</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Estatísticas</h3>
+                <?php
+                $total_equipamentos = count(lerArquivoJSON('../data/equipamentos.json'));
+                $equipamentos_data = lerArquivoJSON('../data/equipamentos.json');
+                $equipamentos_estoque = 0;
+                foreach ($equipamentos_data as $e) {
+                    if (($e['status'] ?? '') === 'estoque') $equipamentos_estoque++;
+                }
+                ?>
+                <div class="footer-stats">
+                    <div class="footer-stat">
+                        <span class="stat-number"><?php echo $total_equipamentos; ?></span>
+                        <span class="stat-label">Equipamentos</span>
+                    </div>
+                    <div class="footer-stat">
+                        <span class="stat-number"><?php echo $equipamentos_estoque; ?></span>
+                        <span class="stat-label">Em Estoque</span>
+                    </div>
+                    <div class="footer-stat">
+                        <span class="stat-number"><?php echo count($colaboradores); ?></span>
+                        <span class="stat-label">Colaboradores</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>Sistema de Gestão &copy; <?php echo date('Y'); ?> - Todos os direitos reservados</p>
+            <p class="footer-version">Última atualização: <?php echo date('d/m/Y H:i'); ?></p>
+        </div>
+    </footer>
+
+    <script>
+        // Validação do formulário
+        const form = document.getElementById('form-atribuicao');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const colaborador = document.getElementById('colaborador_id').value;
+                
+                if (!colaborador) {
+                    alert('Selecione um colaboradsssor para <?php echo $tipo === 'emprestado' ? 'emprestar' : 'alocar'; ?> o equipamento.');
+                    e.preventDefault();
+                    return false;
+                }
+                
+                return true;
+            });
+        }
+        
+        // Definir data mínima para devolução
+        const dataDevolucao = document.getElementById('data_devolucao');
+        if (dataDevolucao) {
+            const hoje = new Date();
+            const amanha = new Date(hoje);
+            amanha.setDate(hoje.getDate() + 1);
+            dataDevolucao.min = amanha.toISOString().split('T')[0];
+        }
+    </script>
 </body>
 </html>
+                
