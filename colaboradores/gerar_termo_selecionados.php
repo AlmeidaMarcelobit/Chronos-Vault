@@ -44,10 +44,6 @@ foreach ($equipamentos as $equip) {
     }
 }
 
-// Limpar sessão após uso
-unset($_SESSION['termo_equipamentos_selecionados']);
-unset($_SESSION['termo_colaborador_id']);
-
 // Configurações para impressão
 header('Content-Type: text/html; charset=UTF-8');
 ?>
@@ -57,108 +53,91 @@ header('Content-Type: text/html; charset=UTF-8');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Termo de Responsabilidade - Colaborador</title>
-    <link rel="stylesheet" href="../css/termo_colaborador.css">
+    <title>Termo de Responsabilidade - Entrega</title>
+    <link rel="stylesheet" href="../css/termos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-<div class="btn-container">
-    <!-- Botões de ação -->
-    <button onclick="window.print()" class="btn-print no-print">
+<!-- Botões de ação -->
+<div class="termo-actions no-print">
+    <button onclick="window.print()" class="btn-print">
         <i class="fas fa-print"></i> Imprimir Termo
     </button>
 
-
-    <button onclick="window.location.href='selecionar_equipamentos_termo.php?id=<?php echo $id; ?>'" class="btn-back no-print">
-        <i class="fas fa-arrow-left"></i> Selecionar Outros Equipamentos
+    <button onclick="window.location.href='selecionar_equipamentos_termo.php?id=<?php echo $id; ?>'" class="btn-back">
+        <i class="fas fa-arrow-left"></i> Selecionar Outros
     </button>
 
-    <button onclick="window.location.href='../index.php'" class="btn-voltar no-print">
+    <button onclick="window.location.href='../index.php'" class="btn-back">
         <i class="fas fa-home"></i> Voltar ao Início
     </button>
-
 </div>
-    <!-- Conteúdo do Termo -->
-    <div class="termo-container">
-        <div class="header">
-            <img src="../img/logo_impressao_08_01_2026.png" alt="">
-            <div class="titulo">TERMO DE RESPONSABILIDADE</div>
-            <!--        <div style="text-align: center; font-size: 14px; color: #666; margin-top: 10px;">-->
-            <!--            <i class="fas fa-info-circle"></i>-->
-            <!--            Termo gerado com -->
-            <?php //echo count($equipamentosColaborador); ?>
-            <!-- equipamento(s) selecionado(s)-->
-            <!--        </div>-->
+
+<!-- Conteúdo do Termo -->
+<div class="termo-container">
+    <?php if (!empty($equipamentosColaborador)): ?>
+        <div class="equipamento-count">
+            <?php echo count($equipamentosColaborador); ?> equipamento(s)
         </div>
+    <?php endif; ?>
 
-        <div class="section">
-            <div class="section-title">1. INFORMAÇÕES DO COLABORADOR</div>
-            <div class="info-grid">
-                <div class="info-item">
-                    <div class="info-label">Nome Completo:</div>
-                    <div class="info-value"><?php echo htmlspecialchars($colaborador['nome']); ?></div>
-                </div>
+    <div class="termo-header">
+        <!-- IMAGEM PARA ENTREGA - PODE SER A MESMA OU DIFERENTE -->
+        <img src="../img/logo_impressao_08_01_2026.png" alt="Logo">
+        <div class="termo-title">TERMO DE RESPONSABILIDADE</div>
+        <div class="termo-subtitle">Entrega de Equipamentos</div>
+    </div>
 
-                <div class="info-item">
-                    <div class="info-label">CPF:</div>
-                    <div class="info-value"><?php echo formatarCPF($colaborador['cpf']); ?></div>
-                </div>
+    <div class="termo-section">
+        <div class="section-title">1. INFORMAÇÕES DO COLABORADOR</div>
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label">Nome Completo:</div>
+                <div class="info-value"><?php echo htmlspecialchars($colaborador['nome']); ?></div>
+            </div>
 
-                <div class="info-item">
-                    <div class="info-label">Cargo:</div>
-                    <div class="info-value"><?php echo htmlspecialchars($colaborador['cargo']); ?></div>
-                </div>
+            <div class="info-item">
+                <div class="info-label">CPF:</div>
+                <div class="info-value"><?php echo formatarCPF($colaborador['cpf']); ?></div>
+            </div>
 
-                <div class="info-item">
-                    <div class="info-label">Departamento:</div>
-                    <div class="info-value"><?php echo htmlspecialchars($colaborador['departamento']); ?></div>
-                </div>
+            <div class="info-item">
+                <div class="info-label">Cargo:</div>
+                <div class="info-value"><?php echo htmlspecialchars($colaborador['cargo']); ?></div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-label">Departamento:</div>
+                <div class="info-value"><?php echo htmlspecialchars($colaborador['departamento']); ?></div>
             </div>
         </div>
+    </div>
 
-        <div class="section">
-            <div class="section-title">2. EQUIPAMENTOS SELECIONADOS PARA O TERMO</div>
+    <div class="termo-section">
+        <div class="section-title">2. EQUIPAMENTOS SELECIONADOS PARA O TERMO</div>
 
-            <?php if (empty($equipamentosColaborador)): ?>
-            <div class="empty-state">
-                <i class="fas fa-laptop"></i>
-                <h3>Nenhum equipamento selecionado</h3>
-                <p>Não há equipamentos selecionados para incluir no termo.</p>
+        <?php if (empty($equipamentosColaborador)): ?>
+            <div style="text-align: center; padding: 30px; background: #f8f9fa; border-radius: 8px;">
+                <i class="fas fa-laptop" style="font-size: 48px; color: #6c757d; margin-bottom: 15px;"></i>
+                <h4>Nenhum equipamento selecionado</h4>
             </div>
-            <?php else: ?>
-
-            <table class="equipamentos-table">
+        <?php else: ?>
+            <table class="termo-table">
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Patrimônio</th>
-                        <th>Tipo</th>
-                        <th>Marca/Modelo</th>
-                        <th>Nº Série</th>
-                        <!--                    <th>Centro Custo</th>-->
-                        <th>Status</th>
-                    </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Patrimônio</th>
+                    <th>Tipo</th>
+                    <th>Marca/Modelo</th>
+                    <th>Nº Série</th>
+                    <th>Status</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <?php
+                <?php
                 $contador = 1;
-                $valorTotalEstimado = 0;
                 foreach ($equipamentosColaborador as $equipamento):
-                    // Valor estimado baseado no tipo
-                    $valoresEstimados = [
-                        'notebook' => 3500,
-                        'desktop' => 2500,
-                        'monitor' => 800,
-                        'impressora' => 1200,
-                        'tablet' => 1500,
-                        'smartphone' => 2000,
-                        'roteador' => 400,
-                        'acessorio' => 200,
-                        'outro' => 500
-                    ];
-                    $valorEstimado = $valoresEstimados[$equipamento['tipo']] ?? 500;
-                    $valorTotalEstimado += $valorEstimado;
                     ?>
                     <tr>
                         <td><?php echo $contador++; ?></td>
@@ -166,138 +145,80 @@ header('Content-Type: text/html; charset=UTF-8');
                         <td><?php echo getTipoTexto($equipamento['tipo']); ?></td>
                         <td><?php echo htmlspecialchars($equipamento['marca'] . ' ' . $equipamento['modelo']); ?></td>
                         <td><?php echo !empty($equipamento['serial']) ? htmlspecialchars($equipamento['serial']) : '---'; ?></td>
-                        <!--                        <td>--><?php //echo htmlspecialchars($equipamento['centro_custo']);
-                        ?>
-                        <!--</td>-->
                         <td>
-                            <span class="status-badge status-<?php echo $equipamento['status']; ?>">
-                                <?php echo getStatusTexto($equipamento['status']); ?>
-                            </span>
+                                <span class="status-badge status-<?php echo $equipamento['status']; ?>">
+                                    <?php echo getStatusTexto($equipamento['status']); ?>
+                                </span>
                         </td>
                     </tr>
-                    <?php endforeach; ?>
+                <?php endforeach; ?>
                 </tbody>
             </table>
-            <?php endif; ?>
-        </div>
-
-        <div class="section">
-            <div class="section-title">3. TERMO DE RESPONSABILIDADE</div>
-            <div class="termo-text">
-                <div class="clausula">
-                    <div class="clausula-title">CLÁUSULA 1 - ACEITAÇÃO</div>
-                    <p>Eu, <strong><?php echo htmlspecialchars($colaborador['nome']); ?></strong>, CPF
-                        <strong><?php echo formatarCPF($colaborador['cpf']); ?></strong>, declaro ter recebido os
-                        equipamentos listados acima da empresa AMOR SAÚDE LTDA, CNPJ 27.602.235/0001-00 a título de
-                        empréstimo, em perfeitas condições de uso, e assumo total responsabilidade por sua guarda,
-                        conservação e uso adequado.
-                    </p>
-                </div>
-
-                <div class="clausula">
-                    <div class="clausula-title">CLÁUSULA 2 - OBRIGAÇÕES</div>
-                    <p>Comprometo-me a:</p>
-                    <ol style="margin-left: 20px; margin-top: 10px;">
-                        <li>Utilizar os equipamentos exclusivamente para fins profissionais;</li>
-                        <li>Manter os equipamentos em local seguro e adequado;</li>
-                        <li>Realizar a manutenção preventiva conforme orientações do departamento de TI;</li>
-                        <li>Comunicar imediatamente qualquer defeito, dano ou necessidade de reparo;</li>
-                        <li>Não realizar modificações físicas ou de software sem autorização prévia;</li>
-                        <li>Devolver todos os equipamentos listados acima quando solicitado ou ao término do vínculo
-                            empregatício.
-                        </li>
-                    </ol>
-                </div>
-
-                <div class="clausula">
-                    <div class="clausula-title">CLÁUSULA 3 - RESPONSABILIDADES</div>
-                    <p>Em caso de danos por mau uso, negligência ou falta de cuidado, assumo total responsabilidade pelos
-                        custos de reparo ou substituição dos equipamentos listados. Em caso de perda ou roubo, comprometo-me
-                        a comunicar imediatamente às autoridades competentes e ao departamento de TI, apresentando o boletim
-                        de ocorrência.</p>
-                </div>
-
-                <div class="clausula">
-                    <div class="clausula-title">CLÁUSULA 4 - DEVOLUÇÃO</div>
-                    <p>Ao término do vínculo empregatício ou quando solicitado, devolverei todos os equipamentos
-                        relacionados neste termo, com seus acessórios e documentos, em perfeito estado de conservação e
-                        funcionamento.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="assinaturas">
-            <div class="assinatura">
-                <div class="linha-assinatura"></div>
-                <div class="nome-assinatura"><?php echo htmlspecialchars($colaborador['nome']); ?></div>
-                <div class="cargo-assinatura">Colaborador</div>
-                <div class="data-assinatura">Data: ______/______/______</div>
-                <div class="data-assinatura">CPF: <?php echo formatarCPF($colaborador['cpf']); ?></div>
-            </div>
-
-            <div class="assinatura">
-                <div class="linha-assinatura"></div>
-                <div class="cargo-assinatura">Responsável pelo Patrimônio</div>
-                <div class="data-assinatura">Data: ______/______/______</div>
-                <div class="data-assinatura">Departamento de TI</div>
-            </div>
-        </div>
-
-        <!--    <div class="footer-termo">-->
-        <!--        <p><strong>Observação:</strong> Este termo foi gerado com base na seleção específica de equipamentos realizada em -->
-        <?php //echo date('d/m/Y'); ?>
-        <!-- e inclui apenas os itens listados acima.</p>-->
-        <!--    </div>-->
+        <?php endif; ?>
     </div>
 
-    <script>
-        // Adicionar classes CSS dinamicamente para os badges de status
-        document.addEventListener('DOMContentLoaded', function() {
-            // Adicionar estilos para status
-            const style = document.createElement('style');
-            style.textContent = `
-            .status-alocado { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-            .status-emprestado { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
-            .status-manutencao { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
-            .status-estoque { background: #e2e3e5; color: #383d41; border: 1px solid #d6d8db; }
-            .status-fora_uso { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    <div class="termo-section">
+        <div class="section-title">3. TERMO DE RESPONSABILIDADE</div>
+        <div class="termo-text">
+            <div class="clausula">
+                <div class="clausula-title">CLÁUSULA 1 - ACEITAÇÃO</div>
+                <p>Eu, <strong><?php echo htmlspecialchars($colaborador['nome']); ?></strong>, CPF
+                    <strong><?php echo formatarCPF($colaborador['cpf']); ?></strong>, declaro ter recebido os
+                    equipamentos listados acima da empresa AMOR SAÚDE LTDA, CNPJ 27.602.235/0001-00 a título de
+                    empréstimo, em perfeitas condições de uso, e assumo total responsabilidade por sua guarda,
+                    conservação e uso adequado.
+                </p>
+            </div>
 
-            .footer-termo {
-                margin-top: 30px;
-                padding: 15px;
-                background: #f8f9fa;
-                border-radius: 5px;
-                font-size: 12px;
-                color: #666;
-                border-left: 4px solid #007bff;
-            }
+            <div class="clausula">
+                <div class="clausula-title">CLÁUSULA 2 - OBRIGAÇÕES</div>
+                <p>Comprometo-me a:</p>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li>Utilizar os equipamentos exclusivamente para fins profissionais;</li>
+                    <li>Manter os equipamentos em local seguro e adequado;</li>
+                    <li>Realizar a manutenção preventiva conforme orientações do departamento de TI;</li>
+                    <li>Comunicar imediatamente qualquer defeito, dano ou necessidade de reparo;</li>
+                    <li>Não realizar modificações físicas ou de software sem autorização prévia;</li>
+                    <li>Devolver todos os equipamentos listados acima quando solicitado ou ao término do vínculo
+                        empregatício.
+                    </li>
+                </ol>
+            </div>
 
-            @media print {
-                .termo-container {
-                    border: none;
-                    padding: 15mm;
-                }
+            <div class="clausula">
+                <div class="clausula-title">CLÁUSULA 3 - RESPONSABILIDADES</div>
+                <p>Em caso de danos por mau uso, negligência ou falta de cuidado, assumo total responsabilidade pelos
+                    custos de reparo ou substituição dos equipamentos listados. Em caso de perda ou roubo, comprometo-me
+                    a comunicar imediatamente às autoridades competentes e ao departamento de TI, apresentando o boletim
+                    de ocorrência.</p>
+            </div>
 
-                .btn-print, .btn-back {
-                    display: none;
-                }
+            <div class="clausula">
+                <div class="clausula-title">CLÁUSULA 4 - DEVOLUÇÃO</div>
+                <p>Ao término do vínculo empregatício ou quando solicitado, devolverei todos os equipamentos
+                    relacionados neste termo, com seus acessórios e documentos, em perfeito estado de conservação e
+                    funcionamento.</p>
+            </div>
+        </div>
+    </div>
 
-                .no-print {
-                    display: none !important;
-                }
-            }
-        `;
-            document.head.appendChild(style);
+    <div class="termo-assinaturas">
+        <div class="assinatura-box">
+            <div class="linha-assinatura"></div>
+            <div class="nome-assinatura"><?php echo htmlspecialchars($colaborador['nome']); ?></div>
+            <div class="cargo-assinatura">Colaborador</div>
+            <div class="data-assinatura">Data: ______/______/______</div>
+            <div class="data-assinatura">CPF: <?php echo formatarCPF($colaborador['cpf']); ?></div>
+        </div>
 
-            // Configurar impressão
-            window.onbeforeprint = function() {
-                document.querySelectorAll('.no-print').forEach(el => {
-                    el.style.display = 'none';
-                });
-            };
-        });
-
-    </script>
+        <div class="assinatura-box">
+            <div class="linha-assinatura"></div>
+            <div class="cargo-assinatura">Responsável pelo Patrimônio</div>
+            <div class="nome-assinatura">________________________________________________</div>
+            <div class="data-assinatura">Nome / Assinatura</div>
+            <div class="data-assinatura">Data: ______/______/______</div>
+        </div>
+    </div>
+</div>
 </body>
-
 </html>
