@@ -27,6 +27,7 @@ foreach ($equipamentos as $equipamento) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestão</title>
     <link rel="icon" href="img/Favicon/Favicon%20Main/favicon.ico">
+    <script src="../js/script.js"></script>
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -70,7 +71,9 @@ foreach ($equipamentos as $equipamento) {
                         <a href="equipamentos/?filtro=estoque" class="card-link">Ver estoque</a>
                     </div>
                 </div>
-                
+
+
+
                 <div class="card card-info">
                     <div class="card-icon">
                         <i class="fas fa-user-check"></i>
@@ -82,7 +85,7 @@ foreach ($equipamentos as $equipamento) {
                     </div>
                 </div>
             </div>
-            
+
             <div class="quick-actions">
                 <h2><i class="fas fa-bolt"></i> Ações Rápidas</h2>
                 <div class="action-buttons">
