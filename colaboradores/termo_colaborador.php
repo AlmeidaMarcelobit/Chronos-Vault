@@ -67,7 +67,7 @@ header('Content-Type: text/html; charset=UTF-8');
 <!--    </div>-->
 
     <div class="header">
-        <img src="../img/logo_impressão.svg" alt="">
+        <img src="../img/logo_impressao.svg" alt="">
         <div class="titulo">TERMO DE RESPONSABILIDADE</div>
     </div>
 
@@ -214,9 +214,9 @@ header('Content-Type: text/html; charset=UTF-8');
         </div>
     </div>
 
-    <div class="carimbo">
-        Data de emissão: <?php echo date('d/m/Y'); ?>
-    </div>
+<!--    <div class="carimbo">-->
+<!--        Data de emissão: --><?php //echo date('d/m/Y'); ?>
+<!--    </div>-->
 
 </div>
 
