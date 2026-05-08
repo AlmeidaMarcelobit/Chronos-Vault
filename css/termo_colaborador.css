@@ -6,12 +6,17 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    line-height: 1.6;
+    line-height: 1.2;
     color: #333;
     background: #fff;
-    padding: 20px;
+    padding: 5px;
+    font-size: 10px;
 }
 
+
+img{
+    height: 100px;
+}
 @media print {
     body {
         padding: 0;
@@ -54,26 +59,25 @@ body {
 }
 
 .titulo {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
     color: #333;
-    margin-bottom: 5px;
 }
 
 .subtitulo {
-    font-size: 14px;
+    font-size: 10px;
     color: #666;
 }
 
 .section {
-    margin-bottom: 25px;
+    /*margin-bottom: 25px;*/
 }
 
 .section-title {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: bold;
     color: #2c3e50;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     padding-bottom: 5px;
     border-bottom: 1px solid #eee;
 }
@@ -92,12 +96,12 @@ body {
 .info-label {
     font-weight: bold;
     color: #555;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .info-value {
     color: #333;
-    font-size: 15px;
+    font-size: 10px;
 }
 
 .destaque {
@@ -110,12 +114,11 @@ body {
 
 .termo-text {
     text-align: justify;
-    line-height: 1.8;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .clausula {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 .clausula-title {
@@ -128,21 +131,21 @@ body {
 .equipamentos-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin: 10px 0;
 }
 
 .equipamentos-table th {
     background: #2c3e50;
     color: white;
-    padding: 10px;
+    padding: 5px;
     text-align: left;
-    font-size: 12px;
+    font-size: 10px;
 }
 
 .equipamentos-table td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
-    font-size: 11px;
+    font-size: 10px;
 }
 
 .equipamentos-table tr:nth-child(even) {
@@ -155,9 +158,9 @@ body {
 
 .status-badge {
     display: inline-block;
-    padding: 3px 10px;
+    padding: 3px 5px;
     border-radius: 20px;
-    font-size: 09px;
+    font-size: 10px;
     font-weight: bold;
     text-transform: uppercase;
 }
@@ -165,8 +168,8 @@ body {
 .assinaturas {
     display: flex;
     justify-content: space-between;
-    margin-top: 50px;
-    padding-top: 20px;
+    margin-top: 30px;
+    padding-top: 10px;
     border-top: 1px solid #333;
 }
 
@@ -177,7 +180,7 @@ body {
 
 .linha-assinatura {
     border-top: 1px solid #333;
-    margin: 60px 0 10px 0;
+    margin: 30px 0 10px 0;
     width: 100%;
 }
 
@@ -187,13 +190,13 @@ body {
 }
 
 .cargo-assinatura {
-    font-size: 12px;
+    font-size: 10px;
     color: #666;
 }
 
 .data-assinatura {
     margin-top: 15px;
-    font-size: 13px;
+    font-size: 10px;
 }
 
 .carimbo {
@@ -201,7 +204,7 @@ body {
     text-align: center;
     font-style: italic;
     color: #666;
-    font-size: 12px;
+    font-size: 10px;
     border-top: 1px dashed #999;
     padding-top: 10px;
 }
