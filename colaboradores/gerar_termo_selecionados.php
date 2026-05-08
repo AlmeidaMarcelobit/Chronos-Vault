@@ -79,10 +79,10 @@ header('Content-Type: text/html; charset=UTF-8');
     <div class="header">
         <img src="../img/logo_impressao_08_01_2026.png" alt="">
         <div class="titulo">TERMO DE RESPONSABILIDADE</div>
-        <div style="text-align: center; font-size: 14px; color: #666; margin-top: 10px;">
-            <i class="fas fa-info-circle"></i>
-            Termo gerado com <?php echo count($equipamentosColaborador); ?> equipamento(s) selecionado(s)
-        </div>
+<!--        <div style="text-align: center; font-size: 14px; color: #666; margin-top: 10px;">-->
+<!--            <i class="fas fa-info-circle"></i>-->
+<!--            Termo gerado com --><?php //echo count($equipamentosColaborador); ?><!-- equipamento(s) selecionado(s)-->
+<!--        </div>-->
     </div>
 
     <div class="section">
@@ -129,7 +129,7 @@ header('Content-Type: text/html; charset=UTF-8');
                     <th>Tipo</th>
                     <th>Marca/Modelo</th>
                     <th>Nº Série</th>
-                    <th>Centro Custo</th>
+<!--                    <th>Centro Custo</th>-->
                     <th>Status</th>
                 </tr>
                 </thead>
@@ -159,7 +159,7 @@ header('Content-Type: text/html; charset=UTF-8');
                         <td><?php echo getTipoTexto($equipamento['tipo']); ?></td>
                         <td><?php echo htmlspecialchars($equipamento['marca'] . ' ' . $equipamento['modelo']); ?></td>
                         <td><?php echo !empty($equipamento['serial']) ? htmlspecialchars($equipamento['serial']) : '---'; ?></td>
-                        <td><?php echo htmlspecialchars($equipamento['centro_custo']); ?></td>
+<!--                        <td>--><?php //echo htmlspecialchars($equipamento['centro_custo']); ?><!--</td>-->
                         <td>
                             <span class="status-badge status-<?php echo $equipamento['status']; ?>">
                                 <?php echo getStatusTexto($equipamento['status']); ?>
@@ -169,13 +169,6 @@ header('Content-Type: text/html; charset=UTF-8');
                 <?php endforeach; ?>
                 </tbody>
             </table>
-
-            <div class="observacoes">
-                <p><strong>Resumo:</strong></p>
-                <p>• Total de equipamentos: <?php echo count($equipamentosColaborador); ?></p>
-                <p>• Valor total estimado: R$ <?php echo number_format($valorTotalEstimado, 2, ',', '.'); ?></p>
-                <p>• Data de geração do termo: <?php echo date('d/m/Y H:i:s'); ?></p>
-            </div>
         <?php endif; ?>
     </div>
 
