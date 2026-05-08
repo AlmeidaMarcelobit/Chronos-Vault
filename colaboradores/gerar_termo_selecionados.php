@@ -63,6 +63,7 @@ header('Content-Type: text/html; charset=UTF-8');
 </head>
 
 <body>
+<div class="btn-container">
     <!-- Botões de ação -->
     <button onclick="window.print()" class="btn-print no-print">
         <i class="fas fa-print"></i> Imprimir Termo
@@ -73,11 +74,11 @@ header('Content-Type: text/html; charset=UTF-8');
         <i class="fas fa-arrow-left"></i> Selecionar Outros Equipamentos
     </button>
 
-    <button onclick="window.location.href='../index.php'" class="btn-back no-print">
+    <button onclick="window.location.href='../index.php'" class="btn-voltar no-print">
         <i class="fas fa-home"></i> Voltar ao Início
     </button>
 
-
+</div>
     <!-- Conteúdo do Termo -->
     <div class="termo-container">
         <div class="header">
