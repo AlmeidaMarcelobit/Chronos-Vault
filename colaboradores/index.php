@@ -110,12 +110,15 @@ if ($busca) {
                                    class="btn btn-sm btn-info" title="Ver Equipamentos">
                                     <i class="fas fa-laptop"></i>
                                 </a>
+                                <style>
+
+
+                                </style>
 
                                 <!-- BOTÃO NOVO: IMPRIMIR TERMO -->
                                 <a href="selecionar_equipamentos_termo.php?id=<?php echo $colaborador['id']; ?>"
                                    class="btn btn-termo" target="_blank">
-                                    <i class="fas fa-file-contract"></i> Gerar Termo
-                                </a>
+                                    <i class="fas fa-file-contract"></i>Gerar Termo
                                 </a>
                             </div>
                         </td>
