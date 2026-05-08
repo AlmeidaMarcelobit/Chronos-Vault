@@ -1777,6 +1777,15 @@ select.form-control {
     opacity: 0.5;
     cursor: not-allowed;
 }
+.action-term {
+    background: var(--gray-100);
+    color: var(--grape);
+}
+
+.action-term:hover {
+    background: rgba(107, 62, 143, 0.1);
+    color: var(--grape);
+}
 
 /* Equipamento de Devolução */
 .devolucao-equipamento {
