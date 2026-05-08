@@ -52,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['equipamentos_selecion
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selecionar Equipamentos - Termo de Responsabilidade</title>
