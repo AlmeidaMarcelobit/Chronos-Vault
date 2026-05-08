@@ -67,7 +67,7 @@ header('Content-Type: text/html; charset=UTF-8');
 <!--    </div>-->
 
     <div class="header">
-        <img src="../img/logo_impressao.svg" alt="">
+        <img src="../img/logo_impressao_08_01_2026.png" alt="">
         <div class="titulo">TERMO DE RESPONSABILIDADE</div>
     </div>
 
