@@ -118,7 +118,7 @@ header('Content-Type: text/html; charset=UTF-8');
                 <h4>Nenhum equipamento selecionado</h4>
             </div>
         <?php else: ?>
-            <table class="termo-table">
+            <table class="termo-table devolucao">
                 <thead>
                 <tr>
                     <th>DESCRIÇÃO</th>
@@ -131,14 +131,71 @@ header('Content-Type: text/html; charset=UTF-8');
                 <tbody>
                 <?php foreach ($equipamentosDevolucao as $equipamento): ?>
                     <tr>
-                        <td><?php echo getTipoTexto($equipamento['tipo']); ?></td>
-                        <td><?php echo htmlspecialchars($equipamento['marca'] . ' ' . $equipamento['modelo']); ?></td>
-                        <td><?php echo !empty($equipamento['serial']) ? htmlspecialchars($equipamento['serial']) : '---'; ?></td>
-                        <td><strong><?php echo htmlspecialchars($equipamento['patrimonio']); ?></strong></td>
+                        <!-- DESCRIÇÃO mais curta -->
+                        <td><?php
+                            // Abrevia tipos longos
+                            $tipo = getTipoTexto($equipamento['tipo']);
+                            $abreviacoes = [
+                                'Notebook' => 'Noteb.',
+                                'Desktop' => 'Desktop',
+                                'Monitor' => 'Monitor',
+                                'Impressora' => 'Impress.',
+                                'Tablet' => 'Tablet',
+                                'Smartphone' => 'Celular',
+                                'Roteador' => 'Roteador',
+                                'Acessório' => 'Acess.',
+                                'Outro' => 'Outro'
+                            ];
+                            echo $abreviacoes[$tipo] ?? substr($tipo, 0, 10);
+                            ?></td>
+
+                        <!-- MARCA/MODELO em duas linhas se necessário -->
+                        <td style="font-size: 11px;">
+                            <?php
+                            $texto = htmlspecialchars($equipamento['marca'] . ' ' . $equipamento['modelo']);
+                            if (strlen($texto) > 25) {
+                                echo wordwrap($texto, 25, '<br>', true);
+                            } else {
+                                echo $texto;
+                            }
+                            ?>
+                        </td>
+
+                        <!-- S/N -->
+                        <td><?php
+                            $serial = !empty($equipamento['serial']) ? htmlspecialchars($equipamento['serial']) : '---';
+                            if (strlen($serial) > 12) {
+                                echo substr($serial, 0, 9) . '...';
+                            } else {
+                                echo $serial;
+                            }
+                            ?></td>
+
+                        <!-- PATRIMÔNIO -->
+                        <td><strong><?php
+                                $patrimonio = htmlspecialchars($equipamento['patrimonio']);
+                                if (strlen($patrimonio) > 10) {
+                                    echo substr($patrimonio, 0, 8) . '...';
+                                } else {
+                                    echo $patrimonio;
+                                }
+                                ?></strong></td>
+
+                        <!-- STATUS compacto -->
                         <td>
-                                <span class="status-badge status-<?php echo $equipamento['status']; ?>">
-                                    <?php echo getStatusTexto($equipamento['status']); ?>
-                                </span>
+                <span class="status-badge status-<?php echo $equipamento['status']; ?>" style="font-size: 10px; padding: 1px 4px;">
+                    <?php
+                    $status = getStatusTexto($equipamento['status']);
+                    $statusCompacto = [
+                        'Em Estoque' => 'Estoque',
+                        'Alocado' => 'Alocado',
+                        'Emprestado' => 'Empres.',
+                        'Em Manutenção' => 'Manut.',
+                        'Fora de Uso' => 'Fora Uso'
+                    ];
+                    echo $statusCompacto[$status] ?? $status;
+                    ?>
+                </span>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -155,22 +212,22 @@ header('Content-Type: text/html; charset=UTF-8');
             <div class="checkbox-group">
                 <div class="checkbox-item">
                     <input type="checkbox" id="condicao1">
-                    <label for="condicao1">( ) Em perfeito estado</label>
+                    <label for="condicao1">Em perfeito estado</label>
                 </div>
 
                 <div class="checkbox-item">
                     <input type="checkbox" id="condicao2">
-                    <label for="condicao2">( ) Apresentando defeito</label>
+                    <label for="condicao2">Apresentando defeito</label>
                 </div>
 
                 <div class="checkbox-item">
                     <input type="checkbox" id="condicao3">
-                    <label for="condicao3">( ) Faltando peças/acessórios</label>
+                    <label for="condicao3">Faltando peças/acessórios</label>
                 </div>
 
                 <div class="checkbox-item">
                     <input type="checkbox" id="condicao4">
-                    <label for="condicao4">( ) Carregador</label>
+                    <label for="condicao4">Carregador</label>
                 </div>
             </div>
         </div>
