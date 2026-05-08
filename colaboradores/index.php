@@ -23,8 +23,8 @@ $busca = $_GET['busca'] ?? '';
 if ($busca) {
     $colaboradores = array_filter($colaboradores, function($colaborador) use ($busca) {
         return stripos($colaborador['nome'], $busca) !== false ||
-                stripos($colaborador['cpf'], $busca) !== false ||
-                stripos($colaborador['departamento'], $busca) !== false;
+            stripos($colaborador['cpf'], $busca) !== false ||
+            stripos($colaborador['departamento'], $busca) !== false;
     });
 }
 ?>
@@ -37,6 +37,57 @@ if ($busca) {
     <link rel="icon" href="../img/Favicon/Favicon%20Main/favicon.ico">
     <link rel="stylesheet" href="../css/colaboradores.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .action-buttons a {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        /* Botão para Gerar Termo de Devolução - mesmo estilo dos outros */
+        .btn-termo-devolucao {
+            background: #17a2b8; /* Cor azul clara, similar ao botão info */
+            color: white;
+            border: 1px solid #138496;
+        }
+
+        .btn-termo-devolucao:hover {
+            background: #138496;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .btn-termo-devolucao:active {
+            transform: translateY(0);
+        }
+
+        /* Botão Gerar Termo normal - mantém o estilo existente */
+        .btn-termo {
+            background: #20c997; /* Cor verde */
+            color: white;
+            border: 1px solid #1ba87e;
+        }
+
+        .btn-termo:hover {
+            background: #1ba87e;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
 <?php include '../includes/header.php'; ?>
@@ -119,12 +170,23 @@ if ($busca) {
                                     <span>Equipamentos</span>
                                 </a>
 
-                                <!-- Botão Termo - EXATAMENTE IGUAL AOS OUTROS -->
-                                <a href="selecionar_equipamentos_termo.php?id=<?php echo $colaborador['id']; ?>"
-                                   class="btn-termo btn-sm" target="_blank" title="Gerar Termo">
-                                    <i class="fas fa-file-contract"></i>
-                                    <span>Gerar Termo</span>
-                                </a>
+                                <!-- Botão Gerar Termo de Responsabilidade -->
+                                <?php if ($qtdEquipamentos > 0): ?>
+                                    <a href="selecionar_equipamentos_termo.php?id=<?php echo $colaborador['id']; ?>"
+                                       class="btn-termo btn-sm" title="Gerar Termo de Responsabilidade">
+                                        <i class="fas fa-file-contract"></i>
+                                        <span>Termo</span>
+                                    </a>
+                                <?php endif; ?>
+
+                                <!-- NOVO BOTÃO: Gerar Termo de Devolução -->
+                                <?php if ($qtdEquipamentos > 0): ?>
+                                    <a href="selecionar_equipamentos_devolucao.php?id=<?php echo $colaborador['id']; ?>"
+                                       class="btn-termo-devolucao btn-sm" title="Gerar Termo de Devolução">
+                                        <i class="fas fa-box-open"></i>
+                                        <span>Devolução</span>
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </td>
                     </tr>
@@ -136,6 +198,13 @@ if ($busca) {
 
     <div class="page-footer">
         <p>Total de colaboradores: <strong><?php echo count($colaboradores); ?></strong></p>
+        <p><small>Legenda dos botões:
+                <span class="btn btn-sm btn-warning" style="margin: 0 5px;"><i class="fas fa-edit"></i> Editar</span>
+                <span class="btn btn-sm btn-danger" style="margin: 0 5px;"><i class="fas fa-trash"></i> Excluir</span>
+                <span class="btn btn-sm btn-info" style="margin: 0 5px;"><i class="fas fa-laptop"></i> Equipamentos</span>
+                <span class="btn-termo btn-sm" style="margin: 0 5px;"><i class="fas fa-file-contract"></i> Termo</span>
+                <span class="btn-termo-devolucao btn-sm" style="margin: 0 5px;"><i class="fas fa-box-open"></i> Devolução</span>
+            </small></p>
     </div>
 </main>
 
