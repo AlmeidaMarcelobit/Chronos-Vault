@@ -488,10 +488,10 @@ header('Content-Type: text/html; charset=UTF-8');
         </div>
     </div>
 
-    <div class="footer-termo">
-        <p><strong>Observação:</strong> Este termo foi gerado automaticamente pelo Sistema de Gestão de Equipamentos em <?php echo date('d/m/Y H:i:s'); ?></p>
-        <p><strong>Total de equipamentos:</strong> <?php echo count($equipamentosDevolucao); ?> item(ns) devolvido(s)</p>
-    </div>
+<!--    <div class="footer-termo">-->
+<!--        <p><strong>Observação:</strong> Este termo foi gerado automaticamente pelo Sistema de Gestão de Equipamentos em --><?php //echo date('d/m/Y H:i:s'); ?><!--</p>-->
+<!--        <p><strong>Total de equipamentos:</strong> --><?php //echo count($equipamentosDevolucao); ?><!-- item(ns) devolvido(s)</p>-->
+<!--    </div>-->
 </div>
 
 <script>
