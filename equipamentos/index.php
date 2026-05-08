@@ -12,6 +12,15 @@ foreach ($colaboradores as $colaborador) {
     $mapaColaboradores[$colaborador['id']] = $colaborador;
 }
 
+// Obter todas as caixas únicas dos equipamentos
+$caixas = [];
+foreach ($equipamentos as $equipamento) {
+    if (!empty($equipamento['caixa'])) {
+        $caixas[$equipamento['caixa']] = $equipamento['caixa'];
+    }
+}
+sort($caixas); // Ordenar alfabeticamente
+
 // Estatísticas GLOBAIS (todos os equipamentos)
 $equipamentosCompleto = $equipamentos; // Backup para estatísticas
 $totalEquipamentos = count($equipamentos);
@@ -26,7 +35,8 @@ $filtro = $_GET['filtro'] ?? 'todos';
 $tipo = $_GET['tipo'] ?? 'todos';
 $status = $_GET['status'] ?? 'todos';
 $colaboradorId = $_GET['colaborador'] ?? null;
-$centro_custo = $_GET['centro_custo'] ?? 'todos'; // NOVO: Inicializar variável
+$centro_custo = $_GET['centro_custo'] ?? 'todos';
+$caixa_id = $_GET['caixa'] ?? '';
 
 // Extrair todos os centros de custo únicos dos equipamentos
 $centrosCustoUnicos = [];
@@ -91,6 +101,13 @@ if ($centro_custo !== 'todos') {
     });
 }
 
+// Filtro por caixa
+if (!empty($caixa_id)) {
+    $equipamentosFiltrados = array_filter($equipamentosFiltrados, function($equipamento) use ($caixa_id) {
+        return $equipamento['caixa'] === $caixa_id;
+    });
+}
+
 // Buscar por patrimônio, serial, marca ou modelo
 $busca = $_GET['busca'] ?? '';
 if ($busca) {
@@ -101,7 +118,8 @@ if ($busca) {
             stripos($equipamento['marca'], $buscaLower) !== false ||
             stripos($equipamento['modelo'], $buscaLower) !== false ||
             stripos(getTipoTexto($equipamento['tipo']), $buscaLower) !== false ||
-            stripos($equipamento['centro_custo'], $buscaLower) !== false; // Adicionar centro_custo na busca
+            stripos($equipamento['caixa'] ?? '', $buscaLower) !== false ||
+        stripos($equipamento['centro_custo'], $buscaLower) !== false; // Adicionar centro_custo na busca
     });
 }
 
@@ -110,6 +128,7 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
 ?>
 
 <?php include '../includes/header.php'; ?>
+<link rel="stylesheet" href="../css/index.css">
 
 <main class="container">
     <div class="page-header">
@@ -175,7 +194,8 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                         <?php endforeach; ?>
                     </select>
                 </div>
-
+                </div>
+                 <div class="filter-grid">
                 <div class="filter-group">
                     <label for="centro_custo">
                         <i class="fas fa-dollar-sign"></i> Centro de Custo:
@@ -220,7 +240,9 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                     </div>
                 <?php endif; ?>
 
-                <div class="filter-group filter-search">
+
+                </div>
+                 <div class="filter-group filter-search">
                     <label for="busca"><i class="fas fa-search"></i> Buscar:</label>
                     <div class="search-box">
                         <input type="text"
@@ -233,7 +255,6 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
-                </div>
 
                 <div class="filter-actions">
                     <button type="submit" class="btn btn-primary">
@@ -518,6 +539,26 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
             Em manutenção: <strong><?php echo $manutencaoFiltrado; ?></strong> |
             Fora de uso: <strong><?php echo $foraUsoFiltrado; ?></strong>
         </p>
+
+        <!-- No final do arquivo, dentro do page-footer -->
+        <p>
+            <strong>Filtro aplicado:</strong>
+            <?php
+            if ($colaboradorId && isset($mapaColaboradores[$colaboradorId])) {
+                echo 'Colaborador: ' . htmlspecialchars($mapaColaboradores[$colaboradorId]['nome']);
+            } elseif ($filtro !== 'todos') {
+                echo 'Status: ' . getStatusTexto($filtro);
+            } elseif ($status !== 'todos') {
+                echo 'Status: ' . getStatusTexto($status);
+            } else {
+                echo 'Todos os equipamentos';
+            }
+            if ($tipo !== 'todos') echo ' | Tipo: ' . getTipoTexto($tipo);
+            if ($centro_custo !== 'todos') echo ' | Centro de Custo: ' . htmlspecialchars($centro_custo);
+            if (!empty($caixa_id)) echo ' | Caixa: ' . htmlspecialchars($caixa_id); // Adicionado
+            if ($busca) echo ' | Busca: "' . htmlspecialchars($busca) . '"';
+            ?>
+        </p>
     </div>
 </main>
 
@@ -533,417 +574,6 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
         </div>
     </div>
 </div>
-
-<style>
-.empty-state {
-    text-align: center;
-    padding: 40px;
-    color: var(--gray-color);
-}
-
-.empty-state i {
-    margin-bottom: 15px;
-    color: var(--light-color);
-}
-
-.empty-state h4 {
-    margin-bottom: 10px;
-    color: var(--dark-color);
-}
-
-.stat-percent {
-    display: block;
-    font-size: 12px;
-    color: #666;
-    margin-top: 2px;
-}
-
-.page-footer {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: var(--border-radius);
-    margin-top: 20px;
-    border-top: 1px solid #dee2e6;
-}
-
-.page-footer p {
-    margin: 5px 0;
-}
-
-/* Layout dos filtros em grid */
-.filter-form {
-    margin-top: 15px;
-}
-
-.filter-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 15px;
-    align-items: center;
-}
-
-.filter-group {
-    margin-bottom: 0;
-}
-
-.filter-search {
-    grid-column: span 2;
-}
-
-.search-box {
-    display: flex;
-    gap: 5px;
-}
-
-/*
-.search-box .form-control {
-    flex: 1;
-}
-*/
-
-.filter-actions {
-    display: flex;
-    gap: 10px;
-}
-
-/* Para telas menores, ajustar o grid */
-@media (max-width: 768px) {
-    .filter-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .filter-search {
-        grid-column: span 1;
-    }
-
-    .filter-actions {
-        flex-direction: column;
-        align-items: stretch;
-    }
-}
-
-/* Status badges corrigidos */
-.status-info {
-    background: #d1ecf1;
-    color: #0c5460;
-    border: 1px solid #bee5eb;
-}
-
-.status-ativo {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-.status-inativo {
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-.status-warning {
-    background: #fff3cd;
-    color: #856404;
-    border: 1px solid #ffeaa7;
-}
-
-.status-danger {
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-/* Dropdown styles */
-.dropdown {
-    display: inline-block;
-    position: relative;
-}
-
-.dropdown-toggle {
-    cursor: pointer;
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    background: white;
-    min-width: 220px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    border-radius: var(--border-radius);
-    z-index: 1000;
-    padding: 5px 0;
-    right: 0;
-}
-
-.dropdown:hover .dropdown-menu {
-    display: block;
-}
-
-.dropdown-item {
-    display: block;
-    padding: 8px 15px;
-    color: var(--dark-color);
-    text-decoration: none;
-    transition: background 0.2s;
-    white-space: nowrap;
-}
-
-.dropdown-item:hover {
-    background: #f8f9fa;
-    color: var(--primary-color);
-}
-
-.dropdown-item i {
-    margin-right: 8px;
-    width: 16px;
-    text-align: center;
-}
-
-/* Abas de filtro */
-.filter-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #dee2e6;
-    padding-bottom: 5px;
-}
-
-.filter-tab {
-    padding: 8px 15px;
-    background: #f8f9fa;
-    border-radius: 5px 5px 0 0;
-    text-decoration: none;
-    color: var(--dark-color);
-    font-weight: 500;
-    transition: all 0.3s;
-    border: 1px solid transparent;
-    border-bottom: none;
-    margin-bottom: -2px;
-}
-
-.filter-tab:hover {
-    background: #e9ecef;
-    color: var(--primary-color);
-}
-
-.filter-tab.active {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-}
-
-/* Cartões de estatísticas */
-.stats-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.stat-card {
-    background: white;
-    border-radius: var(--border-radius);
-    padding: 15px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    transition: transform 0.3s;
-}
-
-.stat-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
-
-.stat-icon {
-    width: 50px;
-    height: 50px;
-    background: #e9ecef;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-}
-
-.stat-content {
-    flex: 1;
-}
-
-.stat-content h3 {
-    margin: 0 0 5px 0;
-    font-size: 14px;
-    color: #666;
-}
-
-.stat-number {
-    margin: 0;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-/* Cores dos cards */
-.stat-primary .stat-icon {
-    background: var(--primary-color);
-    color: white;
-}
-
-.stat-success .stat-icon {
-    background: var(--success-color);
-    color: white;
-}
-
-.stat-info .stat-icon {
-    background: var(--info-color);
-    color: white;
-}
-
-.stat-warning .stat-icon {
-    background: var(--warning-color);
-    color: #212529;
-}
-
-.stat-danger .stat-icon {
-    background: var(--danger-color);
-    color: white;
-}
-
-.stat-secondary .stat-icon {
-    background: #6c757d;
-    color: white;
-}
-
-.stat-primary .stat-number {
-    color: var(--primary-color);
-}
-
-.stat-success .stat-number {
-    color: var(--success-color);
-}
-
-.stat-info .stat-number {
-    color: var(--info-color);
-}
-
-.stat-warning .stat-number {
-    color: var(--warning-color);
-}
-
-.stat-danger .stat-number {
-    color: var(--danger-color);
-}
-
-.stat-secondary .stat-number {
-    color: #6c757d;
-}
-
-/* Modal de detalhes */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-}
-
-.modal-content {
-    background-color: white;
-    margin: 5% auto;
-    padding: 0;
-    border-radius: 8px;
-    width: 80%;
-    max-width: 800px;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-
-.modal-header {
-    padding: 20px;
-    background: var(--primary-color);
-    color: white;
-    border-radius: 8px 8px 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.modal-header h3 {
-    margin: 0;
-}
-
-.modal-close {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 28px;
-    cursor: pointer;
-    padding: 0;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-body {
-    padding: 20px;
-}
-
-/* Estilos para os detalhes do equipamento */
-.equipment-details {
-    font-family: inherit;
-}
-
-.detail-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: 15px;
-}
-
-.detail-item {
-    flex: 1;
-    min-width: 200px;
-}
-
-.detail-item.full-width {
-    flex: 0 0 100%;
-}
-
-.detail-item strong {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
-}
-
-.historico-list {
-    margin-top: 20px;
-}
-
-.historico-item {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    border-left: 4px solid var(--warning-color);
-}
-
-.historico-item strong {
-    color: var(--dark-color);
-}
-
-.historico-item small {
-    color: #666;
-    display: block;
-    margin-top: 5px;
-}
-</style>
 
 <script>
 function showEquipmentDetails(equipamento) {
@@ -965,7 +595,122 @@ function showEquipmentDetails(equipamento) {
     } else {
         historico = '<p>Nenhuma manutenção registrada.</p>';
     }
+function showEquipmentDetails(equipamento) {
+    // Funções auxiliares para formatação
+    function formatarData(dataString) {
+        if (!dataString) return '---';
+        const data = new Date(dataString);
+        return data.toLocaleDateString('pt-BR');
+    }
 
+    function getTipoText(tipo) {
+        const tipos = {
+            'laptop': 'Laptop',
+            'desktop': 'Desktop',
+            'monitor': 'Monitor',
+            'teclado': 'Teclado',
+            'mouse': 'Mouse',
+            'impressora': 'Impressora',
+            'scanner': 'Scanner',
+            'roteador': 'Roteador',
+            'switch': 'Switch',
+            'servidor': 'Servidor',
+            'tablet': 'Tablet',
+            'smartphone': 'Smartphone',
+            'projetor': 'Projetor',
+            'outros': 'Outros'
+        };
+        return tipos[tipo] || tipo;
+    }
+
+    function getStatusText(status) {
+        const statusMap = {
+            'estoque': 'Em Estoque',
+            'alocado': 'Alocado',
+            'emprestado': 'Emprestado',
+            'manutencao': 'Em Manutenção',
+            'fora_uso': 'Fora de Uso'
+        };
+        return statusMap[status] || status;
+    }
+
+    function getIconByStatus(status) {
+        const icons = {
+            'estoque': 'warehouse',
+            'alocado': 'user-check',
+            'emprestado': 'handshake',
+            'manutencao': 'tools',
+            'fora_uso': 'times-circle'
+        };
+        return icons[status] || 'question-circle';
+    }
+
+    function getIconByType(tipo) {
+        const icons = {
+            'laptop': 'laptop',
+            'desktop': 'desktop',
+            'monitor': 'tv',
+            'teclado': 'keyboard',
+            'mouse': 'mouse',
+            'impressora': 'print',
+            'scanner': 'scanner',
+            'roteador': 'wifi',
+            'switch': 'network-wired',
+            'servidor': 'server',
+            'tablet': 'tablet',
+            'smartphone': 'mobile-alt',
+            'projetor': 'video',
+            'outros': 'cogs'
+        };
+        return icons[tipo] || 'question-circle';
+    }
+
+    // Obter nome do colaborador
+    let colaboradorNome = 'N/A';
+    if (equipamento.colaborador_id) {
+        // Tenta buscar do mapa global se disponível
+        if (window.mapaColaboradores && window.mapaColaboradores[equipamento.colaborador_id]) {
+            colaboradorNome = window.mapaColaboradores[equipamento.colaborador_id].nome;
+        }
+    }
+
+    // Formatar histórico de manutenção
+    let historico = '';
+    if (equipamento.historico_manutencao && Array.isArray(equipamento.historico_manutencao) && equipamento.historico_manutencao.length > 0) {
+        historico = '<h4>Histórico de Manutenção</h4><div class="historico-list">';
+        equipamento.historico_manutencao.forEach(item => {
+            historico += `
+                <div class="historico-item">
+                    <strong>${formatarData(item.data_envio)}</strong>
+                    ${item.data_retorno ? ` até ${formatarData(item.data_retorno)}` : '(em andamento)'}
+                    <br><small>Problema: ${item.problema || '---'}</small>
+                    ${item.resultado ? `<br><small>Resultado: ${item.resultado}</small>` : ''}
+                </div>
+            `;
+        });
+        historico += '</div>';
+    } else {
+        historico = '<p>Nenhuma manutenção registrada.</p>';
+    }
+
+    // Formatar observações
+    let observacoes = equipamento.observacoes || 'Nenhuma observação registrada.';
+
+    // Formatar data de aquisição
+    let dataAquisicao = equipamento.data_aquisicao ? formatarData(equipamento.data_aquisicao) : '---';
+
+    // Formatar data de atribuição
+    let dataAtribuicao = equipamento.data_atribuicao ? formatarData(equipamento.data_atribuicao) : '---';
+
+    // Formatar status com ícone
+    const statusIcon = getIconByStatus(equipamento.status);
+    const statusText = getStatusText(equipamento.status);
+
+    // Formatar tipo com ícone
+    const tipoIcon = getIconByType(equipamento.tipo);
+    const tipoText = getTipoText(equipamento.tipo);
+
+    // Criar conteúdo HTML
     const content = `
         <div class="equipment-details">
             <div class="detail-row">
@@ -973,4 +718,94 @@ function showEquipmentDetails(equipamento) {
                     <strong>Patrimônio:</strong> ${equipamento.patrimonio}
                 </div>
                 <div class="detail-item">
-                    <strong>Tipo:</strong> ${getTipoText(
+                    <strong>Status:</strong>
+                    <span class="status-badge" style="display: inline-block; padding: 4px 8px; border-radius: 4px; background: ${equipamento.status === 'estoque' ? '#d4edda' : equipamento.status === 'alocado' ? '#f8d7da' : equipamento.status === 'emprestado' ? '#d1ecf1' : equipamento.status === 'manutencao' ? '#fff3cd' : '#f8d7da'}; color: ${equipamento.status === 'estoque' ? '#155724' : equipamento.status === 'alocado' ? '#721c24' : equipamento.status === 'emprestado' ? '#0c5460' : equipamento.status === 'manutencao' ? '#856404' : '#721c24'}">
+                        <i class="fas fa-${statusIcon}" style="margin-right: 5px;"></i>
+                        ${statusText}
+                    </span>
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-item">
+                    <strong>Tipo:</strong>
+                    <span style="display: inline-block; padding: 4px 8px; border-radius: 4px; background: #e9ecef;">
+                        <i class="fas fa-${tipoIcon}" style="margin-right: 5px;"></i>
+                        ${tipoText}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <strong>Marca/Modelo:</strong> ${equipamento.marca || '---'} ${equipamento.modelo || ''}
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-item">
+                    <strong>Número de Série:</strong> ${equipamento.serial || '---'}
+                </div>
+                <div class="detail-item">
+                    <strong>Centro de Custo:</strong> ${equipamento.centro_custo || '---'}
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-item">
+                    <strong>Caixa:</strong> ${equipamento.caixa || '---'}
+                </div>
+                <div class="detail-item">
+                    <strong>Data de Aquisição:</strong> ${dataAquisicao}
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-item">
+                    <strong>Colaborador:</strong> ${colaboradorNome}
+                </div>
+                <div class="detail-item">
+                    <strong>Data de Atribuição:</strong> ${dataAtribuicao}
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-item full-width">
+                    <strong>Especificações Técnicas:</strong>
+                    <div style="margin-top: 5px; padding: 10px; background: #f8f9fa; border-radius: 4px;">
+                        ${equipamento.especificacoes || 'Não especificado'}
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-item full-width">
+                    <strong>Observações:</strong>
+                    <div style="margin-top: 5px; padding: 10px; background: #f8f9fa; border-radius: 4px;">
+                        ${observacoes}
+                    </div>
+                </div>
+            </div>
+
+            ${historico}
+        </div>
+    `;
+
+    // Exibir modal
+    document.getElementById('modalBody').innerHTML = content;
+    document.getElementById('equipmentModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('equipmentModal').style.display = 'none';
+}
+
+// Fechar modal ao clicar fora
+window.onclick = function(event) {
+    const modal = document.getElementById('equipmentModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Adicionar mapa de colaboradores ao escopo global se disponível
+<?php if (isset($mapaColaboradores)): ?>
+window.mapaColaboradores = <?php echo json_encode($mapaColaboradores); ?>;
+<?php endif; ?>
