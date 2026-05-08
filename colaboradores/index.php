@@ -212,6 +212,11 @@ if ($busca) {
                                            title="Ver Equipamentos">
                                             <i class="fas fa-laptop"></i>
                                         </a>
+                                        <a href="termos.php?id=<?php echo $colaborador['id']; ?>" 
+   class="action-btn action-term" 
+   title="Gerenciar Termos">
+    <i class="fas fa-file-pdf"></i>
+</a>
                                         <?php if ($qtdEquipamentos > 0): ?>
                                             <a href="selecionar_equipamentos_termo.php?id=<?php echo $colaborador['id']; ?>" 
                                                class="action-btn action-term" 
