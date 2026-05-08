@@ -128,7 +128,7 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
 ?>
 
 <?php include '../includes/header.php'; ?>
-<link rel="stylesheet" href="../css/index.css">
+<link rel="stylesheet" href="../css/equipamentos.css">
 
 <main class="container">
     <div class="page-header">
