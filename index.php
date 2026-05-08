@@ -27,7 +27,7 @@ foreach ($equipamentos as $equipamento) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestão</title>
     <link rel="icon" href="img/Favicon/Favicon%20Main/favicon.ico">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -103,9 +103,9 @@ foreach ($equipamentos as $equipamento) {
                 <div class="activity-list">
                     <?php
                     // Exibir últimos 5 equipamentos cadastrados
-                    $equipamentosRecentes = array_slice($equipamentos, -5, 5, true);
+                    $equipamentosRecentes = array_slice($equipamentos, -10, 10, true);
                     $equipamentosRecentes = array_reverse($equipamentosRecentes, true);
-                    
+
                     foreach ($equipamentosRecentes as $equipamento):
                         $statusClass = $equipamento['status'] == 'estoque' ? 'status-ativo' : 'status-inativo';
                         $statusText = $equipamento['status'] == 'estoque' ? 'Em Estoque' : 'Atribuído';
@@ -115,7 +115,7 @@ foreach ($equipamentos as $equipamento) {
                             <i class="fas fa-laptop"></i>
                         </div>
                         <div class="activity-content">
-                            <p><strong><?php echo $equipamento['marca'] . ' ' . $equipamento['modelo']; ?></strong> 
+                            <p><strong><?php echo $equipamento['marca'] . ' ' . $equipamento['modelo']; ?></strong>
                             (Patrimônio: <?php echo $equipamento['patrimonio']; ?>)</p>
                             <span class="activity-time"><?php echo formatarData($equipamento['data_cadastro']); ?></span>
                             <span class="status-badge <?php echo $statusClass; ?>"><?php echo $statusText; ?></span>
