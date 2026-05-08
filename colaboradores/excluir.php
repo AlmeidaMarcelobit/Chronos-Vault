@@ -1,7 +1,12 @@
 <?php
 session_start();
 require_once '../includes/funcoes.php';
-verificarSessao();
+
+// Verificar se o usuário está logado
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: ../login.php');
+    exit;
+}
 
 $id = $_GET['id'] ?? null;
 if (!$id) {
@@ -34,6 +39,9 @@ if ($colaboradorIndex === null) {
     header('Location: index.php');
     exit;
 }
+
+$mensagem = '';
+$tipoMensagem = '';
 
 // Processar exclusão
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -80,211 +88,243 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
+    <!-- ==================== HEADER ==================== -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <a href="../index.php">
+                    <i class="fas fa-laptop-house"></i>
+                    <h1>Sistema de Gestão</h1>
+                </a>
+            </div>
+            
+            <div class="user-menu">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
+                </div>
+                
+                <a href="../logout.php" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </a>
+            </div>
+        </div>
+        
+        <nav class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.php" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.php" class="nav-link active">
+                        <i class="fas fa-users"></i>
+                        <span>Colaboradores</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../equipamentos/index.php" class="nav-link">
+                        <i class="fas fa-laptop"></i>
+                        <span>Equipamentos</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
     
-    <main class="container">
+    <!-- Mensagens de alerta -->
+    <?php if ($mensagem): ?>
+    <div class="global-alert alert-<?php echo $tipoMensagem === 'success' ? 'success' : 'error'; ?>">
+        <div class="alert-content">
+            <i class="fas fa-<?php echo $tipoMensagem === 'success' ? 'check-circle' : 'exclamation-circle'; ?>"></i>
+            <span><?php echo $mensagem; ?></span>
+        </div>
+        <button class="alert-close" onclick="this.parentElement.style.display='none'">&times;</button>
+    </div>
+    <?php endif; ?>
+    
+    <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
+    <main class="main-container">
         <div class="page-header">
-            <h1><i class="fas fa-trash"></i> Excluir Colaborador</h1>
+            <div>
+                <h1><i class="fas fa-trash-alt"></i> Excluir Colaborador</h1>
+                <p class="page-subtitle">Esta ação é irreversível. Confirme os dados antes de prosseguir.</p>
+            </div>
             <a href="index.php" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Voltar
+                <i class="fas fa-arrow-left"></i>
+                <span>Voltar</span>
             </a>
         </div>
         
-        <div class="alert alert-warning">
-            <i class="fas fa-exclamation-triangle"></i>
-            <strong>Atenção!</strong> Esta ação não pode ser desfeita.
+        <!-- Alerta de Atenção -->
+        <div class="alert-warning-card">
+            <div class="alert-warning-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="alert-warning-content">
+                <strong>Atenção!</strong> Esta ação não pode ser desfeita. Todos os dados do colaborador seram removidos.
+            </div>
         </div>
         
         <div class="confirmation-card">
-            <h2>Confirmar Exclusão</h2>
+            <h2><i class="fas fa-question-circle"></i> Confirmar Exclusão</h2>
             
-            <div class="colaborador-details">
-                <h3>Dados do Colaborador</h3>
-                <div class="details-grid">
-                    <div class="detail-item">
-                        <span class="detail-label">Nome:</span>
-                        <span class="detail-value"><?php echo htmlspecialchars($colaboradorAtual['nome']); ?></span>
+            <!-- Dados do Colaborador -->
+            <div class="info-card">
+                <h3><i class="fas fa-user"></i> Dados do Colaborador</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Nome:</span>
+                        <span class="info-value"><?php echo htmlspecialchars($colaboradorAtual['nome']); ?></span>
                     </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Cargo:</span>
-                        <span class="detail-value"><?php echo htmlspecialchars($colaboradorAtual['cargo']); ?></span>
+                    <div class="info-item">
+                        <span class="info-label">Cargo:</span>
+                        <span class="info-value"><?php echo htmlspecialchars($colaboradorAtual['cargo']); ?></span>
                     </div>
-                    <div class="detail-item">
-                        <span class="detail-label">CPF:</span>
-                        <span class="detail-value"><?php echo formatarCPF($colaboradorAtual['cpf']); ?></span>
+                    <div class="info-item">
+                        <span class="info-label">CPF:</span>
+                        <span class="info-value"><?php echo formatarCPF($colaboradorAtual['cpf']); ?></span>
                     </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Departamento:</span>
-                        <span class="detail-value"><?php echo htmlspecialchars($colaboradorAtual['departamento']); ?></span>
+                    <div class="info-item">
+                        <span class="info-label">Departamento:</span>
+                        <span class="info-value"><?php echo htmlspecialchars($colaboradorAtual['departamento']); ?></span>
                     </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Centro de Custo:</span>
-                        <span class="detail-value"><?php echo htmlspecialchars($colaboradorAtual['centro_custo']); ?></span>
+                    <div class="info-item">
+                        <span class="info-label">Centro de Custo:</span>
+                        <span class="info-value"><?php echo htmlspecialchars($colaboradorAtual['centro_custo']); ?></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Data de Cadastro:</span>
+                        <span class="info-value"><?php echo formatarData($colaboradorAtual['data_cadastro']); ?></span>
                     </div>
                 </div>
             </div>
             
+            <!-- Equipamentos Atribuídos -->
             <?php if (!empty($equipamentosAtribuidos)): ?>
             <div class="warning-card">
-                <h4><i class="fas fa-exclamation-circle"></i> Importante</h4>
+                <div class="warning-header">
+                    <i class="fas fa-laptop"></i>
+                    <h4>Equipamentos Atribuídos</h4>
+                </div>
                 <p>Este colaborador possui <strong><?php echo count($equipamentosAtribuidos); ?> equipamento(s)</strong> atribuído(s).</p>
-                <p>Ao excluir o colaborador, todos os equipamentos serão devolvidos automaticamente para o estoque.</p>
+                <p class="warning-message">Ao excluir o colaborador, todos os equipamentos serão <strong>devolvidos automaticamente para o estoque</strong>.</p>
                 
                 <div class="equipamentos-list">
-                    <h5>Equipamentos a serem devolvidos:</h5>
+                    <h5><i class="fas fa-list"></i> Lista de equipamentos:</h5>
                     <ul>
                         <?php foreach ($equipamentosAtribuidos as $equipamento): ?>
-                        <li><?php echo htmlspecialchars($equipamento['marca'] . ' ' . $equipamento['modelo']); ?> (Patrimônio: <?php echo htmlspecialchars($equipamento['patrimonio']); ?>)</li>
+                        <li>
+                            <i class="fas fa-laptop"></i>
+                            <span class="equipamento-nome"><?php echo htmlspecialchars($equipamento['marca'] . ' ' . $equipamento['modelo']); ?></span>
+                            <span class="equipamento-patrimonio">(Patrimônio: <?php echo htmlspecialchars($equipamento['patrimonio']); ?>)</span>
+                        </li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
             </div>
             <?php endif; ?>
             
-            <form method="POST" action="" class="confirmation-form">
-                <div class="confirmation-actions">
-                    <button type="submit" name="confirmar" value="1" class="btn btn-danger">
-                        <i class="fas fa-check"></i> Confirmar Exclusão
-                    </button>
-                    <a href="index.php" class="btn btn-secondary">
-                        <i class="fas fa-times"></i> Cancelar
-                    </a>
+            <!-- Formulário de Confirmação -->
+            <form method="POST" action="" class="confirmation-form" id="form-exclusao">
+                <div class="confirmation-checkbox">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="confirm-checkbox" required>
+                        <span class="checkbox-custom"></span>
+                        <span class="checkbox-text">Confirmo que estou ciente de que esta ação não pode ser desfeita e que todos os dados serão removidos permanentemente.</span>
+                    </label>
                 </div>
                 
-                <div class="confirmation-checkbox">
-                    <label>
-                        <input type="checkbox" required>
-                        Confirmo que estou ciente de que esta ação não pode ser desfeita.
-                    </label>
+                <div class="confirmation-actions">
+                    <button type="submit" name="confirmar" value="1" class="btn btn-danger" id="btn-confirmar" disabled>
+                        <i class="fas fa-trash-alt"></i>
+                        <span>Confirmar Exclusão</span>
+                    </button>
+                    <a href="index.php" class="btn btn-secondary">
+                        <i class="fas fa-times"></i>
+                        <span>Cancelar</span>
+                    </a>
                 </div>
             </form>
         </div>
     </main>
-    
-    <?php include '../includes/footer.php'; ?>
-    
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-laptop-house"></i> Sistema de Gestão</h3>
+                <p>Controle de colaboradores e equipamentos</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Links Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="../index.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="index.php"><i class="fas fa-users"></i> Colaboradores</a></li>
+                    <li><a href="../equipamentos/index.php"><i class="fas fa-laptop"></i> Equipamentos</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Estatísticas</h3>
+                <?php
+                // Carregar dados para estatísticas
+                $total_colaboradores = count(lerArquivoJSON('../data/colaboradores.json'));
+                $total_equipamentos = count(lerArquivoJSON('../data/equipamentos.json'));
+                $equipamentos_estoque = 0;
+                $equipamentos_data = lerArquivoJSON('../data/equipamentos.json');
+                foreach ($equipamentos_data as $e) {
+                    if (($e['status'] ?? '') === 'estoque') $equipamentos_estoque++;
+                }
+                ?>
+                <div class="footer-stats">
+                    <div class="footer-stat">
+                        <span class="stat-number"><?php echo $total_colaboradores; ?></span>
+                        <span class="stat-label">Colaboradores</span>
+                    </div>
+                    <div class="footer-stat">
+                        <span class="stat-number"><?php echo $total_equipamentos; ?></span>
+                        <span class="stat-label">Equipamentos</span>
+                    </div>
+                    <div class="footer-stat">
+                        <span class="stat-number"><?php echo $equipamentos_estoque; ?></span>
+                        <span class="stat-label">Em Estoque</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>Sistema de Gestão &copy; <?php echo date('Y'); ?> - Todos os direitos reservados</p>
+            <p class="footer-version">Última atualização: <?php echo date('d/m/Y H:i'); ?></p>
+        </div>
+    </footer>
+
     <script src="../js/script.js"></script>
     
-    <style>
-    .confirmation-card {
-        background: white;
-        border-radius: var(--border-radius);
-        padding: 30px;
-        box-shadow: var(--box-shadow);
-        margin-top: 20px;
-    }
-    
-    .confirmation-card h2 {
-        color: var(--danger-color);
-        margin-bottom: 20px;
-        text-align: center;
-    }
-    
-    .colaborador-details {
-        margin: 30px 0;
-        padding: 20px;
-        background: #f8f9fa;
-        border-radius: var(--border-radius);
-    }
-    
-    .colaborador-details h3 {
-        color: var(--dark-color);
-        margin-bottom: 15px;
-    }
-    
-    .details-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-    }
-    
-    .detail-item {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-    
-    .detail-label {
-        font-size: 12px;
-        color: var(--gray-color);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    
-    .detail-value {
-        font-weight: 500;
-        color: var(--dark-color);
-    }
-    
-    .warning-card {
-        margin: 30px 0;
-        padding: 20px;
-        background: #fff3cd;
-        border-radius: var(--border-radius);
-        border-left: 4px solid #ffc107;
-    }
-    
-    .warning-card h4 {
-        color: #856404;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .equipamentos-list {
-        margin-top: 15px;
-        padding: 15px;
-        background: white;
-        border-radius: var(--border-radius);
-    }
-    
-    .equipamentos-list h5 {
-        color: var(--dark-color);
-        margin-bottom: 10px;
-    }
-    
-    .equipamentos-list ul {
-        list-style: none;
-        padding-left: 0;
-    }
-    
-    .equipamentos-list li {
-        padding: 8px 0;
-        border-bottom: 1px solid #eee;
-    }
-    
-    .equipamentos-list li:last-child {
-        border-bottom: none;
-    }
-    
-    .confirmation-actions {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-        margin: 30px 0;
-    }
-    
-    .confirmation-checkbox {
-        text-align: center;
-        padding: 15px;
-        background: #f8f9fa;
-        border-radius: var(--border-radius);
-    }
-    
-    .confirmation-checkbox label {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        cursor: pointer;
-    }
-    
-    .alert-warning {
-        background: #fff3cd;
-        color: #856404;
-        border-left: 4px solid #ffc107;
-    }
-    </style>
+    <script>
+        // Habilitar botão de confirmação apenas quando checkbox estiver marcado
+        const checkbox = document.getElementById('confirm-checkbox');
+        const confirmBtn = document.getElementById('btn-confirmar');
+        
+        if (checkbox && confirmBtn) {
+            checkbox.addEventListener('change', function() {
+                confirmBtn.disabled = !this.checked;
+            });
+        }
+        
+        // Fechar alerta após 5 segundos
+        setTimeout(function() {
+            const alert = document.querySelector('.global-alert');
+            if (alert) {
+                alert.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => alert.remove(), 300);
+            }
+        }, 5000);
+    </script>
 </body>
 </html>
