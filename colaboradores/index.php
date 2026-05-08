@@ -112,11 +112,10 @@ if ($busca) {
                                 </a>
 
                                 <!-- BOTÃO NOVO: IMPRIMIR TERMO -->
-                                <a href="termo_colaborador.php?id=<?php echo $colaborador['id']; ?>"
-                                   class="btn btn-sm btn-primary"
-                                   target="_blank"
-                                   title="Imprimir Termo de Responsabilidade">
-                                    <i class="fas fa-file-contract"></i>
+                                <a href="selecionar_equipamentos_termo.php?id=<?php echo $colaborador['id']; ?>"
+                                   class="btn btn-termo" target="_blank">
+                                    <i class="fas fa-file-contract"></i> Gerar Termo
+                                </a>
                                 </a>
                             </div>
                         </td>
