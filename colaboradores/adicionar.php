@@ -217,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <small class="form-text">Digite apenas números ou com pontos e traço</small>
                     </div>
                     
-                    <?php include('../includes/departamentos.php'); ?>
+                    <?php include ('../includes/departamento.php'); ?>
 
                     <div class="form-group">
                         <label for="centro_custo">
