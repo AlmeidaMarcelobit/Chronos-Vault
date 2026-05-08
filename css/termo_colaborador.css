@@ -716,3 +716,48 @@
         display: none !important;
     }
 }
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eaeaea;
+}
+
+.btn-voltar {
+    background: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-voltar:hover {
+    background: #5a6268;
+    color: white;
+}
+
+.btn-selecionar {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1em;
+}
+
+.btn-selecionar:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+}
+
+.btn-selecionar:hover:not(:disabled) {
+    background: #218838;
+}
