@@ -103,9 +103,9 @@ foreach ($equipamentos as $equipamento) {
                 <div class="activity-list">
                     <?php
                     // Exibir últimos 5 equipamentos cadastrados
-                    $equipamentosRecentes = array_slice($equipamentos, -10, 10, true);
+                    $equipamentosRecentes = array_slice($equipamentos, -5, 5, true);
                     $equipamentosRecentes = array_reverse($equipamentosRecentes, true);
-
+                    
                     foreach ($equipamentosRecentes as $equipamento):
                         $statusClass = $equipamento['status'] == 'estoque' ? 'status-ativo' : 'status-inativo';
                         $statusText = $equipamento['status'] == 'estoque' ? 'Em Estoque' : 'Atribuído';
@@ -115,7 +115,7 @@ foreach ($equipamentos as $equipamento) {
                             <i class="fas fa-laptop"></i>
                         </div>
                         <div class="activity-content">
-                            <p><strong><?php echo $equipamento['marca'] . ' ' . $equipamento['modelo']; ?></strong>
+                            <p><strong><?php echo $equipamento['marca'] . ' ' . $equipamento['modelo']; ?></strong> 
                             (Patrimônio: <?php echo $equipamento['patrimonio']; ?>)</p>
                             <span class="activity-time"><?php echo formatarData($equipamento['data_cadastro']); ?></span>
                             <span class="status-badge <?php echo $statusClass; ?>"><?php echo $statusText; ?></span>
