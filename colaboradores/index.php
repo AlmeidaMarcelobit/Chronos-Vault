@@ -35,7 +35,7 @@ if ($busca) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Colaboradores - Sistema de Gestão</title>
     <link rel="icon" href="../img/Favicon/Favicon%20Main/favicon.ico">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/colaboradores.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -96,29 +96,34 @@ if ($busca) {
                         </td>
                         <td>
                             <div class="action-buttons">
+                                <!-- Botão Editar -->
                                 <a href="editar.php?id=<?php echo $colaborador['id']; ?>"
                                    class="btn btn-sm btn-warning" title="Editar">
                                     <i class="fas fa-edit"></i>
+                                    <span>Editar</span>
                                 </a>
+
+                                <!-- Botão Excluir -->
                                 <a href="excluir.php?id=<?php echo $colaborador['id']; ?>"
                                    class="btn btn-sm btn-danger"
                                    onclick="return confirm('Tem certeza que deseja excluir este colaborador?')"
                                    title="Excluir">
                                     <i class="fas fa-trash"></i>
+                                    <span>Excluir</span>
                                 </a>
+
+                                <!-- Botão Equipamentos -->
                                 <a href="../equipamentos/?colaborador=<?php echo $colaborador['id']; ?>"
                                    class="btn btn-sm btn-info" title="Ver Equipamentos">
                                     <i class="fas fa-laptop"></i>
+                                    <span>Equipamentos</span>
                                 </a>
-                                <style>
 
-
-                                </style>
-
-                                <!-- BOTÃO NOVO: IMPRIMIR TERMO -->
+                                <!-- Botão Termo - EXATAMENTE IGUAL AOS OUTROS -->
                                 <a href="selecionar_equipamentos_termo.php?id=<?php echo $colaborador['id']; ?>"
-                                   class="btn btn-termo" target="_blank">
-                                    <i class="fas fa-file-contract"></i>Gerar Termo
+                                   class="btn-termo btn-sm" target="_blank" title="Gerar Termo">
+                                    <i class="fas fa-file-contract"></i>
+                                    <span>Gerar Termo</span>
                                 </a>
                             </div>
                         </td>
