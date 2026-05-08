@@ -571,18 +571,148 @@
 
 /* ========== IMPRESSÃO ========== */
 @media print {
-    .no-print {
-        display: none !important;
+
+
+
+    @page {
+        size: A4 portrait;
+        margin: 6mm;
+    }
+
+    .info-grid {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 10px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .info-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-label {
+        font-size: 10px;
+    }
+
+    .info-value {
+        font-size: 11px;
+        word-break: break-word;
+    }
+
+    html, body {
+        width: 210mm;
+        height: 297mm;
+        font-size: 11px;
+        line-height: 1.25;
     }
 
     .termo-container {
-        box-shadow: none !important;
-        border: none !important;
-        margin: 0 !important;
-        padding: 15mm !important;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 6mm;
+        border: none;
+        box-shadow: none;
     }
 
-    .btn-print, .btn-back {
+    /* ===== COMPACTAR TUDO ===== */
+
+    .section {
+        margin-bottom: 12px;
+    }
+
+    .section-title {
+        font-size: 13px;
+        margin-bottom: 6px;
+        padding-bottom: 4px;
+    }
+
+    .info-value {
+        font-size: 12px;
+    }
+
+    .termo-text {
+        font-size: 11px;
+        line-height: 1.3;
+    }
+
+    .clausula {
+        margin-bottom: 8px;
+    }
+
+    .clausula-title {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+
+    /* ===== TABELA MAIS COMPACTA ===== */
+
+    .equipamentos-table {
+        font-size: 10px;
+    }
+
+    .equipamentos-table th,
+    .equipamentos-table td {
+        padding: 4px 6px;
+    }
+
+    /* ===== LOGO E TÍTULO ===== */
+
+    .termo-container .header img {
+        max-width: 120px;
+        margin-bottom: 6px;
+    }
+
+    .termo-container .titulo {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    /* ===== ASSINATURAS LADO A LADO (FORÇADO) ===== */
+
+    .assinaturas {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        gap: 20px;
+        margin-top: 15px;
+        padding-top: 10px;
+    }
+
+    .assinatura {
+        width: 48%;
+        text-align: center;
+        page-break-inside: avoid;
+    }
+
+    .linha-assinatura {
+        margin-bottom: 6px;
+    }
+
+    .nome-assinatura {
+        font-size: 12px;
+    }
+
+    .cargo-assinatura,
+    .data-assinatura {
+        font-size: 10px;
+    }
+
+    /* ===== REMOVER QUALQUER QUEBRA ===== */
+
+    .section,
+    table,
+    tr,
+    .assinaturas {
+        page-break-inside: avoid !important;
+    }
+
+    /* ===== ESCONDER BOTÕES ===== */
+
+    .no-print,
+    .btn-print,
+    .btn-back {
         display: none !important;
     }
 }
