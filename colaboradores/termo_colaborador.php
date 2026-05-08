@@ -63,10 +63,11 @@ header('Content-Type: text/html; charset=UTF-8');
 <!--    <div class="qr-code">-->
 <!--        <div>CÓDIGO</div>-->
 <!--        <div>ID: --><?php //echo str_pad($colaborador['id'], 4, '0', STR_PAD_LEFT); ?><!--</div>-->
-<!--        <div>--><?php //echo date('d/m/Y'); ?><!--</div>-->
+        <div><?php echo date('d/m/Y'); ?></div>
 <!--    </div>-->
 
     <div class="header">
+        <img src="../img/logo_impressão.svg" alt="">
         <div class="titulo">TERMO DE RESPONSABILIDADE</div>
     </div>
 
@@ -207,13 +208,18 @@ header('Content-Type: text/html; charset=UTF-8');
 
         <div class="assinatura">
             <div class="linha-assinatura"></div>
-<!--            <div class="nome-assinatura">______________________________</div>-->
             <div class="cargo-assinatura">Responsável pelo Patrimônio</div>
             <div class="data-assinatura">Data: ______/______/______</div>
             <div class="data-assinatura">Departamento de TI</div>
         </div>
     </div>
+
+    <div class="carimbo">
+        Data de emissão: <?php echo date('d/m/Y'); ?>
+    </div>
+
 </div>
+
 
 <script>
     // Adicionar classes CSS dinamicamente para os badges de status
