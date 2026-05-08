@@ -34,9 +34,12 @@ $active_equipamentos = (strpos($_SERVER['PHP_SELF'], 'equipamentos/') !== false)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestão</title>
-    <link rel="icon" href="../img/Favicon/Favicon%20Main/favicon.ico">
+    <title><?php echo isset($page_title) ? htmlspecialchars($page_title) : 'Sistema de Gestão'; ?></title>
+    <link rel="icon" href="<?php echo $base_path; ?>img/Favicon/Favicon%20Main/favicon.ico">
     <link rel="stylesheet" href="<?php echo $base_path; ?>css/style.css">
+    <?php if (!empty($page_css)): ?>
+    <link rel="stylesheet" href="<?php echo $base_path . htmlspecialchars($page_css); ?>">
+    <?php endif; ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -94,7 +97,7 @@ $active_equipamentos = (strpos($_SERVER['PHP_SELF'], 'equipamentos/') !== false)
     <div class="global-alert alert-<?php echo $_SESSION['mensagem_tipo'] ?? 'info'; ?>">
         <div class="alert-content">
             <i class="fas fa-<?php echo $_SESSION['mensagem_tipo'] === 'success' ? 'check-circle' : ($_SESSION['mensagem_tipo'] === 'error' ? 'exclamation-circle' : 'info-circle'); ?>"></i>
-            <span><?php echo $_SESSION['mensagem']; ?></span>
+            <span><?php echo htmlspecialchars($_SESSION['mensagem']); ?></span>
         </div>
         <button class="alert-close" onclick="this.parentElement.style.display='none'">&times;</button>
     </div>

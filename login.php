@@ -1,4 +1,10 @@
 <?php
+/*
+ * login.php — Página de login autossuficiente.
+ * Intencionalmente NÃO usa includes/header.php nem includes/footer.php,
+ * pois essas estruturas exigem sessão ativa e renderizam a navbar,
+ * comportamento indesejado na tela de autenticação.
+ */
 session_start();
 
 if (isset($_SESSION['usuario_id'])) {
@@ -18,10 +24,11 @@ if (isset($_GET['erro'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Sistema de Gestão</title>
     <link rel="icon" href="img/Favicon/Favicon%20Main/favicon.ico">
-    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="login-page">
+
 <div class="login-container">
     <div class="login-header">
         <h1><i class="fas fa-laptop-house"></i> Sistema de Gestão</h1>
@@ -50,16 +57,20 @@ if (isset($_GET['erro'])) {
             </button>
         </form>
 
+        <?php if (defined('APP_ENV') && APP_ENV === 'development'): ?>
         <div class="login-info">
             <p><strong>Credenciais padrão:</strong></p>
             <p>Usuário: <code>admin</code></p>
             <p>Senha: <code>admin123</code></p>
         </div>
+        <?php endif; ?>
     </div>
 
     <div class="login-footer">
         <p>Sistema de Gestão &copy; <?php echo date('Y'); ?></p>
     </div>
 </div>
+
+<script src="js/login.js"></script>
 </body>
 </html>

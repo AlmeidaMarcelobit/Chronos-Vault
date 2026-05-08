@@ -209,6 +209,9 @@ if (strpos($_SERVER['PHP_SELF'], '/colaboradores/') !== false) {
     <?php endif; ?>
     
     <script src="<?php echo $base_path; ?>js/script.js"></script>
+    <?php if (!empty($page_js)): ?>
+    <script src="<?php echo $base_path . htmlspecialchars($page_js); ?>"></script>
+    <?php endif; ?>
     
     <script>
     // Script para auto-ocultar alertas após 5 segundos
