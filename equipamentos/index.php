@@ -26,6 +26,16 @@ $filtro = $_GET['filtro'] ?? 'todos';
 $tipo = $_GET['tipo'] ?? 'todos';
 $status = $_GET['status'] ?? 'todos';
 $colaboradorId = $_GET['colaborador'] ?? null;
+$centro_custo = $_GET['centro_custo'] ?? 'todos'; // NOVO: Inicializar variável
+
+// Extrair todos os centros de custo únicos dos equipamentos
+$centrosCustoUnicos = [];
+foreach ($equipamentos as $equipamento) {
+    if (!empty($equipamento['centro_custo'])) {
+        $centrosCustoUnicos[$equipamento['centro_custo']] = $equipamento['centro_custo'];
+    }
+}
+sort($centrosCustoUnicos); // Ordenar alfabeticamente
 
 // Filtrar equipamentos para exibição
 $equipamentosFiltrados = $equipamentos;
@@ -74,16 +84,24 @@ if ($status !== 'todos' && !$colaboradorId && $filtro === 'todos') {
     });
 }
 
+// Filtro por centro de custo (NOVO)
+if ($centro_custo !== 'todos') {
+    $equipamentosFiltrados = array_filter($equipamentosFiltrados, function($equipamento) use ($centro_custo) {
+        return $equipamento['centro_custo'] === $centro_custo;
+    });
+}
+
 // Buscar por patrimônio, serial, marca ou modelo
 $busca = $_GET['busca'] ?? '';
 if ($busca) {
     $buscaLower = strtolower($busca);
     $equipamentosFiltrados = array_filter($equipamentosFiltrados, function($equipamento) use ($buscaLower) {
-        return stripos($equipamento['patrimonio'], $buscaLower) !== false || 
-               stripos($equipamento['serial'] ?? '', $buscaLower) !== false ||
-               stripos($equipamento['marca'], $buscaLower) !== false ||
-               stripos($equipamento['modelo'], $buscaLower) !== false ||
-               stripos(getTipoTexto($equipamento['tipo']), $buscaLower) !== false;
+        return stripos($equipamento['patrimonio'], $buscaLower) !== false ||
+            stripos($equipamento['serial'] ?? '', $buscaLower) !== false ||
+            stripos($equipamento['marca'], $buscaLower) !== false ||
+            stripos($equipamento['modelo'], $buscaLower) !== false ||
+            stripos(getTipoTexto($equipamento['tipo']), $buscaLower) !== false ||
+            stripos($equipamento['centro_custo'], $buscaLower) !== false; // Adicionar centro_custo na busca
     });
 }
 
@@ -100,7 +118,7 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
             <i class="fas fa-laptop-medical"></i> Adicionar Equipamento
         </a>
     </div>
-    
+
     <div class="filter-section">
         <div class="filter-tabs">
             <a href="?filtro=todos" class="filter-tab <?php echo $filtro == 'todos' ? 'active' : ''; ?>">
@@ -122,8 +140,8 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                 Fora de Uso (<?php echo $totalForaUso; ?>)
             </a>
         </div>
-        
-        <!-- FORMULÁRIO DE FILTROS (CORRIGIDO) -->
+
+        <!-- FORMULÁRIO DE FILTROS -->
         <form method="GET" class="filter-form">
             <div class="filter-grid">
                 <div class="filter-group">
@@ -131,14 +149,50 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                     <select id="tipo" name="tipo" class="form-control">
                         <option value="todos" <?php echo $tipo == 'todos' ? 'selected' : ''; ?>>Todos os Tipos</option>
                         <?php foreach (getTiposEquipamentos() as $key => $value): ?>
-                        <option value="<?php echo $key; ?>"
+                            <option value="<?php echo $key; ?>"
                                 <?php echo $tipo == $key ? 'selected' : ''; ?>>
-                            <?php echo $value; ?>
-                        </option>
+                                <?php echo $value; ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                
+
+                <div class="filter-group">
+                    <label for="caixa">
+                        <i class="fas fa-dollar-sign"></i> Caixa:
+                    </label>
+
+                    <select id="caixa" name="caixa" class="form-control">
+                        <option value="">
+                            Selecione a Caixa
+                        </option>
+
+                        <?php foreach ($caixas as $caixa): ?>
+                            <option value="<?php echo htmlspecialchars($caixa); ?>"
+                                <?php echo ($caixa_id == $caixa) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($caixa); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="centro_custo">
+                        <i class="fas fa-dollar-sign"></i> Centro de Custo:
+                    </label>
+                    <select id="centro_custo" name="centro_custo" class="form-control">
+                        <option value="todos" <?php echo $centro_custo == 'todos' ? 'selected' : ''; ?>>
+                            Todos os Centros de Custo
+                        </option>
+                        <?php foreach ($centrosCustoUnicos as $centro): ?>
+                            <option value="<?php echo htmlspecialchars($centro); ?>"
+                                <?php echo $centro_custo == $centro ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($centro); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
                 <div class="filter-group">
                     <label for="status"><i class="fas fa-info-circle"></i> Status:</label>
                     <select id="status" name="status" class="form-control">
@@ -150,37 +204,37 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                         <option value="fora_uso" <?php echo $status == 'fora_uso' ? 'selected' : ''; ?>>Fora de Uso</option>
                     </select>
                 </div>
-                
+
                 <?php if (count($colaboradores) > 0): ?>
-                <div class="filter-group">
-                    <label for="colaborador"><i class="fas fa-user"></i> Colaborador:</label>
-                    <select id="colaborador" name="colaborador" class="form-control">
-                        <option value="">Todos os Colaboradores</option>
-                        <?php foreach ($colaboradores as $colaborador): ?>
-                        <option value="<?php echo $colaborador['id']; ?>" 
-                            <?php echo $colaboradorId == $colaborador['id'] ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($colaborador['nome']); ?>
-                        </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+                    <div class="filter-group">
+                        <label for="colaborador"><i class="fas fa-user"></i> Colaborador:</label>
+                        <select id="colaborador" name="colaborador" class="form-control">
+                            <option value="">Todos os Colaboradores</option>
+                            <?php foreach ($colaboradores as $colaborador): ?>
+                                <option value="<?php echo $colaborador['id']; ?>"
+                                    <?php echo $colaboradorId == $colaborador['id'] ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($colaborador['nome']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                 <?php endif; ?>
-                
+
                 <div class="filter-group filter-search">
                     <label for="busca"><i class="fas fa-search"></i> Buscar:</label>
                     <div class="search-box">
-                        <input type="text" 
-                               id="busca" 
-                               name="busca" 
-                               class="form-control" 
-                               placeholder="Patrimônio, serial, marca, modelo..."
+                        <input type="text"
+                               id="busca"
+                               name="busca"
+                               class="form-control"
+                               placeholder="Patrimônio, serial, marca, modelo, centro de custo..."
                                value="<?php echo htmlspecialchars($busca); ?>">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
                 </div>
-                
+
                 <div class="filter-actions">
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-filter"></i> Aplicar Filtros
@@ -190,16 +244,16 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                     </a>
                 </div>
             </div>
-            
+
             <!-- Campos ocultos para manter filtros -->
             <?php if ($filtro !== 'todos'): ?>
-            <input type="hidden" name="filtro" value="<?php echo htmlspecialchars($filtro); ?>">
+                <input type="hidden" name="filtro" value="<?php echo htmlspecialchars($filtro); ?>">
             <?php endif; ?>
         </form>
     </div>
-    
+
     <!-- Mostrar estatísticas do filtro aplicado -->
-    <?php 
+    <?php
     $totalFiltrado = count($equipamentosFiltrados);
     $estoqueFiltrado = count(array_filter($equipamentosFiltrados, function($e) { return $e['status'] === 'estoque'; }));
     $alocadosFiltrado = count(array_filter($equipamentosFiltrados, function($e) { return $e['status'] === 'alocado'; }));
@@ -207,7 +261,7 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
     $manutencaoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { return $e['status'] === 'manutencao'; }));
     $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { return $e['status'] === 'fora_uso'; }));
     ?>
-    
+
     <div class="stats-cards">
         <div class="stat-card stat-<?php echo $estoqueFiltrado > 0 ? 'primary' : 'secondary'; ?>">
             <div class="stat-icon">
@@ -221,7 +275,7 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                 </small>
             </div>
         </div>
-        
+
         <div class="stat-card stat-<?php echo $alocadosFiltrado > 0 ? 'success' : 'secondary'; ?>">
             <div class="stat-icon">
                 <i class="fas fa-user-check"></i>
@@ -234,7 +288,7 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                 </small>
             </div>
         </div>
-        
+
         <div class="stat-card stat-<?php echo $emprestadosFiltrado > 0 ? 'info' : 'secondary'; ?>">
             <div class="stat-icon">
                 <i class="fas fa-handshake"></i>
@@ -247,7 +301,7 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                 </small>
             </div>
         </div>
-        
+
         <div class="stat-card stat-<?php echo $manutencaoFiltrado > 0 ? 'warning' : 'secondary'; ?>">
             <div class="stat-icon">
                 <i class="fas fa-tools"></i>
@@ -260,7 +314,7 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                 </small>
             </div>
         </div>
-        
+
         <div class="stat-card stat-<?php echo $foraUsoFiltrado > 0 ? 'danger' : 'secondary'; ?>">
             <div class="stat-icon">
                 <i class="fas fa-times-circle"></i>
@@ -274,24 +328,25 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
             </div>
         </div>
     </div>
-    
+
     <div class="table-responsive">
         <table class="data-table">
             <thead>
-                <tr>
-                    <th>Tipo</th>
-                    <th>Patrimônio</th>
-                    <th>Marca/Modelo</th>
-                    <th>Nº Série</th>
-                    <th>Centro de Custo</th>
-                    <th>Status</th>
-                    <th>Colaborador</th>
-                    <th>Data Atribuição</th>
-                    <th>Ações</th>
-                </tr>
+            <tr>
+                <th>Tipo</th>
+                <th>Patrimônio</th>
+                <th>Caixa</th>
+                <th>Marca/Modelo</th>
+                <th>Nº Série</th>
+                <th>Centro de Custo</th>
+                <th>Status</th>
+                <th>Colaborador</th>
+<!--                <th>Data Atribuição</th>-->
+                <th>Ações</th>
+            </tr>
             </thead>
             <tbody>
-                <?php if (empty($equipamentosFiltrados)): ?>
+            <?php if (empty($equipamentosFiltrados)): ?>
                 <tr>
                     <td colspan="9" class="text-center">
                         <div class="empty-state">
@@ -304,25 +359,25 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                         </div>
                     </td>
                 </tr>
-                <?php else: ?>
-                    <?php foreach ($equipamentosFiltrados as $equipamento): 
-                        // Classes de status
-                        $statusClasses = [
-                            'estoque' => 'status-ativo',
-                            'alocado' => 'status-inativo',
-                            'emprestado' => 'status-info',
-                            'manutencao' => 'status-warning',
-                            'fora_uso' => 'status-danger'
-                        ];
-                        $statusClass = $statusClasses[$equipamento['status']] ?? 'status-ativo';
-                        $statusText = getStatusTexto($equipamento['status']);
-                        
-                        $tipoText = getTipoTexto($equipamento['tipo']);
-                        
-                        $colaboradorNome = 'N/A';
-                        if ($equipamento['colaborador_id'] && isset($mapaColaboradores[$equipamento['colaborador_id']])) {
-                            $colaboradorNome = $mapaColaboradores[$equipamento['colaborador_id']]['nome'];
-                        }
+            <?php else: ?>
+                <?php foreach ($equipamentosFiltrados as $equipamento):
+                    // Classes de status
+                    $statusClasses = [
+                        'estoque' => 'status-ativo',
+                        'alocado' => 'status-inativo',
+                        'emprestado' => 'status-info',
+                        'manutencao' => 'status-warning',
+                        'fora_uso' => 'status-danger'
+                    ];
+                    $statusClass = $statusClasses[$equipamento['status']] ?? 'status-ativo';
+                    $statusText = getStatusTexto($equipamento['status']);
+
+                    $tipoText = getTipoTexto($equipamento['tipo']);
+
+                    $colaboradorNome = 'N/A';
+                    if ($equipamento['colaborador_id'] && isset($mapaColaboradores[$equipamento['colaborador_id']])) {
+                        $colaboradorNome = $mapaColaboradores[$equipamento['colaborador_id']]['nome'];
+                    }
                     ?>
                     <tr>
                         <td>
@@ -332,9 +387,24 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                             </span>
                         </td>
                         <td><strong><?php echo htmlspecialchars($equipamento['patrimonio']); ?></strong></td>
+                        <td>
+                            <?php if (!empty($equipamento['caixa'])): ?>
+                                <span class="caixa-badge">
+                    <i class="fas fa-box"></i>
+                    <?php echo htmlspecialchars($equipamento['caixa']); ?>
+                </span>
+                            <?php else: ?>
+                                <span class="text-muted">---</span>
+                            <?php endif; ?>
+                        </td>
                         <td><?php echo htmlspecialchars($equipamento['marca'] . ' ' . $equipamento['modelo']); ?></td>
                         <td><?php echo !empty($equipamento['serial']) ? htmlspecialchars($equipamento['serial']) : '---'; ?></td>
-                        <td><?php echo htmlspecialchars($equipamento['centro_custo']); ?></td>
+                        <td>
+                            <span class="centro-custo-badge">
+                                <i class="fas fa-dollar-sign"></i>
+                                <?php echo htmlspecialchars($equipamento['centro_custo']); ?>
+                            </span>
+                        </td>
                         <td>
                             <span class="status-badge <?php echo $statusClass; ?>">
                                 <i class="fas fa-<?php echo getIconByStatus($equipamento['status']); ?>"></i>
@@ -342,22 +412,22 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                             </span>
                         </td>
                         <td><?php echo htmlspecialchars($colaboradorNome); ?></td>
-                        <td>
-                            <?php echo $equipamento['data_atribuicao'] ? formatarData($equipamento['data_atribuicao']) : '---'; ?>
-                        </td>
+<!--                        <td>-->
+<!--                            --><?php //echo $equipamento['data_atribuicao'] ? formatarData($equipamento['data_atribuicao']) : '---'; ?>
+<!--                        </td>-->
                         <td>
                             <div class="action-buttons">
-                                <a href="editar.php?id=<?php echo $equipamento['id']; ?>" 
+                                <a href="editar.php?id=<?php echo $equipamento['id']; ?>"
                                    class="btn btn-sm btn-warning" title="Editar">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                
+
                                 <?php if ($equipamento['status'] == 'estoque'): ?>
                                     <div class="dropdown">
-                                        <button class="btn btn-sm btn-success dropdown-toggle" 
-                                                type="button" 
-                                                data-toggle="dropdown" 
-                                                aria-haspopup="true" 
+                                        <button class="btn btn-sm btn-success dropdown-toggle"
+                                                type="button"
+                                                data-toggle="dropdown"
+                                                aria-haspopup="true"
                                                 aria-expanded="false"
                                                 title="Atribuir">
                                             <i class="fas fa-user-check"></i>
@@ -372,42 +442,42 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                                         </div>
                                     </div>
                                 <?php elseif (in_array($equipamento['status'], ['alocado', 'emprestado'])): ?>
-                                    <a href="devolver.php?id=<?php echo $equipamento['id']; ?>" 
-                                       class="btn btn-sm btn-info" 
+                                    <a href="devolver.php?id=<?php echo $equipamento['id']; ?>"
+                                       class="btn btn-sm btn-info"
                                        onclick="return confirm('Devolver este equipamento para o estoque?')"
                                        title="Devolver">
                                         <i class="fas fa-undo"></i>
                                     </a>
                                 <?php elseif ($equipamento['status'] == 'manutencao'): ?>
-                                    <a href="finalizar_manutencao.php?id=<?php echo $equipamento['id']; ?>" 
-                                       class="btn btn-sm btn-success" 
+                                    <a href="finalizar_manutencao.php?id=<?php echo $equipamento['id']; ?>"
+                                       class="btn btn-sm btn-success"
                                        onclick="return confirm('Finalizar manutenção deste equipamento?')"
                                        title="Finalizar Manutenção">
                                         <i class="fas fa-check"></i>
                                     </a>
                                 <?php endif; ?>
-                                
+
                                 <!-- Botão de Manutenção para equipamentos alocados/emprestados/estoque -->
                                 <?php if (in_array($equipamento['status'], ['alocado', 'emprestado', 'estoque'])): ?>
-                                    <a href="enviar_manutencao.php?id=<?php echo $equipamento['id']; ?>" 
-                                       class="btn btn-sm btn-warning" 
+                                    <a href="enviar_manutencao.php?id=<?php echo $equipamento['id']; ?>"
+                                       class="btn btn-sm btn-warning"
                                        onclick="return confirm('Enviar este equipamento para manutenção?')"
                                        title="Enviar para Manutenção">
                                         <i class="fas fa-tools"></i>
                                     </a>
                                 <?php endif; ?>
-                                
+
                                 <!-- Botão para marcar como Fora de Uso -->
                                 <?php if ($equipamento['status'] !== 'fora_uso'): ?>
-                                    <a href="marcar_fora_uso.php?id=<?php echo $equipamento['id']; ?>" 
-                                       class="btn btn-sm btn-danger" 
+                                    <a href="marcar_fora_uso.php?id=<?php echo $equipamento['id']; ?>"
+                                       class="btn btn-sm btn-danger"
                                        onclick="return confirm('Marcar este equipamento como fora de uso? Esta ação é irreversível.')"
                                        title="Marcar como Fora de Uso">
                                         <i class="fas fa-times-circle"></i>
                                     </a>
                                 <?php endif; ?>
-                                
-                                <button type="button" class="btn btn-sm btn-secondary" 
+
+                                <button type="button" class="btn btn-sm btn-secondary"
                                         onclick="showEquipmentDetails(<?php echo htmlspecialchars(json_encode($equipamento)); ?>)"
                                         title="Ver Detalhes">
                                     <i class="fas fa-eye"></i>
@@ -415,16 +485,16 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                             </div>
                         </td>
                     </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
             </tbody>
         </table>
     </div>
-    
+
     <div class="page-footer">
         <p>
-            <strong>Filtro aplicado:</strong> 
-            <?php 
+            <strong>Filtro aplicado:</strong>
+            <?php
             if ($colaboradorId && isset($mapaColaboradores[$colaboradorId])) {
                 echo 'Colaborador: ' . htmlspecialchars($mapaColaboradores[$colaboradorId]['nome']);
             } elseif ($filtro !== 'todos') {
@@ -435,16 +505,17 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                 echo 'Todos os equipamentos';
             }
             if ($tipo !== 'todos') echo ' | Tipo: ' . getTipoTexto($tipo);
+            if ($centro_custo !== 'todos') echo ' | Centro de Custo: ' . htmlspecialchars($centro_custo);
             if ($busca) echo ' | Busca: "' . htmlspecialchars($busca) . '"';
             ?>
         </p>
         <p>
-            <strong>Resultados:</strong> 
+            <strong>Resultados:</strong>
             <?php echo $totalFiltrado; ?> de <?php echo $totalEquipamentos; ?> equipamentos |
-            Em estoque: <strong><?php echo $estoqueFiltrado; ?></strong> | 
-            Alocados: <strong><?php echo $alocadosFiltrado; ?></strong> | 
-            Emprestados: <strong><?php echo $emprestadosFiltrado; ?></strong> | 
-            Em manutenção: <strong><?php echo $manutencaoFiltrado; ?></strong> | 
+            Em estoque: <strong><?php echo $estoqueFiltrado; ?></strong> |
+            Alocados: <strong><?php echo $alocadosFiltrado; ?></strong> |
+            Emprestados: <strong><?php echo $emprestadosFiltrado; ?></strong> |
+            Em manutenção: <strong><?php echo $manutencaoFiltrado; ?></strong> |
             Fora de uso: <strong><?php echo $foraUsoFiltrado; ?></strong>
         </p>
     </div>
@@ -540,11 +611,11 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
     .filter-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .filter-search {
         grid-column: span 1;
     }
-    
+
     .filter-actions {
         flex-direction: column;
         align-items: stretch;
@@ -894,7 +965,7 @@ function showEquipmentDetails(equipamento) {
     } else {
         historico = '<p>Nenhuma manutenção registrada.</p>';
     }
-    
+
     const content = `
         <div class="equipment-details">
             <div class="detail-row">

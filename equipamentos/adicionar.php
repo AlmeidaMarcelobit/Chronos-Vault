@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status = $_POST['status'] ?? 'estoque';
     $tipo = $_POST['tipo'] ?? 'notebook';
     $colaborador_id = $_POST['colaborador_id'] ?? null;
+    $caixa_id = trim($_POST['caixa'] ?? '');
     $observacoes = trim($_POST['observacoes'] ?? '');
     
     // Validações
@@ -68,6 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'modelo' => $modelo,
             'patrimonio' => $patrimonio,
             'serial' => $serial,
+            'caixa' => $caixa_id,
             'tipo' => $tipo,
             'centro_custo' => $centro_custo,
             'colaborador_id' => ($status === 'alocado' || $status === 'emprestado') ? $colaborador_id : null,
@@ -154,6 +156,7 @@ if ($colaboradores === false) {
                                required class="form-control" 
                                placeholder="Ex: Dell, HP, Lenovo, Samsung">
                     </div>
+
                 </div>
                 
                 <div class="form-row">
@@ -174,8 +177,16 @@ if ($colaboradores === false) {
                                data-mask="cc">
                     </div>
                 </div>
-                
-                <div class="form-row">
+
+                <div class="form-group">
+                    <label for="caixa"><i class="fas fa-box"></i> Caixa *</label>
+                    <input type="text" id="caixa" name="caixa"
+                           value="<?php echo htmlspecialchars($_POST['caixa'] ?? ''); ?>"
+                           required class="form-control"
+                           placeholder="011">
+                    <small class="form-text">Código único de identificação do caixa</small>
+                </div>
+
                     <div class="form-group">
                         <label for="patrimonio"><i class="fas fa-barcode"></i> Número de Patrimônio *</label>
                         <input type="text" id="patrimonio" name="patrimonio" 
@@ -193,7 +204,7 @@ if ($colaboradores === false) {
                                placeholder="Ex: SN123456789">
                         <small class="form-text">Número de série do fabricante (opcional)</small>
                     </div>
-                </div>
+
                 
                 <div class="form-group">
                     <label><i class="fas fa-map-marker-alt"></i> Status do Equipamento *</label>
@@ -319,46 +330,55 @@ if ($colaboradores === false) {
             e.target.value = value;
         });
     }
-    
+
     // Validação do formulário
     const form = document.getElementById('form-equipamento');
     if (form) {
         form.addEventListener('submit', function(e) {
+            const caixa = document.getElementById('caixa').value.trim();
             const patrimonio = document.getElementById('patrimonio').value.trim();
             const tipo = document.getElementById('tipo').value;
             const statusRadio = document.querySelector('input[name="status"]:checked');
-            
+
             if (!statusRadio) {
                 alert('Selecione o status do equipamento.');
                 e.preventDefault();
                 return false;
             }
-            
+
             const status = statusRadio.value;
             const colaborador = document.getElementById('colaborador_id').value;
-            
+
+            // Validação do campo CAIXA
+            if (caixa.length < 1) {
+                alert('O número da caixa é obrigatório.');
+                e.preventDefault();
+                return false;
+            }
+
+            // Validação do campo PATRIMÔNIO
             if (patrimonio.length < 3) {
                 alert('O número de patrimônio deve ter pelo menos 3 caracteres.');
                 e.preventDefault();
                 return false;
             }
-            
+
             if (tipo === '') {
                 alert('Selecione o tipo de equipamento.');
                 e.preventDefault();
                 return false;
             }
-            
+
             if ((status === 'alocado' || status === 'emprestado') && colaborador === '') {
                 alert('Selecione um colaborador para ' + (status === 'emprestado' ? 'emprestar' : 'alocar') + ' o equipamento.');
                 e.preventDefault();
                 return false;
             }
-            
+
             return true;
         });
     }
-    
+
     // Inicializar estado do colaborador select baseado no status selecionado
     document.addEventListener('DOMContentLoaded', function() {
         const statusRadio = document.querySelector('input[name="status"]:checked');
