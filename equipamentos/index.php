@@ -15,7 +15,8 @@ foreach ($colaboradores as $colaborador) {
 // Obter todas as caixas únicas dos equipamentos
 $caixas = [];
 foreach ($equipamentos as $equipamento) {
-    if (!empty($equipamento['caixa'])) {
+    // Usar operador de coalescência nula para evitar erro se 'caixa' não existir
+    if (!empty($equipamento['caixa'] ?? '')) {
         $caixas[$equipamento['caixa']] = $equipamento['caixa'];
     }
 }
@@ -94,7 +95,7 @@ if ($status !== 'todos' && !$colaboradorId && $filtro === 'todos') {
     });
 }
 
-// Filtro por centro de custo (NOVO)
+// Filtro por centro de custo
 if ($centro_custo !== 'todos') {
     $equipamentosFiltrados = array_filter($equipamentosFiltrados, function($equipamento) use ($centro_custo) {
         return $equipamento['centro_custo'] === $centro_custo;
@@ -104,7 +105,8 @@ if ($centro_custo !== 'todos') {
 // Filtro por caixa
 if (!empty($caixa_id)) {
     $equipamentosFiltrados = array_filter($equipamentosFiltrados, function($equipamento) use ($caixa_id) {
-        return $equipamento['caixa'] === $caixa_id;
+        // Usar operador de coalescência para equipamentos antigos sem campo 'caixa'
+        return ($equipamento['caixa'] ?? '') === $caixa_id;
     });
 }
 
@@ -118,8 +120,8 @@ if ($busca) {
             stripos($equipamento['marca'], $buscaLower) !== false ||
             stripos($equipamento['modelo'], $buscaLower) !== false ||
             stripos(getTipoTexto($equipamento['tipo']), $buscaLower) !== false ||
-            stripos($equipamento['caixa'] ?? '', $buscaLower) !== false ||
-        stripos($equipamento['centro_custo'], $buscaLower) !== false; // Adicionar centro_custo na busca
+            stripos($equipamento['caixa'] ?? '', $buscaLower) !== false || // Corrigido aqui
+            stripos($equipamento['centro_custo'], $buscaLower) !== false;
     });
 }
 
@@ -162,115 +164,93 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
 
         <!-- FORMULÁRIO DE FILTROS -->
         <form method="GET" class="filter-form">
-            <div class="filter-grid">
-                <div class="filter-group">
-                    <label for="tipo"><i class="fas fa-filter"></i> Tipo:</label>
-                    <select id="tipo" name="tipo" class="form-control">
-                        <option value="todos" <?php echo $tipo == 'todos' ? 'selected' : ''; ?>>Todos os Tipos</option>
-                        <?php foreach (getTiposEquipamentos() as $key => $value): ?>
-                            <option value="<?php echo $key; ?>"
-                                <?php echo $tipo == $key ? 'selected' : ''; ?>>
-                                <?php echo $value; ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+    <div class="filter-grid">
+        <div class="filter-group">
+            <label for="tipo"><i class="fas fa-filter"></i> Tipo:</label>
+            <select id="tipo" name="tipo" class="form-control">
+                <option value="todos" <?php echo $tipo == 'todos' ? 'selected' : ''; ?>>Todos os Tipos</option>
+                <?php foreach (getTiposEquipamentos() as $key => $value): ?>
+                    <option value="<?php echo $key; ?>" <?php echo $tipo == $key ? 'selected' : ''; ?>>
+                        <?php echo $value; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
 
-                <div class="filter-group">
-                    <label for="caixa">
-                        <i class="fas fa-dollar-sign"></i> Caixa:
-                    </label>
+        <div class="filter-group">
+            <label for="caixa"><i class="fas fa-box"></i> Caixa:</label>
+            <select id="caixa" name="caixa" class="form-control">
+                <option value="">Selecione a Caixa</option>
+                <?php foreach ($caixas as $caixa): ?>
+                    <option value="<?php echo htmlspecialchars($caixa); ?>" <?php echo ($caixa_id == $caixa) ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($caixa); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
 
-                    <select id="caixa" name="caixa" class="form-control">
-                        <option value="">
-                            Selecione a Caixa
-                        </option>
+        <div class="filter-group">
+            <label for="centro_custo"><i class="fas fa-dollar-sign"></i> Centro de Custo:</label>
+            <select id="centro_custo" name="centro_custo" class="form-control">
+                <option value="todos" <?php echo $centro_custo == 'todos' ? 'selected' : ''; ?>>Todos os Centros de Custo</option>
+                <?php foreach ($centrosCustoUnicos as $centro): ?>
+                    <option value="<?php echo htmlspecialchars($centro); ?>" <?php echo $centro_custo == $centro ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($centro); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
 
-                        <?php foreach ($caixas as $caixa): ?>
-                            <option value="<?php echo htmlspecialchars($caixa); ?>"
-                                <?php echo ($caixa_id == $caixa) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($caixa); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                </div>
-                 <div class="filter-grid">
-                <div class="filter-group">
-                    <label for="centro_custo">
-                        <i class="fas fa-dollar-sign"></i> Centro de Custo:
-                    </label>
-                    <select id="centro_custo" name="centro_custo" class="form-control">
-                        <option value="todos" <?php echo $centro_custo == 'todos' ? 'selected' : ''; ?>>
-                            Todos os Centros de Custo
-                        </option>
-                        <?php foreach ($centrosCustoUnicos as $centro): ?>
-                            <option value="<?php echo htmlspecialchars($centro); ?>"
-                                <?php echo $centro_custo == $centro ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($centro); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+        <div class="filter-group">
+            <label for="status"><i class="fas fa-info-circle"></i> Status:</label>
+            <select id="status" name="status" class="form-control">
+                <option value="todos" <?php echo $status == 'todos' ? 'selected' : ''; ?>>Todos Status</option>
+                <option value="estoque" <?php echo $status == 'estoque' ? 'selected' : ''; ?>>Em Estoque</option>
+                <option value="alocado" <?php echo $status == 'alocado' ? 'selected' : ''; ?>>Alocado</option>
+                <option value="emprestado" <?php echo $status == 'emprestado' ? 'selected' : ''; ?>>Emprestado</option>
+                <option value="manutencao" <?php echo $status == 'manutencao' ? 'selected' : ''; ?>>Em Manutenção</option>
+                <option value="fora_uso" <?php echo $status == 'fora_uso' ? 'selected' : ''; ?>>Fora de Uso</option>
+            </select>
+        </div>
+    </div>
 
-                <div class="filter-group">
-                    <label for="status"><i class="fas fa-info-circle"></i> Status:</label>
-                    <select id="status" name="status" class="form-control">
-                        <option value="todos" <?php echo $status == 'todos' ? 'selected' : ''; ?>>Todos Status</option>
-                        <option value="estoque" <?php echo $status == 'estoque' ? 'selected' : ''; ?>>Em Estoque</option>
-                        <option value="alocado" <?php echo $status == 'alocado' ? 'selected' : ''; ?>>Alocado</option>
-                        <option value="emprestado" <?php echo $status == 'emprestado' ? 'selected' : ''; ?>>Emprestado</option>
-                        <option value="manutencao" <?php echo $status == 'manutencao' ? 'selected' : ''; ?>>Em Manutenção</option>
-                        <option value="fora_uso" <?php echo $status == 'fora_uso' ? 'selected' : ''; ?>>Fora de Uso</option>
-                    </select>
-                </div>
+    <?php if (count($colaboradores) > 0): ?>
+    <div class="filter-grid">
+        <div class="filter-group">
+            <label for="colaborador"><i class="fas fa-user"></i> Colaborador:</label>
+            <select id="colaborador" name="colaborador" class="form-control">
+                <option value="">Todos os Colaboradores</option>
+                <?php foreach ($colaboradores as $colaborador): ?>
+                    <option value="<?php echo $colaborador['id']; ?>" <?php echo $colaboradorId == $colaborador['id'] ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($colaborador['nome']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
 
-                <?php if (count($colaboradores) > 0): ?>
-                    <div class="filter-group">
-                        <label for="colaborador"><i class="fas fa-user"></i> Colaborador:</label>
-                        <select id="colaborador" name="colaborador" class="form-control">
-                            <option value="">Todos os Colaboradores</option>
-                            <?php foreach ($colaboradores as $colaborador): ?>
-                                <option value="<?php echo $colaborador['id']; ?>"
-                                    <?php echo $colaboradorId == $colaborador['id'] ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($colaborador['nome']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                <?php endif; ?>
+        <div class="filter-group filter-search">
+            <label for="busca"><i class="fas fa-search"></i> Buscar:</label>
+            <input type="text" id="busca" name="busca" class="form-control"
+                   placeholder="Patrimônio, serial, marca, modelo, centro de custo..."
+                   value="<?php echo htmlspecialchars($busca); ?>">
+        </div>
+    </div>
+    <?php endif; ?>
 
+    <div class="filter-actions">
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-filter"></i> Aplicar Filtros
+        </button>
+        <a href="index.php" class="btn btn-secondary">
+            <i class="fas fa-times"></i> Limpar
+        </a>
+    </div>
 
-                </div>
-                 <div class="filter-group filter-search">
-                    <label for="busca"><i class="fas fa-search"></i> Buscar:</label>
-                    <div class="search-box">
-                        <input type="text"
-                               id="busca"
-                               name="busca"
-                               class="form-control"
-                               placeholder="Patrimônio, serial, marca, modelo, centro de custo..."
-                               value="<?php echo htmlspecialchars($busca); ?>">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-
-                <div class="filter-actions">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-filter"></i> Aplicar Filtros
-                    </button>
-                    <a href="index.php" class="btn btn-secondary">
-                        <i class="fas fa-times"></i> Limpar
-                    </a>
-                </div>
-            </div>
-
-            <!-- Campos ocultos para manter filtros -->
-            <?php if ($filtro !== 'todos'): ?>
-                <input type="hidden" name="filtro" value="<?php echo htmlspecialchars($filtro); ?>">
-            <?php endif; ?>
-        </form>
+    <!-- Campos ocultos para manter filtros -->
+    <?php if ($filtro !== 'todos'): ?>
+        <input type="hidden" name="filtro" value="<?php echo htmlspecialchars($filtro); ?>">
+    <?php endif; ?>
+</form>
     </div>
 
     <!-- Mostrar estatísticas do filtro aplicado -->
@@ -408,16 +388,16 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
                             </span>
                         </td>
                         <td><strong><?php echo htmlspecialchars($equipamento['patrimonio']); ?></strong></td>
-                        <td>
-                            <?php if (!empty($equipamento['caixa'])): ?>
-                                <span class="caixa-badge">
-                    <i class="fas fa-box"></i>
-                    <?php echo htmlspecialchars($equipamento['caixa']); ?>
-                </span>
-                            <?php else: ?>
-                                <span class="text-muted">---</span>
-                            <?php endif; ?>
-                        </td>
+                    <td>
+    <?php if (!empty($equipamento['caixa'] ?? '')): ?>
+        <span class="caixa-badge">
+            <i class="fas fa-box"></i>
+            <?php echo htmlspecialchars($equipamento['caixa']); ?>
+        </span>
+    <?php else: ?>
+        <span class="text-muted">---</span>
+    <?php endif; ?>
+</td>
                         <td><?php echo htmlspecialchars($equipamento['marca'] . ' ' . $equipamento['modelo']); ?></td>
                         <td><?php echo !empty($equipamento['serial']) ? htmlspecialchars($equipamento['serial']) : '---'; ?></td>
                         <td>
@@ -514,22 +494,23 @@ $equipamentosFiltrados = array_values($equipamentosFiltrados);
 
     <div class="page-footer">
         <p>
-            <strong>Filtro aplicado:</strong>
-            <?php
-            if ($colaboradorId && isset($mapaColaboradores[$colaboradorId])) {
-                echo 'Colaborador: ' . htmlspecialchars($mapaColaboradores[$colaboradorId]['nome']);
-            } elseif ($filtro !== 'todos') {
-                echo 'Status: ' . getStatusTexto($filtro);
-            } elseif ($status !== 'todos') {
-                echo 'Status: ' . getStatusTexto($status);
-            } else {
-                echo 'Todos os equipamentos';
-            }
-            if ($tipo !== 'todos') echo ' | Tipo: ' . getTipoTexto($tipo);
-            if ($centro_custo !== 'todos') echo ' | Centro de Custo: ' . htmlspecialchars($centro_custo);
-            if ($busca) echo ' | Busca: "' . htmlspecialchars($busca) . '"';
-            ?>
-        </p>
+    <strong>Filtro aplicado:</strong>
+    <?php
+    if ($colaboradorId && isset($mapaColaboradores[$colaboradorId])) {
+        echo 'Colaborador: ' . htmlspecialchars($mapaColaboradores[$colaboradorId]['nome']);
+    } elseif ($filtro !== 'todos') {
+        echo 'Status: ' . getStatusTexto($filtro);
+    } elseif ($status !== 'todos') {
+        echo 'Status: ' . getStatusTexto($status);
+    } else {
+        echo 'Todos os equipamentos';
+    }
+    if ($tipo !== 'todos') echo ' | Tipo: ' . getTipoTexto($tipo);
+    if ($centro_custo !== 'todos') echo ' | Centro de Custo: ' . htmlspecialchars($centro_custo);
+    if (!empty($caixa_id)) echo ' | Caixa: ' . htmlspecialchars($caixa_id);
+    if ($busca) echo ' | Busca: "' . htmlspecialchars($busca) . '"';
+    ?>
+</p>
         <p>
             <strong>Resultados:</strong>
             <?php echo $totalFiltrado; ?> de <?php echo $totalEquipamentos; ?> equipamentos |
