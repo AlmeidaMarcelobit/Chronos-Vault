@@ -13,6 +13,7 @@
         <option value="Atendimento" <?php echo ($_POST['departamento'] ?? '') == 'Atendimento' ? 'selected' : ''; ?>>Atendimento</option>
         <option value="SAC" <?php echo ($_POST['departamento'] ?? '') == 'SAC' ? 'selected' : ''; ?>>SAC</option>
         <option value="SAF" <?php echo ($_POST['departamento'] ?? '') == 'SAF' ? 'selected' : ''; ?>>SAF</option>
+        <option value="Contabilidade" <?php echo ($_POST['departamento'] ?? '') == 'Contabilidade' ? 'selected' : ''; ?>>Contabilidade</option>
         <option value="Integração" <?php echo ($_POST['departamento'] ?? '') == 'Integração' ? 'selected' : ''; ?>>Integração</option>
         <option value="BackOffice" <?php echo ($_POST['departamento'] ?? '') == 'BackOffice' ? 'selected' : ''; ?>>BackOffice</option>
         <option value="Gestão de Rede" <?php echo ($_POST['departamento'] ?? '') == 'Gestão de Rede' ? 'selected' : ''; ?>>Gestão de Rede</option>
