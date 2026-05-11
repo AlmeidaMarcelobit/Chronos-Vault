@@ -1834,3 +1834,31 @@ select.form-control {
         gap: var(--spacing-xs);
     }
 }
+.email-link {
+    color: var(--grape);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: var(--transition);
+}
+
+.email-link:hover {
+    color: var(--grape-dark);
+    text-decoration: underline;
+}
+
+.gestor-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 4px var(--spacing-sm);
+    background: rgba(107, 62, 143, 0.1);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    color: var(--grape);
+}
+
+.text-muted {
+    color: var(--gray-500);
+}
