@@ -21,7 +21,7 @@ $usuarios_teste = [
         [
         'id' => 3,
         'username' => 'Felipe',
-        'password' => 'Felipe123', // Senha em texto plano - APENAS PARA TESTE
+        'password' => 'aQxMGwij', // Senha em texto plano - APENAS PARA TESTE
         'nome' => 'Felipe',
         'email' => 'felipe@amorsaude.tech'
     ]
