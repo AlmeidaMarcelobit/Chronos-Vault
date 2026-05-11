@@ -1378,3 +1378,206 @@ select.form-control:hover {
         margin-left: var(--spacing-md);
     }
 }
+/* Estilos para centro de custo */
+.cc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 4px var(--spacing-sm);
+    background: var(--gray-100);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+.info-centro-custo {
+    background: rgba(107, 62, 143, 0.05);
+    border-left: 3px solid var(--grape);
+}
+
+.alert-info {
+    background: rgba(52, 152, 219, 0.1);
+    color: var(--info);
+}
+
+.alert-info i {
+    margin-right: var(--spacing-xs);
+}
+.form-select {
+    max-width: 100%;
+    width: 100%;
+}
+
+.form-select option {
+    white-space: normal;
+    word-wrap: break-word;
+    padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+/* Para selects dentro de formulários */
+.form-group select.form-select {
+    max-width: 100%;
+}
+
+/* Opções truncadas */
+.form-select option {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Versão mais compacta do select */
+.select-compact {
+    font-size: 0.875rem;
+}
+
+.select-compact option {
+    font-size: 0.8rem;
+}
+/* ============================================
+   ESTILOS PARA SELECT DE COLABORADORES
+   ============================================ */
+
+/* Select padrão */
+.form-select {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    color: var(--gray-700);
+    background: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B3E8F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--spacing-md) center;
+    background-size: 14px;
+    padding-right: var(--spacing-xl);
+}
+
+/* Hover state */
+.form-select:hover {
+    border-color: var(--grape-light);
+}
+
+/* Focus state */
+.form-select:focus {
+    outline: none;
+    border-color: var(--grape);
+    box-shadow: 0 0 0 3px rgba(107, 62, 143, 0.1);
+}
+
+/* Estilo para as options */
+.form-select option {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--white);
+    color: var(--gray-700);
+    font-size: 0.875rem;
+    font-family: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+/* Hover nas options */
+.form-select option:hover {
+    background-color: var(--grape-soft);
+    color: var(--white);
+}
+
+/* Option selecionada */
+.form-select option:checked {
+    background: linear-gradient(135deg, var(--grape) 0%, var(--grape-dark) 100%);
+    color: var(--white);
+}
+
+/* Primeira option (placeholder) */
+.form-select option[value=""] {
+    color: var(--gray-500);
+    font-style: italic;
+}
+
+/* Scrollbar personalizada para o select quando aberto */
+.form-select::-webkit-scrollbar {
+    width: 8px;
+}
+
+.form-select::-webkit-scrollbar-track {
+    background: var(--gray-100);
+    border-radius: var(--radius-sm);
+}
+
+.form-select::-webkit-scrollbar-thumb {
+    background: var(--grape-light);
+    border-radius: var(--radius-sm);
+}
+
+.form-select::-webkit-scrollbar-thumb:hover {
+    background: var(--grape);
+}
+
+/* Container do select */
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+.form-group label i {
+    color: var(--grape);
+    font-size: 0.875rem;
+}
+
+.required {
+    color: var(--danger);
+    margin-left: var(--spacing-xs);
+}
+
+.form-text {
+    display: block;
+    margin-top: var(--spacing-xs);
+    font-size: 0.75rem;
+    color: var(--gray-500);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .form-select {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.8125rem;
+        background-size: 12px;
+        padding-right: var(--spacing-lg);
+    }
+
+    .form-select option {
+        font-size: 0.8125rem;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .form-group label {
+        font-size: 0.8125rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-select {
+        font-size: 0.75rem;
+    }
+
+    .form-select option {
+        font-size: 0.75rem;
+        white-space: normal;
+        word-break: break-word;
+    }
+}
