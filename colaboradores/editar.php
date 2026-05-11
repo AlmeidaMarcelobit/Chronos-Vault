@@ -59,9 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validações
     $erros = [];
 
-    if (empty($matricula)) {
-        $erros[] = 'A matrícula é obrigatória.';
-    }
+    // Matrícula NÃO é mais obrigatória - removida a validação
+    // if (empty($matricula)) {
+    //     $erros[] = 'A matrícula é obrigatória.';
+    // }
 
     if (empty($nome)) {
         $erros[] = 'O nome é obrigatório.';
@@ -110,11 +111,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Verificar se matrícula já existe (exceto para o próprio colaborador)
-    foreach ($colaboradores as $index => $colaborador) {
-        if ($index != $colaboradorIndex && isset($colaborador['matricula']) && $colaborador['matricula'] === $matricula) {
-            $erros[] = 'Esta matrícula já está cadastrada no sistema para outro colaborador.';
-            break;
+    // Verificar se matrícula já existe (exceto para o próprio colaborador) - apenas se preenchida
+    if (!empty($matricula)) {
+        foreach ($colaboradores as $index => $colaborador) {
+            if ($index != $colaboradorIndex && isset($colaborador['matricula']) && $colaborador['matricula'] === $matricula) {
+                $erros[] = 'Esta matrícula já está cadastrada no sistema para outro colaborador.';
+                break;
+            }
         }
     }
 
@@ -138,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($erros)) {
         // Atualizar colaborador
-        $colaboradores[$colaboradorIndex]['matricula'] = $matricula;
+        $colaboradores[$colaboradorIndex]['matricula'] = $matricula ?: null;
         $colaboradores[$colaboradorIndex]['nome'] = $nome;
         $colaboradores[$colaboradorIndex]['cargo'] = $cargo;
         $colaboradores[$colaboradorIndex]['cpf'] = $cpf;
@@ -290,13 +293,13 @@ function formatarCEPSeguro($cep)
         <!-- FORMULÁRIO -->
         <form method="POST" action="" class="form-card" id="form-colaborador">
             <div class="form-grid">
-                <!-- Campo Matrícula (Chamado) -->
+                <!-- Campo Matrícula (Chamado) - AGORA OPCIONAL -->
                 <div class="form-group">
-                    <label for="matricula"><i class="fas fa-id-badge"></i> Chamado <span class="required">*</span></label>
+                    <label for="matricula"><i class="fas fa-id-badge"></i> Chamado</label>
                     <input type="text" id="matricula" name="matricula"
-                           value="<?php echo htmlspecialchars($colaboradorAtual['matricula'] ?? ''); ?>" required
+                           value="<?php echo htmlspecialchars($colaboradorAtual['matricula'] ?? ''); ?>"
                            class="form-control" placeholder="Ex: #251506, #255676">
-                    <small class="form-text">Número do chamado único do colaborador</small>
+                    <small class="form-text">Número do chamado do colaborador (opcional)</small>
                 </div>
 
                 <div class="form-group">
@@ -329,7 +332,7 @@ function formatarCEPSeguro($cep)
                 </div>
 
                 <div class="form-group">
-                    <label for="tipo_trabalho"><i class="fas fa-briefcase"></i> Tipo de Trabalho <span class="required">*</span></label>
+                    <label for="tipo_trabalho"><i class="fas fa-briefcase"></i> Tipo de Trabaljo <span class="required">*</span></label>
                     <select id="tipo_trabalho" name="tipo_trabalho" required class="form-control" onchange="toggleEndereco()">
                         <option value="local" <?php echo $tipoTrabalhoAtual == 'local' ? 'selected' : ''; ?>>Presencial
                             (Local)
