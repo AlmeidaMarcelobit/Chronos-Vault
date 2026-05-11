@@ -83,7 +83,7 @@ body {
 }
 
 .header-content {
-    max-width: 1280px;
+    max-width: 1480px;
     margin: 0 auto;
     padding: var(--spacing-md) var(--spacing-xl);
     display: flex;
@@ -167,7 +167,7 @@ body {
 }
 
 .nav-menu {
-    max-width: 1280px;
+    max-width: 1480px;
     margin: 0 auto;
     padding: 0 var(--spacing-xl);
     list-style: none;
@@ -303,7 +303,7 @@ body {
    CONTEÚDO PRINCIPAL
    ============================================ */
 .main-container {
-    max-width: 1580px;
+    max-width: 1680px;
     margin: 0 auto;
     padding: var(--spacing-xl);
     min-height: calc(100vh - 200px);
@@ -652,7 +652,7 @@ select.form-control {
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 900px;
+    min-width: 1000px;
 }
 
 .data-table thead {
@@ -1139,7 +1139,7 @@ select.form-control {
 }
 
 .footer-content {
-    max-width: 1280px;
+    max-width: 1680px;
     margin: 0 auto;
     padding: var(--spacing-xl);
     display: grid;
@@ -1470,5 +1470,487 @@ select.form-control {
     
     .info-item {
         padding: var(--spacing-xs);
+    }
+}
+/* ============================================
+   PÁGINAS DE SELEÇÃO DE EQUIPAMENTOS
+   ============================================ */
+
+/* Selection Form */
+.selection-form {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+    margin-bottom: var(--spacing-xl);
+}
+
+.selection-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--gray-200);
+    background: var(--gray-50);
+}
+
+.checkbox-all {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-label-all {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-label-all input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-custom-all {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--gray-400);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    position: relative;
+    transition: var(--transition);
+}
+
+.checkbox-label-all input[type="checkbox"]:checked + .checkbox-custom-all {
+    background: var(--grape);
+    border-color: var(--grape);
+}
+
+.checkbox-label-all input[type="checkbox"]:checked + .checkbox-custom-all::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    color: var(--white);
+}
+
+.checkbox-label-all strong {
+    font-size: 0.875rem;
+    color: var(--gray-700);
+}
+
+.selected-count {
+    margin-left: var(--spacing-sm);
+    font-size: 0.75rem;
+    color: var(--grape);
+    font-weight: 500;
+}
+
+/* Equipamentos Grid */
+.equipamentos-grid {
+    padding: var(--spacing-lg);
+}
+
+.equipamentos-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--gray-200);
+}
+
+.equipamentos-title i {
+    color: var(--grape);
+}
+
+/* Equipamento Card */
+.equipamento-card {
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+}
+
+.equipamento-card:hover {
+    border-color: var(--grape-light);
+    box-shadow: var(--shadow-sm);
+    transform: translateX(3px);
+}
+
+/* Card de Devolução */
+.devolucao-equipamento {
+    border-left: 3px solid var(--warning);
+}
+
+.devolucao-equipamento:hover {
+    border-left-color: var(--warning);
+    border-color: rgba(243, 156, 18, 0.3);
+}
+
+.equipamento-checkbox {
+    flex-shrink: 0;
+    padding-top: var(--spacing-xs);
+}
+
+.equipamento-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.equipamento-checkbox .checkbox-custom {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--gray-400);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    position: relative;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.equipamento-checkbox input[type="checkbox"]:checked + .checkbox-custom {
+    background: var(--grape);
+    border-color: var(--grape);
+}
+
+.equipamento-checkbox input[type="checkbox"]:checked + .checkbox-custom::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    color: var(--white);
+}
+
+.equipamento-detalhes {
+    flex: 1;
+}
+
+.equipamento-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.equipamento-tipo {
+    display: inline-block;
+    padding: 2px var(--spacing-sm);
+    background: rgba(107, 62, 143, 0.1);
+    color: var(--grape);
+    border-radius: var(--radius-sm);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Tipo específico para devolução */
+.devolucao-tipo {
+    background: rgba(243, 156, 18, 0.1);
+    color: var(--warning);
+}
+
+.equipamento-patrimonio-badge {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+    font-weight: 500;
+}
+
+.equipamento-nome {
+    margin-bottom: var(--spacing-sm);
+}
+
+.equipamento-nome strong {
+    font-size: 0.875rem;
+    color: var(--gray-800);
+}
+
+.equipamento-info-detalhes {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.info-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.75rem;
+    color: var(--gray-600);
+}
+
+.info-badge i {
+    font-size: 0.7rem;
+    color: var(--grape);
+}
+
+/* Badge de devolução */
+.devolucao-badge {
+    color: var(--warning);
+}
+
+.devolucao-badge i {
+    color: var(--warning);
+}
+
+/* Card de Devolução */
+.devolucao-card {
+    background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
+    border-left: 4px solid var(--warning);
+}
+
+.devolucao-card h3 {
+    color: var(--warning);
+}
+
+.devolucao-card h3 i {
+    color: var(--warning);
+}
+
+/* Botão Warning */
+.btn-warning {
+    background: var(--warning);
+    color: var(--white);
+}
+
+.btn-warning:hover:not(:disabled) {
+    background: #e67e22;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-warning:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Responsividade das páginas de seleção */
+@media (max-width: 768px) {
+    .equipamento-card {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .equipamento-checkbox {
+        padding-top: 0;
+    }
+
+    .equipamento-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+
+    .equipamento-info-detalhes {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+
+    .selection-header {
+        padding: var(--spacing-md);
+    }
+
+    .equipamentos-grid {
+        padding: var(--spacing-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .checkbox-label-all {
+        flex-wrap: wrap;
+    }
+
+    .selected-count {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .equipamento-card {
+        padding: var(--spacing-sm);
+    }
+
+    .equipamento-header {
+        align-items: flex-start;
+    }
+}
+
+/* ============================================
+   ESTILO FANTA LARANJA 🍊
+   ============================================ */
+
+:root {
+    --laranja-principal: #ff6a00;
+    --laranja-claro: #ffa94d;
+    --laranja-suave: #fff4e6;
+    --laranja-escuro: #cc5200;
+
+    --white: #ffffff;
+    --gray-100: #f8f9fa;
+    --gray-200: #eee;
+    --gray-400: #ccc;
+    --gray-600: #666;
+    --gray-800: #222;
+
+    --radius: 10px;
+    --transition: 0.2s ease;
+}
+
+/* Container */
+.selection-form {
+    background: linear-gradient(135deg, #fff, var(--laranja-suave));
+    border-radius: var(--radius);
+    border: 2px solid var(--laranja-claro);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+/* Header */
+.selection-header {
+    padding: 16px;
+    background: var(--laranja-principal);
+    color: white;
+}
+
+/* Checkbox geral */
+.checkbox-custom-all {
+    width: 22px;
+    height: 22px;
+    border: 2px solid white;
+    border-radius: 6px;
+    background: transparent;
+    transition: var(--transition);
+}
+
+.checkbox-label-all input:checked + .checkbox-custom-all {
+    background: white;
+}
+
+.checkbox-label-all input:checked + .checkbox-custom-all::after {
+    content: '✔';
+    color: var(--laranja-principal);
+    font-weight: bold;
+}
+
+.checkbox-label-all strong {
+    color: white;
+}
+
+/* Contador */
+.selected-count {
+    color: #ffe0c2;
+}
+
+/* Grid */
+.equipamentos-grid {
+    padding: 16px;
+}
+
+/* Título */
+.equipamentos-title {
+    color: var(--laranja-escuro);
+    border-bottom: 3px solid var(--laranja-claro);
+}
+
+/* Card */
+.equipamento-card {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+    background: white;
+    border-radius: var(--radius);
+    border: 2px solid transparent;
+    transition: var(--transition);
+    position: relative;
+}
+
+/* efeito "refresco" */
+.equipamento-card:hover {
+    border-color: var(--laranja-principal);
+    box-shadow: 0 6px 18px rgba(255, 106, 0, 0.25);
+    transform: scale(1.02);
+}
+
+/* Checkbox */
+.checkbox-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--laranja-principal);
+    border-radius: 5px;
+}
+
+.equipamento-checkbox input:checked + .checkbox-custom {
+    background: var(--laranja-principal);
+}
+
+.equipamento-checkbox input:checked + .checkbox-custom::after {
+    content: '✔';
+    color: white;
+    font-size: 12px;
+}
+
+/* Tipo */
+.equipamento-tipo {
+    background: var(--laranja-suave);
+    color: var(--laranja-principal);
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 2px 8px;
+}
+
+/* Nome */
+.equipamento-nome strong {
+    color: var(--laranja-escuro);
+}
+
+/* Info */
+.info-badge {
+    color: var(--gray-600);
+}
+
+.info-badge i {
+    color: var(--laranja-principal);
+}
+
+/* Devolução */
+.devolucao-equipamento {
+    border-left: 5px solid #ff3d00;
+    background: linear-gradient(135deg, #fff, #ffe5d0);
+}
+
+/* Botão */
+.btn-warning {
+    background: linear-gradient(135deg, #ff6a00, #ff8c00);
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 10px 16px;
+    transition: var(--transition);
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #ff8c00, #ff6a00);
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 106, 0, 0.4);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .equipamento-card {
+        flex-direction: column;
     }
 }
