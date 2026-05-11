@@ -169,12 +169,12 @@ function formatarTelefone($telefone) {
     $telefone = preg_replace('/[^0-9]/', '', $telefone);
     $tamanho = strlen($telefone);
 
-    if ($tamanho == 10) { // (99) 9999-9999
-        return '(' . substr($telefone, 0, 2) . ') ' .
+    if ($tamanho == 10) { // (99) 9999-9999 -> 99 9999-9999
+        return substr($telefone, 0, 2) . ' ' .
             substr($telefone, 2, 4) . '-' .
             substr($telefone, 6, 4);
-    } elseif ($tamanho == 11) { // (99) 99999-9999
-        return '(' . substr($telefone, 0, 2) . ') ' .
+    } elseif ($tamanho == 11) { // (99) 99999-9999 -> 99 99999-9999
+        return substr($telefone, 0, 2) . ' ' .
             substr($telefone, 2, 5) . '-' .
             substr($telefone, 7, 4);
     }
