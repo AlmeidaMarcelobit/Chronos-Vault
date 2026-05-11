@@ -217,8 +217,8 @@ $lembrarChecked = !empty($usuarioSalvo);
         <div class="modal-body">
             <p>Entre em contato com o administrador do sistema para recuperar sua senha.</p>
             <div class="contact-info">
-                <p><i class="fas fa-envelope"></i> suporte@sistemagestao.com.br</p>
-                <p><i class="fas fa-phone"></i> (11) 99999-9999</p>
+                <p><i class="fas fa-envelope"></i> marcelloaraujo1920@hotmail.com</p>
+                <p><i class="fas fa-phone"></i> (11) 98801-3848</p>
             </div>
             <div class="modal-actions">
                 <button type="button" class="btn btn-secondary" onclick="closeForgotModal()">Fechar</button>
