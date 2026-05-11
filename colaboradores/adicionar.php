@@ -252,13 +252,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <small class="form-text">E-mail institucional do colaborador (opcional)</small>
                 </div>
 
-                <div class="form-group">
-                    <label for="departamento">
-                        <i class="fas fa-building"></i>
-                        <span>Departamento</span>
-                        <span class="required">*</span>
-                    </label>
-                    <select id="departamento" name="departamento" required class="form-control">
+                <div class="form-select">
+                    <label for="departamento">Departamento</label>
+                    <select name="departamento" id="departamento" class="form-control" required>
                         <option value="">Selecione um departamento</option>
                         <option value="AmorLab" <?php echo ($_POST['departamento'] ?? '') == 'AmorLab' ? 'selected' : ''; ?>>AmorLab</option>
                         <option value="Assessoria Regional" <?php echo ($_POST['departamento'] ?? '') == 'Assessoria Regional' ? 'selected' : ''; ?>>Assessoria Regional</option>
@@ -305,7 +301,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-select">
                     <label for="centro_custo">
                         <i class="fas fa-dollar-sign"></i>
                         <span>Centro de Custo</span>
@@ -321,14 +317,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <small class="form-text">Código do centro de custo (ex: TI001, ADM002)</small>
                 </div>
 
-                <div class="form-group" id="colaborador-select">
-                    <label for="colaborador_id">
-                        <i class="fas fa-user"></i>
+                <div class="form-group">
+                    <label for="gestor_id">
+                        <i class="fas fa-user-tie"></i>
                         <span>Gestor</span>
-                        <span class="required">*</span>
                     </label>
-                    <select id="gestor_id" name="gestor_id" class="form-select">
-                        <option value="">-- Selecione um gestor --</option>
+                    <select id="gestor_id" name="gestor_id" class="form-control" required>
+                        <option value="">Selecione um gestor</option>
                         <?php
                         // Listar colaboradores existentes (exceto o próprio que está sendo cadastrado)
                         foreach ($colaboradores as $colaborador):
@@ -336,7 +331,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 ?>
                                 <option value="<?php echo $colaborador['id']; ?>"
                                         <?php echo (isset($_POST['gestor_id']) && $_POST['gestor_id'] == $colaborador['id']) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($colaborador['nome'] . ' (' . $colaborador['cargo'] . ')'); ?>
+                                    <?php echo htmlspecialchars($colaborador['nome'] . ' - ' . $colaborador['cargo']); ?>
                                 </option>
                             <?php
                             endif;
