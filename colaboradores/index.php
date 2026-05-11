@@ -144,10 +144,10 @@ endif; ?>
             </div>
         </div>
         <div class="header-actions">
-            <a href="organograma.php" class="btn btn-outline">
-                <i class="fas fa-sitemap"></i>
-                <span>Organograma</span>
-            </a>
+<!--            <a href="organograma.php" class="btn btn-outline">-->
+<!--                <i class="fas fa-sitemap"></i>-->
+<!--                <span>Organograma</span>-->
+<!--            </a>-->
             <a href="adicionar.php" class="btn btn-primary">
                 <i class="fas fa-user-plus"></i>
                 <span>Adicionar Colaborador</span>
