@@ -8,6 +8,12 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
+// Verificar nível do usuário
+$usuario_nivel = $_SESSION['usuario_nivel'] ?? 'user';
+$is_admin = ($usuario_nivel === 'admin');
+$is_view = ($usuario_nivel === 'view');
+$can_edit = ($is_admin || $usuario_nivel === 'user'); // Admin e usuário comum podem editar
+
 $equipamentos = lerArquivoJSON('../data/equipamentos.json');
 $colaboradores = lerArquivoJSON('../data/colaboradores.json');
 
@@ -101,12 +107,12 @@ if ($busca) {
     $buscaLower = strtolower($busca);
     $equipamentosFiltrados = array_filter($equipamentosFiltrados, function($e) use ($buscaLower) {
         return stripos($e['patrimonio'], $buscaLower) !== false ||
-            stripos($e['serial'] ?? '', $buscaLower) !== false ||
-            stripos($e['marca'], $buscaLower) !== false ||
-            stripos($e['modelo'], $buscaLower) !== false ||
-            stripos(getTipoTexto($e['tipo']), $buscaLower) !== false ||
-            stripos($e['caixa'] ?? '', $buscaLower) !== false ||
-            stripos($e['centro_custo'], $buscaLower) !== false;
+                stripos($e['serial'] ?? '', $buscaLower) !== false ||
+                stripos($e['marca'], $buscaLower) !== false ||
+                stripos($e['modelo'], $buscaLower) !== false ||
+                stripos(getTipoTexto($e['tipo']), $buscaLower) !== false ||
+                stripos($e['caixa'] ?? '', $buscaLower) !== false ||
+                stripos($e['centro_custo'], $buscaLower) !== false;
     });
 }
 
@@ -145,6 +151,13 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
             <div class="user-info">
                 <i class="fas fa-user-circle"></i>
                 <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
+<!--                --><?php //if ($is_admin): ?>
+<!--                    <span class="user-level user-level-admin">Admin</span>-->
+<!--                --><?php //elseif ($is_view): ?>
+<!--                    <span class="user-level user-level-view">Visualizador</span>-->
+<!--                --><?php //else: ?>
+<!--                    <span class="user-level user-level-user">Usuário</span>-->
+<!--                --><?php //endif; ?>
             </div>
 
             <a href="../logout.php" class="logout-btn">
@@ -180,6 +193,14 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
                     <span>Linhas</span>
                 </a>
             </li>
+            <?php if ($is_admin): ?>
+                <li class="nav-item">
+                    <a href="../usuarios/index.php" class="nav-link">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Usuários</span>
+                    </a>
+                </li>
+            <?php endif; ?>
         </ul>
     </nav>
 </header>
@@ -193,22 +214,24 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
             <h1><i class="fas fa-laptop"></i> Equipamentos</h1>
             <p class="page-subtitle">Gerencie todos os equipamentos da sua organização</p>
         </div>
-        <div class="page-actions">
-            <div class="action-group">
-                <a href="atribuir_caixa.php" class="btn btn-outline">
-                    <i class="fas fa-boxes"></i>
-                    <span>Atribuir Caixa</span>
-                </a>
-                <a href="alocar_multiplos.php" class="btn btn-outline">
-                    <i class="fas fa-layer-group"></i>
-                    <span>Alocar Múltiplos</span>
+        <?php if ($can_edit): ?>
+            <div class="page-actions">
+                <div class="action-group">
+                    <a href="atribuir_caixa.php" class="btn btn-outline">
+                        <i class="fas fa-boxes"></i>
+                        <span>Atribuir Caixa</span>
+                    </a>
+                    <a href="alocar_multiplos.php" class="btn btn-outline">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Alocar Múltiplos</span>
+                    </a>
+                </div>
+                <a href="adicionar.php" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    <span>Adicionar Equipamento</span>
                 </a>
             </div>
-            <a href="adicionar.php" class="btn btn-primary">
-                <i class="fas fa-plus"></i>
-                <span>Adicionar Equipamento</span>
-            </a>
-        </div>
+        <?php endif; ?>
     </div>
 
     <!-- ==================== FILTROS RÁPIDOS ==================== -->
@@ -393,11 +416,11 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
             <?php else: ?>
                 <?php foreach ($equipamentosFiltrados as $equipamento):
                     $statusClasses = [
-                        'estoque' => 'status-ativo',
-                        'alocado' => 'status-inativo',
-                        'emprestado' => 'status-info',
-                        'manutencao' => 'status-warning',
-                        'fora_uso' => 'status-danger'
+                            'estoque' => 'status-ativo',
+                            'alocado' => 'status-inativo',
+                            'emprestado' => 'status-info',
+                            'manutencao' => 'status-warning',
+                            'fora_uso' => 'status-danger'
                     ];
                     $statusClass = $statusClasses[$equipamento['status']] ?? 'status-ativo';
                     $colaboradorNome = 'N/A';
@@ -426,10 +449,13 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
                         <td data-label="Colaborador"><?php echo htmlspecialchars($colaboradorNome); ?></td>
                         <td data-label="Ações">
                             <div class="action-buttons">
-                                <a href="editar.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-edit" title="Editar">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <?php if ($equipamento['status'] == 'estoque'): ?>
+                                <?php if ($can_edit): ?>
+                                    <a href="editar.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-edit" title="Editar">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                <?php endif; ?>
+
+                                <?php if ($can_edit && $equipamento['status'] == 'estoque'): ?>
                                     <a href="atribuir.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-equipments" title="Atribuir">
                                         <i class="fas fa-user-check"></i>
                                     </a>
@@ -437,21 +463,24 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
                                     <a href="devolver.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-return" title="Devolver" onclick="return confirm('Devolver este equipamento para o estoque?')">
                                         <i class="fas fa-undo"></i>
                                     </a>
-                                <?php elseif ($equipamento['status'] == 'manutencao'): ?>
+                                <?php elseif ($can_edit && $equipamento['status'] == 'manutencao'): ?>
                                     <a href="finalizar_manutencao.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-success" title="Finalizar Manutenção" onclick="return confirm('Finalizar manutenção deste equipamento?')">
                                         <i class="fas fa-check"></i>
                                     </a>
                                 <?php endif; ?>
-                                <?php if (in_array($equipamento['status'], ['alocado', 'emprestado', 'estoque'])): ?>
+
+                                <?php if ($can_edit && in_array($equipamento['status'], ['alocado', 'emprestado', 'estoque'])): ?>
                                     <a href="enviar_manutencao.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-warning" title="Enviar para Manutenção" onclick="return confirm('Enviar este equipamento para manutenção?')">
                                         <i class="fas fa-tools"></i>
                                     </a>
                                 <?php endif; ?>
-                                <?php if ($equipamento['status'] !== 'fora_uso'): ?>
+
+                                <?php if ($can_edit && $equipamento['status'] !== 'fora_uso'): ?>
                                     <a href="marcar_fora_uso.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-delete" title="Marcar Fora de Uso" onclick="return confirm('Marcar este equipamento como fora de uso? Esta ação é irreversível.')">
                                         <i class="fas fa-times-circle"></i>
                                     </a>
                                 <?php endif; ?>
+
                                 <button type="button" class="action-btn action-view" onclick="showEquipmentDetails(<?php echo htmlspecialchars(json_encode($equipamento)); ?>)" title="Ver Detalhes">
                                     <i class="fas fa-eye"></i>
                                 </button>
