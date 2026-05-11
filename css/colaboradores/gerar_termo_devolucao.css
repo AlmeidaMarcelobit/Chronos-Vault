@@ -1,17 +1,16 @@
 /* devolucao.css - Termo de Devolução de Equipamentos */
-/* Tema Fanta Uva - Design para Impressão e Tela */
+/* OTIMIZADO PARA CABER EM UMA ÚNICA PÁGINA A4 */
 
-/* ============================================
-   VARIÁVEIS DE CORES (Fanta Uva)
-   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 :root {
     --grape-dark: #4A266A;
     --grape: #6B3E8F;
     --grape-light: #9B59B6;
-    --grape-soft: #C39BD3;
-    --lime: #2ECC71;
-    --lemon: #F1C40F;
-    --white: #FFFFFF;
     --gray-50: #F8F9FA;
     --gray-100: #F1F3F5;
     --gray-200: #E9ECEF;
@@ -21,71 +20,41 @@
     --gray-600: #6C757D;
     --gray-700: #495057;
     --gray-800: #343A40;
-    --gray-900: #212529;
+    --white: #FFFFFF;
     --success: #2ECC71;
-    --danger: #E74C3C;
-    --warning: #F39C12;
     --info: #3498DB;
-    --spacing-xs: 0.25rem;
-    --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
-    --spacing-2xl: 3rem;
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --transition: all 0.2s ease;
-}
-
-/* ============================================
-   RESET E ESTILOS GLOBAIS
-   ============================================ */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    --warning: #F39C12;
+    --danger: #E74C3C;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     background: var(--gray-100);
     color: var(--gray-800);
-    line-height: 1.5;
-    padding: var(--spacing-xl);
+    padding: 15px;
 }
 
-/* ============================================
-   BOTÕES DE AÇÃO (NÃO IMPRIMEM)
-   ============================================ */
+/* Botões (não imprimem) */
 .termo-actions {
     max-width: 1100px;
-    margin: 0 auto var(--spacing-xl) auto;
+    margin: 0 auto 15px auto;
     display: flex;
-    gap: var(--spacing-md);
+    gap: 15px;
     justify-content: center;
     flex-wrap: wrap;
-    position: sticky;
-    top: var(--spacing-md);
-    z-index: 100;
 }
 
-.btn-print,
-.btn-back {
+.btn-print, .btn-back {
     display: inline-flex;
     align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-xl);
-    border-radius: var(--radius-md);
-    font-size: 0.875rem;
+    gap: 8px;
+    padding: 8px 24px;
+    border-radius: 8px;
+    font-size: 14px;
     font-weight: 500;
-    text-decoration: none;
-    transition: var(--transition);
-    cursor: pointer;
     border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .btn-print {
@@ -96,7 +65,6 @@ body {
 .btn-print:hover {
     background: var(--grape-dark);
     transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
 }
 
 .btn-back {
@@ -106,228 +74,183 @@ body {
 
 .btn-back:hover {
     background: var(--gray-300);
-    transform: translateY(-1px);
 }
 
-/* ============================================
-   CONTAINER PRINCIPAL DO TERMO
-   ============================================ */
+/* Container Principal */
 .termo-container {
     max-width: 1100px;
     margin: 0 auto;
     background: var(--white);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    overflow: hidden;
-    padding: var(--spacing-2xl);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-/* ============================================
-   HEADER DO TERMO
-   ============================================ */
+/* Header */
 .termo-header {
     text-align: center;
-    margin-bottom: var(--spacing-xl);
-    padding-bottom: var(--spacing-lg);
+    margin-bottom: 15px;
+    padding-bottom: 8px;
     border-bottom: 2px solid var(--grape);
 }
 
 .termo-header img {
-    max-width: 150px;
-    margin-bottom: var(--spacing-md);
+    max-width: 70px;
+    margin-bottom: 5px;
 }
 
 .termo-title {
-    font-size: 1.5rem;
+    font-size: 18px;
     font-weight: 700;
     color: var(--grape);
     letter-spacing: 1px;
-    margin-bottom: var(--spacing-xs);
 }
 
 .termo-subtitle {
-    font-size: 0.875rem;
+    font-size: 11px;
     color: var(--gray-500);
 }
 
-/* ============================================
-   CONTADOR DE EQUIPAMENTOS
-   ============================================ */
-.equipamento-count {
-    display: inline-block;
-    background: var(--grape-soft);
-    color: var(--grape-dark);
-    padding: 4px var(--spacing-md);
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    margin-bottom: var(--spacing-lg);
-}
-
-/* ============================================
-   SEÇÕES DO TERMO
-   ============================================ */
+/* Seções */
 .termo-section {
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: 15px;
 }
 
 .section-title {
-    font-size: 0.875rem;
+    font-size: 12px;
     font-weight: 700;
     color: var(--white);
     background: var(--grape);
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
-    letter-spacing: 0.5px;
-    margin-bottom: var(--spacing-md);
+    padding: 5px 12px;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 10px;
 }
 
-/* ============================================
-   INFO GRID (DADOS DO COLABORADOR)
-   ============================================ */
+/* Info Grid */
 .info-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--spacing-md);
-    padding: var(--spacing-md);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 12px;
     background: var(--gray-50);
-    border-radius: var(--radius-md);
+    border-radius: 8px;
 }
 
 .info-item {
     display: flex;
     align-items: baseline;
-    gap: var(--spacing-sm);
+    gap: 8px;
 }
 
 .info-label {
-    font-size: 0.75rem;
+    font-size: 10px;
     font-weight: 600;
     color: var(--gray-500);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    min-width: 80px;
+    min-width: 45px;
 }
 
 .info-value {
-    font-size: 0.875rem;
+    font-size: 12px;
     color: var(--gray-800);
     font-weight: 500;
 }
 
-/* ============================================
-   TABELA DE EQUIPAMENTOS
-   ============================================ */
+/* Tabela */
 .termo-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.75rem;
+    font-size: 10px;
 }
 
 .termo-table.devolucao th,
 .termo-table.devolucao td {
     border: 1px solid var(--gray-300);
-    padding: var(--spacing-sm);
+    padding: 6px 8px;
     text-align: left;
-    vertical-align: top;
+    vertical-align: middle;
 }
 
 .termo-table.devolucao th {
     background: var(--gray-100);
     font-weight: 600;
     color: var(--gray-700);
+    font-size: 9px;
     text-transform: uppercase;
-    font-size: 0.7rem;
-    letter-spacing: 0.5px;
 }
 
 .termo-table.devolucao td {
     color: var(--gray-700);
 }
 
+/* Status Badge */
 .status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    padding: 2px var(--spacing-sm);
-    border-radius: var(--radius-sm);
-    font-size: 0.65rem;
-    font-weight: 500;
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 600;
+    text-align: center;
 }
 
-.status-estoque {
-    background: rgba(46, 204, 113, 0.1);
-    color: var(--success);
-}
+.status-estoque { background: rgba(46,204,113,0.15); color: #27AE60; }
+.status-alocado { background: rgba(52,152,219,0.15); color: #2980B9; }
+.status-emprestado { background: rgba(243,156,18,0.15); color: #D68910; }
+.status-manutencao { background: rgba(231,76,60,0.15); color: #C0392B; }
 
-.status-alocado {
-    background: rgba(52, 152, 219, 0.1);
-    color: var(--info);
-}
-
-.status-emprestado {
-    background: rgba(243, 156, 18, 0.1);
-    color: var(--warning);
-}
-
-.status-manutencao {
-    background: rgba(231, 76, 60, 0.1);
-    color: var(--danger);
-}
-
-/* ============================================
-   CONDIÇÕES DE DEVOLUÇÃO
-   ============================================ */
+/* Condições */
 .termo-condicoes {
-    padding: var(--spacing-md);
+    padding: 10px;
     background: var(--gray-50);
-    border-radius: var(--radius-md);
+    border-radius: 8px;
 }
 
 .condicoes-title {
-    font-size: 0.875rem;
+    font-size: 11px;
     font-weight: 600;
     color: var(--gray-700);
-    margin-bottom: var(--spacing-md);
-    padding-bottom: var(--spacing-sm);
+    margin-bottom: 8px;
+    padding-bottom: 4px;
     border-bottom: 1px solid var(--gray-300);
 }
 
 .checkbox-group {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-md);
+    gap: 6px;
 }
 
 .checkbox-item {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
+    gap: 6px;
 }
 
 .checkbox-item input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     cursor: pointer;
-    accent-color: var(--grape);
 }
 
 .checkbox-item label {
-    font-size: 0.875rem;
+    font-size: 10px;
     color: var(--gray-700);
     cursor: pointer;
 }
 
-/* ============================================
-   ASSINATURAS
-   ============================================ */
+.checkbox-item i {
+    font-size: 10px;
+    width: 14px;
+}
+
+/* Assinaturas */
 .termo-assinaturas {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-xl);
-    padding-top: var(--spacing-lg);
-    border-top: 2px solid var(--gray-200);
+    gap: 25px;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid var(--gray-300);
 }
 
 .assinatura-box {
@@ -337,31 +260,43 @@ body {
 .linha-assinatura {
     height: 1px;
     background: var(--gray-400);
-    margin: var(--spacing-lg) 0 var(--spacing-sm) 0;
+    margin: 12px 0 6px 0;
 }
 
 .nome-assinatura {
-    font-size: 0.75rem;
+    font-size: 10px;
     color: var(--gray-600);
     font-weight: 500;
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: 3px;
 }
 
 .cargo-assinatura {
-    font-size: 0.7rem;
+    font-size: 9px;
     color: var(--gray-500);
-    margin-bottom: var(--spacing-xs);
 }
 
 .data-assinatura {
-    font-size: 0.7rem;
+    font-size: 9px;
     color: var(--gray-500);
-    margin-top: var(--spacing-sm);
+    margin-top: 4px;
 }
 
-/* ============================================
-   ESTILOS DE IMPRESSÃO
-   ============================================ */
+/* Footer */
+.termo-footer {
+    margin-top: 12px;
+    padding-top: 8px;
+    text-align: center;
+    border-top: 1px solid var(--gray-200);
+}
+
+.footer-text {
+    font-size: 8px;
+    color: var(--gray-500);
+}
+
+/*!* ============================================*/
+/*   IMPRESSÃO - OTIMIZADO PARA 1 PÁGINA A4*/
+/*   ============================================ *!*/
 @media print {
     body {
         background: white;
@@ -369,198 +304,186 @@ body {
         margin: 0;
     }
 
-    .termo-actions,
-    .no-print {
+    .termo-actions, .no-print {
         display: none !important;
     }
+}
 
-    .termo-container {
-        box-shadow: none;
-        padding: 0;
-        margin: 0;
-        max-width: 100%;
-    }
+/*    .termo-container {*/
+/*        box-shadow: none;*/
+/*        padding: 8px;*/
+/*        margin: 0;*/
+/*        max-width: 100%;*/
+/*    }*/
 
-    .termo-header {
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-    }
+/*    .termo-header {*/
+/*        margin-bottom: 8px;*/
+/*        padding-bottom: 4px;*/
+/*    }*/
 
-    .termo-title {
-        font-size: 18px;
-    }
+/*    .termo-header img {*/
+/*        max-width: 45px;*/
+/*    }*/
 
-    .section-title {
-        font-size: 12px;
-        padding: 4px 8px;
-    }
+/*    .termo-title {*/
+/*        font-size: 14px;*/
+/*    }*/
 
-    .termo-table {
-        font-size: 10px;
-    }
+/*    .termo-subtitle {*/
+/*        font-size: 9px;*/
+/*    }*/
 
-    .termo-table th,
-    .termo-table td {
-        padding: 4px;
-    }
+/*    .section-title {*/
+/*        font-size: 10px;*/
+/*        padding: 3px 8px;*/
+/*        margin-bottom: 6px;*/
+/*    }*/
 
-    .info-item {
-        font-size: 10px;
-    }
+/*    .info-grid {*/
+/*        padding: 6px;*/
+/*        gap: 6px;*/
+/*    }*/
 
-    .checkbox-group {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/*    .info-label {*/
+/*        font-size: 8px;*/
+/*        min-width: 40px;*/
+/*    }*/
 
-    .checkbox-item label {
-        font-size: 10px;
-    }
+/*    .info-value {*/
+/*        font-size: 9px;*/
+/*    }*/
 
-    .assinatura-box {
-        margin-top: 30px;
-    }
+/*    .termo-table {*/
+/*        font-size: 8px;*/
+/*    }*/
+
+/*    .termo-table.devolucao th,*/
+/*    .termo-table.devolucao td {*/
+/*        padding: 4px 5px;*/
+/*    }*/
+
+/*    .termo-table.devolucao th {*/
+/*        font-size: 7px;*/
+/*    }*/
+
+/*    .status-badge {*/
+/*        font-size: 7px;*/
+/*        padding: 1px 4px;*/
+/*    }*/
+
+/*    .checkbox-group {*/
+/*        gap: 4px;*/
+/*    }*/
+
+/*    .checkbox-item label {*/
+/*        font-size: 8px;*/
+/*    }*/
+
+/*    .checkbox-item input {*/
+/*        width: 11px;*/
+/*        height: 11px;*/
+/*    }*/
+
+/*    .condicoes-title {*/
+/*        font-size: 9px;*/
+/*        margin-bottom: 5px;*/
+/*    }*/
+
+/*    .termo-assinaturas {*/
+/*        margin-top: 10px;*/
+/*        padding-top: 6px;*/
+/*        gap: 20px;*/
+/*    }*/
 
     .linha-assinatura {
-        margin: 20px 0 5px 0;
+        margin: 6px 0 3px 0;
     }
 
-    @page {
-        size: A4;
-        margin: 1.5cm;
-    }
-}
-
-/* ============================================
-   RESPONSIVIDADE
-   ============================================ */
-@media (max-width: 768px) {
-    body {
-        padding: var(--spacing-md);
+    .nome-assinatura,
+    .cargo-assinatura,
+    .data-assinatura {
+        font-size: 8px;
     }
 
-    .termo-container {
-        padding: var(--spacing-lg);
+    .termo-footer {
+        margin-top: 8px;
+        padding-top: 4px;
     }
 
-    .termo-title {
-        font-size: 1.25rem;
+    .footer-text {
+        font-size: 7px;
     }
 
-    .info-grid {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-sm);
-    }
+/*    !* Prevenir quebras de página *!*/
+/*    .termo-section,*/
+/*    .termo-condicoes,*/
+/*    .termo-assinaturas {*/
+/*        page-break-inside: avoid;*/
+/*        break-inside: avoid;*/
+/*    }*/
 
-    .info-item {
-        flex-direction: column;
-        gap: var(--spacing-xs);
-    }
+/*    .termo-container {*/
+/*        page-break-after: avoid;*/
+/*        page-break-before: avoid;*/
+/*    }*/
 
-    .info-label {
-        min-width: auto;
-    }
+/*    @page {*/
+/*        size: A4;*/
+/*        margin: 5mm 8mm;*/
+/*    }*/
+/*}*/
 
-    .checkbox-group {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-sm);
-    }
+/* Responsivo */
+/*@media (max-width: 768px) {*/
+/*    .info-grid {*/
+/*        grid-template-columns: 1fr;*/
+/*        gap: 8px;*/
+/*    }*/
 
-    .termo-assinaturas {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
-    }
+/*    .checkbox-group {*/
+/*        grid-template-columns: 1fr;*/
+/*    }*/
 
-    .termo-actions {
-        position: static;
-        margin-bottom: var(--spacing-md);
-    }
+/*    .termo-assinaturas {*/
+/*        grid-template-columns: 1fr;*/
+/*        gap: 15px;*/
+/*    }*/
 
-    .btn-print,
-    .btn-back {
-        padding: var(--spacing-sm) var(--spacing-md);
-        font-size: 0.75rem;
-    }
-}
+/*    .termo-table.devolucao,*/
+/*    .termo-table.devolucao tbody,*/
+/*    .termo-table.devolucao tr,*/
+/*    .termo-table.devolucao td {*/
+/*        display: block;*/
+/*        width: 100%;*/
+/*    }*/
 
-@media (max-width: 480px) {
-    .termo-container {
-        padding: var(--spacing-md);
-    }
+/*    .termo-table.devolucao thead {*/
+/*        display: none;*/
+/*    }*/
 
-    .termo-table {
-        font-size: 0.65rem;
-    }
+/*    .termo-table.devolucao tr {*/
+/*        margin-bottom: 10px;*/
+/*        border: 1px solid var(--gray-300);*/
+/*        border-radius: 8px;*/
+/*        padding: 5px;*/
+/*    }*/
 
-    .termo-table th,
-    .termo-table td {
-        padding: var(--spacing-xs);
-    }
+/*    .termo-table.devolucao td {*/
+/*        display: flex;*/
+/*        justify-content: space-between;*/
+/*        border: none;*/
+/*        border-bottom: 1px solid var(--gray-200);*/
+/*        padding: 4px 6px;*/
+/*    }*/
 
-    .checkbox-item label {
-        font-size: 0.75rem;
-    }
+/*    .termo-table.devolucao td:last-child {*/
+/*        border-bottom: none;*/
+/*    }*/
 
-    .section-title {
-        font-size: 0.75rem;
-    }
-}
-
-/* ============================================
-   ESTILOS PARA TABELA EM MODO RESPONSIVO (MOBILE)
-   ============================================ */
-@media (max-width: 768px) {
-    .termo-table.devolucao,
-    .termo-table.devolucao tbody,
-    .termo-table.devolucao tr,
-    .termo-table.devolucao td {
-        display: block;
-        width: 100%;
-    }
-
-    .termo-table.devolucao thead {
-        display: none;
-    }
-
-    .termo-table.devolucao tr {
-        margin-bottom: var(--spacing-md);
-        border: 1px solid var(--gray-300);
-        border-radius: var(--radius-md);
-        padding: var(--spacing-sm);
-    }
-
-    .termo-table.devolucao td {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: var(--spacing-xs) var(--spacing-sm);
-        border: none;
-        border-bottom: 1px solid var(--gray-200);
-    }
-
-    .termo-table.devolucao td:last-child {
-        border-bottom: none;
-    }
-
-    .termo-table.devolucao td:before {
-        content: attr(data-label);
-        font-weight: 600;
-        color: var(--gray-600);
-        font-size: 0.7rem;
-        margin-right: var(--spacing-md);
-    }
-}
-
-/* ============================================
-   ESTILOS ADICIONAIS
-   ============================================ */
-.text-center {
-    text-align: center;
-}
-
-.mt-1 { margin-top: var(--spacing-sm); }
-.mt-2 { margin-top: var(--spacing-md); }
-.mt-3 { margin-top: var(--spacing-lg); }
-
-.mb-1 { margin-bottom: var(--spacing-sm); }
-.mb-2 { margin-bottom: var(--spacing-md); }
-.mb-3 { margin-bottom: var(--spacing-lg); }
+/*    .termo-table.devolucao td:before {*/
+/*        content: attr(data-label);*/
+/*        font-weight: 600;*/
+/*        margin-right: 10px;*/
+/*        font-size: 9px;*/
+/*    }*/
+/*}*/

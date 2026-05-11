@@ -39,7 +39,7 @@ if (!$colaborador) {
 $equipamentosDevolucao = [];
 foreach ($equipamentos as $equip) {
     if ($equip['colaborador_id'] == $id &&
-        in_array($equip['id'], $equipamentosSelecionadosIds)) {
+            in_array($equip['id'], $equipamentosSelecionadosIds)) {
         $equipamentosDevolucao[] = $equip;
     }
 }
@@ -47,226 +47,185 @@ foreach ($equipamentos as $equip) {
 // Configurações para impressão
 header('Content-Type: text/html; charset=UTF-8');
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
+    <!DOCTYPE html>
+    <html lang="pt-BR">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Termo de Devolução de Equipamento</title>
-    <link rel="stylesheet" href="../css/colaboradores/gerar_termo_devolucao.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Termo de Devolução de Equipamento</title>
+        <link rel="stylesheet" href="../css/colaboradores/gerar_termo_devolucao.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </head>
 
-<body>
-<!-- Botões de ação -->
-<div class="termo-actions no-print">
-    <button onclick="window.print()" class="btn-print">
-        <i class="fas fa-print"></i> Imprimir Termo
-    </button>
+    <body>
+    <!-- Botões de ação -->
+    <div class="termo-actions no-print">
+        <button onclick="window.print()" class="btn-print">
+            <i class="fas fa-print"></i> Imprimir Termo
+        </button>
 
-    <button onclick="window.location.href='selecionar_equipamentos_devolucao.php?id=<?php echo $id; ?>'" class="btn-back">
-        <i class="fas fa-arrow-left"></i> Selecionar Outros
-    </button>
+        <button onclick="window.location.href='selecionar_equipamentos_devolucao.php?id=<?php echo $id; ?>'" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Selecionar Outros
+        </button>
 
-    <button onclick="window.location.href='../index.php'" class="btn-back">
-        <i class="fas fa-home"></i> Voltar ao Início
-    </button>
-</div>
-
-<!-- Conteúdo do Termo -->
-<div class="termo-container">
-    <?php if (!empty($equipamentosDevolucao)): ?>
-        <div class="equipamento-count">
-            <?php echo count($equipamentosDevolucao); ?> equipamento(s)
-        </div>
-    <?php endif; ?>
-
-    <div class="termo-header">
-        <!-- IMAGEM PARA DEVOLUÇÃO - DIFERENTE DA ENTREGA -->
-        <img src="../img/logo_impressao_08_01_2026.png" alt="Logo">
-        <div class="termo-title">TERMO DE DEVOLUÇÃO DE EQUIPAMENTO</div>
-        <div class="termo-subtitle">Documento de Registro de Devolução</div>
+        <button onclick="window.location.href='../index.php'" class="btn-back">
+            <i class="fas fa-home"></i> Voltar ao Início
+        </button>
     </div>
 
-    <div class="termo-section">
-        <div class="section-title">DEVOLVIDO POR</div>
-        <div class="info-grid">
-            <div class="info-item">
-                <div class="info-label">Nome:</div>
-                <div class="info-value"><?php echo htmlspecialchars($colaborador['nome']); ?></div>
-            </div>
+    <!-- Conteúdo do Termo -->
+    <div class="termo-container">
+        <div class="termo-header">
+            <img src="../img/logo_impressao_08_01_2026.png" alt="Logo">
+            <div class="termo-title">TERMO DE DEVOLUÇÃO DE EQUIPAMENTO</div>
+            <div class="termo-subtitle">Documento de Registro de Devolução</div>
+        </div>
 
-            <div class="info-item">
-                <div class="info-label">Cargo:</div>
-                <div class="info-value"><?php echo htmlspecialchars($colaborador['cargo']); ?></div>
-            </div>
+        <div class="termo-section">
+            <div class="section-title">DEVOLVIDO POR</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Nome:</span>
+                    <span class="info-value"><?php echo htmlspecialchars($colaborador['nome']); ?></span>
+                </div>
 
-            <div class="info-item">
-                <div class="info-label">CPF:</div>
-                <div class="info-value"><?php echo formatarCPF($colaborador['cpf']); ?></div>
+                <div class="info-item">
+                    <span class="info-label">Cargo:</span>
+                    <span class="info-value"><?php echo htmlspecialchars($colaborador['cargo']); ?></span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">CPF:</span>
+                    <span class="info-value"><?php echo formatarCPF($colaborador['cpf']); ?></span>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="termo-section">
-        <div class="section-title">EQUIPAMENTOS DEVOLVIDOS</div>
+        <div class="termo-section">
+            <div class="section-title">EQUIPAMENTOS DEVOLVIDOS (<?php echo count($equipamentosDevolucao); ?>)</div>
 
-        <?php if (empty($equipamentosDevolucao)): ?>
-            <div style="text-align: center; padding: 30px; background: #f8f9fa; border-radius: 8px;">
-                <i class="fas fa-box-open" style="font-size: 48px; color: #6c757d; margin-bottom: 15px;"></i>
-                <h4>Nenhum equipamento selecionado</h4>
-            </div>
-        <?php else: ?>
-            <table class="termo-table devolucao">
-                <thead>
-                <tr>
-                    <th>DESCRIÇÃO</th>
-                    <th>MARCA/MODELO</th>
-                    <th>S/N</th>
-                    <th>PATRIMÔNIO</th>
-                    <th>STATUS</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php foreach ($equipamentosDevolucao as $equipamento): ?>
+            <?php if (empty($equipamentosDevolucao)): ?>
+                <div style="text-align: center; padding: 30px; background: #f8f9fa; border-radius: 8px;">
+                    <i class="fas fa-box-open" style="font-size: 48px; color: #6c757d; margin-bottom: 15px;"></i>
+                    <h4>Nenhum equipamento selecionado</h4>
+                </div>
+            <?php else: ?>
+                <table class="termo-table devolucao">
+                    <thead>
                     <tr>
-                        <!-- DESCRIÇÃO mais curta -->
-                        <td><?php
-                            // Abrevia tipos longos
-                            $tipo = getTipoTexto($equipamento['tipo']);
-                            $abreviacoes = [
-                                'Notebook' => 'Noteb.',
-                                'Desktop' => 'Desktop',
-                                'Monitor' => 'Monitor',
-                                'Impressora' => 'Impress.',
-                                'Tablet' => 'Tablet',
-                                'Smartphone' => 'Celular',
-                                'Roteador' => 'Roteador',
-                                'Acessório' => 'Acess.',
-                                'Outro' => 'Outro'
-                            ];
-                            echo $abreviacoes[$tipo] ?? substr($tipo, 0, 10);
-                            ?></td>
-
-                        <!-- MARCA/MODELO em duas linhas se necessário -->
-                        <td style="font-size: 11px;">
-                            <?php
-                            $texto = htmlspecialchars($equipamento['marca'] . ' ' . $equipamento['modelo']);
-                            if (strlen($texto) > 25) {
-                                echo wordwrap($texto, 25, '<br>', true);
-                            } else {
-                                echo $texto;
-                            }
-                            ?>
-                        </td>
-
-                        <!-- S/N -->
-                        <td><?php
-                            $serial = !empty($equipamento['serial']) ? htmlspecialchars($equipamento['serial']) : '---';
-                            if (strlen($serial) > 12) {
-                                echo substr($serial, 0, 9) . '...';
-                            } else {
-                                echo $serial;
-                            }
-                            ?></td>
-
-                        <!-- PATRIMÔNIO -->
-                        <td><strong><?php
-                                $patrimonio = htmlspecialchars($equipamento['patrimonio']);
-                                if (strlen($patrimonio) > 10) {
-                                    echo substr($patrimonio, 0, 8) . '...';
-                                } else {
-                                    echo $patrimonio;
-                                }
-                                ?></strong></td>
-
-                        <!-- STATUS compacto -->
-                        <td>
-                <span class="status-badge status-<?php echo $equipamento['status']; ?>" style="font-size: 10px; padding: 1px 4px;">
-                    <?php
-                    $status = getStatusTexto($equipamento['status']);
-                    $statusCompacto = [
-                        'Em Estoque' => 'Estoque',
-                        'Alocado' => 'Alocado',
-                        'Emprestado' => 'Empres.',
-                        'Em Manutenção' => 'Manut.',
-                        'Fora de Uso' => 'Fora Uso'
-                    ];
-                    echo $statusCompacto[$status] ?? $status;
-                    ?>
-                </span>
-                        </td>
+                        <th width="25%">DESCRIÇÃO</th>
+                        <th width="25%">MARCA/MODELO</th>
+                        <th width="20%">S/N</th>
+                        <th width="20%">PATRIMÔNIO</th>
+                        <th width="10%">STATUS</th>
                     </tr>
-                <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
-    </div>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($equipamentosDevolucao as $equipamento): ?>
+                        <tr>
+                            <td data-label="DESCRIÇÃO"><?php echo obterDescricaoResumida($equipamento['tipo']); ?></td>
+                            <td data-label="MARCA/MODELO"><?php echo htmlspecialchars(substr($equipamento['marca'] . ' ' . $equipamento['modelo'], 0, 30)); ?></td>
+                            <td data-label="S/N"><?php echo !empty($equipamento['serial']) ? htmlspecialchars(substr($equipamento['serial'], 0, 15)) : '---'; ?></td>
+                            <td data-label="PATRIMÔNIO"><strong><?php echo htmlspecialchars($equipamento['patrimonio']); ?></strong></td>
+                            <td data-label="STATUS"><span class="status-badge status-<?php echo $equipamento['status']; ?>"><?php echo obterStatusResumido($equipamento['status']); ?></span></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+        </div>
 
-    <div class="termo-section">
-        <div class="section-title">CONDIÇÕES DE DEVOLUÇÃO</div>
-        <div class="termo-condicoes">
-            <div class="condicoes-title">Foi devolvido em <?php echo date('d/m/Y'); ?>, nas seguintes condições:</div>
-
-            <div class="checkbox-group">
-                <div class="checkbox-item">
-                    <input type="checkbox" id="condicao1">
-                    <label for="condicao1">Em perfeito estado</label>
-                </div>
-
-                <div class="checkbox-item">
-                    <input type="checkbox" id="condicao2">
-                    <label for="condicao2">Apresentando defeito</label>
-                </div>
-
-                <div class="checkbox-item">
-                    <input type="checkbox" id="condicao3">
-                    <label for="condicao3">Faltando peças/acessórios</label>
-                </div>
-
-                <div class="checkbox-item">
-                    <input type="checkbox" id="condicao4">
-                    <label for="condicao4">Carregador</label>
+        <div class="termo-section">
+            <div class="section-title">CONDIÇÕES DE DEVOLUÇÃO</div>
+            <div class="termo-condicoes">
+                <div class="condicoes-title">Devolvido em <?php echo date('d/m/Y'); ?> às <?php echo date('H:i'); ?>h</div>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="condicao1">
+                        <label for="condicao1"><i class="fas fa-check-circle"></i> Em perfeito estado</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="condicao2">
+                        <label for="condicao2"><i class="fas fa-tools"></i> Com defeito</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="condicao3">
+                        <label for="condicao3"><i class="fas fa-puzzle-piece"></i> Falta acessórios</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="condicao4">
+                        <label for="condicao4"><i class="fas fa-battery-full"></i> Carregador incluso</label>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="termo-assinaturas">
-        <div class="assinatura-box">
-            <div class="linha-assinatura"></div>
-            <div class="nome-assinatura"><?php echo htmlspecialchars($colaborador['nome']); ?></div>
-            <div class="cargo-assinatura">Colaborador</div>
-            <div class="data-assinatura">Data: ______/______/______</div>
-            <div class="data-assinatura">CPF: <?php echo formatarCPF($colaborador['cpf']); ?></div>
+        <div class="termo-assinaturas">
+            <div class="assinatura-box">
+                <div class="linha-assinatura"></div>
+                <div class="nome-assinatura"><?php echo htmlspecialchars($colaborador['nome']); ?></div>
+                <div class="nome-assinatura">________________________________________________</div>
+                <div class="cargo-assinatura">Colaborador</div>
+                <div class="data-assinatura">Data: ___/___/______</div>
+            </div>
+
+            <div class="assinatura-box">
+                <div class="linha-assinatura"></div>
+                <div class="nome-assinatura">________________________________________________</div>
+                <div class="cargo-assinatura">Responsável pelo Recebimento</div>
+                <div class="nome-assinatura">Assinatura</div>
+                <div class="data-assinatura">Data: ___/___/______</div>
+            </div>
         </div>
 
-        <div class="assinatura-box">
-            <div class="linha-assinatura"></div>
-            <div class="cargo-assinatura">Responsável pelo Recebimento</div>
-            <div class="nome-assinatura">________________________________________________</div>
-            <div class="data-assinatura">Nome / Assinatura</div>
-            <div class="data-assinatura">Data: ______/______/______</div>
+        <div class="termo-footer">
+            <div class="footer-text">Documento gerado em <?php echo date('d/m/Y H:i:s'); ?></div>
         </div>
     </div>
-</div>
 
-<script>
-    // Configurar impressão
-    window.onbeforeprint = function() {
-        // Desmarcar checkboxes temporariamente para impressão mais limpa
-        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-            checkbox.style.opacity = '0.5';
-        });
-    };
+    <script>
+        window.onbeforeprint = function() {
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.style.opacity = '0.6';
+            });
+        };
+        window.onafterprint = function() {
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.style.opacity = '1';
+            });
+        };
+    </script>
+    </body>
+    </html>
 
-    window.onafterprint = function() {
-        // Restaurar opacidade após impressão
-        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-            checkbox.style.opacity = '1';
-        });
-    };
-</script>
-</body>
-</html>
+<?php
+// Funções auxiliares
+function obterDescricaoResumida($tipo) {
+    $abreviacoes = [
+            'Notebook' => 'NB',
+            'Desktop' => 'PC',
+            'Monitor' => 'MON',
+            'Impressora' => 'IMP',
+            'Tablet' => 'TAB',
+            'Smartphone' => 'FONE',
+            'Roteador' => 'ROT',
+            'Acessório' => 'ACESS',
+            'Outro' => 'OUT'
+    ];
+    $tipoTexto = getTipoTexto($tipo);
+    return $abreviacoes[$tipoTexto] ?? substr($tipoTexto, 0, 8);
+}
+
+function obterStatusResumido($status) {
+    $statusCompacto = [
+            'Em Estoque' => 'ESTOQUE',
+            'Alocado' => 'ALOCADO',
+            'Emprestado' => 'EMP',
+            'Em Manutenção' => 'MANUT',
+            'Fora de Uso' => 'USO'
+    ];
+    $statusTexto = getStatusTexto($status);
+    return $statusCompacto[$statusTexto] ?? substr($statusTexto, 0, 6);
+}
+?>
