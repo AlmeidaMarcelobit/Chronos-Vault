@@ -265,7 +265,7 @@ function formatarCEP($cep) {
                 <div class="form-group">
                     <label for="matricula">
                         <i class="fas fa-id-badge"></i>
-                        <span>Chmado</span>
+                        <span>Chamado</span>
                         <span class="required">*</span>
                     </label>
                     <input type="text"
