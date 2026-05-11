@@ -217,6 +217,9 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
         <?php if ($can_edit): ?>
             <div class="page-actions">
                 <div class="action-group">
+                    <a href="alocar_por_chamado.php" class="btn btn-outline">
+                        <i class="fas fa-qrcode"></i> Alocar por Chamado
+                    </a>
                     <a href="atribuir_caixa.php" class="btn btn-outline">
                         <i class="fas fa-boxes"></i>
                         <span>Atribuir Caixa</span>
