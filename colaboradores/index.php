@@ -13,6 +13,7 @@ $equipamentos = lerArquivoJSON('../data/equipamentos.json');
 
 // Garantir que todos os colaboradores tenham os campos necessários
 foreach ($colaboradores as &$colab) {
+    if (!isset($colab['matricula'])) $colab['matricula'] = '';
     if (!isset($colab['cpf'])) $colab['cpf'] = '';
     if (!isset($colab['departamento'])) $colab['departamento'] = '';
     if (!isset($colab['email'])) $colab['email'] = '';
@@ -42,6 +43,7 @@ $busca = $_GET['busca'] ?? '';
 if ($busca) {
     $colaboradores = array_filter($colaboradores, function($colaborador) use ($busca) {
         return stripos($colaborador['nome'], $busca) !== false ||
+                (isset($colaborador['matricula']) && stripos($colaborador['matricula'], $busca) !== false) ||
                 (isset($colaborador['cpf']) && stripos($colaborador['cpf'], $busca) !== false) ||
                 (isset($colaborador['departamento']) && stripos($colaborador['departamento'], $busca) !== false) ||
                 (isset($colaborador['email']) && stripos($colaborador['email'], $busca) !== false);
@@ -144,10 +146,6 @@ endif; ?>
             </div>
         </div>
         <div class="header-actions">
-<!--            <a href="organograma.php" class="btn btn-outline">-->
-<!--                <i class="fas fa-sitemap"></i>-->
-<!--                <span>Organograma</span>-->
-<!--            </a>-->
             <a href="adicionar.php" class="btn btn-primary">
                 <i class="fas fa-user-plus"></i>
                 <span>Adicionar Colaborador</span>
@@ -159,7 +157,7 @@ endif; ?>
         <form method="GET" action="" class="search-form">
             <div class="search-wrapper">
                 <i class="fas fa-search search-icon"></i>
-                <input type="text" name="busca" class="search-input" placeholder="Buscar por nome, CPF, e-mail ou departamento..." value="<?php echo htmlspecialchars($busca); ?>">
+                <input type="text" name="busca" class="search-input" placeholder="Buscar por nome, chamado, CPF, e-mail ou departamento..." value="<?php echo htmlspecialchars($busca); ?>">
                 <button type="submit" class="btn btn-primary search-btn">
                     <i class="fas fa-search"></i>
                     <span>Buscar</span>
@@ -179,6 +177,7 @@ endif; ?>
             <thead>
             <tr>
                 <th>Nome <i class="fas fa-arrow-down" style="font-size: 0.7rem; opacity: 0.6;"></i></th>
+                <th>Chamado</th>
                 <th>Cargo</th>
                 <th>E-mail</th>
                 <th>CPF</th>
@@ -193,7 +192,7 @@ endif; ?>
             <tbody>
             <?php if (empty($colaboradores)): ?>
                 <tr>
-                    <td colspan="10" class="empty-state">
+                    <td colspan="11" class="empty-state">
                         <i class="fas fa-users-slash"></i>
                         <p>Nenhum colaborador encontrado</p>
                         <?php if ($busca): ?>
@@ -211,6 +210,11 @@ endif; ?>
                                 <i class="fas fa-user-circle"></i>
                                 <span><?php echo htmlspecialchars($colaborador['nome']); ?></span>
                             </div>
+                        </td>
+                        <td data-label="Matrícula">
+                            <span class="matricula-badge">
+                                <?php echo htmlspecialchars($colaborador['matricula'] ?? ''); ?>
+                            </span>
                         </td>
                         <td data-label="Cargo"><?php echo htmlspecialchars($colaborador['cargo'] ?? ''); ?></td>
                         <td data-label="E-mail">
