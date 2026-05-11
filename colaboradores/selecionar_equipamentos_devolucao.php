@@ -60,8 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['equipamentos_selecion
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selecionar Equipamentos - Termo de Devolução</title>
-    <link rel="stylesheet" href="../css/colaboradores.css">
+    <link rel="stylesheet" href="../css/colaboradores/selecionar_devolucao.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="../img/favicon/favicon.jpg">
 </head>
 <body>
     <!-- ==================== HEADER ==================== -->
