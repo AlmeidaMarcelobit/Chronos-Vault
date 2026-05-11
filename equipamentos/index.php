@@ -185,23 +185,6 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
     
     <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
     <main class="main-container">
-        <div class="page-header">
-            <div>
-                <h1><i class="fas fa-laptop"></i> Equipamentos</h1>
-                <p class="page-subtitle">Gerencie todos os equipamentos da sua organização</p>
-            </div>
-            <a href="atribuir_caixa.php" class="btn btn-outline">
-                <i class="fas fa-boxes"></i>
-                <span>Atribuir Caixa</span>
-            </a>
-            <a href="alocar_multiplos.php" class="btn btn-outline">
-                <i class="fas fa-layer-group"></i> Alocar Múltiplos
-            </a>
-            <a href="adicionar.php" class="btn btn-primary">
-                <i class="fas fa-plus"></i>
-                <span>Adicionar Equipamento</span>
-            </a>
-        </div>
 
         <!-- Filtros Rápidos -->
         <div class="filter-tabs">
@@ -265,6 +248,8 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
                         </select>
                     </div>
 
+
+
                     <div class="filter-group">
                         <label><i class="fas fa-info-circle"></i> Status</label>
                         <select name="status" class="form-control">
@@ -311,6 +296,24 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
                     <input type="hidden" name="filtro" value="<?php echo htmlspecialchars($filtro); ?>">
                 <?php endif; ?>
             </form>
+        </div>
+
+        <div class="page-header">
+            <div>
+                <h1><i class="fas fa-laptop"></i> Equipamentos</h1>
+                <p class="page-subtitle">Gerencie todos os equipamentos da sua organização</p>
+            </div>
+            <a href="atribuir_caixa.php" class="btn btn-outline">
+                <i class="fas fa-boxes"></i>
+                <span>Atribuir Caixa</span>
+            </a>
+            <a href="alocar_multiplos.php" class="btn btn-outline">
+                <i class="fas fa-layer-group"></i> Alocar Múltiplos
+            </a>
+            <a href="adicionar.php" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                <span>Adicionar Equipamento</span>
+            </a>
         </div>
 
         <!-- Cards de Estatísticas Filtradas -->

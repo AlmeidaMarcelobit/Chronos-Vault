@@ -79,17 +79,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     // Atualizar centro de custo se a opção estiver marcada
                     if ($atualizar_centro_custo && $centroCustoColaborador) {
-                        // Registrar no histórico de centro de custo
                         if (!isset($equip['historico_centro_custo']) || !is_array($equip['historico_centro_custo'])) {
                             $equipamentos[$index]['historico_centro_custo'] = [];
                         }
 
                         $historicoCC = [
-                            'data' => date('Y-m-d H:i:s'),
-                            'usuario' => $_SESSION['usuario_nome'] ?? 'Administrador',
-                            'centro_custo_anterior' => $centroCustoOriginal,
-                            'centro_custo_novo' => $centroCustoColaborador,
-                            'motivo' => "Alocação múltipla - Equipamento alocado para {$colaboradorNome}"
+                                'data' => date('Y-m-d H:i:s'),
+                                'usuario' => $_SESSION['usuario_nome'] ?? 'Administrador',
+                                'centro_custo_anterior' => $centroCustoOriginal,
+                                'centro_custo_novo' => $centroCustoColaborador,
+                                'motivo' => "Alocação múltipla - Equipamento alocado para {$colaboradorNome}"
                         ];
                         $equipamentos[$index]['historico_centro_custo'][] = $historicoCC;
 
@@ -99,7 +98,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                     }
 
-                    // Adicionar observação sobre a alocação múltipla
                     $observacaoAtual = $equipamentos[$index]['observacoes'] ?? '';
                     $novaObservacao = "\n\n[ALOCAÇÃO MÚLTIPLA] " . date('d/m/Y H:i:s');
                     $novaObservacao .= "\nEquipamento alocado para {$colaboradorNome}";
@@ -131,7 +129,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $mensagem = "{$equipamentosAtualizados} equipamento(s) alocado(s) com sucesso para {$colaboradorNome}!" . $mensagemExtra;
                     $tipoMensagem = 'success';
 
-                    // Limpar seleção
                     $_POST = [];
                 } else {
                     $mensagem = 'Erro ao salvar as alterações. Tente novamente.';
@@ -173,8 +170,115 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             gap: var(--spacing-md);
         }
 
+        .search-box {
+            margin-bottom: var(--spacing-md);
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: var(--spacing-md);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            pointer-events: none;
+        }
+
+        .search-box input {
+            padding-left: 2.5rem;
+        }
+
+        .colaborador-search-box {
+            margin-bottom: var(--spacing-md);
+            position: relative;
+        }
+
+        .colaborador-search-box i {
+            position: absolute;
+            left: var(--spacing-md);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .colaborador-search-box input {
+            padding-left: 2.5rem;
+        }
+
+        .colaboradores-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            background: var(--white);
+            margin-top: var(--spacing-sm);
+        }
+
+        .colaborador-item-select {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-bottom: 1px solid var(--gray-100);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .colaborador-item-select:hover {
+            background: var(--gray-50);
+        }
+
+        .colaborador-item-select.selected {
+            background: rgba(107, 62, 143, 0.08);
+            border-left: 3px solid var(--grape);
+        }
+
+        .colaborador-info-select {
+            flex: 1;
+        }
+
+        .colaborador-nome-select {
+            font-weight: 500;
+            color: var(--gray-800);
+        }
+
+        .colaborador-detalhes-select {
+            font-size: 0.7rem;
+            color: var(--gray-500);
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .radio-select {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--gray-400);
+            border-radius: 50%;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .colaborador-item-select.selected .radio-select {
+            border-color: var(--grape);
+        }
+
+        .colaborador-item-select.selected .radio-select::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: var(--grape);
+            border-radius: 50%;
+        }
+
         .equipamentos-lista {
-            max-height: 500px;
+            max-height: 400px;
             overflow-y: auto;
             border: 1px solid var(--gray-200);
             border-radius: var(--radius-lg);
@@ -184,7 +288,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .equipamento-item-multiplo {
             display: flex;
             align-items: center;
-            padding: var(--spacing-md);
+            padding: var(--spacing-sm) var(--spacing-md);
             border-bottom: 1px solid var(--gray-100);
             cursor: pointer;
             transition: var(--transition);
@@ -204,8 +308,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .equipamento-checkbox-multiplo input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             cursor: pointer;
             accent-color: var(--grape);
         }
@@ -231,7 +335,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .equipamento-centro-custo {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--gray-500);
             background: var(--gray-100);
             padding: 2px var(--spacing-sm);
@@ -272,49 +376,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-bottom: var(--spacing-lg);
         }
 
-        .cc-atual {
-            color: var(--danger);
-        }
-
         .cc-novo-multiplo {
             color: var(--success);
             font-weight: bold;
         }
+
+        .sem-resultados {
+            text-align: center;
+            padding: var(--spacing-xl);
+            color: var(--gray-500);
+        }
+
+        .filter-stats {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-top: var(--spacing-xs);
+        }
     </style>
 </head>
 <body>
-    <!-- HEADER -->
-    <header class="header">
-        <div class="header-content">
-            <div class="logo">
-                <a href="../index.php">
-                    <i class="fas fa-laptop-house"></i>
-                    <h1>Sistema de Gestão</h1>
-                </a>
-            </div>
-            <div class="user-menu">
-                <div class="user-info">
-                    <i class="fas fa-user-circle"></i>
-                    <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
-                </div>
-                <a href="../logout.php" class="logout-btn">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Sair</span>
-                </a>
-            </div>
+<header class="header">
+    <div class="header-content">
+        <div class="logo">
+            <a href="../index.php">
+                <i class="fas fa-laptop-house"></i>
+                <h1>Sistema de Gestão</h1>
+            </a>
         </div>
-        <nav class="nav-container">
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="../index.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                <li class="nav-item"><a href="../colaboradores/index.php" class="nav-link"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
-                <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
-                <li class="nav-item"><a href="../linhas/index.php" class="nav-link"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
-            </ul>
-        </nav>
-    </header>
+        <div class="user-menu">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
+            </div>
+            <a href="../logout.php" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Sair</span>
+            </a>
+        </div>
+    </div>
+    <nav class="nav-container">
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="../index.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+            <li class="nav-item"><a href="../colaboradores/index.php" class="nav-link"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
+            <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
+            <li class="nav-item"><a href="../linhas/index.php" class="nav-link"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
+        </ul>
+    </nav>
+</header>
 
-    <!-- MENSAGENS DE ALERTA -->
-    <?php if ($mensagem): ?>
+<?php if ($mensagem): ?>
     <div class="global-alert alert-<?php echo $tipoMensagem === 'success' ? 'success' : ($tipoMensagem === 'warning' ? 'warning' : 'error'); ?>">
         <div class="alert-content">
             <i class="fas fa-<?php echo $tipoMensagem === 'success' ? 'check-circle' : ($tipoMensagem === 'warning' ? 'exclamation-triangle' : 'exclamation-circle'); ?>"></i>
@@ -322,291 +432,373 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <button class="alert-close" onclick="this.parentElement.style.display='none'">&times;</button>
     </div>
-    <?php endif; ?>
+<?php endif; ?>
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="main-container">
-        <div class="page-header">
-            <div>
-                <h1><i class="fas fa-layer-group"></i> Alocar Múltiplos Equipamentos</h1>
-                <p class="page-subtitle">Selecione vários equipamentos e aloque todos para um colaborador de uma só vez</p>
-            </div>
-            <a href="index.php" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Voltar
-            </a>
+<main class="main-container">
+    <div class="page-header">
+        <div>
+            <h1><i class="fas fa-layer-group"></i> Alocar Múltiplos Equipamentos</h1>
+            <p class="page-subtitle">Selecione vários equipamentos e aloque todos para um colaborador de uma só vez</p>
         </div>
+        <a href="index.php" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </a>
+    </div>
 
-        <div class="form-card-container">
-            <form method="POST" action="" id="form-alocar-multiplos">
-                <!-- Seleção do Colaborador -->
-                <div class="form-group">
-                    <label for="colaborador_id">
-                        <i class="fas fa-user"></i> Selecionar Colaborador <span class="required">*</span>
-                    </label>
-                    <select id="colaborador_id" name="colaborador_id" required class="form-select" onchange="atualizarInfoCentroCusto()">
-                        <option value="">-- Selecione um colaborador --</option>
-                        <?php foreach ($colaboradores as $colaborador): ?>
-                            <option value="<?php echo $colaborador['id']; ?>"
-                                    data-centro-custo="<?php echo htmlspecialchars($colaborador['centro_custo']); ?>"
-                                    data-nome="<?php echo htmlspecialchars($colaborador['nome']); ?>">
-                                <?php echo htmlspecialchars($colaborador['nome'] . ' - ' . $colaborador['cargo'] . ' (CC: ' . $colaborador['centro_custo'] . ')'); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+    <div class="form-card-container">
+        <form method="POST" action="" id="form-alocar-multiplos">
+            <!-- Seleção do Colaborador com Busca -->
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Selecionar Colaborador <span class="required">*</span></label>
+
+                <div class="colaborador-search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="busca-colaborador" class="form-control" placeholder="Buscar por nome, cargo ou centro de custo..." autocomplete="off">
                 </div>
 
-                <!-- Tipo de Atribuição -->
-                <div class="form-group">
-                    <label for="status"><i class="fas fa-tag"></i> Tipo de Atribuição <span class="required">*</span></label>
-                    <select id="status" name="status" required class="form-select">
-                        <option value="alocado">Alocar (permanente)</option>
-                        <option value="emprestado">Emprestar (temporário)</option>
-                    </select>
-                </div>
-
-                <!-- Informações de Centro de Custo -->
-                <div id="info-centro-custo" class="info-centro-custo-multiplo" style="display: none;">
-                    <strong><i class="fas fa-sync-alt"></i> Informações de Centro de Custo</strong>
-                    <div style="margin-top: var(--spacing-sm);">
-                        <div id="cc-detalhes"></div>
-                        <div style="margin-top: var(--spacing-sm);">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="atualizar_centro_custo" name="atualizar_centro_custo" value="sim">
-                                <span class="checkbox-custom"></span>
-                                <span class="checkbox-text">
-                                    <strong>Atualizar centro de custo dos equipamentos</strong><br>
-                                    <small>O centro de custo de TODOS os equipamentos selecionados será alterado para o centro de custo do colaborador.</small>
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Observações -->
-                <div class="form-group">
-                    <label for="observacoes"><i class="fas fa-sticky-note"></i> Observações da Atribuição</label>
-                    <textarea id="observacoes" name="observacoes" class="form-control" rows="2" placeholder="Observações sobre esta alocação em massa..."></textarea>
-                </div>
-
-                <!-- Lista de Equipamentos Disponíveis -->
-                <div class="selection-header">
-                    <h3><i class="fas fa-laptop"></i> Equipamentos Disponíveis (Estoque)</h3>
-                    <div class="selection-actions">
-                        <button type="button" class="select-all-btn" onclick="selecionarTodos()">
-                            <i class="fas fa-check-double"></i> Selecionar Todos
-                        </button>
-                        <button type="button" class="select-all-btn" onclick="deselecionarTodos()">
-                            <i class="fas fa-times"></i> Desmarcar Todos
-                        </button>
-                    </div>
-                </div>
-
-                <div class="equipamentos-lista" id="equipamentos-lista">
-                    <?php if (empty($equipamentosDisponiveis)): ?>
-                        <div class="empty-state" style="padding: var(--spacing-2xl);">
-                            <i class="fas fa-warehouse"></i>
-                            <p>Nenhum equipamento disponível em estoque.</p>
-                            <a href="adicionar.php" class="btn btn-primary">Adicionar Equipamento</a>
+                <div class="colaboradores-list" id="lista-colaboradores">
+                    <?php if (empty($colaboradores)): ?>
+                        <div class="sem-resultados">
+                            <i class="fas fa-users-slash"></i>
+                            <p>Nenhum colaborador cadastrado</p>
+                            <a href="../colaboradores/adicionar.php" class="btn btn-primary btn-sm">Cadastrar colaborador</a>
                         </div>
                     <?php else: ?>
-                        <?php foreach ($equipamentosDisponiveis as $equipamento): ?>
-                            <div class="equipamento-item-multiplo" data-id="<?php echo $equipamento['id']; ?>" data-centro-custo="<?php echo htmlspecialchars($equipamento['centro_custo']); ?>">
-                                <div class="equipamento-checkbox-multiplo">
-                                    <input type="checkbox" name="equipamentos_selecionados[]" value="<?php echo $equipamento['id']; ?>" class="checkbox-equipamento" onchange="atualizarContador()">
+                        <?php foreach ($colaboradores as $colaborador): ?>
+                            <div class="colaborador-item-select" data-id="<?php echo $colaborador['id']; ?>"
+                                 data-nome="<?php echo htmlspecialchars($colaborador['nome']); ?>"
+                                 data-cargo="<?php echo htmlspecialchars($colaborador['cargo']); ?>"
+                                 data-departamento="<?php echo htmlspecialchars($colaborador['departamento']); ?>"
+                                 data-centro-custo="<?php echo htmlspecialchars($colaborador['centro_custo']); ?>">
+                                <div class="colaborador-info-select">
+                                    <div class="colaborador-nome-select"><?php echo htmlspecialchars($colaborador['nome']); ?></div>
+                                    <div class="colaborador-detalhes-select">
+                                        <span><i class="fas fa-briefcase"></i> <?php echo htmlspecialchars($colaborador['cargo']); ?></span>
+                                        <span><i class="fas fa-building"></i> <?php echo htmlspecialchars($colaborador['departamento']); ?></span>
+                                        <span><i class="fas fa-dollar-sign"></i> <?php echo htmlspecialchars($colaborador['centro_custo']); ?></span>
+                                    </div>
                                 </div>
-                                <div class="equipamento-info-multiplo">
-                                    <span class="equipamento-patrimonio">
-                                        <i class="fas fa-barcode"></i> <?php echo htmlspecialchars($equipamento['patrimonio']); ?>
-                                    </span>
-                                    <span class="equipamento-descricao">
-                                        <?php echo htmlspecialchars($equipamento['marca'] . ' ' . $equipamento['modelo']); ?>
-                                    </span>
-                                    <span class="equipamento-centro-custo">
-                                        <i class="fas fa-dollar-sign"></i> <?php echo htmlspecialchars($equipamento['centro_custo']); ?>
-                                    </span>
-                                </div>
+                                <div class="radio-select"></div>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
 
-                <!-- Contador de Selecionados -->
-                <div class="selection-footer" style="margin-top: var(--spacing-md); text-align: right;">
-                    <span class="selected-count" id="contador-selecionados">0 equipamento(s) selecionado(s)</span>
-                </div>
-
-                <!-- Card de Aviso -->
-                <div class="warning-card" style="margin-top: var(--spacing-lg);">
-                    <div class="warning-header">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <h4>Atenção!</h4>
-                    </div>
-                    <p>Ao alocar estes equipamentos:</p>
-                    <ul>
-                        <li>Todos os equipamentos selecionados sairão do estoque</li>
-                        <li>O status será alterado para o tipo selecionado</li>
-                        <li>O colaborador ficará responsável pelos equipamentos</li>
-                        <li>Se a opção de atualizar centro de custo estiver marcada, TODOS os equipamentos terão o centro de custo atualizado</li>
-                    </ul>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary" id="btn-alocar" disabled>
-                        <i class="fas fa-user-plus"></i> Alocar Equipamentos Selecionados
-                    </button>
-                    <a href="index.php" class="btn btn-secondary"><i class="fas fa-times"></i> Cancelar</a>
-                </div>
-            </form>
-        </div>
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3><i class="fas fa-laptop-house"></i> Sistema de Gestão</h3>
-                <p>Controle de colaboradores e equipamentos</p>
+                <input type="hidden" id="colaborador_id" name="colaborador_id" required>
             </div>
-            <div class="footer-section">
-                <h3>Links Rápidos</h3>
-                <ul class="footer-links">
-                    <li><a href="../index.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li><a href="../colaboradores/index.php"><i class="fas fa-users"></i> Colaboradores</a></li>
-                    <li><a href="index.php"><i class="fas fa-laptop"></i> Equipamentos</a></li>
+
+            <!-- Tipo de Atribuição -->
+            <div class="form-group">
+                <label for="status"><i class="fas fa-tag"></i> Tipo de Atribuição <span class="required">*</span></label>
+                <select id="status" name="status" required class="form-select">
+                    <option value="alocado">Alocar (permanente)</option>
+                    <option value="emprestado">Emprestar (temporário)</option>
+                </select>
+            </div>
+
+            <!-- Informações de Centro de Custo -->
+            <div id="info-centro-custo" class="info-centro-custo-multiplo" style="display: none;">
+                <strong><i class="fas fa-sync-alt"></i> Informações de Centro de Custo</strong>
+                <div style="margin-top: var(--spacing-sm);">
+                    <div id="cc-detalhes"></div>
+                    <div style="margin-top: var(--spacing-sm);">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="atualizar_centro_custo" name="atualizar_centro_custo" value="sim">
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-text">
+                                    <strong>Atualizar centro de custo dos equipamentos</strong><br>
+                                    <small>O centro de custo de TODOS os equipamentos selecionados será alterado para o centro de custo do colaborador.</small>
+                                </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Observações -->
+            <div class="form-group">
+                <label for="observacoes"><i class="fas fa-sticky-note"></i> Observações da Atribuição</label>
+                <textarea id="observacoes" name="observacoes" class="form-control" rows="2" placeholder="Observações sobre esta alocação em massa..."></textarea>
+            </div>
+
+            <!-- Lista de Equipamentos Disponíveis com Busca -->
+            <div class="selection-header">
+                <h3><i class="fas fa-laptop"></i> Equipamentos Disponíveis (Estoque)</h3>
+                <div class="selection-actions">
+                    <button type="button" class="select-all-btn" onclick="selecionarTodos()">
+                        <i class="fas fa-check-double"></i> Selecionar Todos
+                    </button>
+                    <button type="button" class="select-all-btn" onclick="deselecionarTodos()">
+                        <i class="fas fa-times"></i> Desmarcar Todos
+                    </button>
+                </div>
+            </div>
+
+            <!-- Busca de Equipamentos -->
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="busca-equipamento" class="form-control" placeholder="Buscar por patrimônio, marca, modelo ou centro de custo...">
+            </div>
+
+            <div class="equipamentos-lista" id="equipamentos-lista">
+                <?php if (empty($equipamentosDisponiveis)): ?>
+                    <div class="empty-state" style="padding: var(--spacing-2xl);">
+                        <i class="fas fa-warehouse"></i>
+                        <p>Nenhum equipamento disponível em estoque.</p>
+                        <a href="adicionar.php" class="btn btn-primary">Adicionar Equipamento</a>
+                    </div>
+                <?php else: ?>
+                    <?php foreach ($equipamentosDisponiveis as $equipamento): ?>
+                        <div class="equipamento-item-multiplo" data-id="<?php echo $equipamento['id']; ?>"
+                             data-patrimonio="<?php echo htmlspecialchars($equipamento['patrimonio']); ?>"
+                             data-marca="<?php echo htmlspecialchars($equipamento['marca']); ?>"
+                             data-modelo="<?php echo htmlspecialchars($equipamento['modelo']); ?>"
+                             data-centro-custo="<?php echo htmlspecialchars($equipamento['centro_custo']); ?>">
+                            <div class="equipamento-checkbox-multiplo">
+                                <input type="checkbox" name="equipamentos_selecionados[]" value="<?php echo $equipamento['id']; ?>" class="checkbox-equipamento" onchange="atualizarContador()">
+                            </div>
+                            <div class="equipamento-info-multiplo">
+                                    <span class="equipamento-patrimonio">
+                                        <i class="fas fa-barcode"></i> <?php echo htmlspecialchars($equipamento['patrimonio']); ?>
+                                    </span>
+                                <span class="equipamento-descricao">
+                                        <?php echo htmlspecialchars($equipamento['marca'] . ' ' . $equipamento['modelo']); ?>
+                                    </span>
+                                <span class="equipamento-centro-custo">
+                                        <i class="fas fa-dollar-sign"></i> <?php echo htmlspecialchars($equipamento['centro_custo']); ?>
+                                    </span>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+
+            <!-- Contador de Selecionados -->
+            <div class="selection-footer" style="margin-top: var(--spacing-md); text-align: right;">
+                <span class="selected-count" id="contador-selecionados">0 equipamento(s) selecionado(s)</span>
+            </div>
+
+            <!-- Card de Aviso -->
+            <div class="warning-card" style="margin-top: var(--spacing-lg);">
+                <div class="warning-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h4>Atenção!</h4>
+                </div>
+                <p>Ao alocar estes equipamentos:</p>
+                <ul>
+                    <li>Todos os equipamentos selecionados sairão do estoque</li>
+                    <li>O status será alterado para o tipo selecionado</li>
+                    <li>O colaborador ficará responsável pelos equipamentos</li>
+                    <li>Se a opção de atualizar centro de custo estiver marcada, TODOS os equipamentos terão o centro de custo atualizado</li>
                 </ul>
             </div>
-            <div class="footer-section">
-                <h3>Estatísticas</h3>
-                <div class="footer-stats">
-                    <div class="footer-stat"><span class="stat-number"><?php echo count($equipamentos); ?></span><span class="stat-label">Equipamentos</span></div>
-                    <div class="footer-stat"><span class="stat-number"><?php echo count($equipamentosDisponiveis); ?></span><span class="stat-label">Disponíveis</span></div>
-                    <div class="footer-stat"><span class="stat-number"><?php echo count($colaboradores); ?></span><span class="stat-label">Colaboradores</span></div>
-                </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary" id="btn-alocar" disabled>
+                    <i class="fas fa-user-plus"></i> Alocar Equipamentos Selecionados
+                </button>
+                <a href="index.php" class="btn btn-secondary"><i class="fas fa-times"></i> Cancelar</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3><i class="fas fa-laptop-house"></i> Sistema de Gestão</h3>
+            <p>Controle de colaboradores e equipamentos</p>
+        </div>
+        <div class="footer-section">
+            <h3>Links Rápidos</h3>
+            <ul class="footer-links">
+                <li><a href="../index.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="../colaboradores/index.php"><i class="fas fa-users"></i> Colaboradores</a></li>
+                <li><a href="index.php"><i class="fas fa-laptop"></i> Equipamentos</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Estatísticas</h3>
+            <div class="footer-stats">
+                <div class="footer-stat"><span class="stat-number"><?php echo count($equipamentos); ?></span><span class="stat-label">Equipamentos</span></div>
+                <div class="footer-stat"><span class="stat-number"><?php echo count($equipamentosDisponiveis); ?></span><span class="stat-label">Disponíveis</span></div>
+                <div class="footer-stat"><span class="stat-number"><?php echo count($colaboradores); ?></span><span class="stat-label">Colaboradores</span></div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>Sistema de Gestão &copy; <?php echo date('Y'); ?> - Todos os direitos reservados</p>
-            <p class="footer-version">Última atualização: <?php echo date('d/m/Y H:i'); ?></p>
-        </div>
-    </footer>
+    </div>
+    <div class="footer-bottom">
+        <p>Sistema de Gestão &copy; <?php echo date('Y'); ?> - Todos os direitos reservados</p>
+        <p class="footer-version">Última atualização: <?php echo date('d/m/Y H:i'); ?></p>
+    </div>
+</footer>
 
-    <script>
-        const colaboradorSelect = document.getElementById('colaborador_id');
-        const infoCentroCusto = document.getElementById('info-centro-custo');
-        const ccDetalhes = document.getElementById('cc-detalhes');
-        const btnAlocar = document.getElementById('btn-alocar');
-        const contadorSpan = document.getElementById('contador-selecionados');
-        const checkboxes = document.querySelectorAll('.checkbox-equipamento');
+<script>
+    // Busca de Colaboradores
+    const buscaColaborador = document.getElementById('busca-colaborador');
+    const colaboradoresList = document.querySelectorAll('.colaborador-item-select');
+    const colaboradorIdInput = document.getElementById('colaborador_id');
+    const btnAlocar = document.getElementById('btn-alocar');
+    const infoCentroCusto = document.getElementById('info-centro-custo');
+    const ccDetalhes = document.getElementById('cc-detalhes');
 
-        // Atualizar informações de centro de custo
-        function atualizarInfoCentroCusto() {
-            const selectedOption = colaboradorSelect.options[colaboradorSelect.selectedIndex];
-            const centroCustoColaborador = selectedOption ? selectedOption.getAttribute('data-centro-custo') : null;
-            const nomeColaborador = selectedOption ? selectedOption.getAttribute('data-nome') : null;
+    let colaboradorSelecionado = null;
 
-            if (colaboradorSelect.value && centroCustoColaborador) {
-                // Coletar centros de custo dos equipamentos selecionados
-                const equipamentosSelecionados = Array.from(checkboxes).filter(cb => cb.checked);
-                const centrosCustoEquipamentos = equipamentosSelecionados.map(cb => {
-                    const item = cb.closest('.equipamento-item-multiplo');
-                    return item ? item.getAttribute('data-centro-custo') : null;
-                }).filter(cc => cc);
+    function filtrarColaboradores() {
+        const termo = buscaColaborador.value.toLowerCase();
 
-                const centrosUnicos = [...new Set(centrosCustoEquipamentos)];
+        colaboradoresList.forEach(item => {
+            const nome = item.getAttribute('data-nome').toLowerCase();
+            const cargo = item.getAttribute('data-cargo').toLowerCase();
+            const departamento = item.getAttribute('data-departamento').toLowerCase();
+            const centroCusto = item.getAttribute('data-centro-custo').toLowerCase();
 
-                let html = `<strong>Colaborador selecionado:</strong> ${nomeColaborador}<br>`;
-                html += `<strong>Centro de custo do colaborador:</strong> <span class="cc-novo-multiplo">${centroCustoColaborador}</span><br>`;
+            const matches = nome.includes(termo) || cargo.includes(termo) || departamento.includes(termo) || centroCusto.includes(termo);
+            item.style.display = matches ? 'flex' : 'none';
+        });
+    }
 
-                if (equipamentosSelecionados.length > 0) {
-                    html += `<strong>Equipamentos selecionados:</strong> ${equipamentosSelecionados.length}<br>`;
-                    html += `<strong>Centro(s) de custo dos equipamentos:</strong> ${centrosUnicos.join(', ') || '---'}<br>`;
+    function selecionarColaborador(elemento) {
+        colaboradoresList.forEach(item => item.classList.remove('selected'));
+        elemento.classList.add('selected');
 
-                    if (centrosUnicos.length === 1 && centrosUnicos[0] !== centroCustoColaborador) {
-                        html += `<span style="color: var(--warning);">⚠️ O centro de custo será alterado de ${centrosUnicos[0]} para ${centroCustoColaborador}</span>`;
-                    } else if (centrosUnicos.length > 1) {
-                        html += `<span style="color: var(--warning);">⚠️ Múltiplos centros de custo detectados. Eles serão padronizados para ${centroCustoColaborador} se a opção estiver marcada.</span>`;
-                    } else if (centrosUnicos[0] === centroCustoColaborador) {
-                        html += `<span style="color: var(--success);">✓ Centro de custo já é o mesmo do colaborador.</span>`;
-                    }
-                } else {
-                    html += `<span style="color: var(--gray-500);">Nenhum equipamento selecionado.</span>`;
+        const id = elemento.getAttribute('data-id');
+        const nome = elemento.getAttribute('data-nome');
+        const centroCusto = elemento.getAttribute('data-centro-custo');
+
+        colaboradorSelecionado = { id, nome, centroCusto };
+        colaboradorIdInput.value = id;
+
+        atualizarInfoCentroCusto();
+        atualizarContador();
+    }
+
+    colaboradoresList.forEach(item => {
+        item.addEventListener('click', () => selecionarColaborador(item));
+    });
+
+    buscaColaborador.addEventListener('input', filtrarColaboradores);
+
+    // Busca de Equipamentos
+    const buscaEquipamento = document.getElementById('busca-equipamento');
+    const equipamentosItens = document.querySelectorAll('.equipamento-item-multiplo');
+
+    function filtrarEquipamentos() {
+        const termo = buscaEquipamento.value.toLowerCase();
+
+        equipamentosItens.forEach(item => {
+            const patrimonio = item.getAttribute('data-patrimonio').toLowerCase();
+            const marca = item.getAttribute('data-marca').toLowerCase();
+            const modelo = item.getAttribute('data-modelo').toLowerCase();
+            const centroCusto = item.getAttribute('data-centro-custo').toLowerCase();
+
+            const matches = patrimonio.includes(termo) || marca.includes(termo) || modelo.includes(termo) || centroCusto.includes(termo);
+            item.style.display = matches ? 'flex' : 'none';
+        });
+    }
+
+    buscaEquipamento.addEventListener('input', filtrarEquipamentos);
+
+    // Atualizar informações de centro de custo
+    function atualizarInfoCentroCusto() {
+        if (colaboradorSelecionado) {
+            const equipamentosSelecionados = Array.from(document.querySelectorAll('.checkbox-equipamento:checked'));
+            const centrosCustoEquipamentos = equipamentosSelecionados.map(cb => {
+                const item = cb.closest('.equipamento-item-multiplo');
+                return item ? item.getAttribute('data-centro-custo') : null;
+            }).filter(cc => cc);
+
+            const centrosUnicos = [...new Set(centrosCustoEquipamentos)];
+
+            let html = `<strong>Colaborador selecionado:</strong> ${colaboradorSelecionado.nome}<br>`;
+            html += `<strong>Centro de custo do colaborador:</strong> <span class="cc-novo-multiplo">${colaboradorSelecionado.centroCusto}</span><br>`;
+
+            if (equipamentosSelecionados.length > 0) {
+                html += `<strong>Equipamentos selecionados:</strong> ${equipamentosSelecionados.length}<br>`;
+                html += `<strong>Centro(s) de custo dos equipamentos:</strong> ${centrosUnicos.join(', ') || '---'}<br>`;
+
+                if (centrosUnicos.length === 1 && centrosUnicos[0] !== colaboradorSelecionado.centroCusto) {
+                    html += `<span style="color: var(--warning);">⚠️ O centro de custo será alterado de ${centrosUnicos[0]} para ${colaboradorSelecionado.centroCusto}</span>`;
+                } else if (centrosUnicos.length > 1) {
+                    html += `<span style="color: var(--warning);">⚠️ Múltiplos centros de custo detectados. Eles serão padronizados para ${colaboradorSelecionado.centroCusto} se a opção estiver marcada.</span>`;
+                } else if (centrosUnicos[0] === colaboradorSelecionado.centroCusto) {
+                    html += `<span style="color: var(--success);">✓ Centro de custo já é o mesmo do colaborador.</span>`;
                 }
-
-                ccDetalhes.innerHTML = html;
-                infoCentroCusto.style.display = 'block';
             } else {
-                infoCentroCusto.style.display = 'none';
+                html += `<span style="color: var(--gray-500);">Nenhum equipamento selecionado.</span>`;
             }
+
+            ccDetalhes.innerHTML = html;
+            infoCentroCusto.style.display = 'block';
+        } else {
+            infoCentroCusto.style.display = 'none';
         }
+    }
 
-        // Atualizar contador de selecionados
-        function atualizarContador() {
-            const selecionados = Array.from(checkboxes).filter(cb => cb.checked);
-            const total = selecionados.length;
-            contadorSpan.innerHTML = `${total} equipamento(s) selecionado(s)`;
+    // Atualizar contador de selecionados
+    function atualizarContador() {
+        const checkboxes = document.querySelectorAll('.checkbox-equipamento');
+        const selecionados = Array.from(checkboxes).filter(cb => cb.checked);
+        const total = selecionados.length;
+        const contadorSpan = document.getElementById('contador-selecionados');
+        contadorSpan.innerHTML = `${total} equipamento(s) selecionado(s)`;
 
-            // Habilitar/desabilitar botão
-            btnAlocar.disabled = total === 0 || !colaboradorSelect.value;
+        btnAlocar.disabled = total === 0 || !colaboradorIdInput.value;
 
-            // Atualizar estilo dos itens selecionados
-            document.querySelectorAll('.equipamento-item-multiplo').forEach(item => {
-                const checkbox = item.querySelector('.checkbox-equipamento');
-                if (checkbox && checkbox.checked) {
-                    item.classList.add('selected');
-                } else {
-                    item.classList.remove('selected');
-                }
-            });
-
-            // Atualizar informações de centro de custo
-            atualizarInfoCentroCusto();
-        }
-
-        // Selecionar todos os equipamentos
-        function selecionarTodos() {
-            checkboxes.forEach(cb => {
-                cb.checked = true;
-                cb.closest('.equipamento-item-multiplo')?.classList.add('selected');
-            });
-            atualizarContador();
-        }
-
-        // Desmarcar todos os equipamentos
-        function deselecionarTodos() {
-            checkboxes.forEach(cb => {
-                cb.checked = false;
-                cb.closest('.equipamento-item-multiplo')?.classList.remove('selected');
-            });
-            atualizarContador();
-        }
-
-        // Adicionar evento de clique nos itens para marcar/desmarcar
         document.querySelectorAll('.equipamento-item-multiplo').forEach(item => {
-            item.addEventListener('click', function(e) {
-                // Evitar conflito com o clique no checkbox
-                if (e.target.type !== 'checkbox') {
-                    const checkbox = this.querySelector('.checkbox-equipamento');
-                    if (checkbox) {
-                        checkbox.checked = !checkbox.checked;
-                        atualizarContador();
-                    }
-                }
-            });
+            const checkbox = item.querySelector('.checkbox-equipamento');
+            if (checkbox && checkbox.checked) {
+                item.classList.add('selected');
+            } else {
+                item.classList.remove('selected');
+            }
         });
 
-        // Adicionar evento ao select de colaborador
-        colaboradorSelect.addEventListener('change', atualizarContador);
+        atualizarInfoCentroCusto();
+    }
 
-        // Inicializar
+    function selecionarTodos() {
+        const checkboxes = document.querySelectorAll('.checkbox-equipamento');
+        checkboxes.forEach(cb => {
+            cb.checked = true;
+            cb.closest('.equipamento-item-multiplo')?.classList.add('selected');
+        });
         atualizarContador();
+    }
 
-        setTimeout(function() {
-            const alert = document.querySelector('.global-alert');
-            if (alert) {
-                alert.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => alert.remove(), 300);
+    function deselecionarTodos() {
+        const checkboxes = document.querySelectorAll('.checkbox-equipamento');
+        checkboxes.forEach(cb => {
+            cb.checked = false;
+            cb.closest('.equipamento-item-multiplo')?.classList.remove('selected');
+        });
+        atualizarContador();
+    }
+
+    document.querySelectorAll('.equipamento-item-multiplo').forEach(item => {
+        item.addEventListener('click', function(e) {
+            if (e.target.type !== 'checkbox') {
+                const checkbox = this.querySelector('.checkbox-equipamento');
+                if (checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                    atualizarContador();
+                }
             }
-        }, 5000);
-    </script>
+        });
+    });
+
+    document.getElementById('form-alocar-multiplos').addEventListener('submit', function(e) {
+        if (!colaboradorIdInput.value) {
+            e.preventDefault();
+            alert('Selecione um colaborador.');
+        }
+    });
+
+    setTimeout(function() {
+        const alert = document.querySelector('.global-alert');
+        if (alert) {
+            alert.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => alert.remove(), 300);
+        }
+    }, 5000);
+</script>
 </body>
 </html>
