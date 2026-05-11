@@ -627,4 +627,8 @@ function atualizarCentroCustoLinha(&$linha, $colaborador, $usuario) {
 
     return true;
 }
+
+function getCentroCustoPadrao() {
+    return '9999';
+}
 ?>
