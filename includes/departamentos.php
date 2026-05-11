@@ -38,6 +38,7 @@
         <option value="Pessoas" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Pessoas' ? 'selected' : ''; ?>>Pessoas</option>
         <option value="Cultura" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Cultura' ? 'selected' : ''; ?>>Cultura</option>
         <option value="Produto" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Produto' ? 'selected' : ''; ?>>Produto</option>
+        <option value="RT Dentista" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'RT Dentista' ? 'selected' : ''; ?>> RT Dentista</option>
         <option value="Desenvolvimento" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Desenvolvimento' ? 'selected' : ''; ?>>Desenvolvimento</option>
         <option value="Atendimento ao Cliente" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Atendimento ao Cliente' ? 'selected' : ''; ?>>Atendimento ao Cliente</option>
     </select>
