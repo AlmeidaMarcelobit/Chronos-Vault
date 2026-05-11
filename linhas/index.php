@@ -131,9 +131,13 @@ $totalFiltrado = count($linhas);
             <p class="page-subtitle">Gerencie as linhas Vivo (Chip e E-Chip) da organização</p>
         </div>
         <?php if ($can_edit): ?>
+            <a href="alocar_sequencial.php" class="btn btn-outline">
+                <i class="fas fa-list-ol"></i> Alocar Sequencial
+            </a>
             <a href="adicionar.php" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Adicionar Linha
             </a>
+
         <?php endif; ?>
     </div>
 
