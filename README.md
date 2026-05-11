@@ -113,17 +113,23 @@ Sistema-Gestao/
 ├── linhas/
 └── termos/
 
-🔧 Tecnologias Utilizadas
-Tecnologia	Versão	Descrição
-PHP	7.4+	Backend
-HTML5	-	Estrutura
-CSS3	-	Estilização
-JavaScript	ES6	Interatividade
-JSON	-	Armazenamento
-Font Awesome	6.4.0	Ícones
+## 🔧 Tecnologias Utilizadas
 
-📦 Estrutura dos Dados (JSON)
-👤 Colaborador
+| Tecnologia    | Versão | Descrição        |
+|--------------|--------|------------------|
+| PHP          | 7.4+   | Backend          |
+| HTML5        | -      | Estrutura        |
+| CSS3         | -      | Estilização      |
+| JavaScript   | ES6    | Interatividade   |
+| JSON         | -      | Armazenamento    |
+| Font Awesome | 6.4.0  | Ícones           |
+
+---
+
+### 📦 Estrutura dos Dados (JSON)
+
+### 👤 Colaborador
+```json
 {
   "id": 1,
   "nome": "João Silva",
@@ -147,8 +153,9 @@ Font Awesome	6.4.0	Ícones
   "data_atualizacao": "2024-01-15 10:30:00"
 }
 
-💻 Equipamento
+### 💻 Equipamento
 
+```json
 {
   "id": 1,
   "patrimonio": "PAT001",
@@ -165,8 +172,8 @@ Font Awesome	6.4.0	Ícones
   "historico_centro_custo": []
 }
 
-📱 Linha Telefônica
-
+### 📱 Linha Telefônica
+```json
 {
   "id": 1,
   "numero": "16996185975",
@@ -179,16 +186,19 @@ Font Awesome	6.4.0	Ícones
   "historico_centro_custo": []
 }
 
-🛡️ Segurança
-Sessão com timeout de 30 minutos
-Verificação de autenticação
-Sanitização de inputs
-Proteção XSS (htmlspecialchars)
-Validação de CPF e e-mail
+### 🛡️ Segurança
 
-📱 Responsividade
-Dispositivo	Largura
-Desktop	> 1024px
-Tablet	768px - 1024px
-Mobile	< 768px
-Mobile Pequeno	< 480px
+- Sessão com timeout de 30 minutos  
+- Verificação de autenticação  
+- Sanitização de inputs  
+- Proteção contra XSS (`htmlspecialchars`)  
+- Validação de CPF e e-mail  
+
+
+
+| Responsividade                   |
+|--------------|-------------------|
+| Dispositivo     | > 1024px       |
+| Tablet          | 768px - 1024px |
+|Mobile	          |< 768px         |
+|Mobile Pequeno	  |< 480px         |
