@@ -36,8 +36,11 @@
         <option value="Diretoria de Marketing" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Diretoria de Marketing' ? 'selected' : ''; ?>>Diretoria de Marketing</option>
         <option value="Marketing Internacional" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Marketing Internacional' ? 'selected' : ''; ?>>Marketing Internacional</option>
         <option value="Pessoas" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Pessoas' ? 'selected' : ''; ?>>Pessoas</option>
+        <option value="Administrativo" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Administrativo' ? 'selected' : ''; ?>>Administrativo</option>
         <option value="Cultura" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Cultura' ? 'selected' : ''; ?>>Cultura</option>
         <option value="Produto" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Produto' ? 'selected' : ''; ?>>Produto</option>
+        <option value="Dir. Operações" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Dir. Operações' ? 'selected' : ''; ?>>Dir. Operações</option>
+        <option value="Administrativo Soluções em Saúde" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Administrativo Soluções em Saúde' ? 'selected' : ''; ?>>Administrativo Soluções em Saúde</option>
         <option value="Projetos" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Projetos' ? 'selected' : ''; ?>>Projetos</option>
         <option value="RT Dentista" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'RT Dentista' ? 'selected' : ''; ?>> RT Dentista</option>
         <option value="Desenvolvimento" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Desenvolvimento' ? 'selected' : ''; ?>>Desenvolvimento</option>
