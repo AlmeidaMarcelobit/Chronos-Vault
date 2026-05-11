@@ -8,6 +8,10 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
+// Verificar nível do usuário
+$usuario_nivel = $_SESSION['usuario_nivel'] ?? 'user';
+$is_admin = ($usuario_nivel === 'admin');
+
 $colaboradores = lerArquivoJSON('../data/colaboradores.json');
 $equipamentos = lerArquivoJSON('../data/equipamentos.json');
 
@@ -81,6 +85,9 @@ if ($busca) {
             <div class="user-info">
                 <i class="fas fa-user-circle"></i>
                 <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
+                <?php if ($is_admin): ?>
+                    <span class="user-level user-level-admin">Admin</span>
+                <?php endif; ?>
             </div>
 
             <a href="../logout.php" class="logout-btn">
@@ -116,6 +123,14 @@ if ($busca) {
                     <span>Linhas</span>
                 </a>
             </li>
+            <?php if ($is_admin): ?>
+                <li class="nav-item">
+                    <a href="../usuarios/index.php" class="nav-link">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Usuários</span>
+                    </a>
+                </li>
+            <?php endif; ?>
         </ul>
     </nav>
 </header>
@@ -146,10 +161,12 @@ endif; ?>
             </div>
         </div>
         <div class="header-actions">
-            <a href="adicionar.php" class="btn btn-primary">
-                <i class="fas fa-user-plus"></i>
-                <span>Adicionar Colaborador</span>
-            </a>
+            <?php if ($is_admin): ?>
+                <a href="adicionar.php" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Adicionar Colaborador</span>
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -274,25 +291,29 @@ endif; ?>
                         </td>
                         <td data-label="Ações">
                             <div class="action-buttons">
-                                <a href="editar.php?id=<?php echo $colaborador['id']; ?>" class="action-btn action-edit" title="Editar">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="excluir.php?id=<?php echo $colaborador['id']; ?>" class="action-btn action-delete" onclick="return confirm('Tem certeza que deseja excluir este colaborador?')" title="Excluir">
-                                    <i class="fas fa-trash"></i>
-                                </a>
+                                <?php if ($is_admin): ?>
+                                    <a href="editar.php?id=<?php echo $colaborador['id']; ?>" class="action-btn action-edit" title="Editar">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="excluir.php?id=<?php echo $colaborador['id']; ?>" class="action-btn action-delete" onclick="return confirm('Tem certeza que deseja excluir este colaborador?')" title="Excluir">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                <?php endif; ?>
                                 <a href="../equipamentos/index.php?colaborador=<?php echo $colaborador['id']; ?>" class="action-btn action-equipments" title="Ver Equipamentos">
                                     <i class="fas fa-laptop"></i>
                                 </a>
-                                <a href="termos.php?id=<?php echo $colaborador['id']; ?>" class="action-btn action-term" title="Gerenciar Termos">
-                                    <i class="fas fa-file-pdf"></i>
-                                </a>
-                                <?php if ($qtdEquipamentos > 0): ?>
-                                    <a href="selecionar_equipamentos_termo.php?id=<?php echo $colaborador['id']; ?>" class="action-btn action-term" title="Gerar Termo de Responsabilidade">
-                                        <i class="fas fa-file-contract"></i>
+                                <?php if ($is_admin): ?>
+                                    <a href="termos.php?id=<?php echo $colaborador['id']; ?>" class="action-btn action-term" title="Gerenciar Termos">
+                                        <i class="fas fa-file-pdf"></i>
                                     </a>
-                                    <a href="selecionar_equipamentos_devolucao.php?id=<?php echo $colaborador['id']; ?>" class="action-btn action-return" title="Gerar Termo de Devolução">
-                                        <i class="fas fa-box-open"></i>
-                                    </a>
+                                    <?php if ($qtdEquipamentos > 0): ?>
+                                        <a href="selecionar_equipamentos_termo.php?id=<?php echo $colaborador['id']; ?>" class="action-btn action-term" title="Gerar Termo de Responsabilidade">
+                                            <i class="fas fa-file-contract"></i>
+                                        </a>
+                                        <a href="selecionar_equipamentos_devolucao.php?id=<?php echo $colaborador['id']; ?>" class="action-btn action-return" title="Gerar Termo de Devolução">
+                                            <i class="fas fa-box-open"></i>
+                                        </a>
+                                    <?php endif; ?>
                                 <?php endif; ?>
                             </div>
                         </td>
@@ -308,19 +329,21 @@ endif; ?>
             <i class="fas fa-chart-line"></i>
             <span>Total de colaboradores: <strong><?php echo count($colaboradores); ?></strong></span>
         </div>
-        <div class="legend">
-            <div class="legend-title">
-                <i class="fas fa-info-circle"></i>
-                <span>Legenda de Ações:</span>
+        <?php if ($is_admin): ?>
+            <div class="legend">
+                <div class="legend-title">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Legenda de Ações:</span>
+                </div>
+                <div class="legend-items">
+                    <span class="legend-item"><i class="fas fa-edit"></i> Editar</span>
+                    <span class="legend-item"><i class="fas fa-trash"></i> Excluir</span>
+                    <span class="legend-item"><i class="fas fa-laptop"></i> Equipamentos</span>
+                    <span class="legend-item"><i class="fas fa-file-contract"></i> Termo</span>
+                    <span class="legend-item"><i class="fas fa-box-open"></i> Devolução</span>
+                </div>
             </div>
-            <div class="legend-items">
-                <span class="legend-item"><i class="fas fa-edit"></i> Editar</span>
-                <span class="legend-item"><i class="fas fa-trash"></i> Excluir</span>
-                <span class="legend-item"><i class="fas fa-laptop"></i> Equipamentos</span>
-                <span class="legend-item"><i class="fas fa-file-contract"></i> Termo</span>
-                <span class="legend-item"><i class="fas fa-box-open"></i> Devolução</span>
-            </div>
-        </div>
+        <?php endif; ?>
     </div>
 </main>
 
