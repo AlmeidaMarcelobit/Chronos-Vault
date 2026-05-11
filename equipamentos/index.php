@@ -459,11 +459,15 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
                                     <a href="atribuir.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-equipments" title="Atribuir">
                                         <i class="fas fa-user-check"></i>
                                     </a>
-                                <?php elseif (in_array($equipamento['status'], ['alocado', 'emprestado'])): ?>
+                                <?php endif; ?>
+
+                                <?php if ($can_edit && in_array($equipamento['status'], ['alocado', 'emprestado'])): ?>
                                     <a href="devolver.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-return" title="Devolver" onclick="return confirm('Devolver este equipamento para o estoque?')">
                                         <i class="fas fa-undo"></i>
                                     </a>
-                                <?php elseif ($can_edit && $equipamento['status'] == 'manutencao'): ?>
+                                <?php endif; ?>
+
+                                <?php if ($can_edit && $equipamento['status'] == 'manutencao'): ?>
                                     <a href="finalizar_manutencao.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-success" title="Finalizar Manutenção" onclick="return confirm('Finalizar manutenção deste equipamento?')">
                                         <i class="fas fa-check"></i>
                                     </a>
@@ -481,6 +485,7 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
                                     </a>
                                 <?php endif; ?>
 
+                                <!-- Botão Visualizar - visível para todos os níveis -->
                                 <button type="button" class="action-btn action-view" onclick="showEquipmentDetails(<?php echo htmlspecialchars(json_encode($equipamento)); ?>)" title="Ver Detalhes">
                                     <i class="fas fa-eye"></i>
                                 </button>
