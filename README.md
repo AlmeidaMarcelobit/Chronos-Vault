@@ -4,6 +4,8 @@ Sistema completo para gestão de colaboradores, equipamentos e linhas telefônic
 
 ---
 
+
+
 ## 🎨 Tema Visual - Fanta Uva
 
 | Cor | Nome | Valor Hexadecimal |
@@ -113,9 +115,9 @@ Sistema-Gestao/
 ├── linhas/
 └── termos/
 
-## 🔧 Tecnologias Utilizadas
+## 🔧 Tecnologias Utilizadas 
 
-| Tecnologia    | Versão | Descrição        |
+| Tecnologia   | Versão | Descrição        |
 |--------------|--------|------------------|
 | PHP          | 7.4+   | Backend          |
 | HTML5        | -      | Estrutura        |
@@ -124,67 +126,8 @@ Sistema-Gestao/
 | JSON         | -      | Armazenamento    |
 | Font Awesome | 6.4.0  | Ícones           |
 
----
 
-### 📦 Estrutura dos Dados (JSON)
 
-### 👤 Colaborador
-```json
-{
-  "id": 1,
-  "nome": "João Silva",
-  "cargo": "Analista de Sistemas",
-  "cpf": "12345678900",
-  "departamento": "TI - Tecnologia",
-  "centro_custo": "12001",
-  "email": "joao@empresa.com.br",
-  "gestor_id": 3,
-  "tipo_trabalho": "home",
-  "endereco": {
-    "logradouro": "Rua das Flores",
-    "numero": "123",
-    "complemento": "Apto 45",
-    "bairro": "Centro",
-    "cidade": "São Paulo",
-    "estado": "SP",
-    "cep": "01234-567"
-  },
-  "data_cadastro": "2024-01-15 10:30:00",
-  "data_atualizacao": "2024-01-15 10:30:00"
-}
-
-### 💻 Equipamento
-
-```json
-{
-  "id": 1,
-  "patrimonio": "PAT001",
-  "tipo": "notebook",
-  "marca": "Dell",
-  "modelo": "Latitude 5420",
-  "serial": "SN123456",
-  "caixa": "CAIXA-001",
-  "centro_custo": "12001",
-  "status": "alocado",
-  "colaborador_id": 1,
-  "observacoes": "",
-  "data_cadastro": "2024-01-15 10:30:00",
-  "historico_centro_custo": []
-}
-
-### 📱 Linha Telefônica
-```json
-{
-  "id": 1,
-  "numero": "16996185975",
-  "tipo": "chip",
-  "centro_custo": "TI001",
-  "status": "alocado",
-  "colaborador_id": 1,
-  "observacoes": "",
-  "data_cadastro": "2024-01-15 10:30:00",
-  "historico_centro_custo": []
-}
 
 ### 🛡️ Segurança
 
@@ -193,7 +136,6 @@ Sistema-Gestao/
 - Sanitização de inputs  
 - Proteção contra XSS (`htmlspecialchars`)  
 - Validação de CPF e e-mail  
-
 
 
 | Responsividade                   |
