@@ -51,9 +51,23 @@ foreach ($colaboradores as $colaborador) {
 
 // Processar desvinculação
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
+    // Registrar centro de custo antes de desvincular
+    $centroCustoAtual = $linhaAtual['centro_custo'];
+
     $linhas[$linhaIndex]['colaborador_id'] = null;
     $linhas[$linhaIndex]['status'] = 'disponivel';
     $linhas[$linhaIndex]['data_atualizacao'] = date('Y-m-d H:i:s');
+    $linhas[$linhaIndex]['data_atribuicao'] = null;
+
+    // NÃO alterar o centro de custo - mantém o mesmo
+    $linhas[$linhaIndex]['centro_custo'] = $centroCustoAtual;
+
+    // Adicionar observação
+    $observacaoAtual = $linhas[$linhaIndex]['observacoes'] ?? '';
+    $novaObservacao = "\n\n[DESVINCULAÇÃO] " . date('d/m/Y H:i:s');
+    $novaObservacao .= "\nLinha desvinculada do colaborador: " . $colaboradorNome;
+    $novaObservacao .= "\nCentro de custo mantido: {$centroCustoAtual}";
+    $linhas[$linhaIndex]['observacoes'] = $observacaoAtual . $novaObservacao;
 
     if (salvarArquivoJSON('../data/linhas.json', $linhas)) {
         $_SESSION['mensagem'] = 'Linha desvinculada com sucesso!';
@@ -138,6 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
             <ul>
                 <li>O status será alterado para <strong>"Disponível"</strong></li>
                 <li>O vínculo com o colaborador será removido</li>
+                <li><strong>O centro de custo NÃO será alterado</strong> (permanecerá o mesmo)</li>
                 <li>A linha ficará disponível para nova atribuição</li>
             </ul>
         </div>
