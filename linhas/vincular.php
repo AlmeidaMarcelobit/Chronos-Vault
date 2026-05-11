@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vincular Linha - Sistema de Gestão</title>
-    <link rel="stylesheet" href="../css/linhas.css">
+    <link rel="stylesheet" href="../css/linhas/vincular.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -185,8 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="info-item">
                     <span class="info-label">Centro de Custo Atual:</span>
                     <span class="info-value">
-                            <span class="cc-badge">
-                                <i class="fas fa-dollar-sign"></i>
+                            <span class="cc-badge" id="cc-atual">
                                 <?php echo htmlspecialchars($linhaAtual['centro_custo']); ?>
                             </span>
                         </span>
@@ -195,38 +194,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <!-- Formulário de Vinculação -->
-        <form method="POST" action="" class="form-card">
+        <form method="POST" action="" id="form-vincular">
             <div class="form-group">
-                <label for="colaborador_id"><i class="fas fa-user"></i> Selecionar Colaborador <span class="required">*</span></label>
-                <select id="colaborador_id" name="colaborador_id" required class="form-select" onchange="mostrarInfoCentroCusto()">
-                    <option value="">-- Selecione um colaborador --</option>
-                    <?php foreach ($colaboradores as $colaborador): ?>
-                        <option value="<?php echo $colaborador['id']; ?>"
-                                data-centro-custo="<?php echo htmlspecialchars($colaborador['centro_custo']); ?>"
-                                data-nome="<?php echo htmlspecialchars($colaborador['nome']); ?>">
-                            <?php echo htmlspecialchars($colaborador['nome'] . ' - ' . $colaborador['cargo'] . ' (CC: ' . $colaborador['centro_custo'] . ')'); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+                <label><i class="fas fa-users"></i> Selecionar Colaborador <span class="required">*</span></label>
+
+                <!-- Campo de busca -->
+                <div class="search-colaborador">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="busca-colaborador" class="form-control" placeholder="Buscar por nome, cargo ou centro de custo..." autocomplete="off">
+                </div>
+
+                <!-- Lista de colaboradores -->
+                <div class="colaboradores-list" id="lista-colaboradores">
+                    <?php if (empty($colaboradores)): ?>
+                        <div class="sem-resultados">
+                            <i class="fas fa-users-slash"></i>
+                            <p>Nenhum colaborador cadastrado</p>
+                            <a href="../colaboradores/adicionar.php" class="btn btn-primary btn-sm">Cadastrar colaborador</a>
+                        </div>
+                    <?php else: ?>
+                        <?php foreach ($colaboradores as $colaborador): ?>
+                            <div class="colaborador-item" data-id="<?php echo $colaborador['id']; ?>"
+                                 data-nome="<?php echo htmlspecialchars($colaborador['nome']); ?>"
+                                 data-cargo="<?php echo htmlspecialchars($colaborador['cargo']); ?>"
+                                 data-departamento="<?php echo htmlspecialchars($colaborador['departamento']); ?>"
+                                 data-centro-custo="<?php echo htmlspecialchars($colaborador['centro_custo']); ?>">
+                                <div class="colaborador-info">
+                                    <div class="colaborador-nome"><?php echo htmlspecialchars($colaborador['nome']); ?></div>
+                                    <div class="colaborador-detalhes">
+                                        <span><i class="fas fa-briefcase"></i> <?php echo htmlspecialchars($colaborador['cargo']); ?></span>
+                                        <span><i class="fas fa-building"></i> <?php echo htmlspecialchars($colaborador['departamento']); ?></span>
+                                        <span><i class="fas fa-dollar-sign"></i> <?php echo htmlspecialchars($colaborador['centro_custo']); ?></span>
+                                    </div>
+                                </div>
+                                <div class="radio-custom"></div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+
+                <input type="hidden" id="colaborador_id" name="colaborador_id" required>
             </div>
 
             <!-- Informação de Centro de Custo -->
-            <div id="info-centro-custo" class="info-card info-centro-custo" style="display: none; margin-top: var(--spacing-md);">
-                <h4><i class="fas fa-dollar-sign"></i> Atualização Automática</h4>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <span class="info-label">Centro de Custo da Linha:</span>
-                        <span class="info-value" id="cc-linha"><?php echo htmlspecialchars($linhaAtual['centro_custo']); ?></span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Centro de Custo do Colaborador:</span>
-                        <span class="info-value" id="cc-colaborador">---</span>
-                    </div>
-                </div>
-                <div class="alert-info" style="margin-top: var(--spacing-md); padding: var(--spacing-sm); border-radius: var(--radius-sm); background: rgba(52, 152, 219, 0.1);">
-                    <i class="fas fa-sync-alt"></i>
-                    <strong>Centro de custo será atualizado automaticamente!</strong>
-                    <small>Ao vincular esta linha, o centro de custo será alterado para o centro de custo do colaborador selecionado.</small>
+            <div id="info-centro-custo" class="info-centro-custo" style="display: none;">
+                <strong><i class="fas fa-sync-alt"></i> O que vai acontecer:</strong>
+                <div style="margin-top: var(--spacing-sm);">
+                    Centro de custo da linha: <span id="cc-linha" class="cc-anterior"><?php echo htmlspecialchars($linhaAtual['centro_custo']); ?></span><br>
+                    Centro de custo do colaborador: <span id="cc-colaborador-selecionado" class="cc-novo">---</span><br>
+                    <span id="cc-mensagem" style="font-size: 0.875rem; margin-top: var(--spacing-xs); display: inline-block;"></span>
                 </div>
             </div>
 
@@ -245,7 +261,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Confirmar Vinculação</button>
+                <button type="submit" class="btn btn-primary" id="btn-vincular" disabled>
+                    <i class="fas fa-check"></i> Confirmar Vinculação
+                </button>
                 <a href="index.php" class="btn btn-secondary"><i class="fas fa-times"></i> Cancelar</a>
             </div>
         </form>
@@ -274,33 +292,91 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </footer>
 
 <script>
-    function mostrarInfoCentroCusto() {
-        const select = document.getElementById('colaborador_id');
-        const selectedOption = select.options[select.selectedIndex];
-        const centroCustoColaborador = selectedOption ? selectedOption.getAttribute('data-centro-custo') : null;
-        const nomeColaborador = selectedOption ? selectedOption.getAttribute('data-nome') : null;
-        const infoDiv = document.getElementById('info-centro-custo');
-        const ccColaboradorSpan = document.getElementById('cc-colaborador');
-        const ccLinhaSpan = document.getElementById('cc-linha');
-        const centroCustoLinha = '<?php echo $linhaAtual['centro_custo']; ?>';
+    const colaboradoresList = document.querySelectorAll('.colaborador-item');
+    const buscaInput = document.getElementById('busca-colaborador');
+    const colaboradorIdInput = document.getElementById('colaborador_id');
+    const btnVincular = document.getElementById('btn-vincular');
+    const infoCentroCusto = document.getElementById('info-centro-custo');
+    const ccColaboradorSpan = document.getElementById('cc-colaborador-selecionado');
+    const ccLinhaSpan = document.getElementById('cc-linha');
+    const ccMensagemSpan = document.getElementById('cc-mensagem');
 
-        if (select.value && centroCustoColaborador) {
-            ccColaboradorSpan.innerHTML = centroCustoColaborador;
-            infoDiv.style.display = 'block';
+    const centroCustoLinha = '<?php echo $linhaAtual['centro_custo']; ?>';
 
-            // Destacar se são diferentes
-            if (centroCustoColaborador !== centroCustoLinha) {
-                ccColaboradorSpan.style.color = 'var(--warning)';
-                ccColaboradorSpan.style.fontWeight = 'bold';
-                ccLinhaSpan.style.color = 'var(--danger)';
-            } else {
-                ccColaboradorSpan.style.color = 'var(--success)';
-                ccLinhaSpan.style.color = 'var(--success)';
-            }
-        } else {
-            infoDiv.style.display = 'none';
-        }
+    let colaboradorSelecionado = null;
+
+    // Função para filtrar colaboradores
+    function filtrarColaboradores() {
+        const termo = buscaInput.value.toLowerCase();
+
+        colaboradoresList.forEach(item => {
+            const nome = item.getAttribute('data-nome').toLowerCase();
+            const cargo = item.getAttribute('data-cargo').toLowerCase();
+            const departamento = item.getAttribute('data-departamento').toLowerCase();
+            const centroCusto = item.getAttribute('data-centro-custo').toLowerCase();
+
+            const matches = nome.includes(termo) ||
+                cargo.includes(termo) ||
+                departamento.includes(termo) ||
+                centroCusto.includes(termo);
+
+            item.style.display = matches ? 'flex' : 'none';
+        });
     }
+
+    // Função para selecionar colaborador
+    function selecionarColaborador(elemento) {
+        // Remover seleção de todos
+        colaboradoresList.forEach(item => {
+            item.classList.remove('selected');
+        });
+
+        // Adicionar seleção ao clicado
+        elemento.classList.add('selected');
+
+        // Obter dados
+        const id = elemento.getAttribute('data-id');
+        const nome = elemento.getAttribute('data-nome');
+        const centroCusto = elemento.getAttribute('data-centro-custo');
+
+        colaboradorSelecionado = { id, nome, centroCusto };
+        colaboradorIdInput.value = id;
+
+        // Atualizar informações de centro de custo
+        ccColaboradorSpan.innerHTML = centroCusto;
+        infoCentroCusto.style.display = 'block';
+
+        if (centroCusto !== centroCustoLinha) {
+            ccColaboradorSpan.style.color = 'var(--warning)';
+            ccLinhaSpan.style.color = 'var(--danger)';
+            ccMensagemSpan.innerHTML = '⚠️ O centro de custo será alterado automaticamente!';
+            ccMensagemSpan.style.color = 'var(--warning)';
+        } else {
+            ccColaboradorSpan.style.color = 'var(--success)';
+            ccLinhaSpan.style.color = 'var(--success)';
+            ccMensagemSpan.innerHTML = '✓ Centro de custo já é o mesmo do colaborador.';
+            ccMensagemSpan.style.color = 'var(--success)';
+        }
+
+        // Habilitar botão
+        btnVincular.disabled = false;
+    }
+
+    // Evento de clique nos colaboradores
+    colaboradoresList.forEach(item => {
+        item.addEventListener('click', () => selecionarColaborador(item));
+    });
+
+    // Evento de busca
+    buscaInput.addEventListener('input', filtrarColaboradores);
+
+    // Prevenir submit sem seleção
+    document.getElementById('form-vincular').addEventListener('submit', function(e) {
+        if (!colaboradorIdInput.value) {
+            e.preventDefault();
+            alert('Selecione um colaborador para vincular a linha.');
+        }
+    });
 
     setTimeout(function() {
         const alert = document.querySelector('.global-alert');
