@@ -1,5 +1,5 @@
 /* responsabilidade.css - Termo de Responsabilidade de Equipamentos */
-/* Tema Fanta Uva - Design para Impressão e Tela */
+/* Tema Fanta Uva - Otimizado para Impressão em 1 Página */
 
 /* ============================================
    VARIÁVEIS DE CORES (Fanta Uva)
@@ -28,17 +28,14 @@
     --info: #3498DB;
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
-    --spacing-2xl: 3rem;
+    --spacing-md: 0.75rem;
+    --spacing-lg: 1rem;
+    --spacing-xl: 1.25rem;
     --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
+    --radius-md: 6px;
+    --radius-lg: 10px;
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
     --transition: all 0.2s ease;
 }
 
@@ -55,8 +52,8 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
     background: var(--gray-100);
     color: var(--gray-800);
-    line-height: 1.5;
-    padding: var(--spacing-xl);
+    line-height: 1.4;
+    padding: var(--spacing-md);
 }
 
 /* ============================================
@@ -64,13 +61,13 @@ body {
    ============================================ */
 .termo-actions {
     max-width: 1100px;
-    margin: 0 auto var(--spacing-xl) auto;
+    margin: 0 auto var(--spacing-md) auto;
     display: flex;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
     justify-content: center;
     flex-wrap: wrap;
     position: sticky;
-    top: var(--spacing-md);
+    top: var(--spacing-sm);
     z-index: 100;
 }
 
@@ -79,9 +76,9 @@ body {
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-xl);
+    padding: var(--spacing-sm) var(--spacing-lg);
     border-radius: var(--radius-md);
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-weight: 600;
     text-decoration: none;
     transition: var(--transition);
@@ -96,8 +93,7 @@ body {
 
 .btn-print:hover {
     background: var(--grape-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
 }
 
 .btn-back {
@@ -107,7 +103,6 @@ body {
 
 .btn-back:hover {
     background: var(--gray-300);
-    transform: translateY(-1px);
 }
 
 /* ============================================
@@ -118,9 +113,9 @@ body {
     margin: 0 auto;
     background: var(--white);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-md);
     overflow: hidden;
-    padding: var(--spacing-2xl);
+    padding: var(--spacing-lg);
 }
 
 /* ============================================
@@ -128,27 +123,27 @@ body {
    ============================================ */
 .termo-header {
     text-align: center;
-    margin-bottom: var(--spacing-xl);
-    padding-bottom: var(--spacing-lg);
-    border-bottom: 3px solid var(--grape);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--grape);
 }
 
 .termo-header img {
-    max-width: 150px;
-    margin-bottom: var(--spacing-md);
+    max-width: 80px;
+    margin-bottom: var(--spacing-xs);
 }
 
 .termo-title {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--grape);
-    letter-spacing: 1px;
-    margin-bottom: var(--spacing-xs);
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
     text-transform: uppercase;
 }
 
 .termo-subtitle {
-    font-size: 0.875rem;
+    font-size: 0.7rem;
     color: var(--gray-500);
 }
 
@@ -159,29 +154,29 @@ body {
     display: inline-block;
     background: var(--grape-soft);
     color: var(--grape-dark);
-    padding: 4px var(--spacing-md);
-    border-radius: 20px;
-    font-size: 0.75rem;
+    padding: 2px var(--spacing-sm);
+    border-radius: 15px;
+    font-size: 0.65rem;
     font-weight: 600;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
 }
 
 /* ============================================
    SEÇÕES DO TERMO
    ============================================ */
 .termo-section {
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
 }
 
 .section-title {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     font-weight: 700;
     color: var(--white);
     background: var(--grape);
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    padding: 4px var(--spacing-sm);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
     letter-spacing: 0.5px;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
 }
 
 /* ============================================
@@ -189,50 +184,49 @@ body {
    ============================================ */
 .info-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-md);
-    padding: var(--spacing-lg);
-    background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
-    border-radius: var(--radius-md);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    background: var(--gray-50);
+    border-radius: var(--radius-sm);
     border: 1px solid var(--gray-200);
 }
 
 .info-item {
     display: flex;
     align-items: baseline;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-xs);
     flex-wrap: wrap;
 }
 
 .info-label {
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     font-weight: 600;
     color: var(--gray-500);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    min-width: 90px;
+    letter-spacing: 0.3px;
+    min-width: 65px;
 }
 
 .info-value {
-    font-size: 0.875rem;
+    font-size: 0.7rem;
     color: var(--gray-800);
     font-weight: 500;
-    word-break: break-word;
 }
 
 /* ============================================
-   TABELA DE EQUIPAMENTOS
+   TABELA DE EQUIPAMENTOS (COMPACTA)
    ============================================ */
 .termo-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.8rem;
+    font-size: 0.65rem;
 }
 
 .termo-table th,
 .termo-table td {
     border: 1px solid var(--gray-300);
-    padding: var(--spacing-sm);
+    padding: 3px 4px;
     text-align: left;
     vertical-align: top;
 }
@@ -242,25 +236,112 @@ body {
     font-weight: 600;
     color: var(--gray-700);
     text-transform: uppercase;
-    font-size: 0.7rem;
-    letter-spacing: 0.5px;
+    font-size: 0.6rem;
+    letter-spacing: 0.3px;
 }
 
 .termo-table td {
     color: var(--gray-700);
+    font-size: 0.65rem;
 }
 
-.termo-table tbody tr:hover {
-    background: var(--gray-50);
+/* ============================================
+   TEXTO DO TERMO (CLÁUSULAS COMPACTAS)
+   ============================================ */
+.termo-text {
+    padding: var(--spacing-sm);
+    background: var(--white);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--gray-200);
 }
 
+.clausula {
+    margin-bottom: var(--spacing-sm);
+}
+
+.clausula:last-child {
+    margin-bottom: 0;
+}
+
+.clausula-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--grape);
+    margin-bottom: 2px;
+    padding-bottom: 1px;
+    border-bottom: 0.5px solid var(--gray-200);
+}
+
+.clausula p {
+    font-size: 0.65rem;
+    color: var(--gray-700);
+    line-height: 1.3;
+    text-align: justify;
+}
+
+.clausula ol {
+    margin-left: var(--spacing-md);
+    margin-top: 2px;
+}
+
+.clausula li {
+    font-size: 0.65rem;
+    color: var(--gray-700);
+    line-height: 1.3;
+    margin-bottom: 1px;
+}
+
+/* ============================================
+   ASSINATURAS (COMPACTAS)
+   ============================================ */
+.termo-assinaturas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--gray-200);
+}
+
+.assinatura-box {
+    text-align: center;
+}
+
+.linha-assinatura {
+    height: 1px;
+    background: var(--gray-400);
+    margin: var(--spacing-sm) 0 2px 0;
+}
+
+.nome-assinatura {
+    font-size: 0.65rem;
+    color: var(--gray-600);
+    font-weight: 500;
+    margin-bottom: 1px;
+}
+
+.cargo-assinatura {
+    font-size: 0.6rem;
+    color: var(--gray-500);
+    margin-bottom: 1px;
+}
+
+.data-assinatura {
+    font-size: 0.6rem;
+    color: var(--gray-500);
+    margin-top: 2px;
+}
+
+/* ============================================
+   STATUS BADGE (COMPACTO)
+   ============================================ */
 .status-badge {
     display: inline-flex;
     align-items: center;
-    gap: var(--spacing-xs);
-    padding: 2px var(--spacing-sm);
+    gap: 2px;
+    padding: 1px 3px;
     border-radius: var(--radius-sm);
-    font-size: 0.65rem;
+    font-size: 0.55rem;
     font-weight: 500;
 }
 
@@ -280,210 +361,167 @@ body {
 }
 
 /* ============================================
-   TEXTO DO TERMO (CLÁUSULAS)
-   ============================================ */
-.termo-text {
-    padding: var(--spacing-lg);
-    background: var(--white);
-    border-radius: var(--radius-md);
-    border: 1px solid var(--gray-200);
-}
-
-.clausula {
-    margin-bottom: var(--spacing-lg);
-}
-
-.clausula:last-child {
-    margin-bottom: 0;
-}
-
-.clausula-title {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--grape);
-    margin-bottom: var(--spacing-sm);
-    padding-bottom: var(--spacing-xs);
-    border-bottom: 1px solid var(--gray-200);
-}
-
-.clausula p {
-    font-size: 0.8rem;
-    color: var(--gray-700);
-    line-height: 1.6;
-    text-align: justify;
-}
-
-.clausula ol {
-    margin-left: var(--spacing-lg);
-    margin-top: var(--spacing-sm);
-}
-
-.clausula li {
-    font-size: 0.8rem;
-    color: var(--gray-700);
-    line-height: 1.6;
-    margin-bottom: var(--spacing-xs);
-}
-
-/* ============================================
-   ASSINATURAS
-   ============================================ */
-.termo-assinaturas {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-xl);
-    padding-top: var(--spacing-lg);
-    border-top: 2px solid var(--gray-200);
-}
-
-.assinatura-box {
-    text-align: center;
-}
-
-.linha-assinatura {
-    height: 1px;
-    background: var(--gray-400);
-    margin: var(--spacing-lg) 0 var(--spacing-sm) 0;
-}
-
-.nome-assinatura {
-    font-size: 0.75rem;
-    color: var(--gray-600);
-    font-weight: 500;
-    margin-bottom: var(--spacing-xs);
-}
-
-.cargo-assinatura {
-    font-size: 0.7rem;
-    color: var(--gray-500);
-    margin-bottom: var(--spacing-xs);
-}
-
-.data-assinatura {
-    font-size: 0.7rem;
-    color: var(--gray-500);
-    margin-top: var(--spacing-sm);
-}
-
-/* ============================================
-   ESTILOS DE IMPRESSÃO
+   ESTILOS DE IMPRESSÃO - 1 PÁGINA!
    ============================================ */
 @media print {
+    /* Reset para impressão */
     body {
         background: white;
         padding: 0;
         margin: 0;
     }
 
+    /* Esconder botões */
     .termo-actions,
     .no-print {
         display: none !important;
     }
 
+    /* Container sem sombras e sem padding */
     .termo-container {
         box-shadow: none;
-        padding: 0.5cm;
+        padding: 0;
         margin: 0;
         max-width: 100%;
     }
 
+    /* Cabeçalho compacto */
     .termo-header {
-        margin-bottom: 15px;
-        padding-bottom: 8px;
+        margin-bottom: 5px;
+        padding-bottom: 3px;
+    }
+
+    .termo-header img {
+        max-width: 60px;
     }
 
     .termo-title {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .termo-subtitle {
-        font-size: 10px;
+        font-size: 9px;
     }
 
+    /* Títulos das seções */
     .section-title {
-        font-size: 11px;
-        padding: 3px 6px;
+        font-size: 10px;
+        padding: 2px 5px;
+        margin-bottom: 3px;
     }
 
+    /* Grid de informações */
     .info-grid {
-        padding: 10px;
+        padding: 4px;
+        gap: 2px;
     }
 
     .info-label {
-        font-size: 9px;
-        min-width: 70px;
+        font-size: 8px;
+        min-width: 55px;
     }
 
     .info-value {
-        font-size: 10px;
-    }
-
-    .termo-table {
         font-size: 9px;
     }
 
+    /* Tabela compacta */
     .termo-table th,
     .termo-table td {
-        padding: 3px;
+        padding: 2px 3px;
+        font-size: 8px;
+    }
+
+    .termo-table th {
+        font-size: 7px;
+    }
+
+    /* Cláusulas compactas */
+    .termo-text {
+        padding: 4px;
+    }
+
+    .clausula {
+        margin-bottom: 4px;
     }
 
     .clausula-title {
-        font-size: 10px;
+        font-size: 9px;
+        margin-bottom: 1px;
     }
 
     .clausula p,
     .clausula li {
-        font-size: 9px;
+        font-size: 8px;
+        line-height: 1.2;
     }
 
+    .clausula ol {
+        margin-left: 15px;
+    }
+
+    /* Assinaturas compactas */
     .termo-assinaturas {
-        margin-top: 20px;
-        padding-top: 15px;
-        gap: 30px;
+        margin-top: 8px;
+        padding-top: 5px;
+        gap: 20px;
     }
 
     .linha-assinatura {
-        margin: 15px 0 3px 0;
+        margin: 5px 0 1px 0;
     }
 
-    .nome-assinatura,
-    .cargo-assinatura,
-    .data-assinatura {
+    .nome-assinatura {
         font-size: 8px;
     }
 
+    .cargo-assinatura,
+    .data-assinatura {
+        font-size: 7px;
+    }
+
+    /* Contador */
+    .equipamento-count {
+        font-size: 8px;
+        padding: 1px 5px;
+        margin-bottom: 3px;
+    }
+
+    /* Quebra de página - garantir que não quebre no meio */
+    .termo-section,
+    .clausula,
+    .termo-assinaturas {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Configuração da página */
     @page {
         size: A4;
-        margin: 1.5cm;
+        margin: 0.8cm;
     }
 }
 
 /* ============================================
-   RESPONSIVIDADE
+   RESPONSIVIDADE PARA TELA
    ============================================ */
 @media (max-width: 768px) {
     body {
-        padding: var(--spacing-md);
+        padding: var(--spacing-xs);
     }
 
     .termo-container {
-        padding: var(--spacing-lg);
-    }
-
-    .termo-title {
-        font-size: 1.25rem;
+        padding: var(--spacing-sm);
     }
 
     .info-grid {
         grid-template-columns: 1fr;
-        gap: var(--spacing-sm);
-        padding: var(--spacing-md);
+        gap: 2px;
     }
 
     .info-item {
         flex-direction: column;
-        gap: var(--spacing-xs);
+        gap: 1px;
     }
 
     .info-label {
@@ -492,57 +530,19 @@ body {
 
     .termo-assinaturas {
         grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
+        gap: var(--spacing-md);
     }
 
     .termo-actions {
         position: static;
-        margin-bottom: var(--spacing-md);
-    }
-
-    .btn-print,
-    .btn-back {
-        padding: var(--spacing-sm) var(--spacing-md);
-        font-size: 0.75rem;
-    }
-
-    .clausula ol {
-        margin-left: var(--spacing-md);
-    }
-}
-
-@media (max-width: 480px) {
-    .termo-container {
-        padding: var(--spacing-md);
-    }
-
-    .termo-table {
-        font-size: 0.65rem;
-    }
-
-    .termo-table th,
-    .termo-table td {
-        padding: var(--spacing-xs);
-    }
-
-    .clausula p,
-    .clausula li {
-        font-size: 0.7rem;
-    }
-
-    .clausula-title {
-        font-size: 0.75rem;
-    }
-
-    .equipamento-count {
-        font-size: 0.65rem;
+        margin-bottom: var(--spacing-sm);
     }
 }
 
 /* ============================================
    TABELA RESPONSIVA (MOBILE)
    ============================================ */
-@media (max-width: 650px) {
+@media (max-width: 600px) {
     .termo-table,
     .termo-table tbody,
     .termo-table tr,
@@ -556,10 +556,10 @@ body {
     }
 
     .termo-table tr {
-        margin-bottom: var(--spacing-md);
+        margin-bottom: 4px;
         border: 1px solid var(--gray-300);
-        border-radius: var(--radius-md);
-        padding: var(--spacing-sm);
+        border-radius: var(--radius-sm);
+        padding: 3px;
         background: var(--white);
     }
 
@@ -567,10 +567,10 @@ body {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: var(--spacing-xs) var(--spacing-sm);
+        padding: 2px 3px;
         border: none;
-        border-bottom: 1px solid var(--gray-200);
-        font-size: 0.75rem;
+        border-bottom: 0.5px solid var(--gray-200);
+        font-size: 0.7rem;
     }
 
     .termo-table td:last-child {
@@ -581,8 +581,8 @@ body {
         content: attr(data-label);
         font-weight: 600;
         color: var(--gray-600);
-        font-size: 0.7rem;
-        margin-right: var(--spacing-md);
+        font-size: 0.65rem;
+        margin-right: var(--spacing-sm);
     }
 }
 
@@ -593,21 +593,11 @@ body {
     text-align: center;
 }
 
-.mt-1 { margin-top: var(--spacing-sm); }
-.mt-2 { margin-top: var(--spacing-md); }
-.mt-3 { margin-top: var(--spacing-lg); }
-
-.mb-1 { margin-bottom: var(--spacing-sm); }
-.mb-2 { margin-bottom: var(--spacing-md); }
-.mb-3 { margin-bottom: var(--spacing-lg); }
-
-/* ============================================
-   ANIMAÇÕES
-   ============================================ */
+/* Animações */
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(5px);
     }
     to {
         opacity: 1;
@@ -616,5 +606,5 @@ body {
 }
 
 .termo-container {
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.2s ease;
 }
