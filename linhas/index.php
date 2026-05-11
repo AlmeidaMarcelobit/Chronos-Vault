@@ -8,6 +8,12 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
+// Verificar nível do usuário
+$usuario_nivel = $_SESSION['usuario_nivel'] ?? 'user';
+$is_admin = ($usuario_nivel === 'admin');
+$is_view = ($usuario_nivel === 'view');
+$can_edit = ($is_admin || $usuario_nivel === 'user'); // Admin e usuário comum podem editar
+
 $linhas = lerArquivoJSON('../data/linhas.json');
 $colaboradores = lerArquivoJSON('../data/colaboradores.json');
 
@@ -85,6 +91,13 @@ $totalFiltrado = count($linhas);
             <div class="user-info">
                 <i class="fas fa-user-circle"></i>
                 <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
+<!--                --><?php //if ($is_admin): ?>
+<!--                    <span class="user-level user-level-admin">Admin</span>-->
+<!--                --><?php //elseif ($is_view): ?>
+<!--                    <span class="user-level user-level-view">Visualizador</span>-->
+<!--                --><?php //else: ?>
+<!--                    <span class="user-level user-level-user">Usuário</span>-->
+<!--                --><?php //endif; ?>
             </div>
             <a href="../logout.php" class="logout-btn">
                 <i class="fas fa-sign-out-alt"></i>
@@ -98,6 +111,14 @@ $totalFiltrado = count($linhas);
             <li class="nav-item"><a href="../colaboradores/index.php" class="nav-link"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
             <li class="nav-item"><a href="../equipamentos/index.php" class="nav-link"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
             <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
+            <?php if ($is_admin): ?>
+                <li class="nav-item">
+                    <a href="../usuarios/index.php" class="nav-link">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Usuários</span>
+                    </a>
+                </li>
+            <?php endif; ?>
         </ul>
     </nav>
 </header>
@@ -109,9 +130,11 @@ $totalFiltrado = count($linhas);
             <h1><i class="fas fa-phone"></i> Linhas Telefônicas</h1>
             <p class="page-subtitle">Gerencie as linhas Vivo (Chip e E-Chip) da organização</p>
         </div>
-        <a href="adicionar.php" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Adicionar Linha
-        </a>
+        <?php if ($can_edit): ?>
+            <a href="adicionar.php" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Adicionar Linha
+            </a>
+        <?php endif; ?>
     </div>
 
     <!-- Cards de Estatísticas -->
@@ -248,21 +271,27 @@ $totalFiltrado = count($linhas);
                         </td>
                         <td data-label="Ações">
                             <div class="action-buttons">
-                                <a href="editar.php?id=<?php echo $linha['id']; ?>" class="action-btn action-edit" title="Editar">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <?php if ($linha['status'] === 'disponivel'): ?>
+                                <?php if ($can_edit): ?>
+                                    <a href="editar.php?id=<?php echo $linha['id']; ?>" class="action-btn action-edit" title="Editar">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                <?php endif; ?>
+
+                                <?php if ($can_edit && $linha['status'] === 'disponivel'): ?>
                                     <a href="vincular.php?id=<?php echo $linha['id']; ?>" class="action-btn action-equipments" title="Vincular a Colaborador">
                                         <i class="fas fa-user-plus"></i>
                                     </a>
-                                <?php else: ?>
+                                <?php elseif ($can_edit && $linha['status'] === 'alocado'): ?>
                                     <a href="desvincular.php?id=<?php echo $linha['id']; ?>" class="action-btn action-return" title="Desvincular" onclick="return confirm('Desvincular esta linha do colaborador? O centro de custo será alterado para 9999.')">
                                         <i class="fas fa-user-slash"></i>
                                     </a>
                                 <?php endif; ?>
-                                <a href="excluir.php?id=<?php echo $linha['id']; ?>" class="action-btn action-delete" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir esta linha?')">
-                                    <i class="fas fa-trash"></i>
-                                </a>
+
+                                <?php if ($can_edit): ?>
+                                    <a href="excluir.php?id=<?php echo $linha['id']; ?>" class="action-btn action-delete" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir esta linha?')">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </td>
                     </tr>
