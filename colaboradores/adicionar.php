@@ -8,10 +8,16 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
+// Verificar nível do usuário
+$usuario_nivel = $_SESSION['usuario_nivel'] ?? 'user';
+$is_admin = ($usuario_nivel === 'admin');
+$is_view = ($usuario_nivel === 'view');
+$can_edit = ($is_admin || $usuario_nivel === 'user');
+
 $mensagem = '';
 $tipoMensagem = '';
 
-// Carregar colaboradores para o select de gestor
+// Carregar colaboradores para o select de gestor (será removido)
 $colaboradores = lerArquivoJSON('../data/colaboradores.json');
 
 // Processar o formulário
@@ -24,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $departamento = trim($_POST['departamento'] ?? '');
     $centro_custo = trim($_POST['centro_custo'] ?? '');
     $email = trim($_POST['email'] ?? '');
-    $gestor_id = !empty($_POST['gestor_id']) ? $_POST['gestor_id'] : null;
+    // CAMPO GESTOR REMOVIDO
 
     // Novos campos de endereço
     $tipo_trabalho = $_POST['tipo_trabalho'] ?? 'local';
@@ -101,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verificar se matrícula já existe
     foreach ($colaboradores as $colaborador) {
         if (isset($colaborador['matricula']) && $colaborador['matricula'] === $matricula) {
-            $erros[] = 'Este chamado já está cadastrada no sistema.';
+            $erros[] = 'Esta matrícula já está cadastrada no sistema.';
             break;
         }
     }
@@ -117,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($erros)) {
-        // Criar novo colaborador
+        // Criar novo colaborador (SEM CAMPO GESTOR_ID)
         $novoColaborador = [
                 'id' => gerarId($colaboradores),
                 'matricula' => $matricula,
@@ -127,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'departamento' => $departamento,
                 'centro_custo' => $centro_custo,
                 'email' => $email ?: null,
-                'gestor_id' => $gestor_id,
+            // 'gestor_id' => $gestor_id,  // REMOVIDO
                 'tipo_trabalho' => $tipo_trabalho,
                 'endereco' => $tipo_trabalho === 'home' ? [
                         'logradouro' => $endereco,
@@ -195,6 +201,13 @@ function formatarCEP($cep) {
             <div class="user-info">
                 <i class="fas fa-user-circle"></i>
                 <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
+                <?php if ($is_admin): ?>
+                    <span class="user-level user-level-admin">Admin</span>
+                <?php elseif ($is_view): ?>
+                    <span class="user-level user-level-view">Visualizador</span>
+                <?php else: ?>
+                    <span class="user-level user-level-user">Usuário</span>
+                <?php endif; ?>
             </div>
 
             <a href="../logout.php" class="logout-btn">
@@ -261,7 +274,7 @@ function formatarCEP($cep) {
     <div class="form-card-container">
         <form method="POST" action="" class="form-card" id="form-colaborador">
             <div class="form-grid">
-                <!-- Campo Matrícula (PRIMEIRO INPUT) -->
+                <!-- Campo Matrícula (Chamado) -->
                 <div class="form-group">
                     <label for="matricula">
                         <i class="fas fa-id-badge"></i>
@@ -276,7 +289,7 @@ function formatarCEP($cep) {
                            class="form-control"
                            placeholder="Ex: #251506, #255676"
                            autofocus>
-                    <small class="form-text">Número desse chamado único do colaborador</small>
+                    <small class="form-text">Número do chamado único do colaborador</small>
                 </div>
 
                 <div class="form-group">
@@ -347,14 +360,14 @@ function formatarCEP($cep) {
                         <span class="required">*</span>
                     </label>
                     <select id="tipo_trabalho" name="tipo_trabalho" required class="form-control" onchange="toggleEnderecoFields()">
-                        <option value="local" <?php echo (isset($_POST['tipo_trabalho']) && $_POST['tipo_trabalho'] == 'local') ? 'selected' : ''; ?>>Presencial (Local)</option>
-                        <option value="home" <?php echo (isset($_POST['tipo_trabalho']) && $_POST['tipo_trabalho'] == 'home') ? 'selected' : ''; ?>>Home Office</option>
+                        <option value="local" <?php echo ($_POST['tipo_trabalho'] ?? 'local') == 'local' ? 'selected' : ''; ?>>Presencial (Local)</option>
+                        <option value="home" <?php echo ($_POST['tipo_trabalho'] ?? '') == 'home' ? 'selected' : ''; ?>>Home Office</option>
                     </select>
                 </div>
             </div>
 
             <!-- Seção de Endereço (visível apenas quando Home Office) -->
-            <div id="endereco-section" style="display: <?php echo (isset($_POST['tipo_trabalho']) && $_POST['tipo_trabalho'] == 'home') ? 'block' : 'none'; ?>;">
+            <div id="endereco-section" style="display: <?php echo (($_POST['tipo_trabalho'] ?? '') == 'home') ? 'block' : 'none'; ?>;">
                 <div class="section-divider">
                     <h3><i class="fas fa-home"></i> Endereço Residencial</h3>
                 </div>
@@ -438,7 +451,7 @@ function formatarCEP($cep) {
                         <select id="estado" name="estado" class="form-control">
                             <option value="">Selecione o estado</option>
                             <?php foreach (getEstados() as $sigla => $nome): ?>
-                                <option value="<?php echo $sigla; ?>" <?php echo (isset($_POST['estado']) && $_POST['estado'] == $sigla) ? 'selected' : ''; ?>>
+                                <option value="<?php echo $sigla; ?>" <?php echo (($_POST['estado'] ?? '') == $sigla) ? 'selected' : ''; ?>>
                                     <?php echo $sigla . ' - ' . $nome; ?>
                                 </option>
                             <?php endforeach; ?>
@@ -478,31 +491,10 @@ function formatarCEP($cep) {
                            required
                            class="form-control cc-mask"
                            placeholder="Ex: 12001, 12001">
-                    <small class="form-text">Código do centro de custo (ex: TI001, ADM002)</small>
+                    <small class="form-text">Código do centro de custo</small>
                 </div>
 
-                <div class="form-group">
-                    <label for="gestor_id">
-                        <i class="fas fa-user-tie"></i>
-                        <span>Gestor</span>
-                    </label>
-                    <select id="gestor_id" name="gestor_id" class="form-control">
-                        <option value="">Selecione um gestor</option>
-                        <?php
-                        foreach ($colaboradores as $colaborador):
-                            if ($colaborador['id'] != ($_POST['id'] ?? '')):
-                                ?>
-                                <option value="<?php echo $colaborador['id']; ?>"
-                                        <?php echo (isset($_POST['gestor_id']) && $_POST['gestor_id'] == $colaborador['id']) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($colaborador['nome'] . ' - ' . $colaborador['cargo']); ?>
-                                </option>
-                            <?php
-                            endif;
-                        endforeach;
-                        ?>
-                    </select>
-                    <small class="form-text">Gestor responsável pelo colaborador (opcional)</small>
-                </div>
+                <!-- CAMPO GESTOR REMOVIDO -->
             </div>
 
             <div class="form-actions">
@@ -586,7 +578,6 @@ function formatarCEP($cep) {
 
         if (tipoTrabalho.value === 'home') {
             enderecoSection.style.display = 'block';
-            // Marcar campos como required
             if (document.getElementById('endereco')) document.getElementById('endereco').required = true;
             if (document.getElementById('numero')) document.getElementById('numero').required = true;
             if (document.getElementById('bairro')) document.getElementById('bairro').required = true;
@@ -594,7 +585,6 @@ function formatarCEP($cep) {
             if (document.getElementById('estado')) document.getElementById('estado').required = true;
         } else {
             enderecoSection.style.display = 'none';
-            // Remover required
             if (document.getElementById('endereco')) document.getElementById('endereco').required = false;
             if (document.getElementById('numero')) document.getElementById('numero').required = false;
             if (document.getElementById('bairro')) document.getElementById('bairro').required = false;
@@ -667,21 +657,18 @@ function formatarCEP($cep) {
             const matriculaValue = matriculaInput ? matriculaInput.value.trim() : '';
             const cpfValue = cpfInput ? cpfInput.value.replace(/\D/g, '') : '';
 
-            // Validar Matrícula
             if (matriculaValue.length === 0) {
                 alert('A matrícula é obrigatória.');
                 if (matriculaInput) matriculaInput.focus();
                 valid = false;
             }
 
-            // Validar CPF
             if (cpfValue.length !== 11) {
                 alert('CPF deve conter 11 dígitos.');
                 if (cpfInput) cpfInput.focus();
                 valid = false;
             }
 
-            // Validar e-mail se informado
             const emailValue = emailInput ? emailInput.value.trim() : '';
             if (emailValue && !emailValue.includes('@')) {
                 alert('E-mail inválido. Use o formato: nome@empresa.com');
@@ -689,7 +676,6 @@ function formatarCEP($cep) {
                 valid = false;
             }
 
-            // Validar campos de endereço se for Home Office
             if (tipoTrabalho && tipoTrabalho.value === 'home') {
                 const endereco = document.getElementById('endereco');
                 const numero = document.getElementById('numero');

@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $departamento = trim($_POST['departamento'] ?? '');
     $centro_custo = trim($_POST['centro_custo'] ?? '');
     $email = trim($_POST['email'] ?? '');
-    $gestor_id = !empty($_POST['gestor_id']) ? $_POST['gestor_id'] : null;
+    // CAMPO GESTOR REMOVIDO
 
     // Novos campos de endereço
     $tipo_trabalho = $_POST['tipo_trabalho'] ?? 'local';
@@ -59,10 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validações
     $erros = [];
 
-    // Matrícula NÃO é mais obrigatória - removida a validação
-    // if (empty($matricula)) {
-    //     $erros[] = 'A matrícula é obrigatória.';
-    // }
+    if (empty($matricula)) {
+        $erros[] = 'A matrícula é obrigatória.';
+    }
 
     if (empty($nome)) {
         $erros[] = 'O nome é obrigatório.';
@@ -111,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Verificar se matrícula já existe (exceto para o próprio colaborador) - apenas se preenchida
+    // Verificar se matrícula já existe (exceto para o próprio colaborador)
     if (!empty($matricula)) {
         foreach ($colaboradores as $index => $colaborador) {
             if ($index != $colaboradorIndex && isset($colaborador['matricula']) && $colaborador['matricula'] === $matricula) {
@@ -140,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($erros)) {
-        // Atualizar colaborador
+        // Atualizar colaborador (SEM CAMPO GESTOR_ID)
         $colaboradores[$colaboradorIndex]['matricula'] = $matricula ?: null;
         $colaboradores[$colaboradorIndex]['nome'] = $nome;
         $colaboradores[$colaboradorIndex]['cargo'] = $cargo;
@@ -148,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $colaboradores[$colaboradorIndex]['departamento'] = $departamento;
         $colaboradores[$colaboradorIndex]['centro_custo'] = $centro_custo;
         $colaboradores[$colaboradorIndex]['email'] = $email ?: null;
-        $colaboradores[$colaboradorIndex]['gestor_id'] = $gestor_id;
+        // 'gestor_id' => $gestor_id,  // REMOVIDO
         $colaboradores[$colaboradorIndex]['tipo_trabalho'] = $tipo_trabalho;
 
         // Atualizar endereço
@@ -293,7 +292,7 @@ function formatarCEPSeguro($cep)
         <!-- FORMULÁRIO -->
         <form method="POST" action="" class="form-card" id="form-colaborador">
             <div class="form-grid">
-                <!-- Campo Matrícula (Chamado) - AGORA OPCIONAL -->
+                <!-- Campo Matrícula (Chamado) - OPCIONAL -->
                 <div class="form-group">
                     <label for="matricula"><i class="fas fa-id-badge"></i> Chamado</label>
                     <input type="text" id="matricula" name="matricula"
@@ -332,7 +331,7 @@ function formatarCEPSeguro($cep)
                 </div>
 
                 <div class="form-group">
-                    <label for="tipo_trabalho"><i class="fas fa-briefcase"></i> Tipo de Trabaljo <span class="required">*</span></label>
+                    <label for="tipo_trabalho"><i class="fas fa-briefcase"></i> Tipo de Trabalho <span class="required">*</span></label>
                     <select id="tipo_trabalho" name="tipo_trabalho" required class="form-control" onchange="toggleEndereco()">
                         <option value="local" <?php echo $tipoTrabalhoAtual == 'local' ? 'selected' : ''; ?>>Presencial
                             (Local)
@@ -412,18 +411,7 @@ function formatarCEPSeguro($cep)
                            class="form-control cc-mask" placeholder="Ex: 12001, 12001">
                     <small class="form-text">Código do centro de custo</small>
                 </div>
-                <div class="form-group">
-                    <label for="gestor_id"><i class="fas fa-user-tie"></i> Gestor</label>
-                    <select id="gestor_id" name="gestor_id" class="form-control">
-                        <option value="">Selecione um gestor</option>
-                        <?php foreach ($colaboradores as $colaborador): if ($colaborador['id'] != $colaboradorAtual['id']): ?>
-                            <option value="<?php echo $colaborador['id']; ?>" <?php echo (isset($colaboradorAtual['gestor_id']) && $colaboradorAtual['gestor_id'] == $colaborador['id']) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($colaborador['nome'] . ' - ' . $colaborador['cargo']); ?>
-                            </option>
-                        <?php endif; endforeach; ?>
-                    </select>
-                    <small class="form-text">Gestor responsável pelo colaborador (opcional)</small>
-                </div>
+                <!-- CAMPO GESTOR REMOVIDO -->
             </div>
 
             <div class="form-actions">

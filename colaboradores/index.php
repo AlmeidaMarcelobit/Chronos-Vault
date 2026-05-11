@@ -14,6 +14,7 @@ $is_admin = ($usuario_nivel === 'admin');
 
 $colaboradores = lerArquivoJSON('../data/colaboradores.json');
 $equipamentos = lerArquivoJSON('../data/equipamentos.json');
+$linhas = lerArquivoJSON('../data/linhas.json');
 
 // Garantir que todos os colaboradores tenham os campos necessários
 foreach ($colaboradores as &$colab) {
@@ -22,7 +23,6 @@ foreach ($colaboradores as &$colab) {
     if (!isset($colab['departamento'])) $colab['departamento'] = '';
     if (!isset($colab['email'])) $colab['email'] = '';
     if (!isset($colab['tipo_trabalho'])) $colab['tipo_trabalho'] = 'local';
-    if (!isset($colab['gestor_id'])) $colab['gestor_id'] = null;
 }
 
 // Ordenar colaboradores em ordem alfabética por nome
@@ -39,6 +39,18 @@ foreach ($equipamentos as $equipamento) {
             $equipamentosPorColaborador[$colaboradorId] = 0;
         }
         $equipamentosPorColaborador[$colaboradorId]++;
+    }
+}
+
+// Buscar linhas por colaborador
+$linhasPorColaborador = [];
+foreach ($linhas as $linha) {
+    if (!empty($linha['colaborador_id'])) {
+        $colaboradorId = $linha['colaborador_id'];
+        if (!isset($linhasPorColaborador[$colaboradorId])) {
+            $linhasPorColaborador[$colaboradorId] = [];
+        }
+        $linhasPorColaborador[$colaboradorId][] = $linha;
     }
 }
 
@@ -197,16 +209,16 @@ endif; ?>
                 <th>CPF</th>
                 <th>Departamento</th>
                 <th>Centro de Custo</th>
-                <th>Gestor</th>
                 <th>Tipo</th>
                 <th>Equipamentos</th>
+                <th>Linhas</th>
                 <th>Ações</th>
             </tr>
             </thead>
             <tbody>
             <?php if (empty($colaboradores)): ?>
                 <tr>
-                    <td colspan="11" class="empty-state">
+                    <td colspan="12" class="empty-state">
                         <i class="fas fa-users-slash"></i>
                         <p>Nenhum colaborador encontrado</p>
                         <?php if ($busca): ?>
@@ -217,7 +229,11 @@ endif; ?>
                     </td>
                 </tr>
             <?php else: ?>
-                <?php foreach ($colaboradores as $colaborador): ?>
+                <?php foreach ($colaboradores as $colaborador):
+                    $linhasColaborador = $linhasPorColaborador[$colaborador['id']] ?? [];
+                    $totalLinhas = count($linhasColaborador);
+                    $primeirasLinhas = array_slice($linhasColaborador, 0, 2);
+                    ?>
                     <tr>
                         <td data-label="Nome">
                             <div class="colaborador-info">
@@ -225,7 +241,7 @@ endif; ?>
                                 <span><?php echo htmlspecialchars($colaborador['nome']); ?></span>
                             </div>
                         </td>
-                        <td data-label="Matrícula">
+                        <td data-label="Chamado">
                             <span class="matricula-badge">
                                 <?php echo htmlspecialchars($colaborador['matricula'] ?? ''); ?>
                             </span>
@@ -248,23 +264,7 @@ endif; ?>
                             </span>
                         </td>
                         <td data-label="Centro de Custo"><?php echo htmlspecialchars($colaborador['centro_custo'] ?? ''); ?></td>
-                        <td data-label="Gestor">
-                            <?php
-                            $gestorNome = '---';
-                            if (!empty($colaborador['gestor_id'])) {
-                                foreach ($colaboradores as $colab) {
-                                    if ($colab['id'] == $colaborador['gestor_id']) {
-                                        $gestorNome = $colab['nome'];
-                                        break;
-                                    }
-                                }
-                            }
-                            ?>
-                            <span class="gestor-badge">
-                                <i class="fas fa-user-tie"></i>
-                                <?php echo htmlspecialchars($gestorNome); ?>
-                            </span>
-                        </td>
+
                         <td data-label="Tipo">
                             <?php
                             $tipoTrabalho = $colaborador['tipo_trabalho'] ?? 'local';
@@ -286,6 +286,25 @@ endif; ?>
                                 <?php echo $qtdEquipamentos; ?> equipamento(s)
                             </span>
                         </td>
+                        <td data-label="Linhas">
+                            <?php if ($totalLinhas === 0): ?>
+                                <span class="text-muted">---</span>
+                            <?php else: ?>
+                                <div class="linhas-list">
+                                    <?php foreach ($primeirasLinhas as $linha): ?>
+                                        <span class="linha-item-simple">
+                                            <i class="fas fa-phone"></i>
+                                            <?php echo formatarTelefone($linha['numero']); ?>
+                                        </span>
+                                    <?php endforeach; ?>
+                                    <?php if ($totalLinhas > 2): ?>
+                                        <span class="linhas-more" onclick="showLinhasModal(<?php echo htmlspecialchars(json_encode($linhasColaborador)); ?>, '<?php echo htmlspecialchars($colaborador['nome']); ?>')">
+                                            +<?php echo ($totalLinhas - 2); ?> outra(s) linha(s)
+                                        </span>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endif; ?>
+                        </td>
                         <td data-label="Ações">
                             <div class="action-buttons">
                                 <?php if ($is_admin): ?>
@@ -298,6 +317,9 @@ endif; ?>
                                 <?php endif; ?>
                                 <a href="../equipamentos/index.php?colaborador=<?php echo $colaborador['id']; ?>" class="action-btn action-equipments" title="Ver Equipamentos">
                                     <i class="fas fa-laptop"></i>
+                                </a>
+                                <a href="../linhas/index.php?colaborador=<?php echo $colaborador['id']; ?>" class="action-btn action-equipments" title="Ver Linhas">
+                                    <i class="fas fa-phone"></i>
                                 </a>
                                 <?php if ($is_admin): ?>
                                     <a href="termos.php?id=<?php echo $colaborador['id']; ?>" class="action-btn action-term" title="Gerenciar Termos">
@@ -336,6 +358,7 @@ endif; ?>
                     <span class="legend-item"><i class="fas fa-edit"></i> Editar</span>
                     <span class="legend-item"><i class="fas fa-trash"></i> Excluir</span>
                     <span class="legend-item"><i class="fas fa-laptop"></i> Equipamentos</span>
+                    <span class="legend-item"><i class="fas fa-phone"></i> Linhas</span>
                     <span class="legend-item"><i class="fas fa-file-contract"></i> Termo</span>
                     <span class="legend-item"><i class="fas fa-box-open"></i> Devolução</span>
                 </div>
@@ -343,6 +366,22 @@ endif; ?>
         <?php endif; ?>
     </div>
 </main>
+
+<!-- Modal para lista completa de linhas -->
+<div id="modalLinhas" class="modal-linhas">
+    <div class="modal-linhas-content">
+        <div class="modal-linhas-header">
+            <h3>
+                <i class="fas fa-phone"></i>
+                <span id="modalTitle">Linhas do Colaborador</span>
+            </h3>
+            <button class="modal-linhas-close" onclick="closeLinhasModal()">&times;</button>
+        </div>
+        <div class="modal-linhas-body" id="modalLinhasBody">
+            <!-- Conteúdo será preenchido dinamicamente -->
+        </div>
+    </div>
+</div>
 
 <!-- ==================== FOOTER ==================== -->
 <footer class="footer">
@@ -367,6 +406,7 @@ endif; ?>
             // Carregar dados para estatísticas
             $total_colaboradores = count(lerArquivoJSON('../data/colaboradores.json'));
             $total_equipamentos = count(lerArquivoJSON('../data/equipamentos.json'));
+            $total_linhas = count(lerArquivoJSON('../data/linhas.json'));
             $equipamentos_estoque = 0;
             $equipamentos_data = lerArquivoJSON('../data/equipamentos.json');
             foreach ($equipamentos_data as $e) {
@@ -383,8 +423,8 @@ endif; ?>
                     <span class="stat-label">Equipamentos</span>
                 </div>
                 <div class="footer-stat">
-                    <span class="stat-number"><?php echo $equipamentos_estoque; ?></span>
-                    <span class="stat-label">Em Estoque</span>
+                    <span class="stat-number"><?php echo $total_linhas; ?></span>
+                    <span class="stat-label">Linhas</span>
                 </div>
             </div>
         </div>
@@ -396,10 +436,62 @@ endif; ?>
     </div>
 </footer>
 
-<script src="../js/script.js"></script>
-<script src="../js/colaboradores.js"></script>
-
 <script>
+    function showLinhasModal(linhas, colaboradorNome) {
+        const modal = document.getElementById('modalLinhas');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalLinhasBody');
+
+        modalTitle.innerHTML = `<i class="fas fa-phone"></i> Linhas de ${colaboradorNome}`;
+
+        if (linhas.length === 0) {
+            modalBody.innerHTML = '<div class="no-linhas"><i class="fas fa-phone-slash"></i><p>Nenhuma linha atribuída a este colaborador.</p></div>';
+        } else {
+            let html = '';
+            linhas.forEach(linha => {
+                const numeroFormatado = formatarTelefoneLocal(linha.numero);
+                const tipoTexto = linha.tipo === 'chip' ? 'Chip Físico' : 'E-Chip';
+                html += `
+                    <div class="linha-detail-item">
+                        <div>
+                            <span class="linha-number">${numeroFormatado}</span>
+                            <span class="linha-type"> (${tipoTexto})</span>
+                        </div>
+                        <span class="info-badge">
+                            <i class="fas fa-dollar-sign"></i> ${linha.centro_custo}
+                        </span>
+                    </div>
+                `;
+            });
+            modalBody.innerHTML = html;
+        }
+
+        modal.style.display = 'block';
+    }
+
+    function closeLinhasModal() {
+        document.getElementById('modalLinhas').style.display = 'none';
+    }
+
+    function formatarTelefoneLocal(telefone) {
+        if (!telefone) return '';
+        const numero = telefone.replace(/\D/g, '');
+        if (numero.length === 11) {
+            return `${numero.substring(0, 2)} ${numero.substring(2, 7)}-${numero.substring(7, 11)}`;
+        } else if (numero.length === 10) {
+            return `${numero.substring(0, 2)} ${numero.substring(2, 6)}-${numero.substring(6, 10)}`;
+        }
+        return telefone;
+    }
+
+    // Fechar modal ao clicar fora
+    window.onclick = function(event) {
+        const modal = document.getElementById('modalLinhas');
+        if (event.target === modal) {
+            closeLinhasModal();
+        }
+    }
+
     // Fechar alerta após 5 segundos
     setTimeout(function() {
         const alert = document.querySelector('.global-alert');
@@ -408,8 +500,6 @@ endif; ?>
             setTimeout(() => alert.remove(), 300);
         }
     }, 5000);
-
 </script>
 </body>
-
 </html>
