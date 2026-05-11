@@ -78,7 +78,7 @@ function salvarArquivoJSON($caminho, $dados) {
         return false;
     }
 
-    $json = json_encode($dados, JSON_PRETTY_PRINT);
+    $json = json_encode($dados, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
     // Criar diretório se não existir
     $diretorio = dirname($caminho);
@@ -109,7 +109,7 @@ function gerarId($dados) {
     return max($ids) + 1;
 }
 
-// Formatadores (VERSÃO ÚNICA CORRIGIDA)
+// Formatadores
 function formatarCPF($cpf) {
     if (empty($cpf)) {
         return '';
@@ -180,7 +180,16 @@ function validarCPF($cpf) {
     return true;
 }
 
-// Função para obter tipos de equipamentos (ATUALIZADA)
+// Validar e-mail
+function validarEmail($email) {
+    if (empty($email)) {
+        return false;
+    }
+
+    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+}
+
+// Função para obter tipos de equipamentos
 function getTiposEquipamentos() {
     return [
         'notebook' => 'Notebook',
@@ -271,15 +280,6 @@ function limparString($string) {
     $string = htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
 
     return $string;
-}
-
-// Função para validar e-mail
-function validarEmail($email) {
-    if (empty($email)) {
-        return false;
-    }
-
-    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 }
 
 // Função para formatar número de telefone
@@ -407,7 +407,7 @@ function registrarLog($acao, $detalhes = '') {
     return true;
 }
 
-// Função para obter valor estimado do equipamento (NOVA - útil para o termo)
+// Função para obter valor estimado do equipamento
 function getValorEstimadoEquipamento($tipo) {
     $valores = [
         'notebook' => 3500.00,
@@ -424,7 +424,7 @@ function getValorEstimadoEquipamento($tipo) {
     return $valores[$tipo] ?? 500.00;
 }
 
-// Função para formatar valor monetário (NOVA)
+// Função para formatar valor monetário
 function formatarMoeda($valor) {
     if (!is_numeric($valor)) {
         return 'R$ 0,00';
@@ -433,19 +433,19 @@ function formatarMoeda($valor) {
     return 'R$ ' . number_format($valor, 2, ',', '.');
 }
 
-// Função para obter data atual formatada (NOVA)
+// Função para obter data atual formatada
 function getDataAtual($formato = 'd/m/Y') {
     return date($formato);
 }
 
-// Função para gerar código único para termos (NOVA)
+// Função para gerar código único para termos
 function gerarCodigoTermo($colaboradorId, $tipo = 'COL') {
     $timestamp = date('YmdHis');
     $idFormatado = str_pad($colaboradorId, 4, '0', STR_PAD_LEFT);
     return $tipo . '-' . $idFormatado . '-' . $timestamp;
 }
 
-// Função para contar equipamentos do colaborador (NOVA)
+// Função para contar equipamentos do colaborador
 function contarEquipamentosColaborador($colaboradorId, $equipamentos) {
     $count = 0;
     foreach ($equipamentos as $equipamento) {
@@ -455,5 +455,35 @@ function contarEquipamentosColaborador($colaboradorId, $equipamentos) {
         }
     }
     return $count;
+}
+
+// Função para obter nome do gestor pelo ID
+function getNomeGestor($gestorId, $colaboradores) {
+    if (empty($gestorId)) {
+        return 'Não informado';
+    }
+
+    foreach ($colaboradores as $colaborador) {
+        if ($colaborador['id'] == $gestorId) {
+            return $colaborador['nome'];
+        }
+    }
+
+    return 'Não encontrado';
+}
+
+// Função para obter dados completos do gestor
+function getGestorInfo($gestorId, $colaboradores) {
+    if (empty($gestorId)) {
+        return null;
+    }
+
+    foreach ($colaboradores as $colaborador) {
+        if ($colaborador['id'] == $gestorId) {
+            return $colaborador;
+        }
+    }
+
+    return null;
 }
 ?>
