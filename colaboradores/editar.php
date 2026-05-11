@@ -44,6 +44,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $centro_custo = trim($_POST['centro_custo'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $gestor_id = !empty($_POST['gestor_id']) ? $_POST['gestor_id'] : null;
+    
+    // Novos campos de endereço
+    $tipo_trabalho = $_POST['tipo_trabalho'] ?? 'local';
+    $endereco = trim($_POST['endereco'] ?? '');
+    $numero = trim($_POST['numero'] ?? '');
+    $complemento = trim($_POST['complemento'] ?? '');
+    $bairro = trim($_POST['bairro'] ?? '');
+    $cidade = trim($_POST['cidade'] ?? '');
+    $estado = trim($_POST['estado'] ?? '');
+    $cep = preg_replace('/[^0-9]/', '', $_POST['cep'] ?? '');
 
     // Validações
     $erros = [];
@@ -71,6 +81,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validar e-mail se informado
     if (!empty($email) && !validarEmail($email)) {
         $erros[] = 'E-mail inválido.';
+    }
+    
+    // Validar endereço se for Home Office
+    if ($tipo_trabalho === 'home') {
+        if (empty($endereco)) {
+            $erros[] = 'O endereço é obrigatório para Home Office.';
+        }
+        if (empty($numero)) {
+            $erros[] = 'O número é obrigatório para Home Office.';
+        }
+        if (empty($bairro)) {
+            $erros[] = 'O bairro é obrigatório para Home Office.';
+        }
+        if (empty($cidade)) {
+            $erros[] = 'A cidade é obrigatória para Home Office.';
+        }
+        if (empty($estado)) {
+            $erros[] = 'O estado é obrigatório para Home Office.';
+        }
+        if (!empty($cep) && !validarCEP($cep)) {
+            $erros[] = 'CEP inválido.';
+        }
     }
 
     // Verificar se CPF já existe (exceto para o próprio colaborador)
@@ -100,6 +132,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $colaboradores[$colaboradorIndex]['centro_custo'] = $centro_custo;
         $colaboradores[$colaboradorIndex]['email'] = $email ?: null;
         $colaboradores[$colaboradorIndex]['gestor_id'] = $gestor_id;
+        $colaboradores[$colaboradorIndex]['tipo_trabalho'] = $tipo_trabalho;
+        
+        // Atualizar endereço
+        if ($tipo_trabalho === 'home') {
+            $colaboradores[$colaboradorIndex]['endereco'] = [
+                'logradouro' => $endereco,
+                'numero' => $numero,
+                'complemento' => $complemento ?: null,
+                'bairro' => $bairro,
+                'cidade' => $cidade,
+                'estado' => $estado,
+                'cep' => $cep ?: null
+            ];
+        } else {
+            $colaboradores[$colaboradorIndex]['endereco'] = null;
+        }
+        
         $colaboradores[$colaboradorIndex]['data_atualizacao'] = date('Y-m-d H:i:s');
 
         // Salvar no JSON
@@ -118,6 +167,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tipoMensagem = 'error';
     }
 }
+
+// Buscar dados do endereço se existir
+$enderecoAtual = $colaboradorAtual['endereco'] ?? null;
+$tipoTrabalhoAtual = $colaboradorAtual['tipo_trabalho'] ?? 'local';
+
+// Função para formatar CEP com segurança
+function formatarCEPSeguro($cep) {
+    if (empty($cep)) {
+        return '';
+    }
+    $cep = preg_replace('/[^0-9]/', '', $cep);
+    if (strlen($cep) == 8) {
+        return substr($cep, 0, 5) . '-' . substr($cep, 5, 3);
+    }
+    return $cep;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -129,55 +194,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-<!-- ==================== HEADER ==================== -->
-<header class="header">
-    <div class="header-content">
-        <div class="logo">
-            <a href="../index.php">
-                <i class="fas fa-laptop-house"></i>
-                <h1>Sistema de Gestão</h1>
-            </a>
-        </div>
-
-        <div class="user-menu">
-            <div class="user-info">
-                <i class="fas fa-user-circle"></i>
-                <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <a href="../index.php">
+                    <i class="fas fa-laptop-house"></i>
+                    <h1>Sistema de Gestão</h1>
+                </a>
             </div>
-
-            <a href="../logout.php" class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Sair</span>
-            </a>
+            <div class="user-menu">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
+                </div>
+                <a href="../logout.php" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </a>
+            </div>
         </div>
-    </div>
+        <nav class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../index.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
+                <li class="nav-item"><a href="../equipamentos/index.php" class="nav-link"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <nav class="nav-container">
-        <ul class="nav-menu">
-            <li class="nav-item">
-                <a href="../index.php" class="nav-link">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="index.php" class="nav-link active">
-                    <i class="fas fa-users"></i>
-                    <span>Colaboradores</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="../equipamentos/index.php" class="nav-link">
-                    <i class="fas fa-laptop"></i>
-                    <span>Equipamentos</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
-
-<!-- Mensagens de alerta -->
-<?php if ($mensagem): ?>
+    <!-- MENSAGENS DE ALERTA -->
+    <?php if ($mensagem): ?>
     <div class="global-alert alert-<?php echo $tipoMensagem === 'success' ? 'success' : 'error'; ?>">
         <div class="alert-content">
             <i class="fas fa-<?php echo $tipoMensagem === 'success' ? 'check-circle' : 'exclamation-circle'; ?>"></i>
@@ -185,286 +232,288 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <button class="alert-close" onclick="this.parentElement.style.display='none'">&times;</button>
     </div>
-<?php endif; ?>
+    <?php endif; ?>
 
-<!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
-<main class="main-container">
-    <div class="page-header">
-        <div>
-            <h1><i class="fas fa-edit"></i> Editar Colaborador</h1>
-            <p class="page-subtitle">Atualize as informações do colaborador</p>
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-container">
+        <div class="page-header">
+            <div>
+                <h1><i class="fas fa-edit"></i> Editar Colaborador</h1>
+                <p class="page-subtitle">Atualize as informações do colaborador</p>
+            </div>
+            <a href="index.php" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> <span>Voltar</span>
+            </a>
         </div>
-        <a href="index.php" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i>
-            <span>Voltar</span>
-        </a>
-    </div>
 
-    <div class="form-card-container">
-        <!-- Informações do Colaborador -->
-        <div class="info-card">
-            <h3><i class="fas fa-info-circle"></i> Informações do Colaborador</h3>
-            <div class="info-grid">
-                <div class="info-item">
-                    <span class="info-label">ID:</span>
-                    <span class="info-value"><?php echo $colaboradorAtual['id']; ?></span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Data de Cadastro:</span>
-                    <span class="info-value"><?php echo formatarData($colaboradorAtual['data_cadastro']); ?></span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Última Atualização:</span>
-                    <span class="info-value"><?php echo isset($colaboradorAtual['data_atualizacao']) ? formatarData($colaboradorAtual['data_atualizacao']) : '---'; ?></span>
+        <div class="form-card-container">
+            <!-- INFORMAÇÕES DO COLABORADOR -->
+            <div class="info-card">
+                <h3><i class="fas fa-info-circle"></i> Informações do Colaborador</h3>
+                <div class="info-grid">
+                    <div class="info-item"><span class="info-label">ID:</span><span class="info-value"><?php echo $colaboradorAtual['id']; ?></span></div>
+                    <div class="info-item"><span class="info-label">Data de Cadastro:</span><span class="info-value"><?php echo formatarData($colaboradorAtual['data_cadastro']); ?></span></div>
+                    <div class="info-item"><span class="info-label">Última Atualização:</span><span class="info-value"><?php echo isset($colaboradorAtual['data_atualizacao']) ? formatarData($colaboradorAtual['data_atualizacao']) : '---'; ?></span></div>
                 </div>
             </div>
-        </div>
 
-        <!-- Formulário de Edição -->
-        <form method="POST" action="" class="form-card" id="form-colaborador">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="nome">
-                        <i class="fas fa-user"></i>
-                        <span>Nome Completo</span>
-                        <span class="required">*</span>
-                    </label>
-                    <input type="text"
-                           id="nome"
-                           name="nome"
-                           value="<?php echo htmlspecialchars($colaboradorAtual['nome']); ?>"
-                           required
-                           class="form-control"
-                           placeholder="Digite o nome completo"
-                           autofocus>
+            <!-- FORMULÁRIO -->
+            <form method="POST" action="" class="form-card" id="form-colaborador">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nome"><i class="fas fa-user"></i> Nome Completo <span class="required">*</span></label>
+                        <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($colaboradorAtual['nome']); ?>" required class="form-control" placeholder="Digite o nome completo">
+                    </div>
+                    <div class="form-group">
+                        <label for="cargo"><i class="fas fa-briefcase"></i> Cargo <span class="required">*</span></label>
+                        <input type="text" id="cargo" name="cargo" value="<?php echo htmlspecialchars($colaboradorAtual['cargo']); ?>" required class="form-control" placeholder="Digite o cargo">
+                    </div>
+                    <div class="form-group">
+                        <label for="cpf"><i class="fas fa-id-card"></i> CPF <span class="required">*</span></label>
+                        <input type="text" id="cpf" name="cpf" value="<?php echo formatarCPF($colaboradorAtual['cpf']); ?>" required class="form-control cpf-mask" placeholder="000.000.000-00" maxlength="14">
+                        <small class="form-text">Digite apenas números ou com pontos e traço</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> E-mail</label>
+                        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($colaboradorAtual['email'] ?? ''); ?>" class="form-control" placeholder="colaborador@empresa.com.br">
+                        <small class="form-text">E-mail institucional do colaborador (opcional)</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo_trabalho"><i class="fas fa-briefcase"></i> Tipo de Trabalho <span class="required">*</span></label>
+                        <select id="tipo_trabalho" name="tipo_trabalho" required class="form-control">
+                            <option value="local" <?php echo $tipoTrabalhoAtual == 'local' ? 'selected' : ''; ?>>Presencial (Local)</option>
+                            <option value="home" <?php echo $tipoTrabalhoAtual == 'home' ? 'selected' : ''; ?>>Home Office</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="cargo">
-                        <i class="fas fa-briefcase"></i>
-                        <span>Cargo</span>
-                        <span class="required">*</span>
-                    </label>
-                    <input type="text"
-                           id="cargo"
-                           name="cargo"
-                           value="<?php echo htmlspecialchars($colaboradorAtual['cargo']); ?>"
-                           required
-                           class="form-control"
-                           placeholder="Digite o cargo">
+                <!-- SEÇÃO DE ENDEREÇO -->
+                <div id="endereco-section" style="display: <?php echo $tipoTrabalhoAtual == 'home' ? 'block' : 'none'; ?>;">
+                    <div class="section-divider">
+                        <h3><i class="fas fa-home"></i> Endereço Residencial</h3>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="endereco"><i class="fas fa-road"></i> Logradouro <span class="required">*</span></label>
+                            <input type="text" id="endereco" name="endereco" value="<?php echo htmlspecialchars($enderecoAtual['logradouro'] ?? ''); ?>" class="form-control" placeholder="Rua, Avenida, Alameda...">
+                        </div>
+                        <div class="form-group">
+                            <label for="numero"><i class="fas fa-hashtag"></i> Número <span class="required">*</span></label>
+                            <input type="text" id="numero" name="numero" value="<?php echo htmlspecialchars($enderecoAtual['numero'] ?? ''); ?>" class="form-control" placeholder="Número">
+                        </div>
+                        <div class="form-group">
+                            <label for="complemento"><i class="fas fa-plus-circle"></i> Complemento</label>
+                            <input type="text" id="complemento" name="complemento" value="<?php echo htmlspecialchars($enderecoAtual['complemento'] ?? ''); ?>" class="form-control" placeholder="Apto, Bloco, Casa...">
+                        </div>
+                        <div class="form-group">
+                            <label for="bairro"><i class="fas fa-location-dot"></i> Bairro <span class="required">*</span></label>
+                            <input type="text" id="bairro" name="bairro" value="<?php echo htmlspecialchars($enderecoAtual['bairro'] ?? ''); ?>" class="form-control" placeholder="Bairro">
+                        </div>
+                        <div class="form-group">
+                            <label for="cidade"><i class="fas fa-city"></i> Cidade <span class="required">*</span></label>
+                            <input type="text" id="cidade" name="cidade" value="<?php echo htmlspecialchars($enderecoAtual['cidade'] ?? ''); ?>" class="form-control" placeholder="Cidade">
+                        </div>
+                        <div class="form-group">
+                            <label for="estado"><i class="fas fa-map-marker-alt"></i> Estado <span class="required">*</span></label>
+                            <select id="estado" name="estado" class="form-control">
+                                <option value="">Selecione o estado</option>
+                                <?php foreach (getEstados() as $sigla => $nome): ?>
+                                    <option value="<?php echo $sigla; ?>" <?php echo (($enderecoAtual['estado'] ?? '') == $sigla) ? 'selected' : ''; ?>>
+                                        <?php echo $sigla . ' - ' . $nome; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cep"><i class="fas fa-mail-bulk"></i> CEP</label>
+                            <input type="text" id="cep" name="cep" value="<?php echo formatarCEPSeguro($enderecoAtual['cep'] ?? ''); ?>" class="form-control cep-mask" placeholder="00000-000" maxlength="9">
+                            <small class="form-text">Opcional - Formato: 00000-000</small>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="cpf">
-                        <i class="fas fa-id-card"></i>
-                        <span>CPF</span>
-                        <span class="required">*</span>
-                    </label>
-                    <input type="text"
-                           id="cpf"
-                           name="cpf"
-                           value="<?php echo formatarCPF($colaboradorAtual['cpf']); ?>"
-                           required
-                           class="form-control cpf-mask"
-                           placeholder="000.000.000-00"
-                           maxlength="14">
-                    <small class="form-text">Digite apenas números ou com pontos e traço</small>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">
-                        <i class="fas fa-envelope"></i>
-                        <span>E-mail</span>
-                    </label>
-                    <input type="email"
-                           id="email"
-                           name="email"
-                           value="<?php echo htmlspecialchars($colaboradorAtual['email'] ?? ''); ?>"
-                           class="form-control"
-                           placeholder="colaborador@empresa.com.br">
-                    <small class="form-text">E-mail institucional do colaborador (opcional)</small>
-                </div>
-
-                <?php include('../includes/departamentos.php') ?>
-
-                <div class="form-group">
-                    <label for="centro_custo">
-                        <i class="fas fa-dollar-sign"></i>
-                        <span>Centro de Custo</span>
-                        <span class="required">*</span>
-                    </label>
-                    <input type="text"
-                           id="centro_custo"
-                           name="centro_custo"
-                           value="<?php echo htmlspecialchars($colaboradorAtual['centro_custo']); ?>"
-                           required
-                           class="form-control cc-mask"
-                           placeholder="Ex: TI001, ADM002">
-                    <small class="form-text">Código do centro de custo (ex: TI001, ADM002)</small>
-                </div>
-
-                <div class="form-group">
-                    <label for="gestor_id">
-                        <i class="fas fa-user-tie"></i>
-                        <span>Gestor</span>
-                    </label>
-                    <select id="gestor_id" name="gestor_id" class="form-control">
-                        <option value="">Selecione um gestor</option>
-                        <?php
-                        // Listar colaboradores existentes (exceto o próprio)
-                        foreach ($colaboradores as $colaborador):
-                            if ($colaborador['id'] != $colaboradorAtual['id']):
-                                ?>
-                                <option value="<?php echo $colaborador['id']; ?>"
-                                        <?php echo (isset($colaboradorAtual['gestor_id']) && $colaboradorAtual['gestor_id'] == $colaborador['id']) ? 'selected' : ''; ?>>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="departamento"><i class="fas fa-building"></i> Departamento <span class="required">*</span></label>
+                        <select id="departamento" name="departamento" required class="form-control">
+                            <option value="">Selecione um departamento</option>
+                            <option value="Dental Vidas Administrativo" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Dental Vidas Administrativo' ? 'selected' : ''; ?>>Dental Vidas Administrativo</option>
+                            <option value="Relacionamento com Profissionais da Saúde" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Relacionamento com Profissionais da Saúde' ? 'selected' : ''; ?>>Relacionamento com Profissionais da Saúde</option>
+                            <option value="AmorLab" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'AmorLab' ? 'selected' : ''; ?>>AmorLab</option>
+                            <option value="Financeiro" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Financeiro' ? 'selected' : ''; ?>>Financeiro</option>
+                            <option value="Cadastro" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Cadastro' ? 'selected' : ''; ?>>Cadastro</option>
+                            <option value="Infraestrutura" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Infraestrutura' ? 'selected' : ''; ?>>Infraestrutura</option>
+                            <option value="Retenção" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Retenção' ? 'selected' : ''; ?>>Retenção</option>
+                            <option value="Diretoria CEO" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Diretoria CEO' ? 'selected' : ''; ?>>Diretoria CEO</option>
+                            <option value="Atendimento" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Atendimento' ? 'selected' : ''; ?>>Atendimento</option>
+                            <option value="SAC" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'SAC' ? 'selected' : ''; ?>>SAC</option>
+                            <option value="SAF" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'SAF' ? 'selected' : ''; ?>>SAF</option>
+                            <option value="Contabilidade" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Contabilidade' ? 'selected' : ''; ?>>Contabilidade</option>
+                            <option value="Integração" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Integração' ? 'selected' : ''; ?>>Integração</option>
+                            <option value="BackOffice" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'BackOffice' ? 'selected' : ''; ?>>BackOffice</option>
+                            <option value="Gestão de Rede" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Gestão de Rede' ? 'selected' : ''; ?>>Gestão de Rede</option>
+                            <option value="Técnico" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Técnico' ? 'selected' : ''; ?>>Técnico</option>
+                            <option value="Remuneração E Beneficios" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Remuneração E Beneficios' ? 'selected' : ''; ?>>Remuneração E Beneficios</option>
+                            <option value="Consultoria de Performance" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Consultoria de Performance' ? 'selected' : ''; ?>>Consultoria de Performance</option>
+                            <option value="Internacional" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Internacional' ? 'selected' : ''; ?>>Internacional</option>
+                            <option value="Assessoria Regional" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Assessoria Regional' ? 'selected' : ''; ?>>Assessoria Regional</option>
+                            <option value="Qualidade de Atendimento" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Qualidade de Atendimento' ? 'selected' : ''; ?>>Qualidade de Atendimento</option>
+                            <option value="Cirurgias" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Cirurgias' ? 'selected' : ''; ?>>Cirurgias</option>
+                            <option value="Telemedicina" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Telemedicina' ? 'selected' : ''; ?>>Telemedicina</option>
+                            <option value="Suporte" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Suporte' ? 'selected' : ''; ?>>Suporte</option>
+                            <option value="Treinamento" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Treinamento' ? 'selected' : ''; ?>>Treinamento</option>
+                            <option value="Inteligência de Negócio" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Inteligência de Negócio' ? 'selected' : ''; ?>>Inteligência de Negócio</option>
+                            <option value="TI Tecnologia" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'TI Tecnologia' ? 'selected' : ''; ?>>TI Tecnologia</option>
+                            <option value="Atendimento a Franquia" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Atendimento a Franquia' ? 'selected' : ''; ?>>Atendimento a Franquia</option>
+                            <option value="Diretoria de Pessoas e Cultura" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Diretoria de Pessoas e Cultura' ? 'selected' : ''; ?>>Diretoria de Pessoas e Cultura</option>
+                            <option value="Governança TI" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Governança TI' ? 'selected' : ''; ?>>Governança TI</option>
+                            <option value="CRM" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'CRM' ? 'selected' : ''; ?>>CRM</option>
+                            <option value="Diretoria de Marketing" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Diretoria de Marketing' ? 'selected' : ''; ?>>Diretoria de Marketing</option>
+                            <option value="Marketing Internacional" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Marketing Internacional' ? 'selected' : ''; ?>>Marketing Internacional</option>
+                            <option value="Pessoas" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Pessoas' ? 'selected' : ''; ?>>Pessoas</option>
+                            <option value="Cultura" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Cultura' ? 'selected' : ''; ?>>Cultura</option>
+                            <option value="Produto" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Produto' ? 'selected' : ''; ?>>Produto</option>
+                            <option value="Desenvolvimento" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Desenvolvimento' ? 'selected' : ''; ?>>Desenvolvimento</option>
+                            <option value="Atendimento ao Cliente" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Atendimento ao Cliente' ? 'selected' : ''; ?>>Atendimento ao Cliente</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="centro_custo"><i class="fas fa-dollar-sign"></i> Centro de Custo <span class="required">*</span></label>
+                        <input type="text" id="centro_custo" name="centro_custo" value="<?php echo htmlspecialchars($colaboradorAtual['centro_custo']); ?>" required class="form-control cc-mask" placeholder="Ex: TI001, ADM002">
+                        <small class="form-text">Código do centro de custo (ex: TI001, ADM002)</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="gestor_id"><i class="fas fa-user-tie"></i> Gestor</label>
+                        <select id="gestor_id" name="gestor_id" class="form-control">
+                            <option value="">Selecione um gestor</option>
+                            <?php foreach ($colaboradores as $colaborador): if ($colaborador['id'] != $colaboradorAtual['id']): ?>
+                                <option value="<?php echo $colaborador['id']; ?>" <?php echo (isset($colaboradorAtual['gestor_id']) && $colaboradorAtual['gestor_id'] == $colaborador['id']) ? 'selected' : ''; ?>>
                                     <?php echo htmlspecialchars($colaborador['nome'] . ' - ' . $colaborador['cargo']); ?>
                                 </option>
-                            <?php
-                            endif;
-                        endforeach;
-                        ?>
-                    </select>
-                    <small class="form-text">Gestor responsável pelo colaborador (opcional)</small>
+                            <?php endif; endforeach; ?>
+                        </select>
+                        <small class="form-text">Gestor responsável pelo colaborador (opcional)</small>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Atualizar Colaborador</button>
+                    <a href="index.php" class="btn btn-secondary"><i class="fas fa-times"></i> Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-laptop-house"></i> Sistema de Gestão</h3>
+                <p>Controle de colaboradores e equipamentos</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="../index.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="index.php"><i class="fas fa-users"></i> Colaboradores</a></li>
+                    <li><a href="../equipamentos/index.php"><i class="fas fa-laptop"></i> Equipamentos</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Estatísticas</h3>
+                <?php
+                $total_colaboradores = count(lerArquivoJSON('../data/colaboradores.json'));
+                $total_equipamentos = count(lerArquivoJSON('../data/equipamentos.json'));
+                $equipamentos_estoque = 0;
+                $equipamentos_data = lerArquivoJSON('../data/equipamentos.json');
+                foreach ($equipamentos_data as $e) { if (($e['status'] ?? '') === 'estoque') $equipamentos_estoque++; }
+                ?>
+                <div class="footer-stats">
+                    <div class="footer-stat"><span class="stat-number"><?php echo $total_colaboradores; ?></span><span class="stat-label">Colaboradores</span></div>
+                    <div class="footer-stat"><span class="stat-number"><?php echo $total_equipamentos; ?></span><span class="stat-label">Equipamentos</span></div>
+                    <div class="footer-stat"><span class="stat-number"><?php echo $equipamentos_estoque; ?></span><span class="stat-label">Em Estoque</span></div>
                 </div>
             </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i>
-                    <span>Atualizar Colaborador</span>
-                </button>
-                <a href="index.php" class="btn btn-secondary">
-                    <i class="fas fa-times"></i>
-                    <span>Cancelar</span>
-                </a>
-            </div>
-        </form>
-    </div>
-</main>
-
-<!-- ==================== FOOTER ==================== -->
-<footer class="footer">
-    <div class="footer-content">
-        <div class="footer-section">
-            <h3><i class="fas fa-laptop-house"></i> Sistema de Gestão</h3>
-            <p>Controle de colaboradores e equipamentos</p>
         </div>
-
-        <div class="footer-section">
-            <h3>Links Rápidos</h3>
-            <ul class="footer-links">
-                <li><a href="../index.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="index.php"><i class="fas fa-users"></i> Colaboradores</a></li>
-                <li><a href="../equipamentos/index.php"><i class="fas fa-laptop"></i> Equipamentos</a></li>
-            </ul>
+        <div class="footer-bottom">
+            <p>Sistema de Gestão &copy; <?php echo date('Y'); ?> - Todos os direitos reservados</p>
+            <p class="footer-version">Última atualização: <?php echo date('d/m/Y H:i'); ?></p>
         </div>
+    </footer>
 
-        <div class="footer-section">
-            <h3>Estatísticas</h3>
-            <?php
-            // Carregar dados para estatísticas
-            $total_colaboradores = count(lerArquivoJSON('../data/colaboradores.json'));
-            $total_equipamentos = count(lerArquivoJSON('../data/equipamentos.json'));
-            $equipamentos_estoque = 0;
-            $equipamentos_data = lerArquivoJSON('../data/equipamentos.json');
-            foreach ($equipamentos_data as $e) {
-                if (($e['status'] ?? '') === 'estoque') $equipamentos_estoque++;
+    <script src="../js/script.js"></script>
+    <script>
+        // Mostrar/esconder campos de endereço
+        const selectTipoTrabalho = document.getElementById('tipo_trabalho');
+        const enderecoSection = document.getElementById('endereco-section');
+        
+        function toggleEndereco() {
+            if (selectTipoTrabalho.value === 'home') {
+                enderecoSection.style.display = 'block';
+                document.getElementById('endereco').required = true;
+                document.getElementById('numero').required = true;
+                document.getElementById('bairro').required = true;
+                document.getElementById('cidade').required = true;
+                document.getElementById('estado').required = true;
+            } else {
+                enderecoSection.style.display = 'none';
+                document.getElementById('endereco').required = false;
+                document.getElementById('numero').required = false;
+                document.getElementById('bairro').required = false;
+                document.getElementById('cidade').required = false;
+                document.getElementById('estado').required = false;
+                document.getElementById('cep').required = false;
             }
-            ?>
-            <div class="footer-stats">
-                <div class="footer-stat">
-                    <span class="stat-number"><?php echo $total_colaboradores; ?></span>
-                    <span class="stat-label">Colaboradores</span>
-                </div>
-                <div class="footer-stat">
-                    <span class="stat-number"><?php echo $total_equipamentos; ?></span>
-                    <span class="stat-label">Equipamentos</span>
-                </div>
-                <div class="footer-stat">
-                    <span class="stat-number"><?php echo $equipamentos_estoque; ?></span>
-                    <span class="stat-label">Em Estoque</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-bottom">
-        <p>Sistema de Gestão &copy; <?php echo date('Y'); ?> - Todos os direitos reservados</p>
-        <p class="footer-version">Última atualização: <?php echo date('d/m/Y H:i'); ?></p>
-    </div>
-</footer>
-
-<script src="../js/script.js"></script>
-
-<script>
-    // Fechar alerta após 5 segundos
-    setTimeout(function() {
-        const alert = document.querySelector('.global-alert');
-        if (alert) {
-            alert.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => alert.remove(), 300);
         }
-    }, 5000);
-
-    // Máscara para CPF
-    const cpfInput = document.getElementById('cpf');
-    if (cpfInput) {
-        cpfInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-
-            if (value.length > 11) {
-                value = value.substring(0, 11);
+        
+        selectTipoTrabalho.addEventListener('change', toggleEndereco);
+        
+        // Máscara para CPF
+        const cpfInput = document.getElementById('cpf');
+        if (cpfInput) {
+            cpfInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 11) value = value.substring(0, 11);
+                if (value.length <= 11) {
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                }
+                e.target.value = value;
+            });
+        }
+        
+        // Máscara para CEP
+        const cepInput = document.getElementById('cep');
+        if (cepInput) {
+            cepInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 8) value = value.substring(0, 8);
+                if (value.length > 5) {
+                    value = value.replace(/(\d{5})(\d)/, '$1-$2');
+                }
+                e.target.value = value;
+            });
+        }
+        
+        // Máscara para centro de custo
+        const ccInput = document.getElementById('centro_custo');
+        if (ccInput) {
+            ccInput.addEventListener('input', function(e) {
+                let value = e.target.value.toUpperCase();
+                value = value.replace(/[^A-Z0-9]/g, '');
+                e.target.value = value;
+            });
+        }
+        
+        // Fechar alerta após 5 segundos
+        setTimeout(function() {
+            const alert = document.querySelector('.global-alert');
+            if (alert) {
+                alert.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => alert.remove(), 300);
             }
-
-            if (value.length <= 11) {
-                value = value.replace(/(\d{3})(\d)/, '$1.$2');
-                value = value.replace(/(\d{3})(\d)/, '$1.$2');
-                value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-            }
-
-            e.target.value = value;
-        });
-    }
-
-    // Máscara para centro de custo
-    const ccInput = document.getElementById('centro_custo');
-    if (ccInput) {
-        ccInput.addEventListener('input', function(e) {
-            let value = e.target.value.toUpperCase();
-            value = value.replace(/[^A-Z0-9]/g, '');
-            e.target.value = value;
-        });
-    }
-
-    // Validação do formulário
-    const form = document.getElementById('form-colaborador');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            let valid = true;
-            const cpfInput = document.getElementById('cpf');
-            const emailInput = document.getElementById('email');
-            const cpfValue = cpfInput.value.replace(/\D/g, '');
-
-            // Validar CPF
-            if (cpfValue.length !== 11) {
-                alert('CPF deve conter 11 dígitos.');
-                cpfInput.focus();
-                valid = false;
-            }
-
-            // Validar e-mail se informado
-            const emailValue = emailInput.value.trim();
-            if (emailValue && !emailValue.includes('@')) {
-                alert('E-mail inválido. Use o formato: nome@empresa.com');
-                emailInput.focus();
-                valid = false;
-            }
-
-            if (!valid) {
-                e.preventDefault();
-            }
-        });
-    }
-</script>
+        }, 5000);
+    </script>
 </body>
 </html>
