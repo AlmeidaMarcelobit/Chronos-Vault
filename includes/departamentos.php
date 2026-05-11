@@ -27,6 +27,8 @@
         <option value="Telemedicina" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Telemedicina' ? 'selected' : ''; ?>>Telemedicina</option>
         <option value="Suporte" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Suporte' ? 'selected' : ''; ?>>Suporte</option>
         <option value="Treinamento" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Treinamento' ? 'selected' : ''; ?>>Treinamento</option>
+        <option value="Gerência Técnica" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Gerência Técnica' ? 'selected' : ''; ?>>Gerência Técnica</option>
+        <option value="Operações de Laboratórios" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Operações de Laboratórios' ? 'selected' : ''; ?>>Operações de Laboratórios</option>
         <option value="Inteligência de Negócio" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Inteligência de Negócio' ? 'selected' : ''; ?>>Inteligência de Negócio</option>
         <option value="TI Tecnologia" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'TI Tecnologia' ? 'selected' : ''; ?>>TI Tecnologia</option>
         <option value="Atendimento a Franquia" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Atendimento a Franquia' ? 'selected' : ''; ?>>Atendimento a Franquia</option>
@@ -37,6 +39,7 @@
         <option value="Marketing Internacional" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Marketing Internacional' ? 'selected' : ''; ?>>Marketing Internacional</option>
         <option value="Pessoas" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Pessoas' ? 'selected' : ''; ?>>Pessoas</option>
         <option value="Administrativo" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Administrativo' ? 'selected' : ''; ?>>Administrativo</option>
+        <option value="Novos Negócios" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Novos Negócios' ? 'selected' : ''; ?>>Novos Negócios</option>
         <option value="Cultura" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Cultura' ? 'selected' : ''; ?>>Cultura</option>
         <option value="Produto" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Produto' ? 'selected' : ''; ?>>Produto</option>
         <option value="Dir. Operações" <?php echo ($colaboradorAtual['departamento'] ?? '') == 'Dir. Operações' ? 'selected' : ''; ?>>Dir. Operações</option>
