@@ -190,6 +190,10 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
                 <h1><i class="fas fa-laptop"></i> Equipamentos</h1>
                 <p class="page-subtitle">Gerencie todos os equipamentos da sua organização</p>
             </div>
+            <a href="atribuir_caixa.php" class="btn btn-outline">
+                <i class="fas fa-boxes"></i>
+                <span>Atribuir Caixa</span>
+            </a>
             <a href="adicionar.php" class="btn btn-primary">
                 <i class="fas fa-plus"></i>
                 <span>Adicionar Equipamento</span>
@@ -267,6 +271,7 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
                             <option value="emprestado" <?php echo $status == 'emprestado' ? 'selected' : ''; ?>>Emprestado</option>
                             <option value="manutencao" <?php echo $status == 'manutencao' ? 'selected' : ''; ?>>Em Manutenção</option>
                             <option value="fora_uso" <?php echo $status == 'fora_uso' ? 'selected' : ''; ?>>Fora de Uso</option>
+
                         </select>
                     </div>
 

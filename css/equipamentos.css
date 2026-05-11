@@ -2794,3 +2794,14 @@ select.form-control option:disabled {
         transform: translateY(0);
     }
 }
+.btn-outline {
+    background: transparent;
+    color: var(--grape);
+    border: 1px solid var(--grape);
+}
+
+.btn-outline:hover {
+    background: var(--grape);
+    color: var(--white);
+    transform: translateY(-1px);
+}
