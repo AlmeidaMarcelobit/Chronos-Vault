@@ -210,6 +210,12 @@ function formatarCEP($cep) {
                         <span>Equipamentos</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="../linhas/index.php" class="nav-link">
+                        <i class="fas fa-phone"></i>
+                        <span>Linhas</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
