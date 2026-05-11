@@ -32,20 +32,28 @@ $busca = $_GET['busca'] ?? '';
 $status = $_GET['status'] ?? '';
 $tipo = $_GET['tipo'] ?? '';
 
-if ($busca) {
-    $linhas = array_filter($linhas, function($linha) use ($busca) {
-        return stripos($linha['numero'], $busca) !== false ||
-            stripos($linha['centro_custo'], $busca) !== false;
+// Filtrar por busca (apenas uma vez)
+if (!empty($busca)) {
+    $buscaLower = strtolower($busca);
+    $buscaNumeros = preg_replace('/[^0-9]/', '', $busca);
+
+    $linhas = array_filter($linhas, function($linha) use ($buscaLower, $buscaNumeros) {
+        $numeroPuro = preg_replace('/[^0-9]/', '', $linha['numero']);
+        return stripos($linha['numero'], $buscaLower) !== false ||
+                stripos($numeroPuro, $buscaNumeros) !== false ||
+                stripos($linha['centro_custo'], $buscaLower) !== false;
     });
 }
 
-if ($status) {
+// Filtrar por status
+if (!empty($status)) {
     $linhas = array_filter($linhas, function($linha) use ($status) {
         return $linha['status'] === $status;
     });
 }
 
-if ($tipo) {
+// Filtrar por tipo
+if (!empty($tipo)) {
     $linhas = array_filter($linhas, function($linha) use ($tipo) {
         return $linha['tipo'] === $tipo;
     });
@@ -59,46 +67,8 @@ $totalFiltrado = count($linhas);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linhas Telefônicas - Sistema de Gestão</title>
-    <link rel="stylesheet" href="../css/linhas.css">
+    <link rel="stylesheet" href="../css/linhas/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Estilos específicos para linhas */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--spacing-lg);
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .operadora-badge {
-            background: rgba(107, 62, 143, 0.1);
-            color: var(--grape);
-            padding: 2px var(--spacing-sm);
-            border-radius: var(--radius-sm);
-            font-size: 0.7rem;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-        }
-
-        .numero-link {
-            font-family: monospace;
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--grape);
-        }
-
-        .tipo-badge-chip {
-            background: rgba(46, 204, 113, 0.1);
-            color: var(--success);
-        }
-
-        .tipo-badge-echip {
-            background: rgba(52, 152, 219, 0.1);
-            color: var(--info);
-        }
-    </style>
 </head>
 <body>
 <!-- HEADER -->
@@ -174,7 +144,7 @@ $totalFiltrado = count($linhas);
             <div class="filter-grid">
                 <div class="filter-group">
                     <label><i class="fas fa-search"></i> Buscar</label>
-                    <input type="text" name="busca" class="form-control" placeholder="Número ou Centro de Custo..." value="<?php echo htmlspecialchars($busca); ?>">
+                    <input type="text" name="busca" class="form-control" placeholder="Número (ex: 16 99618-5975) ou Centro de Custo..." value="<?php echo htmlspecialchars($busca); ?>">
                 </div>
                 <div class="filter-group">
                     <label><i class="fas fa-tag"></i> Tipo</label>
@@ -238,33 +208,32 @@ $totalFiltrado = count($linhas);
                     ?>
                     <tr>
                         <td data-label="Número">
-                                    <span class="numero-link">
-                                        <i class="fas fa-phone"></i>
-                                        <?php echo formatarTelefone($linha['numero']); ?>
-                                    </span>
+                            <span class="numero-link">
+                                <i class="fas fa-phone"></i>
+                                <?php echo formatarTelefone($linha['numero']); ?>
+                            </span>
                         </td>
                         <td data-label="Tipo">
-                                    <span class="tipo-badge <?php echo $tipoClass; ?>">
-                                        <i class="fas fa-<?php echo $linha['tipo'] === 'chip' ? 'sim-card' : 'microchip'; ?>"></i>
-                                        <?php echo getTipoLinhaTexto($linha['tipo']); ?>
-                                    </span>
+                            <span class="tipo-badge <?php echo $tipoClass; ?>">
+                                <i class="fas fa-<?php echo $linha['tipo'] === 'chip' ? 'sim-card' : 'microchip'; ?>"></i>
+                                <?php echo getTipoLinhaTexto($linha['tipo']); ?>
+                            </span>
                         </td>
                         <td data-label="Operadora">
-                                    <span class="operadora-badge">
-                                        <i class="fas fa-signal"></i> Vivo
-                                    </span>
+                            <span class="operadora-badge">
+                                <i class="fas fa-signal"></i> Vivo
+                            </span>
                         </td>
                         <td data-label="Centro de Custo">
-                                    <span class="departamento-badge">
-                                        <i class="fas"></i>
-                                        <?php echo htmlspecialchars($linha['centro_custo']); ?>
-                                    </span>
+                            <span class="departamento-badge">
+                                <?php echo htmlspecialchars($linha['centro_custo']); ?>
+                            </span>
                         </td>
                         <td data-label="Status">
-                                    <span class="status-badge <?php echo $statusClass; ?>">
-                                        <i class="fas fa-<?php echo $linha['status'] === 'disponivel' ? 'check-circle' : 'user-check'; ?>"></i>
-                                        <?php echo getStatusLinhaTexto($linha['status']); ?>
-                                    </span>
+                            <span class="status-badge <?php echo $statusClass; ?>">
+                                <i class="fas fa-<?php echo $linha['status'] === 'disponivel' ? 'check-circle' : 'user-check'; ?>"></i>
+                                <?php echo getStatusLinhaTexto($linha['status']); ?>
+                            </span>
                         </td>
                         <td data-label="Colaborador">
                             <?php if ($colaboradorNome !== '---'): ?>
@@ -286,7 +255,7 @@ $totalFiltrado = count($linhas);
                                         <i class="fas fa-user-plus"></i>
                                     </a>
                                 <?php else: ?>
-                                    <a href="desvincular.php?id=<?php echo $linha['id']; ?>" class="action-btn action-return" title="Desvincular" onclick="return confirm('Desvincular esta linha do colaborador?')">
+                                    <a href="desvincular.php?id=<?php echo $linha['id']; ?>" class="action-btn action-return" title="Desvincular" onclick="return confirm('Desvincular esta linha do colaborador? O centro de custo será alterado para 9999.')">
                                         <i class="fas fa-user-slash"></i>
                                     </a>
                                 <?php endif; ?>
@@ -307,6 +276,11 @@ $totalFiltrado = count($linhas);
             <i class="fas fa-chart-line"></i>
             <span>Total: <strong><?php echo $totalFiltrado; ?></strong> linha(s)</span>
         </div>
+        <?php if ($busca): ?>
+            <div class="filter-summary">
+                <small>Buscando por: <strong><?php echo htmlspecialchars($busca); ?></strong></small>
+            </div>
+        <?php endif; ?>
     </div>
 </main>
 
@@ -345,5 +319,15 @@ $totalFiltrado = count($linhas);
 </footer>
 
 <script src="../js/script.js"></script>
+<script>
+    // Fechar alerta após 5 segundos
+    setTimeout(function() {
+        const alert = document.querySelector('.global-alert');
+        if (alert) {
+            alert.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => alert.remove(), 300);
+        }
+    }, 5000);
+</script>
 </body>
 </html>

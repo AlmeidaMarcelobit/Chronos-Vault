@@ -142,8 +142,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-grid">
                 <div class="form-group">
                     <label for="numero"><i class="fas fa-phone"></i> Número da Linha <span class="required">*</span></label>
-                    <input type="text" id="numero" name="numero" value="<?php echo htmlspecialchars($_POST['numero'] ?? ''); ?>" required class="form-control telefone-mask" placeholder="(11) 99999-9999" maxlength="15">
-                    <small class="form-text">Formato: (DDD) 99999-9999</small>
+                    <input type="text"
+                           id="numero"
+                           name="numero"
+                           value="<?php echo htmlspecialchars($_POST['numero'] ?? ''); ?>"
+                           required
+                           class="form-control telefone-mask"
+                           placeholder="16 99999-9999"
+                           maxlength="14">
+                    <small class="form-text">Formato: DDD + espaço + número (ex: 16 99999-9999)</small>
                 </div>
 
                 <div class="form-group">
@@ -251,11 +258,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         telefoneInput.addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length > 11) value = value.substring(0, 11);
+
             if (value.length <= 11) {
                 if (value.length === 11) {
-                    value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+                    value = value.replace(/(\d{2})(\d{5})(\d{4})/, '$1 $2-$3');
                 } else if (value.length === 10) {
-                    value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+                    value = value.replace(/(\d{2})(\d{4})(\d{4})/, '$1 $2-$3');
                 }
             }
             e.target.value = value;
