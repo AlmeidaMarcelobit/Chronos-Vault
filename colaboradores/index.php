@@ -85,9 +85,6 @@ if ($busca) {
             <div class="user-info">
                 <i class="fas fa-user-circle"></i>
                 <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
-                <?php if ($is_admin): ?>
-                    <span class="user-level user-level-admin">Admin</span>
-                <?php endif; ?>
             </div>
 
             <a href="../logout.php" class="logout-btn">
