@@ -918,3 +918,48 @@ select.form-control {
         height: 36px;
     }
 }
+/* Botão Alocar Sequencial */
+.btn-outline {
+    background: transparent;
+    color: var(--grape);
+    border: 1px solid var(--grape);
+    transition: var(--transition);
+}
+
+.btn-outline:hover {
+    background: var(--grape);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(107, 62, 143, 0.2);
+}
+
+.btn-outline i {
+    transition: var(--transition);
+}
+
+.btn-outline:hover i {
+    transform: scale(1.05);
+}
+
+/* Botão com ícone específico */
+.btn-outline .fa-list-ol {
+    margin-right: var(--spacing-xs);
+}
+
+/* Responsividade para o botão */
+@media (max-width: 768px) {
+    .btn-outline {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.8125rem;
+    }
+
+    .btn-outline i {
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-outline span {
+        display: inline-block;
+    }
+}
