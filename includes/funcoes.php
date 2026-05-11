@@ -4,13 +4,18 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// ============================================
+// FUNÇÕES DE SESSÃO E AUTENTICAÇÃO
+// ============================================
+
 // Verificar sessão com timeout
 function verificarSessao() {
     if (!isset($_SESSION['usuario_id'])) {
         // Determinar o caminho correto para login.php
         $current_path = $_SERVER['PHP_SELF'];
         if (strpos($current_path, '/colaboradores/') !== false ||
-            strpos($current_path, '/equipamentos/') !== false) {
+            strpos($current_path, '/equipamentos/') !== false ||
+            strpos($current_path, '/linhas/') !== false) {
             header('Location: ../login.php');
         } else {
             header('Location: login.php');
@@ -37,7 +42,8 @@ function verificarTimeoutSessao() {
             // Redirecionar para login com mensagem de timeout
             $current_path = $_SERVER['PHP_SELF'];
             if (strpos($current_path, '/colaboradores/') !== false ||
-                strpos($current_path, '/equipamentos/') !== false) {
+                strpos($current_path, '/equipamentos/') !== false ||
+                strpos($current_path, '/linhas/') !== false) {
                 header('Location: ../login.php?timeout=1');
             } else {
                 header('Location: login.php?timeout=1');
@@ -49,6 +55,10 @@ function verificarTimeoutSessao() {
         }
     }
 }
+
+// ============================================
+// FUNÇÕES DE ARQUIVO JSON
+// ============================================
 
 // Ler arquivo JSON
 function lerArquivoJSON($caminho) {
@@ -109,7 +119,11 @@ function gerarId($dados) {
     return max($ids) + 1;
 }
 
-// Formatadores
+// ============================================
+// FUNÇÕES DE FORMATAÇÃO
+// ============================================
+
+// Formatar CPF
 function formatarCPF($cpf) {
     if (empty($cpf)) {
         return '';
@@ -127,6 +141,7 @@ function formatarCPF($cpf) {
     return $cpf;
 }
 
+// Formatar data
 function formatarData($data, $formato = 'd/m/Y H:i') {
     if (empty($data) || $data === '---') {
         return '---';
@@ -144,6 +159,41 @@ function formatarData($data, $formato = 'd/m/Y H:i') {
         return date($formato, $timestamp);
     }
 }
+
+// Formatar número de telefone
+function formatarTelefone($telefone) {
+    if (empty($telefone)) {
+        return '';
+    }
+
+    $telefone = preg_replace('/[^0-9]/', '', $telefone);
+    $tamanho = strlen($telefone);
+
+    if ($tamanho == 10) { // (99) 9999-9999
+        return '(' . substr($telefone, 0, 2) . ') ' .
+            substr($telefone, 2, 4) . '-' .
+            substr($telefone, 6, 4);
+    } elseif ($tamanho == 11) { // (99) 99999-9999
+        return '(' . substr($telefone, 0, 2) . ') ' .
+            substr($telefone, 2, 5) . '-' .
+            substr($telefone, 7, 4);
+    }
+
+    return $telefone;
+}
+
+
+// Formatar valor monetário
+function formatarMoeda($valor) {
+    if (!is_numeric($valor)) {
+        return 'R$ 0,00';
+    }
+    return 'R$ ' . number_format($valor, 2, ',', '.');
+}
+
+// ============================================
+// FUNÇÕES DE VALIDAÇÃO
+// ============================================
 
 // Validar CPF
 function validarCPF($cpf) {
@@ -185,11 +235,38 @@ function validarEmail($email) {
     if (empty($email)) {
         return false;
     }
-
     return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 }
 
-// Função para obter tipos de equipamentos
+// Validar número de telefone
+function validarTelefone($numero) {
+    $numero = preg_replace('/[^0-9]/', '', $numero);
+    $tamanho = strlen($numero);
+    // Aceita: 10 (DDD+fixo) ou 11 (DDD+celular)
+    return in_array($tamanho, [10, 11]);
+}
+
+// Validar CEP
+function validarCEP($cep) {
+    $cep = preg_replace('/[^0-9]/', '', $cep);
+    return strlen($cep) === 8;
+}
+
+// Validar estado (UF)
+function validarUF($uf) {
+    $ufsValidas = [
+        'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA',
+        'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN',
+        'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
+    ];
+    return in_array(strtoupper($uf), $ufsValidas);
+}
+
+// ============================================
+// FUNÇÕES PARA EQUIPAMENTOS
+// ============================================
+
+// Obter tipos de equipamentos
 function getTiposEquipamentos() {
     return [
         'notebook' => 'Notebook',
@@ -204,7 +281,7 @@ function getTiposEquipamentos() {
     ];
 }
 
-// Função para obter status disponíveis
+// Obter status disponíveis para equipamentos
 function getStatusEquipamentos() {
     return [
         'estoque' => 'Em Estoque',
@@ -215,31 +292,31 @@ function getStatusEquipamentos() {
     ];
 }
 
-// Função para obter texto do status
+// Obter texto do status do equipamento
 function getStatusTexto($status) {
     $statuses = getStatusEquipamentos();
     return $statuses[$status] ?? 'Desconhecido';
 }
 
-// Função para obter texto do tipo
+// Obter texto do tipo de equipamento
 function getTipoTexto($tipo) {
     $tipos = getTiposEquipamentos();
     return $tipos[$tipo] ?? 'Outro';
 }
 
-// Função para verificar se um status permite atribuição a colaborador
+// Verificar se um status permite atribuição a colaborador
 function statusPermiteAtribuicao($status) {
     $statusesComAtribuicao = ['alocado', 'emprestado'];
     return in_array($status, $statusesComAtribuicao);
 }
 
-// Função para verificar se um status permite estar no estoque
+// Verificar se um status permite estar no estoque
 function statusPermiteEstoque($status) {
     $statusesComEstoque = ['estoque', 'manutencao', 'fora_uso'];
     return in_array($status, $statusesComEstoque);
 }
 
-// Função para obter ícone baseado no tipo de equipamento
+// Obter ícone baseado no tipo de equipamento
 function getIconByType($tipo) {
     $icones = [
         'notebook' => 'laptop',
@@ -252,11 +329,10 @@ function getIconByType($tipo) {
         'fone' => 'headphones',
         'outros' => 'laptop-medical'
     ];
-
     return $icones[$tipo] ?? 'laptop-medical';
 }
 
-// Função para obter ícone baseado no status
+// Obter ícone baseado no status do equipamento
 function getIconByStatus($status) {
     $icons = [
         'estoque' => 'warehouse',
@@ -265,11 +341,150 @@ function getIconByStatus($status) {
         'manutencao' => 'tools',
         'emprestado' => 'handshake'
     ];
-
     return $icons[$status] ?? 'question-circle';
 }
 
-// Função para limpar e validar string
+// Obter valor estimado do equipamento
+function getValorEstimadoEquipamento($tipo) {
+    $valores = [
+        'notebook' => 3500.00,
+        'celular' => 2000.00,
+        'suporte' => 1200.00,
+        'monitor' => 800.00,
+        'teclado' => 150.00,
+        'mouse' => 80.00,
+        'adaptador' => 120.00,
+        'fone' => 200.00,
+        'outros' => 500.00
+    ];
+    return $valores[$tipo] ?? 500.00;
+}
+
+// Contar equipamentos do colaborador
+function contarEquipamentosColaborador($colaboradorId, $equipamentos) {
+    $count = 0;
+    foreach ($equipamentos as $equipamento) {
+        if ($equipamento['colaborador_id'] == $colaboradorId &&
+            in_array($equipamento['status'], ['alocado', 'emprestado'])) {
+            $count++;
+        }
+    }
+    return $count;
+}
+
+// ============================================
+// FUNÇÕES PARA LINHAS TELEFÔNICAS
+// ============================================
+
+// Obter tipos de linha
+function getTiposLinha() {
+    return [
+        'chip' => 'Chip Físico',
+        'echip' => 'E-Chip (eSIM)'
+    ];
+}
+
+// Obter texto do tipo de linha
+function getTipoLinhaTexto($tipo) {
+    $tipos = getTiposLinha();
+    return $tipos[$tipo] ?? 'Desconhecido';
+}
+
+// Obter status da linha
+function getStatusLinhaTexto($status) {
+    $statuses = [
+        'disponivel' => 'Disponível',
+        'alocado' => 'Alocado'
+    ];
+    return $statuses[$status] ?? 'Desconhecido';
+}
+
+// ============================================
+// FUNÇÕES PARA COLABORADORES
+// ============================================
+
+// Obter nome do gestor pelo ID
+function getNomeGestor($gestorId, $colaboradores) {
+    if (empty($gestorId)) {
+        return 'Não informado';
+    }
+
+    foreach ($colaboradores as $colaborador) {
+        if ($colaborador['id'] == $gestorId) {
+            return $colaborador['nome'];
+        }
+    }
+    return 'Não encontrado';
+}
+
+// Obter dados completos do gestor
+function getGestorInfo($gestorId, $colaboradores) {
+    if (empty($gestorId)) {
+        return null;
+    }
+
+    foreach ($colaboradores as $colaborador) {
+        if ($colaborador['id'] == $gestorId) {
+            return $colaborador;
+        }
+    }
+    return null;
+}
+
+// Obter lista de estados (UF)
+function getEstados() {
+    return [
+        'AC' => 'Acre',
+        'AL' => 'Alagoas',
+        'AP' => 'Amapá',
+        'AM' => 'Amazonas',
+        'BA' => 'Bahia',
+        'CE' => 'Ceará',
+        'DF' => 'Distrito Federal',
+        'ES' => 'Espírito Santo',
+        'GO' => 'Goiás',
+        'MA' => 'Maranhão',
+        'MT' => 'Mato Grosso',
+        'MS' => 'Mato Grosso do Sul',
+        'MG' => 'Minas Gerais',
+        'PA' => 'Pará',
+        'PB' => 'Paraíba',
+        'PR' => 'Paraná',
+        'PE' => 'Pernambuco',
+        'PI' => 'Piauí',
+        'RJ' => 'Rio de Janeiro',
+        'RN' => 'Rio Grande do Norte',
+        'RS' => 'Rio Grande do Sul',
+        'RO' => 'Rondônia',
+        'RR' => 'Roraima',
+        'SC' => 'Santa Catarina',
+        'SP' => 'São Paulo',
+        'SE' => 'Sergipe',
+        'TO' => 'Tocantins'
+    ];
+}
+
+// ============================================
+// FUNÇÕES PARA TERMOS E DOCUMENTOS
+// ============================================
+
+// Obter data atual formatada
+function getDataAtual($formato = 'd/m/Y') {
+    return date($formato);
+}
+
+// Gerar código único para termos
+function gerarCodigoTermo($colaboradorId, $tipo = 'COL') {
+    $timestamp = date('YmdHis');
+    $idFormatado = str_pad($colaboradorId, 4, '0', STR_PAD_LEFT);
+    return $tipo . '-' . $idFormatado . '-' . $timestamp;
+}
+
+// ============================================
+// FUNÇÕES UTILITÁRIAS
+// ============================================
+
+// Limpar e validar string
 function limparString($string) {
     if (!is_string($string)) {
         return '';
@@ -278,34 +493,10 @@ function limparString($string) {
     $string = trim($string);
     $string = stripslashes($string);
     $string = htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
-
     return $string;
 }
 
-// Função para formatar número de telefone
-function formatarTelefone($telefone) {
-    if (empty($telefone)) {
-        return '';
-    }
-
-    $telefone = preg_replace('/[^0-9]/', '', $telefone);
-
-    $tamanho = strlen($telefone);
-
-    if ($tamanho == 10) { // (99) 9999-9999
-        return '(' . substr($telefone, 0, 2) . ') ' .
-            substr($telefone, 2, 4) . '-' .
-            substr($telefone, 6, 4);
-    } elseif ($tamanho == 11) { // (99) 99999-9999
-        return '(' . substr($telefone, 0, 2) . ') ' .
-            substr($telefone, 2, 5) . '-' .
-            substr($telefone, 7, 4);
-    }
-
-    return $telefone;
-}
-
-// Função para criar slug (URL amigável)
+// Criar slug (URL amigável)
 function criarSlug($texto) {
     if (empty($texto)) {
         return '';
@@ -328,11 +519,10 @@ function criarSlug($texto) {
 
     // Remove hífens do início e fim
     $texto = trim($texto, '-');
-
     return $texto;
 }
 
-// Função para exibir mensagem de alerta
+// Exibir mensagem de alerta
 function exibirAlerta($mensagem, $tipo = 'info') {
     $classes = [
         'success' => 'alert-success',
@@ -362,11 +552,12 @@ function exibirAlerta($mensagem, $tipo = 'info') {
     );
 }
 
-// Função para criar backup dos dados
+// Criar backup dos dados
 function criarBackup($diretorio = 'backups/') {
     $arquivos = [
         'data/colaboradores.json',
         'data/equipamentos.json',
+        'data/linhas.json',
         'data/usuarios.json'
     ];
 
@@ -386,7 +577,7 @@ function criarBackup($diretorio = 'backups/') {
     return $pastaBackup;
 }
 
-// Função para log de atividades
+// Registrar log de atividades
 function registrarLog($acao, $detalhes = '') {
     $logFile = 'data/logs.json';
     $logs = lerArquivoJSON($logFile);
@@ -403,87 +594,6 @@ function registrarLog($acao, $detalhes = '') {
 
     $logs[] = $log;
     salvarArquivoJSON($logFile, $logs);
-
     return true;
-}
-
-// Função para obter valor estimado do equipamento
-function getValorEstimadoEquipamento($tipo) {
-    $valores = [
-        'notebook' => 3500.00,
-        'celular' => 2000.00,
-        'suporte' => 1200.00,
-        'monitor' => 800.00,
-        'teclado' => 150.00,
-        'mouse' => 80.00,
-        'adaptador' => 120.00,
-        'fone' => 200.00,
-        'outros' => 500.00
-    ];
-
-    return $valores[$tipo] ?? 500.00;
-}
-
-// Função para formatar valor monetário
-function formatarMoeda($valor) {
-    if (!is_numeric($valor)) {
-        return 'R$ 0,00';
-    }
-
-    return 'R$ ' . number_format($valor, 2, ',', '.');
-}
-
-// Função para obter data atual formatada
-function getDataAtual($formato = 'd/m/Y') {
-    return date($formato);
-}
-
-// Função para gerar código único para termos
-function gerarCodigoTermo($colaboradorId, $tipo = 'COL') {
-    $timestamp = date('YmdHis');
-    $idFormatado = str_pad($colaboradorId, 4, '0', STR_PAD_LEFT);
-    return $tipo . '-' . $idFormatado . '-' . $timestamp;
-}
-
-// Função para contar equipamentos do colaborador
-function contarEquipamentosColaborador($colaboradorId, $equipamentos) {
-    $count = 0;
-    foreach ($equipamentos as $equipamento) {
-        if ($equipamento['colaborador_id'] == $colaboradorId &&
-            in_array($equipamento['status'], ['alocado', 'emprestado'])) {
-            $count++;
-        }
-    }
-    return $count;
-}
-
-// Função para obter nome do gestor pelo ID
-function getNomeGestor($gestorId, $colaboradores) {
-    if (empty($gestorId)) {
-        return 'Não informado';
-    }
-
-    foreach ($colaboradores as $colaborador) {
-        if ($colaborador['id'] == $gestorId) {
-            return $colaborador['nome'];
-        }
-    }
-
-    return 'Não encontrado';
-}
-
-// Função para obter dados completos do gestor
-function getGestorInfo($gestorId, $colaboradores) {
-    if (empty($gestorId)) {
-        return null;
-    }
-
-    foreach ($colaboradores as $colaborador) {
-        if ($colaborador['id'] == $gestorId) {
-            return $colaborador;
-        }
-    }
-
-    return null;
 }
 ?>
