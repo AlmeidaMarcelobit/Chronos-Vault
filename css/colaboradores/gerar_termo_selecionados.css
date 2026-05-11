@@ -1,0 +1,620 @@
+/* responsabilidade.css - Termo de Responsabilidade de Equipamentos */
+/* Tema Fanta Uva - Design para Impressão e Tela */
+
+/* ============================================
+   VARIÁVEIS DE CORES (Fanta Uva)
+   ============================================ */
+:root {
+    --grape-dark: #4A266A;
+    --grape: #6B3E8F;
+    --grape-light: #9B59B6;
+    --grape-soft: #C39BD3;
+    --lime: #2ECC71;
+    --lemon: #F1C40F;
+    --white: #FFFFFF;
+    --gray-50: #F8F9FA;
+    --gray-100: #F1F3F5;
+    --gray-200: #E9ECEF;
+    --gray-300: #DEE2E6;
+    --gray-400: #CED4DA;
+    --gray-500: #ADB5BD;
+    --gray-600: #6C757D;
+    --gray-700: #495057;
+    --gray-800: #343A40;
+    --gray-900: #212529;
+    --success: #2ECC71;
+    --danger: #E74C3C;
+    --warning: #F39C12;
+    --info: #3498DB;
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --transition: all 0.2s ease;
+}
+
+/* ============================================
+   RESET E ESTILOS GLOBAIS
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--gray-100);
+    color: var(--gray-800);
+    line-height: 1.5;
+    padding: var(--spacing-xl);
+}
+
+/* ============================================
+   BOTÕES DE AÇÃO (NÃO IMPRIMEM)
+   ============================================ */
+.termo-actions {
+    max-width: 1100px;
+    margin: 0 auto var(--spacing-xl) auto;
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+    position: sticky;
+    top: var(--spacing-md);
+    z-index: 100;
+}
+
+.btn-print,
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-xl);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+}
+
+.btn-print {
+    background: var(--grape);
+    color: var(--white);
+}
+
+.btn-print:hover {
+    background: var(--grape-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-back {
+    background: var(--gray-200);
+    color: var(--gray-700);
+}
+
+.btn-back:hover {
+    background: var(--gray-300);
+    transform: translateY(-1px);
+}
+
+/* ============================================
+   CONTAINER PRINCIPAL DO TERMO
+   ============================================ */
+.termo-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    padding: var(--spacing-2xl);
+}
+
+/* ============================================
+   HEADER DO TERMO
+   ============================================ */
+.termo-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 3px solid var(--grape);
+}
+
+.termo-header img {
+    max-width: 150px;
+    margin-bottom: var(--spacing-md);
+}
+
+.termo-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--grape);
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-xs);
+    text-transform: uppercase;
+}
+
+.termo-subtitle {
+    font-size: 0.875rem;
+    color: var(--gray-500);
+}
+
+/* ============================================
+   CONTADOR DE EQUIPAMENTOS
+   ============================================ */
+.equipamento-count {
+    display: inline-block;
+    background: var(--grape-soft);
+    color: var(--grape-dark);
+    padding: 4px var(--spacing-md);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-lg);
+}
+
+/* ============================================
+   SEÇÕES DO TERMO
+   ============================================ */
+.termo-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.section-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--grape);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--spacing-md);
+}
+
+/* ============================================
+   INFO GRID (DADOS DO COLABORADOR)
+   ============================================ */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray-200);
+}
+
+.info-item {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-width: 90px;
+}
+
+.info-value {
+    font-size: 0.875rem;
+    color: var(--gray-800);
+    font-weight: 500;
+    word-break: break-word;
+}
+
+/* ============================================
+   TABELA DE EQUIPAMENTOS
+   ============================================ */
+.termo-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+}
+
+.termo-table th,
+.termo-table td {
+    border: 1px solid var(--gray-300);
+    padding: var(--spacing-sm);
+    text-align: left;
+    vertical-align: top;
+}
+
+.termo-table th {
+    background: var(--gray-100);
+    font-weight: 600;
+    color: var(--gray-700);
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+}
+
+.termo-table td {
+    color: var(--gray-700);
+}
+
+.termo-table tbody tr:hover {
+    background: var(--gray-50);
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 2px var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.65rem;
+    font-weight: 500;
+}
+
+.status-estoque {
+    background: rgba(46, 204, 113, 0.1);
+    color: var(--success);
+}
+
+.status-alocado {
+    background: rgba(52, 152, 219, 0.1);
+    color: var(--info);
+}
+
+.status-emprestado {
+    background: rgba(243, 156, 18, 0.1);
+    color: var(--warning);
+}
+
+/* ============================================
+   TEXTO DO TERMO (CLÁUSULAS)
+   ============================================ */
+.termo-text {
+    padding: var(--spacing-lg);
+    background: var(--white);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray-200);
+}
+
+.clausula {
+    margin-bottom: var(--spacing-lg);
+}
+
+.clausula:last-child {
+    margin-bottom: 0;
+}
+
+.clausula-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--grape);
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.clausula p {
+    font-size: 0.8rem;
+    color: var(--gray-700);
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.clausula ol {
+    margin-left: var(--spacing-lg);
+    margin-top: var(--spacing-sm);
+}
+
+.clausula li {
+    font-size: 0.8rem;
+    color: var(--gray-700);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xs);
+}
+
+/* ============================================
+   ASSINATURAS
+   ============================================ */
+.termo-assinaturas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 2px solid var(--gray-200);
+}
+
+.assinatura-box {
+    text-align: center;
+}
+
+.linha-assinatura {
+    height: 1px;
+    background: var(--gray-400);
+    margin: var(--spacing-lg) 0 var(--spacing-sm) 0;
+}
+
+.nome-assinatura {
+    font-size: 0.75rem;
+    color: var(--gray-600);
+    font-weight: 500;
+    margin-bottom: var(--spacing-xs);
+}
+
+.cargo-assinatura {
+    font-size: 0.7rem;
+    color: var(--gray-500);
+    margin-bottom: var(--spacing-xs);
+}
+
+.data-assinatura {
+    font-size: 0.7rem;
+    color: var(--gray-500);
+    margin-top: var(--spacing-sm);
+}
+
+/* ============================================
+   ESTILOS DE IMPRESSÃO
+   ============================================ */
+@media print {
+    body {
+        background: white;
+        padding: 0;
+        margin: 0;
+    }
+
+    .termo-actions,
+    .no-print {
+        display: none !important;
+    }
+
+    .termo-container {
+        box-shadow: none;
+        padding: 0.5cm;
+        margin: 0;
+        max-width: 100%;
+    }
+
+    .termo-header {
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+    }
+
+    .termo-title {
+        font-size: 16px;
+    }
+
+    .termo-subtitle {
+        font-size: 10px;
+    }
+
+    .section-title {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+
+    .info-grid {
+        padding: 10px;
+    }
+
+    .info-label {
+        font-size: 9px;
+        min-width: 70px;
+    }
+
+    .info-value {
+        font-size: 10px;
+    }
+
+    .termo-table {
+        font-size: 9px;
+    }
+
+    .termo-table th,
+    .termo-table td {
+        padding: 3px;
+    }
+
+    .clausula-title {
+        font-size: 10px;
+    }
+
+    .clausula p,
+    .clausula li {
+        font-size: 9px;
+    }
+
+    .termo-assinaturas {
+        margin-top: 20px;
+        padding-top: 15px;
+        gap: 30px;
+    }
+
+    .linha-assinatura {
+        margin: 15px 0 3px 0;
+    }
+
+    .nome-assinatura,
+    .cargo-assinatura,
+    .data-assinatura {
+        font-size: 8px;
+    }
+
+    @page {
+        size: A4;
+        margin: 1.5cm;
+    }
+}
+
+/* ============================================
+   RESPONSIVIDADE
+   ============================================ */
+@media (max-width: 768px) {
+    body {
+        padding: var(--spacing-md);
+    }
+
+    .termo-container {
+        padding: var(--spacing-lg);
+    }
+
+    .termo-title {
+        font-size: 1.25rem;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-md);
+    }
+
+    .info-item {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+
+    .info-label {
+        min-width: auto;
+    }
+
+    .termo-assinaturas {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .termo-actions {
+        position: static;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .btn-print,
+    .btn-back {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.75rem;
+    }
+
+    .clausula ol {
+        margin-left: var(--spacing-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .termo-container {
+        padding: var(--spacing-md);
+    }
+
+    .termo-table {
+        font-size: 0.65rem;
+    }
+
+    .termo-table th,
+    .termo-table td {
+        padding: var(--spacing-xs);
+    }
+
+    .clausula p,
+    .clausula li {
+        font-size: 0.7rem;
+    }
+
+    .clausula-title {
+        font-size: 0.75rem;
+    }
+
+    .equipamento-count {
+        font-size: 0.65rem;
+    }
+}
+
+/* ============================================
+   TABELA RESPONSIVA (MOBILE)
+   ============================================ */
+@media (max-width: 650px) {
+    .termo-table,
+    .termo-table tbody,
+    .termo-table tr,
+    .termo-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .termo-table thead {
+        display: none;
+    }
+
+    .termo-table tr {
+        margin-bottom: var(--spacing-md);
+        border: 1px solid var(--gray-300);
+        border-radius: var(--radius-md);
+        padding: var(--spacing-sm);
+        background: var(--white);
+    }
+
+    .termo-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border: none;
+        border-bottom: 1px solid var(--gray-200);
+        font-size: 0.75rem;
+    }
+
+    .termo-table td:last-child {
+        border-bottom: none;
+    }
+
+    .termo-table td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--gray-600);
+        font-size: 0.7rem;
+        margin-right: var(--spacing-md);
+    }
+}
+
+/* ============================================
+   UTILITÁRIOS
+   ============================================ */
+.text-center {
+    text-align: center;
+}
+
+.mt-1 { margin-top: var(--spacing-sm); }
+.mt-2 { margin-top: var(--spacing-md); }
+.mt-3 { margin-top: var(--spacing-lg); }
+
+.mb-1 { margin-bottom: var(--spacing-sm); }
+.mb-2 { margin-bottom: var(--spacing-md); }
+.mb-3 { margin-bottom: var(--spacing-lg); }
+
+/* ============================================
+   ANIMAÇÕES
+   ============================================ */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.termo-container {
+    animation: fadeIn 0.3s ease;
+}
