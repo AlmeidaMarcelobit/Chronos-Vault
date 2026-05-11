@@ -1581,3 +1581,12 @@ select.form-control:hover {
         word-break: break-word;
     }
 }
+.cc-badge-padrao {
+    background: rgba(108, 117, 125, 0.1);
+    color: var(--gray-600);
+    font-style: italic;
+}
+
+.cc-badge-padrao i {
+    color: var(--gray-500);
+}
