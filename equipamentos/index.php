@@ -194,6 +194,9 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
                 <i class="fas fa-boxes"></i>
                 <span>Atribuir Caixa</span>
             </a>
+            <a href="alocar_multiplos.php" class="btn btn-outline">
+                <i class="fas fa-layer-group"></i> Alocar Múltiplos
+            </a>
             <a href="adicionar.php" class="btn btn-primary">
                 <i class="fas fa-plus"></i>
                 <span>Adicionar Equipamento</span>
