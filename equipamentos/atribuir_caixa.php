@@ -16,9 +16,9 @@ $caixas = [];
 foreach ($equipamentos as $equip) {
     if (!empty($equip['caixa'] ?? '')) {
         $caixas[$equip['caixa']] = [
-            'nome' => $equip['caixa'],
-            'quantidade' => 0,
-            'equipamentos' => []
+                'nome' => $equip['caixa'],
+                'quantidade' => 0,
+                'equipamentos' => []
         ];
     }
 }
@@ -43,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $colaborador_id = $_POST['colaborador_id'] ?? null;
     $status = $_POST['status'] ?? 'alocado';
     $observacoes = trim($_POST['observacoes'] ?? '');
+    $atualizar_centro_custo = isset($_POST['atualizar_centro_custo']) && $_POST['atualizar_centro_custo'] === 'sim';
 
     $erros = [];
 
@@ -55,23 +56,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($erros)) {
+        // Buscar centro de custo do colaborador
+        $centroCustoColaborador = null;
+        $colaboradorNome = '';
+        foreach ($colaboradores as $colab) {
+            if ($colab['id'] == $colaborador_id) {
+                $centroCustoColaborador = $colab['centro_custo'];
+                $colaboradorNome = $colab['nome'];
+                break;
+            }
+        }
+
         $equipamentosAtualizados = 0;
         $equipamentosAlterados = [];
+        $centroCustoAlterados = [];
 
         // Atualizar todos os equipamentos da caixa
         foreach ($equipamentos as $index => &$equip) {
             if (($equip['caixa'] ?? '') === $caixa_id && $equip['status'] === 'estoque') {
+                $centroCustoOriginal = $equip['centro_custo'];
+
                 $equipamentos[$index]['colaborador_id'] = (int)$colaborador_id;
                 $equipamentos[$index]['status'] = $status;
                 $equipamentos[$index]['data_atribuicao'] = date('Y-m-d H:i:s');
                 $equipamentos[$index]['data_atualizacao'] = date('Y-m-d H:i:s');
                 $equipamentos[$index]['tipo_atribuicao'] = $status === 'emprestado' ? 'emprestimo' : 'alocacao';
 
+                // Atualizar centro de custo se a opção estiver marcada
+                if ($atualizar_centro_custo && $centroCustoColaborador) {
+                    // Registrar no histórico de centro de custo
+                    if (!isset($equip['historico_centro_custo']) || !is_array($equip['historico_centro_custo'])) {
+                        $equipamentos[$index]['historico_centro_custo'] = [];
+                    }
+
+                    $historicoCC = [
+                            'data' => date('Y-m-d H:i:s'),
+                            'usuario' => $_SESSION['usuario_nome'] ?? 'Administrador',
+                            'centro_custo_anterior' => $centroCustoOriginal,
+                            'centro_custo_novo' => $centroCustoColaborador,
+                            'motivo' => "Atribuição em massa via caixa {$caixa_id} - Equipamento alocado para {$colaboradorNome}"
+                    ];
+                    $equipamentos[$index]['historico_centro_custo'][] = $historicoCC;
+
+                    // Atualizar centro de custo do equipamento
+                    if ($centroCustoOriginal != $centroCustoColaborador) {
+                        $equipamentos[$index]['centro_custo'] = $centroCustoColaborador;
+                        $centroCustoAlterados[] = $equip['patrimonio'];
+                    }
+                }
+
                 // Adicionar observação sobre a atribuição em massa
                 $observacaoAtual = $equipamentos[$index]['observacoes'] ?? '';
                 $novaObservacao = "\n\n[ATRIBUIÇÃO EM MASSA] " . date('d/m/Y H:i:s');
-                $novaObservacao .= "\nAtribuído via caixa " . $caixa_id;
-                $novaObservacao .= "\nObservações: " . $observacoes;
+                $novaObservacao .= "\nAtribuído via caixa " . $caixa_id . " para {$colaboradorNome}";
+
+                if ($atualizar_centro_custo && $centroCustoColaborador && $centroCustoOriginal != $centroCustoColaborador) {
+                    $novaObservacao .= "\nCentro de custo atualizado de {$centroCustoOriginal} para {$centroCustoColaborador}";
+                }
+
+                if (!empty($observacoes)) {
+                    $novaObservacao .= "\nObservações: " . $observacoes;
+                }
+
                 $equipamentos[$index]['observacoes'] = $observacaoAtual . $novaObservacao;
 
                 $equipamentosAtualizados++;
@@ -81,16 +127,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($equipamentosAtualizados > 0) {
             if (salvarArquivoJSON('../data/equipamentos.json', $equipamentos)) {
-                // Buscar nome do colaborador
-                $colaboradorNome = '';
-                foreach ($colaboradores as $colab) {
-                    if ($colab['id'] == $colaborador_id) {
-                        $colaboradorNome = $colab['nome'];
-                        break;
+                $mensagemExtra = '';
+                if ($atualizar_centro_custo && $centroCustoColaborador) {
+                    $quantidadeCC = count($centroCustoAlterados);
+                    if ($quantidadeCC > 0) {
+                        $mensagemExtra = " O centro de custo de {$quantidadeCC} equipamento(s) foi atualizado para {$centroCustoColaborador}.";
                     }
                 }
-
-                $mensagem = "{$equipamentosAtualizados} equipamento(s) da caixa {$caixa_id} foram atribuídos com sucesso para {$colaboradorNome}!";
+                $mensagem = "{$equipamentosAtualizados} equipamento(s) da caixa {$caixa_id} foram atribuídos com sucesso para {$colaboradorNome}!" . $mensagemExtra;
                 $tipoMensagem = 'success';
             } else {
                 $mensagem = 'Erro ao salvar as alterações. Tente novamente.';
@@ -112,6 +156,7 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
     $colaborador_id = $_GET['colaborador'] ?? null;
 
     $equipamentosAtualizados = 0;
+    $equipamentosDevolvidos = [];
 
     foreach ($equipamentos as $index => &$equip) {
         if (($equip['caixa'] ?? '') === $caixa_id && in_array($equip['status'], ['alocado', 'emprestado'])) {
@@ -135,6 +180,7 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
             $equipamentos[$index]['observacoes'] = $observacaoAtual . $novaObservacao;
 
             $equipamentosAtualizados++;
+            $equipamentosDevolvidos[] = $equip['patrimonio'];
         }
     }
 
@@ -185,6 +231,8 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
             margin-bottom: var(--spacing-md);
             padding-bottom: var(--spacing-sm);
             border-bottom: 2px solid var(--gray-200);
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
         }
 
         .caixa-titulo {
@@ -207,6 +255,7 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
         .caixa-stats {
             display: flex;
             gap: var(--spacing-md);
+            flex-wrap: wrap;
         }
 
         .stat-badge {
@@ -244,6 +293,8 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
             padding: var(--spacing-sm);
             border-bottom: 1px solid var(--gray-100);
             font-size: 0.875rem;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
         }
 
         .equipamento-item-caixa:last-child {
@@ -270,6 +321,22 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
         .caixa-actions {
             display: flex;
             gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .info-centro-custo {
+            background: rgba(107, 62, 143, 0.05);
+            border-left: 3px solid var(--grape);
+        }
+
+        .cc-diferente {
+            color: var(--warning);
+            font-weight: bold;
+        }
+
+        .cc-igual {
+            color: var(--success);
         }
     </style>
 </head>
@@ -345,11 +412,11 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
 
                 <div class="form-group">
                     <label for="colaborador_id"><i class="fas fa-user"></i> Selecionar Colaborador <span class="required">*</span></label>
-                    <select id="colaborador_id" name="colaborador_id" required class="form-select">
+                    <select id="colaborador_id" name="colaborador_id" required class="form-select" onchange="verificarCentroCusto()">
                         <option value="">-- Selecione um colaborador --</option>
                         <?php foreach ($colaboradores as $colaborador): ?>
-                            <option value="<?php echo $colaborador['id']; ?>">
-                                <?php echo htmlspecialchars($colaborador['nome'] . ' - ' . $colaborador['cargo']); ?>
+                            <option value="<?php echo $colaborador['id']; ?>" data-centro-custo="<?php echo htmlspecialchars($colaborador['centro_custo']); ?>" data-nome="<?php echo htmlspecialchars($colaborador['nome']); ?>">
+                                <?php echo htmlspecialchars($colaborador['nome'] . ' - ' . $colaborador['cargo'] . ' (CC: ' . $colaborador['centro_custo'] . ')'); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -369,6 +436,32 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
                 </div>
             </div>
 
+            <!-- Informações de Centro de Custo -->
+            <div id="info-centro-custo" class="info-card info-centro-custo" style="display: none;">
+                <h4><i class="fas fa-dollar-sign"></i> Informações de Centro de Custo</h4>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Centro de Custo dos Equipamentos:</span>
+                        <span class="info-value" id="cc-equipamentos">---</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Centro de Custo do Colaborador:</span>
+                        <span class="info-value" id="cc-colaborador">---</span>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: var(--spacing-md);">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="atualizar_centro_custo" name="atualizar_centro_custo" value="sim">
+                        <span class="checkbox-custom"></span>
+                        <span class="checkbox-text">
+                                <strong>Atualizar centro de custo dos equipamentos</strong><br>
+                                <small>O centro de custo de TODOS os equipamentos da caixa será alterado para o centro de custo do colaborador. O histórico será registrado.</small>
+                            </span>
+                    </label>
+                </div>
+            </div>
+
             <div id="detalhes-caixa" class="info-card" style="display: none;">
                 <h3><i class="fas fa-list"></i> Equipamentos da Caixa</h3>
                 <div id="lista-equipamentos"></div>
@@ -384,6 +477,7 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
                     <li>Todos os equipamentos <strong>EM ESTOQUE</strong> da caixa serão atribuídos ao colaborador</li>
                     <li>Equipamentos já alocados ou em manutenção não serão alterados</li>
                     <li>O status de cada equipamento será alterado para o tipo selecionado</li>
+                    <li>Se a opção de atualizar centro de custo estiver marcada, TODOS os equipamentos terão o centro de custo atualizado</li>
                     <li>Esta ação pode ser desfeita individualmente ou pela caixa</li>
                 </ul>
             </div>
@@ -415,6 +509,14 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
                     }));
                     $disponiveis = $total - $alocados;
                     $colaboradorAtual = null;
+                    $centroCustoEquipamentos = [];
+
+                    // Verificar centros de custo dos equipamentos
+                    foreach ($equipamentosCaixa as $eq) {
+                        if (!empty($eq['centro_custo'])) {
+                            $centroCustoEquipamentos[$eq['centro_custo']] = true;
+                        }
+                    }
 
                     // Verificar se todos os equipamentos estão com o mesmo colaborador
                     $colaboradoresUnicos = [];
@@ -448,6 +550,15 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
                             </div>
                         </div>
 
+                        <?php if (count($centroCustoEquipamentos) > 0): ?>
+                            <div class="info-item" style="margin-bottom: var(--spacing-sm);">
+                                <span class="info-label">Centro(s) de Custo:</span>
+                                <span class="info-value">
+                                <?php echo implode(', ', array_keys($centroCustoEquipamentos)); ?>
+                            </span>
+                            </div>
+                        <?php endif; ?>
+
                         <?php if ($colaboradorAtual): ?>
                             <div class="info-card" style="margin-bottom: var(--spacing-md); padding: var(--spacing-sm);">
                                 <div class="info-item">
@@ -469,19 +580,23 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
                                         <span><?php echo htmlspecialchars($equip['marca'] . ' ' . $equip['modelo']); ?></span>
                                         <span class="equipamento-status status-<?php
                                         echo $equip['status'] === 'estoque' ? 'ativo' :
-                                            ($equip['status'] === 'alocado' ? 'inativo' :
-                                                ($equip['status'] === 'emprestado' ? 'info' :
-                                                    ($equip['status'] === 'manutencao' ? 'warning' : 'danger')));
+                                                ($equip['status'] === 'alocado' ? 'inativo' :
+                                                        ($equip['status'] === 'emprestado' ? 'info' :
+                                                                ($equip['status'] === 'manutencao' ? 'warning' : 'danger')));
                                         ?>">
                                         <i class="fas fa-<?php echo getIconByStatus($equip['status']); ?>"></i>
                                         <?php echo getStatusTexto($equip['status']); ?>
+                                    </span>
+                                        <span class="cc-badge">
+                                        <i class="fas fa-dollar-sign"></i>
+                                        <?php echo htmlspecialchars($equip['centro_custo']); ?>
                                     </span>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
                         </div>
 
-                        <div class="caixa-actions" style="margin-top: var(--spacing-md);">
+                        <div class="caixa-actions">
                             <?php if ($alocados > 0): ?>
                                 <a href="?devolver=1&caixa=<?php echo urlencode($caixa['nome']); ?>"
                                    class="btn btn-warning btn-caixa"
@@ -536,14 +651,17 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
 
 <script>
     const equipamentosData = <?php
-        $equipamentosPorCaixa = [];
-        foreach ($equipamentos as $e) {
-            if (!empty($e['caixa'])) {
-                $equipamentosPorCaixa[$e['caixa']][] = $e;
+            $equipamentosPorCaixa = [];
+            foreach ($equipamentos as $e) {
+                if (!empty($e['caixa'])) {
+                    if (!isset($equipamentosPorCaixa[$e['caixa']])) {
+                        $equipamentosPorCaixa[$e['caixa']] = [];
+                    }
+                    $equipamentosPorCaixa[$e['caixa']][] = $e;
+                }
             }
-        }
-        echo json_encode($equipamentosPorCaixa);
-        ?>;
+            echo json_encode($equipamentosPorCaixa);
+            ?>;
 
     function carregarDetalhesCaixa() {
         const caixaSelect = document.getElementById('caixa_id');
@@ -555,6 +673,7 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
             const equipamentos = equipamentosData[caixaSelecionada];
             const disponiveis = equipamentos.filter(e => e.status === 'estoque');
             const alocados = equipamentos.filter(e => e.status === 'alocado' || e.status === 'emprestado');
+            const centrosCusto = [...new Set(equipamentos.map(e => e.centro_custo))];
 
             let html = `
                     <div class="info-grid" style="margin-bottom: var(--spacing-md);">
@@ -569,6 +688,10 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
                         <div class="info-item">
                             <span class="info-label">Já Alocados/Emprestados:</span>
                             <span class="info-value" style="color: var(--warning);">${alocados.length}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Centro(s) de Custo:</span>
+                            <span class="info-value">${centrosCusto.join(', ') || '---'}</span>
                         </div>
                     </div>
                     <div class="equipamentos-lista">
@@ -591,6 +714,10 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
                                     <i class="fas fa-${equip.status === 'estoque' ? 'warehouse' : (equip.status === 'alocado' ? 'user-check' : 'handshake')}"></i>
                                     ${statusText}
                                 </span>
+                                <span class="cc-badge">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    ${equip.centro_custo}
+                                </span>
                             </div>
                         </div>
                     `;
@@ -599,8 +726,54 @@ if (isset($_GET['devolver']) && isset($_GET['caixa'])) {
             html += `</div>`;
             listaDiv.innerHTML = html;
             detalhesDiv.style.display = 'block';
+
+            // Atualizar informações de centro de custo
+            const ccEquipamentosSpan = document.getElementById('cc-equipamentos');
+            if (ccEquipamentosSpan) {
+                ccEquipamentosSpan.innerHTML = centrosCusto.join(', ') || '---';
+            }
+
+            // Verificar se já tem colaborador selecionado
+            verificarCentroCusto();
         } else {
             detalhesDiv.style.display = 'none';
+            const infoCCDiv = document.getElementById('info-centro-custo');
+            if (infoCCDiv) infoCCDiv.style.display = 'none';
+        }
+    }
+
+    function verificarCentroCusto() {
+        const select = document.getElementById('colaborador_id');
+        const selectedOption = select.options[select.selectedIndex];
+        const centroCustoColaborador = selectedOption ? selectedOption.getAttribute('data-centro-custo') : null;
+        const infoCCDiv = document.getElementById('info-centro-custo');
+        const ccColaboradorSpan = document.getElementById('cc-colaborador');
+        const ccEquipamentosSpan = document.getElementById('cc-equipamentos');
+
+        if (select.value && centroCustoColaborador && ccEquipamentosSpan && ccEquipamentosSpan.innerHTML !== '---') {
+            ccColaboradorSpan.innerHTML = centroCustoColaborador;
+            infoCCDiv.style.display = 'block';
+
+            // Verificar se os centros de custo são diferentes
+            const centrosEquipamentos = ccEquipamentosSpan.innerHTML.split(', ');
+            let todosDiferentes = true;
+            for (let cc of centrosEquipamentos) {
+                if (cc === centroCustoColaborador) {
+                    todosDiferentes = false;
+                    break;
+                }
+            }
+
+            if (todosDiferentes && centrosEquipamentos.length > 0) {
+                ccColaboradorSpan.style.color = 'var(--warning)';
+                ccColaboradorSpan.style.fontWeight = 'bold';
+                ccEquipamentosSpan.style.color = 'var(--danger)';
+            } else {
+                ccColaboradorSpan.style.color = 'var(--success)';
+                ccEquipamentosSpan.style.color = 'var(--success)';
+            }
+        } else {
+            infoCCDiv.style.display = 'none';
         }
     }
 
