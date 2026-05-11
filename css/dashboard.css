@@ -70,7 +70,7 @@ body {
 }
 
 .header-content {
-    max-width: 1400px;
+    max-width: 1280px;
     margin: 0 auto;
     padding: var(--spacing-md) var(--spacing-xl);
     display: flex;
@@ -150,7 +150,7 @@ body {
 }
 
 .nav-menu {
-    max-width: 1400px;
+    max-width: 1280px;
     margin: 0 auto;
     padding: 0 var(--spacing-xl);
     list-style: none;
