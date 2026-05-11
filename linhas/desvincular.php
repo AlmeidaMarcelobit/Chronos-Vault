@@ -2,6 +2,10 @@
 session_start();
 require_once '../includes/funcoes.php';
 
+$centroCustoPadrao = getCentroCustoPadrao();
+
+$centroCustoNovo = $centroCustoPadrao;
+
 // Verificar se o usuário está logado
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: ../login.php');
@@ -16,6 +20,9 @@ if (!$id) {
 
 $linhas = lerArquivoJSON('../data/linhas.json');
 $colaboradores = lerArquivoJSON('../data/colaboradores.json');
+
+// Definir centro de custo padrão para linhas desvinculadas
+define('CENTRO_CUSTO_PADRAO', '9999');
 
 // Encontrar linha
 $linhaIndex = null;
@@ -49,28 +56,45 @@ foreach ($colaboradores as $colaborador) {
     }
 }
 
+$mensagem = '';
+$tipoMensagem = '';
+
 // Processar desvinculação
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
-    // Registrar centro de custo antes de desvincular
-    $centroCustoAtual = $linhaAtual['centro_custo'];
+    // Registrar centro de custo anterior
+    $centroCustoAnterior = $linhaAtual['centro_custo'];
+    $centroCustoNovo = CENTRO_CUSTO_PADRAO;
 
+    // Registrar histórico de centro de custo
+    if (!isset($linhas[$linhaIndex]['historico_centro_custo']) || !is_array($linhas[$linhaIndex]['historico_centro_custo'])) {
+        $linhas[$linhaIndex]['historico_centro_custo'] = [];
+    }
+
+    $historicoCC = [
+            'data' => date('Y-m-d H:i:s'),
+            'usuario' => $_SESSION['usuario_nome'] ?? 'Administrador',
+            'centro_custo_anterior' => $centroCustoAnterior,
+            'centro_custo_novo' => $centroCustoNovo,
+            'motivo' => 'Desvinculação - Linha removida do colaborador ' . $colaboradorNome
+    ];
+    $linhas[$linhaIndex]['historico_centro_custo'][] = $historicoCC;
+
+    // Atualizar linha
     $linhas[$linhaIndex]['colaborador_id'] = null;
     $linhas[$linhaIndex]['status'] = 'disponivel';
     $linhas[$linhaIndex]['data_atualizacao'] = date('Y-m-d H:i:s');
     $linhas[$linhaIndex]['data_atribuicao'] = null;
-
-    // NÃO alterar o centro de custo - mantém o mesmo
-    $linhas[$linhaIndex]['centro_custo'] = $centroCustoAtual;
+    $linhas[$linhaIndex]['centro_custo'] = $centroCustoNovo;
 
     // Adicionar observação
     $observacaoAtual = $linhas[$linhaIndex]['observacoes'] ?? '';
     $novaObservacao = "\n\n[DESVINCULAÇÃO] " . date('d/m/Y H:i:s');
     $novaObservacao .= "\nLinha desvinculada do colaborador: " . $colaboradorNome;
-    $novaObservacao .= "\nCentro de custo mantido: {$centroCustoAtual}";
+    $novaObservacao .= "\nCentro de custo alterado de {$centroCustoAnterior} para {$centroCustoNovo} (padrão)";
     $linhas[$linhaIndex]['observacoes'] = $observacaoAtual . $novaObservacao;
 
     if (salvarArquivoJSON('../data/linhas.json', $linhas)) {
-        $_SESSION['mensagem'] = 'Linha desvinculada com sucesso!';
+        $_SESSION['mensagem'] = "Linha desvinculada com sucesso! Centro de custo alterado de {$centroCustoAnterior} para {$centroCustoNovo}.";
         $_SESSION['mensagem_tipo'] = 'success';
         header('Location: index.php');
         exit;
@@ -119,6 +143,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
     </nav>
 </header>
 
+<?php if ($mensagem): ?>
+    <div class="global-alert alert-<?php echo $tipoMensagem === 'success' ? 'success' : 'error'; ?>">
+        <div class="alert-content">
+            <i class="fas fa-<?php echo $tipoMensagem === 'success' ? 'check-circle' : 'exclamation-circle'; ?>"></i>
+            <span><?php echo $mensagem; ?></span>
+        </div>
+        <button class="alert-close" onclick="this.parentElement.style.display='none'">&times;</button>
+    </div>
+<?php endif; ?>
+
 <main class="main-container">
     <div class="page-header">
         <div>
@@ -138,7 +172,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
             <div class="info-grid">
                 <div class="info-item"><span class="info-label">Número:</span><span class="info-value"><?php echo formatarTelefone($linhaAtual['numero']); ?></span></div>
                 <div class="info-item"><span class="info-label">Tipo:</span><span class="info-value"><?php echo getTipoLinhaTexto($linhaAtual['tipo']); ?></span></div>
-                <div class="info-item"><span class="info-label">Centro de Custo:</span><span class="info-value"><?php echo htmlspecialchars($linhaAtual['centro_custo']); ?></span></div>
+                <div class="info-item">
+                    <span class="info-label">Centro de Custo Atual:</span>
+                    <span class="info-value">
+                            <span class="cc-badge">
+                                <i class="fas fa-dollar-sign"></i>
+                                <?php echo htmlspecialchars($linhaAtual['centro_custo']); ?>
+                            </span>
+                        </span>
+                </div>
                 <div class="info-item"><span class="info-label">Colaborador:</span><span class="info-value"><?php echo htmlspecialchars($colaboradorNome); ?></span></div>
             </div>
         </div>
@@ -152,9 +194,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
             <ul>
                 <li>O status será alterado para <strong>"Disponível"</strong></li>
                 <li>O vínculo com o colaborador será removido</li>
-                <li><strong>O centro de custo NÃO será alterado</strong> (permanecerá o mesmo)</li>
+                <li>O centro de custo será alterado para <strong>9999 (Padrão)</strong></li>
+                <li>Um registro será adicionado ao histórico</li>
                 <li>A linha ficará disponível para nova atribuição</li>
             </ul>
+        </div>
+
+        <div class="info-card" style="background: rgba(231, 76, 60, 0.05); border-left: 3px solid var(--danger);">
+            <h4><i class="fas fa-sync-alt"></i> O que vai acontecer?</h4>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Centro de Custo Antigo:</span>
+                    <span class="info-value" style="color: var(--danger);">
+                            <i class="fas fa-arrow-left"></i> <?php echo htmlspecialchars($linhaAtual['centro_custo']); ?>
+                        </span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Novo Centro de Custo:</span>
+                    <span class="info-value" style="color: var(--success); font-weight: bold;">
+                            <i class="fas fa-arrow-right"></i> 9999 (Padrão)
+                        </span>
+                </div>
+            </div>
         </div>
 
         <form method="POST" action="" class="confirmation-form">
@@ -162,7 +223,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
                 <label class="checkbox-label">
                     <input type="checkbox" id="confirmCheckbox" required>
                     <span class="checkbox-custom"></span>
-                    <span class="checkbox-text">Confirmo que desejo desvincular esta linha do colaborador.</span>
+                    <span class="checkbox-text">
+                            Confirmo que desejo desvincular esta linha do colaborador.
+                            O centro de custo será alterado para <strong>9999</strong>.
+                        </span>
                 </label>
             </div>
 
