@@ -103,7 +103,7 @@ $page_title = 'Dashboard - Sistema de Gestão';
                 <i class="fas fa-user-circle"></i>
                 <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
                 <span class="user-level user-level-<?php echo $usuario_nivel; ?>">
-                    <?php echo $is_admin ? 'Admin' : ($is_view ? 'Visualizador' : 'Usuário'); ?>
+<!--                    --><?php //echo $is_admin ? 'Admin' : ($is_view ? 'Visualizador' : 'Usuário'); ?>
                 </span>
             </div>
             <a href="logout.php" class="logout-btn">
