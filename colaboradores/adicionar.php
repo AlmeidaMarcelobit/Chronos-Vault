@@ -251,56 +251,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                            placeholder="colaborador@empresa.com.br">
                     <small class="form-text">E-mail institucional do colaborador (opcional)</small>
                 </div>
+                
+                <?php include('../includes/departamentos.php') ?>
 
-                <div class="form-select">
-                    <label for="departamento">Departamento</label>
-                    <select name="departamento" id="departamento" class="form-control" required>
-                        <option value="">Selecione um departamento</option>
-                        <option value="Administrativo" <?php echo ($_POST['departamento'] ?? '') == 'Administrativo' ? 'selected' : ''; ?>>Administrativo</option>
-                        <option value="AmorLab" <?php echo ($_POST['departamento'] ?? '') == 'AmorLab' ? 'selected' : ''; ?>>AmorLab</option>
-                        <option value="Assessoria Regional" <?php echo ($_POST['departamento'] ?? '') == 'Assessoria Regional' ? 'selected' : ''; ?>>Assessoria Regional</option>
-                        <option value="Atendimento" <?php echo ($_POST['departamento'] ?? '') == 'Atendimento' ? 'selected' : ''; ?>>Atendimento</option>
-                        <option value="Atendimento a Franquia" <?php echo ($_POST['departamento'] ?? '') == 'Atendimento a Franquia' ? 'selected' : ''; ?>>Atendimento a Franquia</option>
-                        <option value="Atendimento ao Cliente" <?php echo ($_POST['departamento'] ?? '') == 'Atendimento ao Cliente' ? 'selected' : ''; ?>>Atendimento ao Cliente</option>
-                        <option value="BackOffice" <?php echo ($_POST['departamento'] ?? '') == 'BackOffice' ? 'selected' : ''; ?>>BackOffice</option>
-                        <option value="Cadastro" <?php echo ($_POST['departamento'] ?? '') == 'Cadastro' ? 'selected' : ''; ?>>Cadastro</option>
-                        <option value="Cirurgias" <?php echo ($_POST['departamento'] ?? '') == 'Cirurgias' ? 'selected' : ''; ?>>Cirurgias</option>
-                        <option value="Consultoria de Performance" <?php echo ($_POST['departamento'] ?? '') == 'Consultoria de Performance' ? 'selected' : ''; ?>>Consultoria de Performance</option>
-                        <option value="Contabilidade" <?php echo ($_POST['departamento'] ?? '') == 'Contabilidade' ? 'selected' : ''; ?>>Contabilidade</option>
-                        <option value="CRM" <?php echo ($_POST['departamento'] ?? '') == 'CRM' ? 'selected' : ''; ?>>CRM</option>
-                        <option value="Cultura" <?php echo ($_POST['departamento'] ?? '') == 'Cultura' ? 'selected' : ''; ?>>Cultura</option>
-                        <option value="Dental Vidas Administrativo" <?php echo ($_POST['departamento'] ?? '') == 'Dental Vidas Administrativo' ? 'selected' : ''; ?>>Dental Vidas Administrativo</option>
-                        <option value="Desenvolvimento" <?php echo ($_POST['departamento'] ?? '') == 'Desenvolvimento' ? 'selected' : ''; ?>>Desenvolvimento</option>
-                        <option value="Diretoria CEO" <?php echo ($_POST['departamento'] ?? '') == 'Diretoria CEO' ? 'selected' : ''; ?>>Diretoria CEO</option>
-                        <option value="Diretoria de Marketing" <?php echo ($_POST['departamento'] ?? '') == 'Diretoria de Marketing' ? 'selected' : ''; ?>>Diretoria de Marketing</option>
-                        <option value="Diretoria de Pessoas e Cultura" <?php echo ($_POST['departamento'] ?? '') == 'Diretoria de Pessoas e Cultura' ? 'selected' : ''; ?>>Diretoria de Pessoas e Cultura</option>
-                        <option value="Financeiro" <?php echo ($_POST['departamento'] ?? '') == 'Financeiro' ? 'selected' : ''; ?>>Financeiro</option>
-                        <option value="Gestão de Rede" <?php echo ($_POST['departamento'] ?? '') == 'Gestão de Rede' ? 'selected' : ''; ?>>Gestão de Rede</option>
-                        <option value="Infraestrutura" <?php echo ($_POST['departamento'] ?? '') == 'Infraestrutura' ? 'selected' : ''; ?>>Infraestrutura</option>
-                        <option value="Integração" <?php echo ($_POST['departamento'] ?? '') == 'Integração' ? 'selected' : ''; ?>>Integração</option>
-                        <option value="Inteligência de Negócio" <?php echo ($_POST['departamento'] ?? '') == 'Inteligência de Negócio' ? 'selected' : ''; ?>>Inteligência de Negócio</option>
-                        <option value="Internacional" <?php echo ($_POST['departamento'] ?? '') == 'Internacional' ? 'selected' : ''; ?>>Internacional</option>
-                        <option value="Marketing Internacional" <?php echo ($_POST['departamento'] ?? '') == 'Marketing Internacional' ? 'selected' : ''; ?>>Marketing Internacional</option>
-                        <option value="Pessoas" <?php echo ($_POST['departamento'] ?? '') == 'Pessoas' ? 'selected' : ''; ?>>Pessoas</option>
-                        <option value="Produto" <?php echo ($_POST['departamento'] ?? '') == 'Produto' ? 'selected' : ''; ?>>Produto</option>
-                        <option value="Qualidade de Atendimento" <?php echo ($_POST['departamento'] ?? '') == 'Qualidade de Atendimento' ? 'selected' : ''; ?>>Qualidade de Atendimento</option>
-                        <option value="Relacionamento com Profissionais da Saúde" <?php echo ($_POST['departamento'] ?? '') == 'Relacionamento com Profissionais da Saúde' ? 'selected' : ''; ?>>Relacionamento com Profissionais da Saúde</option>
-                        <option value="Remuneração e Benefícios" <?php echo ($_POST['departamento'] ?? '') == 'Remuneração e Benefícios' ? 'selected' : ''; ?>>Remuneração e Benefícios</option>
-                        <option value="Retenção" <?php echo ($_POST['departamento'] ?? '') == 'Retenção' ? 'selected' : ''; ?>>Retenção</option>
-                        <option value="SAC" <?php echo ($_POST['departamento'] ?? '') == 'SAC' ? 'selected' : ''; ?>>SAC</option>
-                        <option value="SAF" <?php echo ($_POST['departamento'] ?? '') == 'SAF' ? 'selected' : ''; ?>>SAF</option>
-                        <option value="Telemedicina" <?php echo ($_POST['departamento'] ?? '') == 'Telemedicina' ? 'selected' : ''; ?>>Telemedicina</option>
-                        <option value="Treinamento" <?php echo ($_POST['departamento'] ?? '') == 'Treinamento' ? 'selected' : ''; ?>>Treinamento</option>
-
-                        <!-- TI -->
-                        <option value="TI - Governança" <?php echo ($_POST['departamento'] ?? '') == 'TI - Governança' ? 'selected' : ''; ?>>TI - Governança</option>
-                        <option value="TI - Infraestrutura" <?php echo ($_POST['departamento'] ?? '') == 'TI - Infraestrutura' ? 'selected' : ''; ?>>TI - Infraestrutura</option>
-                        <option value="TI - Integração" <?php echo ($_POST['departamento'] ?? '') == 'TI - Integração' ? 'selected' : ''; ?>>TI - Integração</option>
-                        <option value="TI - Suporte" <?php echo ($_POST['departamento'] ?? '') == 'TI - Suporte' ? 'selected' : ''; ?>>TI - Suporte</option>
-                        <option value="TI - Técnico" <?php echo ($_POST['departamento'] ?? '') == 'TI - Técnico' ? 'selected' : ''; ?>>TI - Técnico</option>
-                        <option value="TI - Tecnologia" <?php echo ($_POST['departamento'] ?? '') == 'TI - Tecnologia' ? 'selected' : ''; ?>>TI - Tecnologia</option>
-                    </select>
-                </div>
 
                 <div class="form-select">
                     <label for="centro_custo">

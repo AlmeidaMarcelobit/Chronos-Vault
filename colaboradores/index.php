@@ -11,6 +11,11 @@ if (!isset($_SESSION['usuario_id'])) {
 $colaboradores = lerArquivoJSON('../data/colaboradores.json');
 $equipamentos = lerArquivoJSON('../data/equipamentos.json');
 
+// Ordenar colaboradores em ordem alfabética por nome
+usort($colaboradores, function($a, $b) {
+    return strcmp($a['nome'], $b['nome']);
+});
+
 // Contar equipamentos por colaborador
 $equipamentosPorColaborador = [];
 foreach ($equipamentos as $equipamento) {
@@ -31,6 +36,11 @@ if ($busca) {
                 stripos($colaborador['cpf'], $busca) !== false ||
                 stripos($colaborador['departamento'], $busca) !== false ||
                 stripos($colaborador['email'] ?? '', $busca) !== false;
+    });
+
+    // Reordenar após o filtro
+    usort($colaboradores, function($a, $b) {
+        return strcmp($a['nome'], $b['nome']);
     });
 }
 ?>
@@ -111,11 +121,21 @@ endif; ?>
         <div>
             <h1><i class="fas fa-users"></i> Colaboradores</h1>
             <p class="page-subtitle">Gerencie todos os colaboradores da sua organização</p>
+            <div class="sort-info">
+                <i class="fas fa-sort-alpha-down"></i>
+                <small>Ordenado por nome (A-Z)</small>
+            </div>
         </div>
-        <a href="adicionar.php" class="btn btn-primary">
-            <i class="fas fa-user-plus"></i>
-            <span>Adicionar Colaborador</span>
-        </a>
+        <div class="header-actions">
+            <a href="organograma.php" class="btn btn-outline">
+                <i class="fas fa-sitemap"></i>
+                <span>Organograma</span>
+            </a>
+            <a href="adicionar.php" class="btn btn-primary">
+                <i class="fas fa-user-plus"></i>
+                <span>Adicionar Colaborador</span>
+            </a>
+        </div>
     </div>
 
     <div class="search-section">
@@ -145,8 +165,8 @@ endif; ?>
         <table class="data-table">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>Nome</th>
+                <!-- <th>ID</th> -->
+                <th>Nome <i class="fas fa-arrow-down" style="font-size: 0.7rem; opacity: 0.6;"></i></th>
                 <th>Cargo</th>
                 <th>E-mail</th>
                 <th>CPF</th>
@@ -173,7 +193,7 @@ endif; ?>
             <?php else: ?>
                 <?php foreach ($colaboradores as $colaborador): ?>
                     <tr>
-                        <td data-label="ID"><?php echo $colaborador['id']; ?></td>
+                        <!-- <td data-label="ID"><?php echo $colaborador['id']; ?></td> -->
                         <td data-label="Nome">
                             <div class="colaborador-info">
                                 <i class="fas fa-user-circle"></i>
