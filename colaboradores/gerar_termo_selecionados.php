@@ -206,6 +206,7 @@ header('Content-Type: text/html; charset=UTF-8');
         <div class="assinatura-box">
             <div class="linha-assinatura"></div>
             <div class="nome-assinatura"><?php echo htmlspecialchars($colaborador['nome']); ?></div>
+            <div class="nome-assinatura">________________________________________________</div>
             <div class="cargo-assinatura">Colaborador</div>
             <div class="data-assinatura">Data: ______/______/______</div>
             <div class="data-assinatura">CPF: <?php echo formatarCPF($colaborador['cpf']); ?></div>
