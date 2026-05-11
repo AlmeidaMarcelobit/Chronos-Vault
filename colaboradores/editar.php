@@ -37,6 +37,7 @@ $tipoMensagem = '';
 // Processar o formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validar e sanitizar os dados
+    $matricula = trim($_POST['matricula'] ?? '');
     $nome = trim($_POST['nome'] ?? '');
     $cargo = trim($_POST['cargo'] ?? '');
     $cpf = preg_replace('/[^0-9]/', '', $_POST['cpf'] ?? '');
@@ -57,6 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validações
     $erros = [];
+
+    if (empty($matricula)) {
+        $erros[] = 'A matrícula é obrigatória.';
+    }
 
     if (empty($nome)) {
         $erros[] = 'O nome é obrigatório.';
@@ -105,6 +110,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    // Verificar se matrícula já existe (exceto para o próprio colaborador)
+    foreach ($colaboradores as $index => $colaborador) {
+        if ($index != $colaboradorIndex && isset($colaborador['matricula']) && $colaborador['matricula'] === $matricula) {
+            $erros[] = 'Esta matrícula já está cadastrada no sistema para outro colaborador.';
+            break;
+        }
+    }
+
     // Verificar se CPF já existe (exceto para o próprio colaborador)
     foreach ($colaboradores as $index => $colaborador) {
         if ($index != $colaboradorIndex && $colaborador['cpf'] === $cpf) {
@@ -125,6 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($erros)) {
         // Atualizar colaborador
+        $colaboradores[$colaboradorIndex]['matricula'] = $matricula;
         $colaboradores[$colaboradorIndex]['nome'] = $nome;
         $colaboradores[$colaboradorIndex]['cargo'] = $cargo;
         $colaboradores[$colaboradorIndex]['cpf'] = $cpf;
@@ -192,7 +206,7 @@ function formatarCEPSeguro($cep)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Colaborador - Sistema de Gestão</title>
-    <link rel="stylesheet" href="../css/colaboradores.css">
+    <link rel="stylesheet" href="../css/colaboradores/editar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -276,24 +290,36 @@ function formatarCEPSeguro($cep)
         <!-- FORMULÁRIO -->
         <form method="POST" action="" class="form-card" id="form-colaborador">
             <div class="form-grid">
+                <!-- Campo Matrícula (Chamado) -->
+                <div class="form-group">
+                    <label for="matricula"><i class="fas fa-id-badge"></i> Chamado <span class="required">*</span></label>
+                    <input type="text" id="matricula" name="matricula"
+                           value="<?php echo htmlspecialchars($colaboradorAtual['matricula'] ?? ''); ?>" required
+                           class="form-control" placeholder="Ex: #251506, #255676">
+                    <small class="form-text">Número do chamado único do colaborador</small>
+                </div>
+
                 <div class="form-group">
                     <label for="nome"><i class="fas fa-user"></i> Nome Completo <span class="required">*</span></label>
                     <input type="text" id="nome" name="nome"
                            value="<?php echo htmlspecialchars($colaboradorAtual['nome']); ?>" required
                            class="form-control" placeholder="Digite o nome completo">
                 </div>
+
                 <div class="form-group">
                     <label for="cargo"><i class="fas fa-briefcase"></i> Cargo <span class="required">*</span></label>
                     <input type="text" id="cargo" name="cargo"
                            value="<?php echo htmlspecialchars($colaboradorAtual['cargo']); ?>" required
                            class="form-control" placeholder="Digite o cargo">
                 </div>
+
                 <div class="form-group">
                     <label for="cpf"><i class="fas fa-id-card"></i> CPF <span class="required">*</span></label>
                     <input type="text" id="cpf" name="cpf" value="<?php echo formatarCPF($colaboradorAtual['cpf']); ?>"
                            required class="form-control cpf-mask" placeholder="000.000.000-00" maxlength="14">
                     <small class="form-text">Digite apenas números ou com pontos e traço</small>
                 </div>
+
                 <div class="form-group">
                     <label for="email"><i class="fas fa-envelope"></i> E-mail</label>
                     <input type="email" id="email" name="email"
@@ -301,9 +327,10 @@ function formatarCEPSeguro($cep)
                            class="form-control" placeholder="colaborador@empresa.com.br">
                     <small class="form-text">E-mail institucional do colaborador (opcional)</small>
                 </div>
+
                 <div class="form-group">
                     <label for="tipo_trabalho"><i class="fas fa-briefcase"></i> Tipo de Trabalho <span class="required">*</span></label>
-                    <select id="tipo_trabalho" name="tipo_trabalho" required class="form-control">
+                    <select id="tipo_trabalho" name="tipo_trabalho" required class="form-control" onchange="toggleEndereco()">
                         <option value="local" <?php echo $tipoTrabalhoAtual == 'local' ? 'selected' : ''; ?>>Presencial
                             (Local)
                         </option>
@@ -379,7 +406,7 @@ function formatarCEPSeguro($cep)
                     <label for="centro_custo"><i class="fas fa-dollar-sign"></i> Centro de Custo <span class="required">*</span></label>
                     <input type="text" id="centro_custo" name="centro_custo"
                            value="<?php echo htmlspecialchars($colaboradorAtual['centro_custo']); ?>" required
-                           class="form-control cc-mask" placeholder="Ex: TI001, ADM002">
+                           class="form-control cc-mask" placeholder="Ex: 12001, 12001">
                     <small class="form-text">Código do centro de custo</small>
                 </div>
                 <div class="form-group">
