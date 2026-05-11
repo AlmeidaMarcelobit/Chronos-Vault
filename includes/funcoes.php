@@ -403,34 +403,6 @@ function getStatusLinhaTexto($status) {
 // FUNÇÕES PARA COLABORADORES
 // ============================================
 
-// Obter nome do gestor pelo ID
-function getNomeGestor($gestorId, $colaboradores) {
-    if (empty($gestorId)) {
-        return 'Não informado';
-    }
-
-    foreach ($colaboradores as $colaborador) {
-        if ($colaborador['id'] == $gestorId) {
-            return $colaborador['nome'];
-        }
-    }
-    return 'Não encontrado';
-}
-
-// Obter dados completos do gestor
-function getGestorInfo($gestorId, $colaboradores) {
-    if (empty($gestorId)) {
-        return null;
-    }
-
-    foreach ($colaboradores as $colaborador) {
-        if ($colaborador['id'] == $gestorId) {
-            return $colaborador;
-        }
-    }
-    return null;
-}
-
 // Obter lista de estados (UF)
 function getEstados() {
     return [
