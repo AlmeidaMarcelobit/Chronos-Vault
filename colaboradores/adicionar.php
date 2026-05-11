@@ -256,6 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="departamento">Departamento</label>
                     <select name="departamento" id="departamento" class="form-control" required>
                         <option value="">Selecione um departamento</option>
+                        <option value="Administrativo" <?php echo ($_POST['departamento'] ?? '') == 'Administrativo' ? 'selected' : ''; ?>>Administrativo</option>
                         <option value="AmorLab" <?php echo ($_POST['departamento'] ?? '') == 'AmorLab' ? 'selected' : ''; ?>>AmorLab</option>
                         <option value="Assessoria Regional" <?php echo ($_POST['departamento'] ?? '') == 'Assessoria Regional' ? 'selected' : ''; ?>>Assessoria Regional</option>
                         <option value="Atendimento" <?php echo ($_POST['departamento'] ?? '') == 'Atendimento' ? 'selected' : ''; ?>>Atendimento</option>
