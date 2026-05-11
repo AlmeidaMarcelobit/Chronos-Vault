@@ -303,7 +303,7 @@ body {
    CONTEÚDO PRINCIPAL
    ============================================ */
 .main-container {
-    max-width: 1280px;
+    max-width: 1580px;
     margin: 0 auto;
     padding: var(--spacing-xl);
     min-height: calc(100vh - 200px);
