@@ -596,4 +596,35 @@ function registrarLog($acao, $detalhes = '') {
     salvarArquivoJSON($logFile, $logs);
     return true;
 }
+
+function atualizarCentroCustoLinha(&$linha, $colaborador, $usuario) {
+    if (empty($colaborador['centro_custo'])) {
+        return false;
+    }
+
+    $centroCustoAnterior = $linha['centro_custo'] ?? 'Não definido';
+    $centroCustoNovo = $colaborador['centro_custo'];
+
+    if ($centroCustoAnterior === $centroCustoNovo) {
+        return false;
+    }
+
+    // Registrar histórico de centro de custo
+    if (!isset($linha['historico_centro_custo']) || !is_array($linha['historico_centro_custo'])) {
+        $linha['historico_centro_custo'] = [];
+    }
+
+    $historico = [
+        'data' => date('Y-m-d H:i:s'),
+        'usuario' => $usuario,
+        'centro_custo_anterior' => $centroCustoAnterior,
+        'centro_custo_novo' => $centroCustoNovo,
+        'motivo' => 'Vinculação automática ao colaborador ' . $colaborador['nome']
+    ];
+
+    $linha['historico_centro_custo'][] = $historico;
+    $linha['centro_custo'] = $centroCustoNovo;
+
+    return true;
+}
 ?>
