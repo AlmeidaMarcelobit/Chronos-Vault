@@ -84,7 +84,7 @@ $page_title = 'Dashboard - Sistema de Gestão';
     <title><?php echo $page_title; ?></title>
     <link rel="stylesheet" href="css/home/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js CDN -->
+    <link rel="icon" href="img/favicon/favicon.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>

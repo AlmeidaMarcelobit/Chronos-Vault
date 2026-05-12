@@ -81,34 +81,6 @@ if (strlen($username) > 50 || strlen($password) > 100) {
 // Carregar usuários do arquivo JSON (método correto)
 $usuarios = lerArquivoJSON('data/usuarios.json');
 
-// Se não houver usuários no JSON, usar array padrão (apenas para primeira execução)
-if (empty($usuarios)) {
-    // WARNING: Isso é apenas para desenvolvimento! Em produção, remova ou altere as senhas.
-    $usuarios = [
-        [
-            'id' => 1,
-            'username' => 'admin',
-            'password' => password_hash('admin123', PASSWORD_DEFAULT), // Senha hash
-            'nome' => 'Administrador',
-            'email' => 'admin@sistema.com',
-            'nivel' => 'admin',
-            'ativo' => true
-        ],
-        [
-            'id' => 2,
-            'username' => 'user',
-            'password' => password_hash('user123', PASSWORD_DEFAULT),
-            'nome' => 'Usuário Teste',
-            'email' => 'user@sistema.com',
-            'nivel' => 'user',
-            'ativo' => true
-        ]
-    ];
-
-    // Salvar usuários no JSON
-    salvarArquivoJSON('data/usuarios.json', $usuarios);
-}
-
 // Buscar usuário
 $usuarioEncontrado = null;
 foreach ($usuarios as $usuario) {
