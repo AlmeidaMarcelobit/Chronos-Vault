@@ -119,6 +119,7 @@ if ($colaboradores === false) {
     <title>Adicionar Equipamento - Sistema de Gestão</title>
     <link rel="stylesheet" href="../css/equipamentos/adicionar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="../img/favicon/favicon.png">
 </head>
 <body>
     <!-- ==================== HEADER ==================== -->

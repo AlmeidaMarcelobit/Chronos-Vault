@@ -262,6 +262,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_alocacao'])
     <title>Alocar por Chamado - Sistema de Gestão</title>
     <link rel="stylesheet" href="../css/equipamentos/alocar_por_chamado.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="../img/favicon/favicon.png">
 </head>
 <body>
 <header class="header">

@@ -153,6 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Alocar Múltiplos Equipamentos - Sistema de Gestão</title>
     <link rel="stylesheet" href="../css/equipamentos/alocar_multiplos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="../img/favicon/favicon.png">
 </head>
 <body>
 <header class="header">

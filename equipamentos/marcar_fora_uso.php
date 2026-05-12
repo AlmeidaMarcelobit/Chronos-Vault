@@ -145,6 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Marcar Fora de Uso - Sistema de Gestão</title>
     <link rel="stylesheet" href="../css/equipamentos/marcar_fora_uso.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="../img/favicon/favicon.png">
 </head>
 <body>
     <!-- ==================== HEADER ==================== -->
