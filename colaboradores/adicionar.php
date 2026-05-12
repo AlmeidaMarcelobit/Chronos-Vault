@@ -30,9 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $departamento = trim($_POST['departamento'] ?? '');
     $centro_custo = trim($_POST['centro_custo'] ?? '');
     $email = trim($_POST['email'] ?? '');
-    // CAMPO GESTOR REMOVIDO
-
-    // Novos campos de endereço
     $tipo_trabalho = $_POST['tipo_trabalho'] ?? 'local';
     $endereco = trim($_POST['endereco'] ?? '');
     $numero = trim($_POST['numero'] ?? '');
@@ -44,10 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validações
     $erros = [];
-
-    if (empty($matricula)) {
-        $erros[] = 'A matrícula é obrigatória.';
-    }
 
     if (empty($nome)) {
         $erros[] = 'O nome é obrigatório.';
@@ -133,7 +126,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'departamento' => $departamento,
                 'centro_custo' => $centro_custo,
                 'email' => $email ?: null,
-            // 'gestor_id' => $gestor_id,  // REMOVIDO
                 'tipo_trabalho' => $tipo_trabalho,
                 'endereco' => $tipo_trabalho === 'home' ? [
                         'logradouro' => $endereco,
@@ -279,7 +271,6 @@ function formatarCEP($cep) {
                     <label for="matricula">
                         <i class="fas fa-id-badge"></i>
                         <span>Chamado</span>
-                        <span class="required">*</span>
                     </label>
                     <input type="text"
                            id="matricula"
