@@ -97,11 +97,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Verificar se matrícula já existe
-    foreach ($colaboradores as $colaborador) {
-        if (isset($colaborador['matricula']) && $colaborador['matricula'] === $matricula) {
-            $erros[] = 'Esta matrícula já está cadastrada no sistema.';
-            break;
+    // Verificar se matrícula já existe (apenas se foi informada)
+    if (!empty($matricula)) {
+        foreach ($colaboradores as $colaborador) {
+            if (isset($colaborador['matricula']) && $colaborador['matricula'] === $matricula) {
+                $erros[] = 'Esta matrícula já está cadastrada no sistema.';
+                break;
+            }
         }
     }
 
@@ -119,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Criar novo colaborador (SEM CAMPO GESTOR_ID)
         $novoColaborador = [
                 'id' => gerarId($colaboradores),
-                'matricula' => $matricula,
+                'matricula' => $matricula ?: null,
                 'nome' => $nome,
                 'cargo' => $cargo,
                 'cpf' => $cpf,
@@ -266,7 +268,7 @@ function formatarCEP($cep) {
     <div class="form-card-container">
         <form method="POST" action="" class="form-card" id="form-colaborador">
             <div class="form-grid">
-                <!-- Campo Matrícula (Chamado) -->
+                <!-- Campo Matrícula (Chamado) - AGORA OPCIONAL -->
                 <div class="form-group">
                     <label for="matricula">
                         <i class="fas fa-id-badge"></i>
@@ -276,11 +278,10 @@ function formatarCEP($cep) {
                            id="matricula"
                            name="matricula"
                            value="<?php echo htmlspecialchars($_POST['matricula'] ?? ''); ?>"
-                           required
                            class="form-control"
                            placeholder="Ex: #251506, #255676"
                            autofocus>
-                    <small class="form-text">Número do chamado único do colaborador</small>
+                    <small class="form-text">Número do chamado do colaborador <strong>(opcional)</strong> - Pode ser preenchido depois</small>
                 </div>
 
                 <div class="form-group">
@@ -648,11 +649,7 @@ function formatarCEP($cep) {
             const matriculaValue = matriculaInput ? matriculaInput.value.trim() : '';
             const cpfValue = cpfInput ? cpfInput.value.replace(/\D/g, '') : '';
 
-            if (matriculaValue.length === 0) {
-                alert('A matrícula é obrigatória.');
-                if (matriculaInput) matriculaInput.focus();
-                valid = false;
-            }
+            // Matrícula NÃO é mais obrigatória - removida a validação
 
             if (cpfValue.length !== 11) {
                 alert('CPF deve conter 11 dígitos.');
