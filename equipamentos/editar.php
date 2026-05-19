@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $colaborador_id = $_POST['colaborador_id'] ?? null;
     $observacoes = trim($_POST['observacoes'] ?? '');
     $caixa = trim($_POST['caixa'] ?? '');
+    $hostname = trim($_POST['hostname'] ?? '');
 
     // Validações
     $erros = [];
@@ -66,6 +67,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($modelo)) $erros[] = 'O modelo é obrigatório.';
     if (empty($patrimonio)) $erros[] = 'O número de patrimônio é obrigatório.';
     if (empty($centro_custo)) $erros[] = 'O centro de custo é obrigatório.';
+
+    // Validar hostname (obrigatório apenas para notebooks)
+    if ($tipo === 'notebook' && empty($hostname)) {
+        $erros[] = 'O hostname é obrigatório para equipamentos do tipo Notebook.';
+    } elseif (!empty($hostname) && !preg_match('/^[a-zA-Z0-9\-_]+$/', $hostname)) {
+        $erros[] = 'O hostname deve conter apenas letras, números, hífen ou underline.';
+    }
 
     // Verificar se patrimônio já existe (exceto para o próprio equipamento)
     foreach ($equipamentos as $index => $equip) {
@@ -136,6 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $equipamentos[$equipamentoIndex]['status'] = $status;
         $equipamentos[$equipamentoIndex]['observacoes'] = $observacoes;
         $equipamentos[$equipamentoIndex]['caixa'] = $caixa;
+        $equipamentos[$equipamentoIndex]['hostname'] = !empty($hostname) ? $hostname : null;
         $equipamentos[$equipamentoIndex]['data_atualizacao'] = date('Y-m-d H:i:s');
 
         // Manter o histórico atualizado
@@ -358,7 +367,7 @@ $historicoCentroCusto = $equipamento['historico_centro_custo'] ?? [];
                         <span>Tipo de Equipamento</span>
                         <span class="required">*</span>
                     </label>
-                    <select id="tipo" name="tipo" required class="form-select">
+                    <select id="tipo" name="tipo" required class="form-select" onchange="toggleHostnameRequired()">
                         <option value="">-- Selecione o tipo --</option>
                         <?php foreach (getTiposEquipamentos() as $key => $value): ?>
                             <option value="<?php echo $key; ?>" <?php echo $equipamento['tipo'] == $key ? 'selected' : ''; ?>>
@@ -390,6 +399,25 @@ $historicoCentroCusto = $equipamento['historico_centro_custo'] ?? [];
                            value="<?php echo htmlspecialchars($equipamento['modelo']); ?>"
                            required class="form-control"
                            placeholder="Ex: Latitude 5420, iPhone 13">
+                </div>
+
+                <div class="form-group">
+                    <label for="hostname">
+                        <i class="fas fa-network-wired"></i>
+                        <span>Hostname</span>
+                        <span id="hostname-required" class="required" style="display: <?php echo $equipamento['tipo'] == 'notebook' ? 'inline' : 'none'; ?>;">*</span>
+                    </label>
+                    <input type="text" id="hostname" name="hostname"
+                           value="<?php echo htmlspecialchars($equipamento['hostname'] ?? ''); ?>"
+                           class="form-control"
+                           placeholder="Ex: NOTEBOOK-001, PC-123">
+                    <small class="form-text" id="hostname-help">
+                        <?php if ($equipamento['tipo'] == 'notebook'): ?>
+                            Obrigatório para equipamentos do tipo Notebook.
+                        <?php else: ?>
+                            Opcional - Apenas para identificação na rede.
+                        <?php endif; ?>
+                    </small>
                 </div>
 
                 <div class="form-group">
@@ -639,6 +667,26 @@ $historicoCentroCusto = $equipamento['historico_centro_custo'] ?? [];
         }
     }
 
+    // Função para controlar obrigatoriedade do hostname baseado no tipo
+    function toggleHostnameRequired() {
+        const tipoSelect = document.getElementById('tipo');
+        const hostnameInput = document.getElementById('hostname');
+        const hostnameRequiredSpan = document.getElementById('hostname-required');
+        const hostnameHelp = document.getElementById('hostname-help');
+
+        if (tipoSelect.value === 'notebook') {
+            hostnameInput.required = true;
+            hostnameRequiredSpan.style.display = 'inline';
+            hostnameHelp.innerHTML = '<strong>Obrigatório</strong> para equipamentos do tipo Notebook.';
+            hostnameHelp.style.color = 'var(--danger)';
+        } else {
+            hostnameInput.required = false;
+            hostnameRequiredSpan.style.display = 'none';
+            hostnameHelp.innerHTML = 'Opcional - Apenas para identificação na rede.';
+            hostnameHelp.style.color = 'var(--gray-500)';
+        }
+    }
+
     // Mostrar campo de motivo quando centro de custo mudar
     const centroCustoInput = document.getElementById('centro_custo');
     const motivoGroup = document.getElementById('motivo-alteracao-group');
@@ -673,6 +721,16 @@ $historicoCentroCusto = $equipamento['historico_centro_custo'] ?? [];
         });
     }
 
+    // Auto-formatar hostname (apenas letras, números, hífen, underline)
+    const hostnameInput = document.getElementById('hostname');
+    if (hostnameInput) {
+        hostnameInput.addEventListener('input', function(e) {
+            let value = e.target.value;
+            value = value.replace(/[^a-zA-Z0-9\-_]/g, '');
+            e.target.value = value;
+        });
+    }
+
     // Fechar alerta após 5 segundos
     setTimeout(function() {
         const alert = document.querySelector('.global-alert');
@@ -682,7 +740,7 @@ $historicoCentroCusto = $equipamento['historico_centro_custo'] ?? [];
         }
     }, 5000);
 
-    // Inicializar estado do colaborador select
+    // Inicializar estado do colaborador select e hostname
     document.addEventListener('DOMContentLoaded', function() {
         const statusRadio = document.querySelector('input[name="status"]:checked');
         if (statusRadio) {
@@ -693,6 +751,9 @@ $historicoCentroCusto = $equipamento['historico_centro_custo'] ?? [];
         // Salvar centro de custo original
         centroCustoOriginal = document.getElementById('centro_custo').value;
 
+        // Inicializar obrigatoriedade do hostname
+        toggleHostnameRequired();
+
         // Validação do formulário
         const form = document.getElementById('form-equipamento');
         if (form) {
@@ -700,6 +761,7 @@ $historicoCentroCusto = $equipamento['historico_centro_custo'] ?? [];
                 const patrimonio = document.getElementById('patrimonio').value.trim();
                 const tipo = document.getElementById('tipo').value;
                 const statusRadio = document.querySelector('input[name="status"]:checked');
+                const hostname = document.getElementById('hostname').value.trim();
 
                 if (!statusRadio) {
                     alert('Selecione o status do equipamento.');
@@ -718,6 +780,13 @@ $historicoCentroCusto = $equipamento['historico_centro_custo'] ?? [];
 
                 if (tipo === '') {
                     alert('Selecione o tipo de equipamento.');
+                    e.preventDefault();
+                    return false;
+                }
+
+                // Validar hostname para notebooks
+                if (tipo === 'notebook' && hostname === '') {
+                    alert('O hostname é obrigatório para equipamentos do tipo Notebook.');
                     e.preventDefault();
                     return false;
                 }
