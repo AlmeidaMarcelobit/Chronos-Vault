@@ -685,7 +685,7 @@ $foraUsoFiltrado = count(array_filter($equipamentosFiltrados, function($e) { ret
             'emprestado': 'Emprestado',
             'manutencao': 'Em Manutenção',
             'fora_uso': 'Fora de Uso'
-        };
+        };git status
         return statusMap[status] || status;
     }
 
