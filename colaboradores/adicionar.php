@@ -17,8 +17,58 @@ $can_edit = ($is_admin || $usuario_nivel === 'user');
 $mensagem = '';
 $tipoMensagem = '';
 
-// Carregar colaboradores para o select de gestor (será removido)
+// Carregar colaboradores
 $colaboradores = lerArquivoJSON('../data/colaboradores.json');
+
+// Função para mesclar dados do colaborador (mantém dados não vazios)
+function mesclarDadosColaborador($existente, $novo) {
+    // Mesclar campos básicos (apenas se o novo valor não estiver vazio)
+    if (!empty($novo['nome']) && $novo['nome'] !== $existente['nome']) {
+        $existente['nome'] = $novo['nome'];
+    }
+    if (!empty($novo['cargo']) && $novo['cargo'] !== $existente['cargo']) {
+        $existente['cargo'] = $novo['cargo'];
+    }
+    if (!empty($novo['cpf']) && $novo['cpf'] !== $existente['cpf']) {
+        $existente['cpf'] = $novo['cpf'];
+    }
+    if (!empty($novo['departamento']) && $novo['departamento'] !== $existente['departamento']) {
+        $existente['departamento'] = $novo['departamento'];
+    }
+    if (!empty($novo['centro_custo']) && $novo['centro_custo'] !== $existente['centro_custo']) {
+        $existente['centro_custo'] = $novo['centro_custo'];
+    }
+    if (!empty($novo['email']) && $novo['email'] !== $existente['email']) {
+        $existente['email'] = $novo['email'];
+    }
+    if (!empty($novo['tipo_trabalho']) && $novo['tipo_trabalho'] !== $existente['tipo_trabalho']) {
+        $existente['tipo_trabalho'] = $novo['tipo_trabalho'];
+    }
+    
+    // Mesclar endereço (se for Home Office e tiver dados novos)
+    if ($novo['tipo_trabalho'] === 'home' && !empty($novo['endereco'])) {
+        if (!isset($existente['endereco']) || !is_array($existente['endereco'])) {
+            $existente['endereco'] = [];
+        }
+        
+        $camposEndereco = ['logradouro', 'numero', 'complemento', 'bairro', 'cidade', 'estado', 'cep'];
+        foreach ($camposEndereco as $campo) {
+            if (!empty($novo['endereco'][$campo]) && ($existente['endereco'][$campo] ?? '') !== $novo['endereco'][$campo]) {
+                $existente['endereco'][$campo] = $novo['endereco'][$campo];
+            }
+        }
+        
+        // Se endereço ficou vazio, remover
+        if (empty(array_filter($existente['endereco']))) {
+            $existente['endereco'] = null;
+        }
+    }
+    
+    // Atualizar data de modificação
+    $existente['data_atualizacao'] = date('Y-m-d H:i:s');
+    
+    return $existente;
+}
 
 // Processar o formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -39,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $estado = trim($_POST['estado'] ?? '');
     $cep = preg_replace('/[^0-9]/', '', $_POST['cep'] ?? '');
 
-    // Validações
+    // Validações básicas
     $erros = [];
 
     if (empty($nome)) {
@@ -89,39 +139,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Verificar se CPF já existe
-    foreach ($colaboradores as $colaborador) {
-        if (isset($colaborador['cpf']) && $colaborador['cpf'] === $cpf) {
-            $erros[] = 'Este CPF já está cadastrado no sistema.';
-            break;
-        }
-    }
-
-    // Verificar se matrícula já existe (apenas se foi informada)
-    if (!empty($matricula)) {
-        foreach ($colaboradores as $colaborador) {
-            if (isset($colaborador['matricula']) && $colaborador['matricula'] === $matricula) {
-                $erros[] = 'Esta matrícula já está cadastrada no sistema.';
-                break;
-            }
-        }
-    }
-
-    // Verificar se e-mail já existe (se informado)
-    if (!empty($email)) {
-        foreach ($colaboradores as $colaborador) {
-            if (isset($colaborador['email']) && $colaborador['email'] === $email) {
-                $erros[] = 'Este e-mail já está cadastrado no sistema.';
-                break;
-            }
-        }
-    }
-
     if (empty($erros)) {
-        // Criar novo colaborador (SEM CAMPO GESTOR_ID)
-        $novoColaborador = [
-                'id' => gerarId($colaboradores),
-                'matricula' => $matricula ?: null,
+        // VERIFICAR SE JÁ EXISTE UM COLABORADOR COM ESTA MATRÍCULA
+        $colaboradorExistente = null;
+        $colaboradorIndex = null;
+        
+        if (!empty($matricula)) {
+            foreach ($colaboradores as $index => $colab) {
+                if (isset($colab['matricula']) && $colab['matricula'] === $matricula) {
+                    $colaboradorExistente = $colab;
+                    $colaboradorIndex = $index;
+                    break;
+                }
+            }
+        }
+        
+        // Se não encontrou por matrícula, verificar por CPF (para evitar duplicidade)
+        if (!$colaboradorExistente && !empty($cpf)) {
+            foreach ($colaboradores as $index => $colab) {
+                if (isset($colab['cpf']) && $colab['cpf'] === $cpf) {
+                    $colaboradorExistente = $colab;
+                    $colaboradorIndex = $index;
+                    break;
+                }
+            }
+        }
+        
+        // Se encontrou colaborador existente, mesclar dados
+        if ($colaboradorExistente) {
+            // Preparar dados do novo colaborador para mesclagem
+            $novoDados = [
                 'nome' => $nome,
                 'cargo' => $cargo,
                 'cpf' => $cpf,
@@ -130,6 +177,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'email' => $email ?: null,
                 'tipo_trabalho' => $tipo_trabalho,
                 'endereco' => $tipo_trabalho === 'home' ? [
+                    'logradouro' => $endereco,
+                    'numero' => $numero,
+                    'complemento' => $complemento ?: null,
+                    'bairro' => $bairro,
+                    'cidade' => $cidade,
+                    'estado' => $estado,
+                    'cep' => $cep ?: null
+                ] : null
+            ];
+            
+            // Mesclar dados
+            $colaboradores[$colaboradorIndex] = mesclarDadosColaborador($colaboradorExistente, $novoDados);
+            
+            // Salvar no JSON
+            if (salvarArquivoJSON('../data/colaboradores.json', $colaboradores)) {
+                $mensagem = 'Colaborador atualizado com sucesso! (Dados mesclados)';
+                $tipoMensagem = 'success';
+                
+                // Limpar o formulário
+                $_POST = [];
+            } else {
+                $mensagem = 'Erro ao atualizar o colaborador. Tente novamente.';
+                $tipoMensagem = 'error';
+            }
+        } else {
+            // Verificar se CPF já existe (para evitar duplicidade em novo cadastro)
+            $cpfExistente = false;
+            foreach ($colaboradores as $colab) {
+                if (isset($colab['cpf']) && $colab['cpf'] === $cpf) {
+                    $cpfExistente = true;
+                    break;
+                }
+            }
+            
+            // Verificar se e-mail já existe (se informado)
+            $emailExistente = false;
+            if (!empty($email)) {
+                foreach ($colaboradores as $colab) {
+                    if (isset($colab['email']) && $colab['email'] === $email) {
+                        $emailExistente = true;
+                        break;
+                    }
+                }
+            }
+            
+            if ($cpfExistente) {
+                $erros[] = 'Este CPF já está cadastrado no sistema.';
+            } elseif ($emailExistente) {
+                $erros[] = 'Este e-mail já está cadastrado no sistema.';
+            } else {
+                // Criar novo colaborador
+                $novoColaborador = [
+                    'id' => gerarId($colaboradores),
+                    'matricula' => $matricula ?: null,
+                    'nome' => $nome,
+                    'cargo' => $cargo,
+                    'cpf' => $cpf,
+                    'departamento' => $departamento,
+                    'centro_custo' => $centro_custo,
+                    'email' => $email ?: null,
+                    'tipo_trabalho' => $tipo_trabalho,
+                    'endereco' => $tipo_trabalho === 'home' ? [
                         'logradouro' => $endereco,
                         'numero' => $numero,
                         'complemento' => $complemento ?: null,
@@ -137,26 +246,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'cidade' => $cidade,
                         'estado' => $estado,
                         'cep' => $cep ?: null
-                ] : null,
-                'data_cadastro' => date('Y-m-d H:i:s'),
-                'data_atualizacao' => date('Y-m-d H:i:s')
-        ];
-
-        // Adicionar ao array
-        $colaboradores[] = $novoColaborador;
-
-        // Salvar no JSON
-        if (salvarArquivoJSON('../data/colaboradores.json', $colaboradores)) {
-            $mensagem = 'Colaborador cadastrado com sucesso!';
-            $tipoMensagem = 'success';
-
-            // Limpar o formulário
-            $_POST = [];
-        } else {
-            $mensagem = 'Erro ao salvar o colaborador. Tente novamente.';
-            $tipoMensagem = 'error';
+                    ] : null,
+                    'data_cadastro' => date('Y-m-d H:i:s'),
+                    'data_atualizacao' => date('Y-m-d H:i:s')
+                ];
+                
+                // Adicionar ao array
+                $colaboradores[] = $novoColaborador;
+                
+                // Salvar no JSON
+                if (salvarArquivoJSON('../data/colaboradores.json', $colaboradores)) {
+                    $mensagem = 'Colaborador cadastrado com sucesso!';
+                    $tipoMensagem = 'success';
+                    
+                    // Limpar o formulário
+                    $_POST = [];
+                } else {
+                    $mensagem = 'Erro ao salvar o colaborador. Tente novamente.';
+                    $tipoMensagem = 'error';
+                }
+            }
         }
-    } else {
+    }
+    
+    if (!empty($erros)) {
         $mensagem = implode('<br>', $erros);
         $tipoMensagem = 'error';
     }
@@ -180,6 +293,14 @@ function formatarCEP($cep) {
     <link rel="stylesheet" href="../css/colaboradores/adicionar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="../img/favicon/favicon.png">
+    <style>
+        /* Estilo adicional para destacar mensagem de mesclagem */
+        .alert-info {
+            background: rgba(52, 152, 219, 0.15);
+            color: #1e5a7a;
+            border-left: 4px solid var(--info);
+        }
+    </style>
 </head>
 <body>
 <!-- ==================== HEADER ==================== -->
@@ -244,9 +365,9 @@ function formatarCEP($cep) {
 
 <!-- Mensagens de alerta -->
 <?php if ($mensagem): ?>
-    <div class="global-alert alert-<?php echo $tipoMensagem === 'success' ? 'success' : 'error'; ?>">
+    <div class="global-alert alert-<?php echo $tipoMensagem === 'success' ? 'success' : ($tipoMensagem === 'info' ? 'info' : 'error'); ?>">
         <div class="alert-content">
-            <i class="fas fa-<?php echo $tipoMensagem === 'success' ? 'check-circle' : 'exclamation-circle'; ?>"></i>
+            <i class="fas fa-<?php echo $tipoMensagem === 'success' ? 'check-circle' : ($tipoMensagem === 'info' ? 'info-circle' : 'exclamation-circle'); ?>"></i>
             <span><?php echo $mensagem; ?></span>
         </div>
         <button class="alert-close" onclick="this.parentElement.style.display='none'">&times;</button>
@@ -259,6 +380,10 @@ function formatarCEP($cep) {
         <div>
             <h1><i class="fas fa-user-plus"></i> Adicionar Novo Colaborador</h1>
             <p class="page-subtitle">Preencha os dados abaixo para cadastrar um novo colaborador</p>
+            <p class="page-subtitle" style="color: var(--info); margin-top: 5px;">
+                <i class="fas fa-info-circle"></i> 
+                <strong>Nota:</strong> Se a matrícula já existir, os dados serão automaticamente mesclados (atualizados).
+            </p>
         </div>
         <a href="index.php" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i>
@@ -273,7 +398,7 @@ function formatarCEP($cep) {
                 <div class="form-group">
                     <label for="matricula">
                         <i class="fas fa-id-badge"></i>
-                        <span>Chamado</span>
+                        <span>Chamado / Matrícula</span>
                     </label>
                     <input type="text"
                            id="matricula"
@@ -282,7 +407,7 @@ function formatarCEP($cep) {
                            class="form-control"
                            placeholder="Ex: #251506, #255676"
                            autofocus>
-                    <small class="form-text">Número do chamado do colaborador <strong>(opcional)</strong> - Pode ser preenchido depois</small>
+                    <small class="form-text">Número do chamado do colaborador <strong>(opcional)</strong> - Se já existir, os dados serão mesclados</small>
                 </div>
 
                 <div class="form-group">
@@ -486,8 +611,6 @@ function formatarCEP($cep) {
                            placeholder="Ex: 12001, 12001">
                     <small class="form-text">Código do centro de custo</small>
                 </div>
-
-                <!-- CAMPO GESTOR REMOVIDO -->
             </div>
 
             <div class="form-actions">
@@ -647,10 +770,7 @@ function formatarCEP($cep) {
             const cpfInput = document.getElementById('cpf');
             const emailInput = document.getElementById('email');
             const tipoTrabalho = document.getElementById('tipo_trabalho');
-            const matriculaValue = matriculaInput ? matriculaInput.value.trim() : '';
             const cpfValue = cpfInput ? cpfInput.value.replace(/\D/g, '') : '';
-
-            // Matrícula NÃO é mais obrigatória - removida a validação
 
             if (cpfValue.length !== 11) {
                 alert('CPF deve conter 11 dígitos.');
