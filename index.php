@@ -9,9 +9,14 @@ if (!isset($_SESSION['usuario_id'])) {
 }
 
 // Carregar dados
-$colaboradores = lerArquivoJSON('data/colaboradores.json');
+$colaboradores = lerArquivoJSON('data/colaboradores/ativos.json');
+if ($colaboradores === false) $colaboradores = [];
+
 $equipamentos = lerArquivoJSON('data/equipamentos.json');
+if ($equipamentos === false) $equipamentos = [];
+
 $linhas = lerArquivoJSON('data/linhas.json');
+if ($linhas === false) $linhas = [];
 
 // Nível do usuário
 $usuario_nivel = $_SESSION['usuario_nivel'] ?? 'user';
@@ -76,7 +81,6 @@ $topCentroCusto = array_slice($equipamentosPorCentroCusto, 0, 5, true);
 
 $page_title = 'Dashboard - Sistema de Gestão';
 ?>
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -84,27 +88,25 @@ $page_title = 'Dashboard - Sistema de Gestão';
     <title><?php echo $page_title; ?></title>
     <link rel="stylesheet" href="css/home/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="img/favicon/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="icon" href="img/favicon/favicon.png">
 </head>
 <body>
-<!-- ==================== HEADER ==================== -->
+
+<!-- HEADER -->
 <header class="header">
     <div class="header-content">
         <div class="logo">
             <a href="index.php">
-                <i class="fas fa-laptop-house"></i>
+                <i class="fas fa-chart-line"></i>
                 <h1>Sistema de Gestão</h1>
             </a>
         </div>
-
         <div class="user-menu">
             <div class="user-info">
                 <i class="fas fa-user-circle"></i>
                 <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
-                <span class="user-level user-level-<?php echo $usuario_nivel; ?>">
-<!--                    --><?php //echo $is_admin ? 'Admin' : ($is_view ? 'Visualizador' : 'Usuário'); ?>
-                </span>
             </div>
             <a href="logout.php" class="logout-btn">
                 <i class="fas fa-sign-out-alt"></i>
@@ -112,46 +114,20 @@ $page_title = 'Dashboard - Sistema de Gestão';
             </a>
         </div>
     </div>
-
     <nav class="nav-container">
         <ul class="nav-menu">
-            <li class="nav-item">
-                <a href="index.php" class="nav-link active">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="colaboradores/index.php" class="nav-link">
-                    <i class="fas fa-users"></i>
-                    <span>Colaboradores</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="equipamentos/index.php" class="nav-link">
-                    <i class="fas fa-laptop"></i>
-                    <span>Equipamentos</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="linhas/index.php" class="nav-link">
-                    <i class="fas fa-phone"></i>
-                    <span>Linhas</span>
-                </a>
-            </li>
+            <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+            <li class="nav-item"><a href="colaboradores/index.php" class="nav-link"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
+            <li class="nav-item"><a href="equipamentos/index.php" class="nav-link"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
+            <li class="nav-item"><a href="linhas/index.php" class="nav-link"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
             <?php if ($is_admin): ?>
-                <li class="nav-item">
-                    <a href="usuarios/index.php" class="nav-link">
-                        <i class="fas fa-user-cog"></i>
-                        <span>Usuários</span>
-                    </a>
-                </li>
+                <li class="nav-item"><a href="usuarios/index.php" class="nav-link"><i class="fas fa-user-cog"></i><span>Usuários</span></a></li>
             <?php endif; ?>
         </ul>
     </nav>
 </header>
 
-<!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
+<!-- CONTEÚDO PRINCIPAL -->
 <main class="main-container">
     <div class="dashboard-header">
         <h1><i class="fas fa-chart-line"></i> Dashboard</h1>
@@ -160,8 +136,8 @@ $page_title = 'Dashboard - Sistema de Gestão';
 
     <!-- Cards de Resumo -->
     <div class="stats-grid">
-        <div class="stat-card stat-primary">
-            <div class="stat-icon"><i class="fas fa-users"></i></div>
+        <div class="stat-card">
+            <div class="stat-icon primary"><i class="fas fa-users"></i></div>
             <div class="stat-content">
                 <h3>Colaboradores</h3>
                 <p class="stat-number"><?php echo $totalColaboradores; ?></p>
@@ -172,8 +148,8 @@ $page_title = 'Dashboard - Sistema de Gestão';
             </div>
         </div>
 
-        <div class="stat-card stat-success">
-            <div class="stat-icon"><i class="fas fa-laptop"></i></div>
+        <div class="stat-card">
+            <div class="stat-icon success"><i class="fas fa-laptop"></i></div>
             <div class="stat-content">
                 <h3>Equipamentos</h3>
                 <p class="stat-number"><?php echo $totalEquipamentos; ?></p>
@@ -184,8 +160,8 @@ $page_title = 'Dashboard - Sistema de Gestão';
             </div>
         </div>
 
-        <div class="stat-card stat-info">
-            <div class="stat-icon"><i class="fas fa-phone"></i></div>
+        <div class="stat-card">
+            <div class="stat-icon info"><i class="fas fa-phone"></i></div>
             <div class="stat-content">
                 <h3>Linhas</h3>
                 <p class="stat-number"><?php echo $totalLinhas; ?></p>
@@ -196,8 +172,8 @@ $page_title = 'Dashboard - Sistema de Gestão';
             </div>
         </div>
 
-        <div class="stat-card stat-warning">
-            <div class="stat-icon"><i class="fas fa-chart-pie"></i></div>
+        <div class="stat-card">
+            <div class="stat-icon warning"><i class="fas fa-chart-pie"></i></div>
             <div class="stat-content">
                 <h3>Ocupação</h3>
                 <p class="stat-number"><?php echo $totalEquipamentos > 0 ? round((($equipamentosAlocados + $equipamentosEmprestados) / $totalEquipamentos) * 100) : 0; ?>%</p>
@@ -208,7 +184,7 @@ $page_title = 'Dashboard - Sistema de Gestão';
         </div>
     </div>
 
-    <!-- Gráficos - Primeira Linha -->
+    <!-- Gráficos -->
     <div class="charts-row">
         <div class="chart-card">
             <div class="chart-header">
@@ -236,17 +212,17 @@ $page_title = 'Dashboard - Sistema de Gestão';
                 <canvas id="tipoChart"></canvas>
             </div>
             <div class="chart-legend">
-                <?php foreach ($equipamentosPorTipo as $tipo => $quantidade): ?>
-                    <div class="legend-item">
-                        <span class="color-box tipo-<?php echo $tipo; ?>"></span>
-                        <?php echo getTipoTexto($tipo); ?> (<?php echo $quantidade; ?>)
-                    </div>
-                <?php endforeach; ?>
+                <?php 
+                $tipoCores = ['#6B3E8F', '#9B59B6', '#C39BD3', '#4A266A', '#E8DAEF', '#2ECC71', '#27AE60', '#F1C40F'];
+                $corIdx = 0;
+                foreach ($equipamentosPorTipo as $tipo => $quantidade): 
+                ?>
+                    <div class="legend-item"><span class="color-box" style="background: <?php echo $tipoCores[$corIdx % count($tipoCores)]; ?>;"></span> <?php echo getTipoTexto($tipo); ?> (<?php echo $quantidade; ?>)</div>
+                <?php $corIdx++; endforeach; ?>
             </div>
         </div>
     </div>
 
-    <!-- Gráficos - Segunda Linha -->
     <div class="charts-row">
         <div class="chart-card">
             <div class="chart-header">
@@ -273,53 +249,76 @@ $page_title = 'Dashboard - Sistema de Gestão';
         </div>
     </div>
 
-    <!-- Ações Rápidas -->
-    <div class="quick-actions-section">
-        <div class="section-header">
-            <h2><i class="fas fa-bolt"></i> Ações Rápidas</h2>
-            <p>Realize as principais operações do sistema</p>
+    <div class="charts-row">
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3><i class="fas fa-chart-pie"></i> Colaboradores por Tipo</h3>
+                <p>Distribuição entre Presencial e Home Office</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="colaboradoresChart"></canvas>
+            </div>
+            <div class="chart-legend">
+                <div class="legend-item"><span class="color-box" style="background: #3498DB;"></span> Presencial (<?php echo $colaboradoresPresencial; ?>)</div>
+                <div class="legend-item"><span class="color-box" style="background: #F39C12;"></span> Home Office (<?php echo $colaboradoresHomeOffice; ?>)</div>
+            </div>
         </div>
-        <div class="action-grid">
-            <?php if (!$is_view): ?>
-                <a href="colaboradores/adicionar.php" class="action-card">
-                    <div class="action-icon"><i class="fas fa-user-plus"></i></div>
-                    <div class="action-content">
-                        <h3>Adicionar Colaborador</h3>
-                        <p>Cadastre um novo colaborador</p>
-                    </div>
-                </a>
-                <a href="equipamentos/adicionar.php" class="action-card">
-                    <div class="action-icon"><i class="fas fa-laptop-medical"></i></div>
-                    <div class="action-content">
-                        <h3>Adicionar Equipamento</h3>
-                        <p>Cadastre um novo equipamento</p>
-                    </div>
-                </a>
-                <a href="linhas/adicionar.php" class="action-card">
-                    <div class="action-icon"><i class="fas fa-phone-plus"></i></div>
-                    <div class="action-content">
-                        <h3>Adicionar Linha</h3>
-                        <p>Cadastre uma nova linha</p>
-                    </div>
-                </a>
-            <?php else: ?>
-                <div class="action-card view-only">
-                    <div class="action-icon"><i class="fas fa-eye"></i></div>
-                    <div class="action-content">
-                        <h3>Modo Visualização</h3>
-                        <p>Você está no modo de visualização</p>
-                    </div>
-                </div>
-            <?php endif; ?>
+
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3><i class="fas fa-chart-bar"></i> Resumo Geral</h3>
+                <p>Visão consolidada dos indicadores</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="resumoChart"></canvas>
+            </div>
         </div>
+    </div>
+        <!-- Últimos Colaboradores -->
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Matrícula</th>
+                    <th>Cargo</th>
+                    <th>Departamento</th>
+                    <th>Tipo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                $ultimosColaboradores = array_slice($colaboradores, 0, 10);
+                foreach ($ultimosColaboradores as $colaborador): ?>
+                <tr>
+                    <td><strong><?php echo htmlspecialchars($colaborador['nome']); ?></strong></td>
+                    <td><?php echo htmlspecialchars($colaborador['matricula'] ?? '---'); ?></td>
+                    <td><?php echo htmlspecialchars($colaborador['cargo'] ?? '---'); ?></td>
+                    <td><?php echo htmlspecialchars($colaborador['departamento'] ?? '---'); ?></td>
+                    <td>
+                        <span class="status-badge status-ativo">
+                            <i class="fas fa-<?php echo ($colaborador['tipo_trabalho'] ?? 'local') === 'home' ? 'home' : 'building'; ?>"></i>
+                            <?php echo ($colaborador['tipo_trabalho'] ?? 'local') === 'home' ? 'Home Office' : 'Presencial'; ?>
+                        </span>
+                    </td>
+                    <td>
+                        <a href="colaboradores/editar.php?id=<?php echo $colaborador['id']; ?>" class="btn btn-secondary" style="padding: 0.25rem 0.5rem;">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 </main>
 
-<!-- ==================== FOOTER ==================== -->
+<!-- FOOTER -->
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
-            <h3><i class="fas fa-laptop-house"></i> Sistema de Gestão</h3>
+            <h3><i class="fas fa-chart-line"></i> Sistema de Gestão</h3>
             <p>Controle de colaboradores e equipamentos</p>
         </div>
         <div class="footer-section">
@@ -348,6 +347,7 @@ $page_title = 'Dashboard - Sistema de Gestão';
             </div>
         </div>
     </div>
+
     <div class="footer-bottom">
         <p>Sistema de Gestão &copy; <?php echo date('Y'); ?> - Todos os direitos reservados</p>
         <p class="footer-version">Última atualização: <?php echo date('d/m/Y H:i'); ?></p>
@@ -355,42 +355,228 @@ $page_title = 'Dashboard - Sistema de Gestão';
 </footer>
 
 <script>
-    // Gráfico de Status dos Equipamentos
-    const ctxStatus = document.getElementById('statusChart').getContext('2d');
-    new Chart(ctxStatus, {
-        type: 'pie',
-        data: {
-            labels: ['Em Estoque', 'Alocados', 'Emprestados', 'Em Manutenção', 'Fora de Uso'],
-            datasets: [{
-                data: [<?php echo $equipamentosEstoque; ?>, <?php echo $equipamentosAlocados; ?>, <?php echo $equipamentosEmprestados; ?>, <?php echo $equipamentosManutencao; ?>, <?php echo $equipamentosForaUso; ?>],
-                backgroundColor: ['#2ECC71', '#3498DB', '#F39C12', '#E74C3C', '#95A5A6'],
-                borderWidth: 0,
-                hoverOffset: 10
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(context) { const label = context.label || ''; const value = context.raw || 0; const total = context.dataset.data.reduce((a, b) => a + b, 0); const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0; return `${label}: ${value} (${percent}%)`; } } } }
-        }
+    // Aguardar o DOM carregar
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // 1. Gráfico de Status dos Equipamentos
+        const ctxStatus = document.getElementById('statusChart').getContext('2d');
+        new Chart(ctxStatus, {
+            type: 'pie',
+            data: {
+                labels: ['Em Estoque', 'Alocados', 'Emprestados', 'Em Manutenção', 'Fora de Uso'],
+                datasets: [{
+                    data: [<?php echo $equipamentosEstoque; ?>, <?php echo $equipamentosAlocados; ?>, <?php echo $equipamentosEmprestados; ?>, <?php echo $equipamentosManutencao; ?>, <?php echo $equipamentosForaUso; ?>],
+                    backgroundColor: ['#2ECC71', '#3498DB', '#F39C12', '#E74C3C', '#95A5A6'],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                return `${label}: ${value} (${percent}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 2. Gráfico de Equipamentos por Tipo
+        const tipoLabels = [<?php foreach ($equipamentosPorTipo as $tipo => $quantidade): ?>'<?php echo getTipoTexto($tipo); ?>',<?php endforeach; ?>];
+        const tipoData = [<?php foreach ($equipamentosPorTipo as $quantidade): ?><?php echo $quantidade; ?>,<?php endforeach; ?>];
+        const tipoColors = ['#6B3E8F', '#9B59B6', '#C39BD3', '#4A266A', '#E8DAEF', '#2ECC71', '#27AE60', '#F1C40F', '#E67E22', '#3498DB'];
+        
+        const ctxTipo = document.getElementById('tipoChart').getContext('2d');
+        new Chart(ctxTipo, {
+            type: 'pie',
+            data: {
+                labels: tipoLabels,
+                datasets: [{
+                    data: tipoData,
+                    backgroundColor: tipoColors.slice(0, tipoLabels.length),
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                return `${label}: ${value} (${percent}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 3. Gráfico de Top Centros de Custo
+        const ccLabels = [<?php foreach ($topCentroCusto as $cc => $quantidade): ?>'<?php echo addslashes($cc); ?>',<?php endforeach; ?>];
+        const ccData = [<?php foreach ($topCentroCusto as $quantidade): ?><?php echo $quantidade; ?>,<?php endforeach; ?>];
+        
+        const ctxCC = document.getElementById('centroCustoChart').getContext('2d');
+        new Chart(ctxCC, {
+            type: 'bar',
+            data: {
+                labels: ccLabels,
+                datasets: [{
+                    label: 'Quantidade de Equipamentos',
+                    data: ccData,
+                    backgroundColor: '#6B3E8F',
+                    borderRadius: 8,
+                    barPercentage: 0.7
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                indexAxis: 'y',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `Equipamentos: ${context.raw}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        title: { display: true, text: 'Quantidade' }
+                    },
+                    y: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 4. Gráfico de Status das Linhas
+        const ctxLinhas = document.getElementById('linhasChart').getContext('2d');
+        new Chart(ctxLinhas, {
+            type: 'pie',
+            data: {
+                labels: ['Disponível', 'Alocado'],
+                datasets: [{
+                    data: [<?php echo $linhasDisponiveis; ?>, <?php echo $linhasAlocadas; ?>],
+                    backgroundColor: ['#2ECC71', '#F39C12'],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                return `${label}: ${value} (${percent}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 5. Gráfico de Colaboradores por Tipo
+        const ctxColab = document.getElementById('colaboradoresChart').getContext('2d');
+        new Chart(ctxColab, {
+            type: 'pie',
+            data: {
+                labels: ['Presencial', 'Home Office'],
+                datasets: [{
+                    data: [<?php echo $colaboradoresPresencial; ?>, <?php echo $colaboradoresHomeOffice; ?>],
+                    backgroundColor: ['#3498DB', '#F39C12'],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                return `${label}: ${value} (${percent}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 6. Gráfico de Resumo Geral
+        const ctxResumo = document.getElementById('resumoChart').getContext('2d');
+        new Chart(ctxResumo, {
+            type: 'bar',
+            data: {
+                labels: ['Equipamentos', 'Colaboradores', 'Linhas'],
+                datasets: [{
+                    label: 'Quantidade',
+                    data: [<?php echo $totalEquipamentos; ?>, <?php echo $totalColaboradores; ?>, <?php echo $totalLinhas; ?>],
+                    backgroundColor: ['#3498DB', '#2ECC71', '#F39C12'],
+                    borderRadius: 8,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.raw}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { display: true },
+                        title: { display: true, text: 'Quantidade' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
     });
-
-    // Gráfico de Equipamentos por Tipo
-    const ctxTipo = document.getElementById('tipoChart').getContext('2d');
-    const tiposLabels = [<?php foreach ($equipamentosPorTipo as $tipo => $quantidade): ?>'<?php echo getTipoTexto($tipo); ?>',<?php endforeach; ?>];
-    const tiposData = [<?php foreach ($equipamentosPorTipo as $quantidade): ?><?php echo $quantidade; ?>,<?php endforeach; ?>];
-    const tipoColors = ['#6B3E8F', '#9B59B6', '#C39BD3', '#4A266A', '#E8DAEF', '#2ECC71', '#27AE60', '#F1C40F', '#E67E22', '#3498DB'];
-    new Chart(ctxTipo, { type: 'pie', data: { labels: tiposLabels, datasets: [{ data: tiposData, backgroundColor: tipoColors.slice(0, tiposLabels.length), borderWidth: 0, hoverOffset: 10 }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(context) { const label = context.label || ''; const value = context.raw || 0; const total = context.dataset.data.reduce((a, b) => a + b, 0); const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0; return `${label}: ${value} (${percent}%)`; } } } } } });
-
-    // Gráfico de Top Centros de Custo
-    const ctxCC = document.getElementById('centroCustoChart').getContext('2d');
-    const ccLabels = [<?php foreach ($topCentroCusto as $cc => $quantidade): ?>'<?php echo addslashes($cc); ?>',<?php endforeach; ?>];
-    const ccData = [<?php foreach ($topCentroCusto as $quantidade): ?><?php echo $quantidade; ?>,<?php endforeach; ?>];
-    new Chart(ctxCC, { type: 'bar', data: { labels: ccLabels, datasets: [{ label: 'Quantidade de Equipamentos', data: ccData, backgroundColor: '#6B3E8F', borderRadius: 8, barPercentage: 0.7 }] }, options: { responsive: true, maintainAspectRatio: true, indexAxis: 'y', plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(context) { return `Equipamentos: ${context.raw}`; } } } }, scales: { x: { grid: { display: false }, title: { display: true, text: 'Quantidade' } }, y: { grid: { display: false } } } } });
-
-    // Gráfico de Status das Linhas
-    const ctxLinhas = document.getElementById('linhasChart').getContext('2d');
-    new Chart(ctxLinhas, { type: 'pie', data: { labels: ['Disponível', 'Alocado'], datasets: [{ data: [<?php echo $linhasDisponiveis; ?>, <?php echo $linhasAlocadas; ?>], backgroundColor: ['#2ECC71', '#F39C12'], borderWidth: 0, hoverOffset: 10 }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(context) { const label = context.label || ''; const value = context.raw || 0; const total = context.dataset.data.reduce((a, b) => a + b, 0); const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0; return `${label}: ${value} (${percent}%)`; } } } } } });
 </script>
 </body>
 </html>
