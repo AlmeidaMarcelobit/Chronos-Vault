@@ -14,7 +14,8 @@ if (!$id) {
     exit;
 }
 
-$colaboradores = lerArquivoJSON('../data/colaboradores.json');
+// Carregar colaboradores do novo caminho (ativos.json)
+$colaboradores = lerArquivoJSON('../data/colaboradores/ativos.json');
 
 // Encontrar colaborador
 $colaboradorIndex = null;
@@ -27,6 +28,8 @@ foreach ($colaboradores as $index => $colaborador) {
 }
 
 if ($colaboradorIndex === null) {
+    $_SESSION['mensagem'] = 'Colaborador não encontrado.';
+    $_SESSION['mensagem_tipo'] = 'error';
     header('Location: index.php');
     exit;
 }
@@ -44,9 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $departamento = trim($_POST['departamento'] ?? '');
     $centro_custo = trim($_POST['centro_custo'] ?? '');
     $email = trim($_POST['email'] ?? '');
-    // CAMPO GESTOR REMOVIDO
-
-    // Novos campos de endereço
     $tipo_trabalho = $_POST['tipo_trabalho'] ?? 'local';
     $endereco = trim($_POST['endereco'] ?? '');
     $numero = trim($_POST['numero'] ?? '');
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($erros)) {
-        // Atualizar colaborador (SEM CAMPO GESTOR_ID)
+        // Atualizar colaborador
         $colaboradores[$colaboradorIndex]['matricula'] = $matricula ?: null;
         $colaboradores[$colaboradorIndex]['nome'] = $nome;
         $colaboradores[$colaboradorIndex]['cargo'] = $cargo;
@@ -147,19 +147,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $colaboradores[$colaboradorIndex]['departamento'] = $departamento;
         $colaboradores[$colaboradorIndex]['centro_custo'] = $centro_custo;
         $colaboradores[$colaboradorIndex]['email'] = $email ?: null;
-        // 'gestor_id' => $gestor_id,  // REMOVIDO
         $colaboradores[$colaboradorIndex]['tipo_trabalho'] = $tipo_trabalho;
 
         // Atualizar endereço
         if ($tipo_trabalho === 'home') {
             $colaboradores[$colaboradorIndex]['endereco'] = [
-                    'logradouro' => $endereco,
-                    'numero' => $numero,
-                    'complemento' => $complemento ?: null,
-                    'bairro' => $bairro,
-                    'cidade' => $cidade,
-                    'estado' => $estado,
-                    'cep' => $cep ?: null
+                'logradouro' => $endereco,
+                'numero' => $numero,
+                'complemento' => $complemento ?: null,
+                'bairro' => $bairro,
+                'cidade' => $cidade,
+                'estado' => $estado,
+                'cep' => $cep ?: null
             ];
         } else {
             $colaboradores[$colaboradorIndex]['endereco'] = null;
@@ -167,13 +166,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $colaboradores[$colaboradorIndex]['data_atualizacao'] = date('Y-m-d H:i:s');
 
-        // Salvar no JSON
-        if (salvarArquivoJSON('../data/colaboradores.json', $colaboradores)) {
-            $mensagem = 'Colaborador atualizado com sucesso!';
-            $tipoMensagem = 'success';
-
-            // Atualizar dados locais
-            $colaboradorAtual = $colaboradores[$colaboradorIndex];
+        // Salvar no JSON (caminho correto: ativos.json)
+        if (salvarArquivoJSON('../data/colaboradores/ativos.json', $colaboradores)) {
+            $_SESSION['mensagem'] = 'Colaborador atualizado com sucesso!';
+            $_SESSION['mensagem_tipo'] = 'success';
+            header('Location: index.php');
+            exit;
         } else {
             $mensagem = 'Erro ao atualizar o colaborador. Tente novamente.';
             $tipoMensagem = 'error';
@@ -189,11 +187,8 @@ $enderecoAtual = $colaboradorAtual['endereco'] ?? null;
 $tipoTrabalhoAtual = $colaboradorAtual['tipo_trabalho'] ?? 'local';
 
 // Função para formatar CEP com segurança
-function formatarCEPSeguro($cep)
-{
-    if (empty($cep)) {
-        return '';
-    }
+function formatarCEPSeguro($cep) {
+    if (empty($cep)) return '';
     $cep = preg_replace('/[^0-9]/', '', $cep);
     if (strlen($cep) == 8) {
         return substr($cep, 0, 5) . '-' . substr($cep, 5, 3);
@@ -201,8 +196,15 @@ function formatarCEPSeguro($cep)
     return $cep;
 }
 
+// Estatísticas para o footer
+$total_colaboradores = count(lerArquivoJSON('../data/colaboradores/ativos.json'));
+$total_equipamentos = count(lerArquivoJSON('../data/equipamentos.json'));
+$equipamentos_data = lerArquivoJSON('../data/equipamentos.json');
+$equipamentos_estoque = 0;
+foreach ($equipamentos_data as $e) {
+    if (($e['status'] ?? '') === 'estoque') $equipamentos_estoque++;
+}
 ?>
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -210,16 +212,18 @@ function formatarCEPSeguro($cep)
     <title>Editar Colaborador - Sistema de Gestão</title>
     <link rel="stylesheet" href="../css/colaboradores/editar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="../img/favicon/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../img/favicon/favicon.png">     
 </head>
 <body>
-<!-- HEADER -->
+
+<!-- ==================== HEADER ==================== -->
 <header class="header">
     <div class="header-content">
         <div class="logo">
             <a href="../index.php">
-                <i class="fas fa-laptop-house"></i>
-                <h1>Sistema de Gestão</h1>
+                <i class="fas fa-users"></i>
+                <h1>Gestão de Colaboradores</h1>
             </a>
         </div>
         <div class="user-menu">
@@ -235,23 +239,15 @@ function formatarCEPSeguro($cep)
     </div>
     <nav class="nav-container">
         <ul class="nav-menu">
-            <li class="nav-item"><a href="../index.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
-            </li>
-            <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-users"></i><span>Colaboradores</span></a>
-            </li>
-            <li class="nav-item"><a href="../equipamentos/index.php" class="nav-link"><i
-                            class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
-            <li class="nav-item">
-                <a href="../linhas/index.php" class="nav-link">
-                    <i class="fas fa-phone"></i>
-                    <span>Linhas</span>
-                </a>
-            </li>
+            <li class="nav-item"><a href="../index.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+            <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
+            <li class="nav-item"><a href="../equipamentos/index.php" class="nav-link"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
+            <li class="nav-item"><a href="../linhas/index.php" class="nav-link"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
         </ul>
     </nav>
 </header>
 
-<!-- MENSAGENS DE ALERTA -->
+<!-- Mensagens de alerta -->
 <?php if ($mensagem): ?>
     <div class="global-alert alert-<?php echo $tipoMensagem === 'success' ? 'success' : 'error'; ?>">
         <div class="alert-content">
@@ -262,7 +258,7 @@ function formatarCEPSeguro($cep)
     </div>
 <?php endif; ?>
 
-<!-- CONTEÚDO PRINCIPAL -->
+<!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
 <main class="main-container">
     <div class="page-header">
         <div>
@@ -270,7 +266,7 @@ function formatarCEPSeguro($cep)
             <p class="page-subtitle">Atualize as informações do colaborador</p>
         </div>
         <a href="index.php" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> <span>Voltar</span>
+            <i class="fas fa-arrow-left"></i> Voltar
         </a>
     </div>
 
@@ -279,27 +275,30 @@ function formatarCEPSeguro($cep)
         <div class="info-card">
             <h3><i class="fas fa-info-circle"></i> Informações do Colaborador</h3>
             <div class="info-grid">
-                <div class="info-item"><span class="info-label">ID:</span><span
-                            class="info-value"><?php echo $colaboradorAtual['id']; ?></span></div>
-                <div class="info-item"><span class="info-label">Data de Cadastro:</span><span
-                            class="info-value"><?php echo formatarData($colaboradorAtual['data_cadastro']); ?></span>
+                <div class="info-item">
+                    <span class="info-label">ID:</span>
+                    <span class="info-value"><?php echo $colaboradorAtual['id']; ?></span>
                 </div>
-                <div class="info-item"><span class="info-label">Última Atualização:</span><span
-                            class="info-value"><?php echo isset($colaboradorAtual['data_atualizacao']) ? formatarData($colaboradorAtual['data_atualizacao']) : '---'; ?></span>
+                <div class="info-item">
+                    <span class="info-label">Data de Cadastro:</span>
+                    <span class="info-value"><?php echo formatarData($colaboradorAtual['data_cadastro']); ?></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Última Atualização:</span>
+                    <span class="info-value"><?php echo isset($colaboradorAtual['data_atualizacao']) ? formatarData($colaboradorAtual['data_atualizacao']) : '---'; ?></span>
                 </div>
             </div>
         </div>
 
         <!-- FORMULÁRIO -->
-        <form method="POST" action="" class="form-card" id="form-colaborador">
+        <form method="POST" action="" id="form-colaborador">
             <div class="form-grid">
-                <!-- Campo Matrícula (Chamado) - OPCIONAL -->
                 <div class="form-group">
-                    <label for="matricula"><i class="fas fa-id-badge"></i> Chamado</label>
+                    <label for="matricula"><i class="fas fa-id-badge"></i> Chamado / Matrícula</label>
                     <input type="text" id="matricula" name="matricula"
                            value="<?php echo htmlspecialchars($colaboradorAtual['matricula'] ?? ''); ?>"
                            class="form-control" placeholder="Ex: #251506, #255676">
-                    <small class="form-text">Número do chamado do colaborador (opcional)</small>
+                    <small class="form-text">Número do chamado do colaborador</small>
                 </div>
 
                 <div class="form-group">
@@ -333,12 +332,9 @@ function formatarCEPSeguro($cep)
 
                 <div class="form-group">
                     <label for="tipo_trabalho"><i class="fas fa-briefcase"></i> Tipo de Trabalho <span class="required">*</span></label>
-                    <select id="tipo_trabalho" name="tipo_trabalho" required class="form-control" onchange="toggleEndereco()">
-                        <option value="local" <?php echo $tipoTrabalhoAtual == 'local' ? 'selected' : ''; ?>>Presencial
-                            (Local)
-                        </option>
-                        <option value="home" <?php echo $tipoTrabalhoAtual == 'home' ? 'selected' : ''; ?>>Home Office
-                        </option>
+                    <select id="tipo_trabalho" name="tipo_trabalho" required class="form-select" onchange="toggleEndereco()">
+                        <option value="local" <?php echo $tipoTrabalhoAtual == 'local' ? 'selected' : ''; ?>>Presencial (Local)</option>
+                        <option value="home" <?php echo $tipoTrabalhoAtual == 'home' ? 'selected' : ''; ?>>Home Office</option>
                     </select>
                 </div>
             </div>
@@ -350,15 +346,13 @@ function formatarCEPSeguro($cep)
                 </div>
                 <div class="form-grid">
                     <div class="form-group full-width">
-                        <label for="endereco"><i class="fas fa-road"></i> Logradouro <span
-                                    class="required">*</span></label>
+                        <label for="endereco"><i class="fas fa-road"></i> Logradouro <span class="required">*</span></label>
                         <input type="text" id="endereco" name="endereco"
                                value="<?php echo htmlspecialchars($enderecoAtual['logradouro'] ?? ''); ?>"
                                class="form-control" placeholder="Rua, Avenida, Alameda...">
                     </div>
                     <div class="form-group">
-                        <label for="numero"><i class="fas fa-hashtag"></i> Número <span
-                                    class="required">*</span></label>
+                        <label for="numero"><i class="fas fa-hashtag"></i> Número <span class="required">*</span></label>
                         <input type="text" id="numero" name="numero"
                                value="<?php echo htmlspecialchars($enderecoAtual['numero'] ?? ''); ?>"
                                class="form-control" placeholder="Número">
@@ -370,8 +364,7 @@ function formatarCEPSeguro($cep)
                                class="form-control" placeholder="Apto, Bloco, Casa...">
                     </div>
                     <div class="form-group">
-                        <label for="bairro"><i class="fas fa-location-dot"></i> Bairro <span
-                                    class="required">*</span></label>
+                        <label for="bairro"><i class="fas fa-location-dot"></i> Bairro <span class="required">*</span></label>
                         <input type="text" id="bairro" name="bairro"
                                value="<?php echo htmlspecialchars($enderecoAtual['bairro'] ?? ''); ?>"
                                class="form-control" placeholder="Bairro">
@@ -384,7 +377,7 @@ function formatarCEPSeguro($cep)
                     </div>
                     <div class="form-group">
                         <label for="estado"><i class="fas fa-map-marker-alt"></i> Estado <span class="required">*</span></label>
-                        <select id="estado" name="estado" class="form-control">
+                        <select id="estado" name="estado" class="form-select">
                             <option value="">Selecione o estado</option>
                             <?php foreach (getEstados() as $sigla => $nome): ?>
                                 <option value="<?php echo $sigla; ?>" <?php echo (($enderecoAtual['estado'] ?? '') == $sigla) ? 'selected' : ''; ?>>
@@ -404,15 +397,32 @@ function formatarCEPSeguro($cep)
             </div>
 
             <div class="form-grid">
-                <?php include '../includes/departamentos.php'; ?>
+                <div class="form-group">
+                    <label for="departamento"><i class="fas fa-building"></i> Departamento <span class="required">*</span></label>
+                    <select id="departamento" name="departamento" required class="form-select">
+                        <option value="">Selecione o departamento</option>
+                        <?php
+                        $departamentos = [
+                            'Administração', 'Comercial', 'Compras', 'Contabilidade', 'Desenvolvimento',
+                            'Diretoria', 'Financeiro', 'Jurídico', 'Marketing', 'Recursos Humanos',
+                            'Suporte Técnico', 'Tecnologia da Informação', 'Vendas'
+                        ];
+                        foreach ($departamentos as $dept):
+                        ?>
+                            <option value="<?php echo $dept; ?>" <?php echo ($colaboradorAtual['departamento'] ?? '') == $dept ? 'selected' : ''; ?>>
+                                <?php echo $dept; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <label for="centro_custo"><i class="fas fa-dollar-sign"></i> Centro de Custo <span class="required">*</span></label>
                     <input type="text" id="centro_custo" name="centro_custo"
                            value="<?php echo htmlspecialchars($colaboradorAtual['centro_custo']); ?>" required
-                           class="form-control cc-mask" placeholder="Ex: 12001, 12001">
+                           class="form-control cc-mask" placeholder="Ex: TI001, ADM002">
                     <small class="form-text">Código do centro de custo</small>
                 </div>
-                <!-- CAMPO GESTOR REMOVIDO -->
             </div>
 
             <div class="form-actions">
@@ -423,11 +433,11 @@ function formatarCEPSeguro($cep)
     </div>
 </main>
 
-<!-- FOOTER -->
+<!-- ==================== FOOTER ==================== -->
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
-            <h3><i class="fas fa-laptop-house"></i> Sistema de Gestão</h3>
+            <h3><i class="fas fa-users"></i> Sistema de Gestão</h3>
             <p>Controle de colaboradores e equipamentos</p>
         </div>
         <div class="footer-section">
@@ -440,22 +450,10 @@ function formatarCEPSeguro($cep)
         </div>
         <div class="footer-section">
             <h3>Estatísticas</h3>
-            <?php
-            $total_colaboradores = count(lerArquivoJSON('../data/colaboradores.json'));
-            $total_equipamentos = count(lerArquivoJSON('../data/equipamentos.json'));
-            $equipamentos_estoque = 0;
-            $equipamentos_data = lerArquivoJSON('../data/equipamentos.json');
-            foreach ($equipamentos_data as $e) {
-                if (($e['status'] ?? '') === 'estoque') $equipamentos_estoque++;
-            }
-            ?>
             <div class="footer-stats">
-                <div class="footer-stat"><span class="stat-number"><?php echo $total_colaboradores; ?></span><span
-                            class="stat-label">Colaboradores</span></div>
-                <div class="footer-stat"><span class="stat-number"><?php echo $total_equipamentos; ?></span><span
-                            class="stat-label">Equipamentos</span></div>
-                <div class="footer-stat"><span class="stat-number"><?php echo $equipamentos_estoque; ?></span><span
-                            class="stat-label">Em Estoque</span></div>
+                <div class="footer-stat"><span class="stat-number"><?php echo $total_colaboradores; ?></span><span class="stat-label">Colaboradores</span></div>
+                <div class="footer-stat"><span class="stat-number"><?php echo $total_equipamentos; ?></span><span class="stat-label">Equipamentos</span></div>
+                <div class="footer-stat"><span class="stat-number"><?php echo $equipamentos_estoque; ?></span><span class="stat-label">Em Estoque</span></div>
             </div>
         </div>
     </div>
@@ -465,7 +463,6 @@ function formatarCEPSeguro($cep)
     </div>
 </footer>
 
-<script src="../js/script.js"></script>
 <script>
     // Mostrar/esconder campos de endereço
     const selectTipoTrabalho = document.getElementById('tipo_trabalho');
@@ -490,12 +487,10 @@ function formatarCEPSeguro($cep)
         }
     }
 
-    selectTipoTrabalho.addEventListener('change', toggleEndereco);
-
     // Máscara para CPF
     const cpfInput = document.getElementById('cpf');
     if (cpfInput) {
-        cpfInput.addEventListener('input', function (e) {
+        cpfInput.addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length > 11) value = value.substring(0, 11);
             if (value.length <= 11) {
@@ -510,7 +505,7 @@ function formatarCEPSeguro($cep)
     // Máscara para CEP
     const cepInput = document.getElementById('cep');
     if (cepInput) {
-        cepInput.addEventListener('input', function (e) {
+        cepInput.addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length > 8) value = value.substring(0, 8);
             if (value.length > 5) {
@@ -523,7 +518,7 @@ function formatarCEPSeguro($cep)
     // Máscara para centro de custo
     const ccInput = document.getElementById('centro_custo');
     if (ccInput) {
-        ccInput.addEventListener('input', function (e) {
+        ccInput.addEventListener('input', function(e) {
             let value = e.target.value.toUpperCase();
             value = value.replace(/[^A-Z0-9]/g, '');
             e.target.value = value;
@@ -531,10 +526,10 @@ function formatarCEPSeguro($cep)
     }
 
     // Fechar alerta após 5 segundos
-    setTimeout(function () {
+    setTimeout(function() {
         const alert = document.querySelector('.global-alert');
         if (alert) {
-            alert.style.animation = 'slideOut 0.3s ease';
+            alert.style.opacity = '0';
             setTimeout(() => alert.remove(), 300);
         }
     }, 5000);
