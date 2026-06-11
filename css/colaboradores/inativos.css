@@ -5,7 +5,6 @@
             --primary-light: #E8F4FD;
             --primary: #2196F3;
             --primary-dark: #1976D2;
-            --primary-soft: #64B5F6;
             --secondary: #FF9800;
             --success: #4CAF50;
             --danger: #F44336;
@@ -22,7 +21,6 @@
             --gray-600: #757575;
             --gray-700: #616161;
             --gray-800: #424242;
-            --gray-900: #212121;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
             --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
             --shadow-lg: 0 8px 24px rgba(0,0,0,0.1);
@@ -45,9 +43,7 @@
             line-height: 1.5;
         }
 
-        /* ========================================
-           HEADER
-           ======================================== */
+        /* HEADER */
         .header {
             background: var(--white);
             border-bottom: 1px solid var(--gray-200);
@@ -136,9 +132,7 @@
             transform: translateY(-1px);
         }
 
-        /* ========================================
-           NAVEGAÇÃO
-           ======================================== */
+        /* NAVEGAÇÃO */
         .nav-container {
             background: var(--white);
             border-top: 1px solid var(--gray-100);
@@ -175,18 +169,14 @@
             border-bottom-color: var(--primary);
         }
 
-        /* ========================================
-           CONTEÚDO PRINCIPAL
-           ======================================== */
+        /* CONTEÚDO PRINCIPAL */
         .main-container {
             max-width: 1440px;
             margin: 0 auto;
             padding: 2rem;
         }
 
-        /* ========================================
-           HEADER DA PÁGINA
-           ======================================== */
+        /* PAGE HEADER */
         .page-header {
             margin-bottom: 2rem;
             display: flex;
@@ -217,9 +207,7 @@
             margin-left: 2.5rem;
         }
 
-        /* ========================================
-           STATS CARDS
-           ======================================== */
+        /* STATS CARDS */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -278,9 +266,37 @@
             line-height: 1.2;
         }
 
-        /* ========================================
-           BUSCA
-           ======================================== */
+        /* FILTER TABS */
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .filter-tab:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-tab.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        /* BUSCA */
         .search-section {
             margin-bottom: 2rem;
         }
@@ -351,18 +367,14 @@
             transform: translateY(-1px);
         }
 
-        /* ========================================
-           GRID DE COLABORADORES
-           ======================================== */
+        /* GRID DE COLABORADORES */
         .colaboradores-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 1.5rem;
         }
 
-        /* ========================================
-           CARD DO COLABORADOR INATIVO
-           ======================================== */
+        /* CARD DO COLABORADOR */
         .colaborador-card {
             background: var(--white);
             border-radius: var(--radius-lg);
@@ -373,13 +385,11 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            opacity: 0.85;
         }
 
         .colaborador-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
-            opacity: 1;
         }
 
         /* Card Header */
@@ -387,6 +397,10 @@
             background: linear-gradient(135deg, var(--gray) 0%, #757575 100%);
             padding: 1.25rem;
             color: var(--white);
+        }
+
+        .card-header.pendente-header {
+            background: linear-gradient(135deg, var(--secondary) 0%, #e68900 100%);
         }
 
         .colaborador-nome {
@@ -404,11 +418,6 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-        }
-
-        .colaborador-nome h3 i {
-            font-size: 1rem;
-            opacity: 0.9;
         }
 
         .tipo-badge-header {
@@ -432,16 +441,25 @@
             margin-bottom: 0.5rem;
         }
 
-        .inativo-badge {
-            background: rgba(244, 67, 54, 0.2);
-            padding: 0.25rem 0.75rem;
-            border-radius: 2rem;
-            font-size: 0.65rem;
-            font-weight: 500;
+        .status-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.375rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            font-weight: 500;
             margin-bottom: 0.5rem;
+        }
+
+        .status-badge.pendente {
+            background: rgba(255, 193, 7, 0.2);
+            color: lemonchiffon;
+        }
+
+        .status-badge.inativo {
+            background: rgba(244, 67, 54, 0.2);
+            color: lemonchiffon;
         }
 
         /* Card Body */
@@ -514,6 +532,20 @@
             margin: 1rem 0;
         }
 
+        .pendencia-info {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 3px solid var(--warning);
+            padding: 0.75rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+        }
+
+        .pendencia-info p {
+            font-size: 0.75rem;
+            margin-bottom: 0.25rem;
+            color: var(--gray-700);
+        }
+
         .inativo-info {
             background: rgba(244, 67, 54, 0.05);
             border-left: 3px solid var(--danger);
@@ -528,16 +560,7 @@
             color: var(--gray-700);
         }
 
-        .inativo-info p:last-child {
-            margin-bottom: 0;
-        }
-
-        .text-muted {
-            color: var(--gray-400);
-            font-size: 0.75rem;
-        }
-
-        /* Card Footer - Botões de Ação */
+        /* Card Footer */
         .card-footer {
             padding: 1rem 1.25rem;
             background: var(--gray-50);
@@ -573,8 +596,9 @@
             transform: translateY(-2px);
         }
 
-        .action-btn.reativar:hover { background: var(--success); color: var(--white); border-color: var(--success); }
+        .action-btn.confirm:hover { background: var(--success); color: var(--white); border-color: var(--success); }
         .action-btn.delete:hover { background: var(--danger); color: var(--white); border-color: var(--danger); }
+        .action-btn.equipments:hover { background: var(--info); color: var(--white); border-color: var(--info); }
 
         /* Empty State */
         .empty-state {
@@ -762,6 +786,11 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+            .filter-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 0.5rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -787,3 +816,93 @@
                 margin: 0;
             }
         }
+/* ========================================
+   FILTER TABS (Filtros Rápidos)
+   ======================================== */
+.filter-tabs {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    padding: 0.25rem;
+    background: var(--gray-50);
+    border-radius: var(--radius-lg);
+}
+
+.filter-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--gray-600);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: var(--transition);
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.filter-tab i {
+    font-size: 0.875rem;
+    transition: var(--transition);
+}
+
+.filter-tab:hover {
+    background: var(--white);
+    color: var(--primary);
+    border-color: var(--gray-200);
+    transform: translateY(-1px);
+}
+
+.filter-tab.active {
+    background: var(--primary);
+    color: var(--white);
+    box-shadow: var(--shadow-sm);
+}
+
+.filter-tab.active i {
+    color: var(--white);
+}
+
+/* Variantes de cores para cada status (opcional) */
+.filter-tab[data-status="pendentes"].active {
+    background: var(--warning);
+}
+
+.filter-tab[data-status="inativos"].active {
+    background: var(--danger);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .filter-tabs {
+        gap: 0.5rem;
+        padding: 0.5rem;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .filter-tab {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+        white-space: nowrap;
+    }
+    
+    .filter-tab i {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-tab span {
+        display: inline;
+    }
+    
+    .filter-tab {
+        padding: 0.375rem 0.875rem;
+    }
+}
