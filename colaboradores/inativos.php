@@ -23,6 +23,10 @@ if (!$is_admin) {
 $colaboradoresInativos = lerArquivoJSON('../data/colaboradores/inativos.json');
 if ($colaboradoresInativos === false) $colaboradoresInativos = [];
 
+// Carregar equipamentos para verificar pendências
+$equipamentos = lerArquivoJSON('../data/equipamentos.json');
+if ($equipamentos === false) $equipamentos = [];
+
 // Garantir que todos os colaboradores tenham os campos necessários
 foreach ($colaboradoresInativos as &$colab) {
     if (!isset($colab['matricula'])) $colab['matricula'] = '';
@@ -30,15 +34,45 @@ foreach ($colaboradoresInativos as &$colab) {
     if (!isset($colab['departamento'])) $colab['departamento'] = '';
     if (!isset($colab['email'])) $colab['email'] = '';
     if (!isset($colab['tipo_trabalho'])) $colab['tipo_trabalho'] = 'local';
+    if (!isset($colab['status_inativacao'])) $colab['status_inativacao'] = 'inativo';
+    if (!isset($colab['data_inativacao'])) $colab['data_inativacao'] = date('Y-m-d H:i:s');
 }
 
-// Ordenar colaboradores em ordem alfabética por nome
-usort($colaboradoresInativos, function($a, $b) {
+// Função para verificar se colaborador tem equipamentos pendentes
+function temEquipamentosPendentes($colaboradorId, $equipamentos) {
+    foreach ($equipamentos as $equip) {
+        if ($equip['colaborador_id'] == $colaboradorId && in_array($equip['status'], ['alocado', 'emprestado'])) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Função para contar equipamentos pendentes
+function contarEquipamentosPendentes($colaboradorId, $equipamentos) {
+    $count = 0;
+    foreach ($equipamentos as $equip) {
+        if ($equip['colaborador_id'] == $colaboradorId && in_array($equip['status'], ['alocado', 'emprestado'])) {
+            $count++;
+        }
+    }
+    return $count;
+}
+
+// Ordenar colaboradores: primeiro os com pendência, depois os inativos
+usort($colaboradoresInativos, function($a, $b) use ($equipamentos) {
+    $aPendente = temEquipamentosPendentes($a['id'], $equipamentos);
+    $bPendente = temEquipamentosPendentes($b['id'], $equipamentos);
+    
+    if ($aPendente && !$bPendente) return -1;
+    if (!$aPendente && $bPendente) return 1;
     return strcmp($a['nome'], $b['nome']);
 });
 
 // Buscar por nome (se aplicável)
 $busca = $_GET['busca'] ?? '';
+$filtroStatus = $_GET['status'] ?? 'todos';
+
 if ($busca) {
     $colaboradoresInativos = array_filter($colaboradoresInativos, function($colaborador) use ($busca) {
         return stripos($colaborador['nome'], $busca) !== false ||
@@ -47,58 +81,65 @@ if ($busca) {
                 (isset($colaborador['departamento']) && stripos($colaborador['departamento'], $busca) !== false) ||
                 (isset($colaborador['email']) && stripos($colaborador['email'], $busca) !== false);
     });
-    
-    // Reordenar após o filtro
-    usort($colaboradoresInativos, function($a, $b) {
-        return strcmp($a['nome'], $b['nome']);
+}
+
+// Filtrar por status
+if ($filtroStatus !== 'todos') {
+    $colaboradoresInativos = array_filter($colaboradoresInativos, function($colab) use ($filtroStatus, $equipamentos) {
+        if ($filtroStatus === 'pendentes') {
+            return temEquipamentosPendentes($colab['id'], $equipamentos);
+        } elseif ($filtroStatus === 'inativos') {
+            return !temEquipamentosPendentes($colab['id'], $equipamentos);
+        }
+        return true;
     });
 }
 
 // Estatísticas
 $totalInativos = count($colaboradoresInativos);
-$totalHomeOfficeInativos = count(array_filter($colaboradoresInativos, function($c) {
-    return ($c['tipo_trabalho'] ?? 'local') === 'home';
-}));
+$totalPendentes = 0;
+$totalEquipamentosPendentes = 0;
 
-// Função para reativar colaborador
-function reativarColaborador($colaboradorId, $colaboradoresInativos, $colaboradoresAtivos) {
-    // Buscar colaborador nos inativos
-    $colaboradorEncontrado = null;
-    $colaboradorIndex = null;
-    foreach ($colaboradoresInativos as $index => $colab) {
+foreach ($colaboradoresInativos as $colab) {
+    $pendentes = contarEquipamentosPendentes($colab['id'], $equipamentos);
+    if ($pendentes > 0) {
+        $totalPendentes++;
+        $totalEquipamentosPendentes += $pendentes;
+    }
+}
+
+// Função para marcar como inativo (após devolução)
+function marcarComoInativo($colaboradorId, $colaboradoresInativos) {
+    foreach ($colaboradoresInativos as &$colab) {
         if ($colab['id'] == $colaboradorId) {
-            $colaboradorEncontrado = $colab;
-            $colaboradorIndex = $index;
+            $colab['status_inativacao'] = 'inativo';
+            $colab['data_inativacao'] = date('Y-m-d H:i:s');
+            $colab['data_confirmacao'] = date('Y-m-d H:i:s');
             break;
         }
     }
-    
-    if (!$colaboradorEncontrado) {
-        return ['success' => false, 'message' => 'Colaborador não encontrado nos inativos.'];
-    }
-    
-    // Remover dados de inativação
-    unset($colaboradorEncontrado['data_inativacao']);
-    unset($colaboradorEncontrado['motivo_inativacao']);
-    
-    // Adicionar data de reativação
-    $colaboradorEncontrado['data_reativacao'] = date('Y-m-d H:i:s');
-    $colaboradorEncontrado['data_atualizacao'] = date('Y-m-d H:i:s');
-    
-    // Remover dos inativos
-    array_splice($colaboradoresInativos, $colaboradorIndex, 1);
-    
-    // Adicionar aos ativos
-    $colaboradoresAtivos[] = $colaboradorEncontrado;
-    
-    // Salvar alterações
-    $saveInativos = salvarArquivoJSON('../data/colaboradores/inativos.json', $colaboradoresInativos);
-    $saveAtivos = salvarArquivoJSON('../data/colaboradores/ativos.json', $colaboradoresAtivos);
-    
-    if ($saveInativos && $saveAtivos) {
-        return ['success' => true, 'message' => "Colaborador reativado com sucesso!"];
-    } else {
-        return ['success' => false, 'message' => 'Erro ao reativar colaborador. Tente novamente.'];
+    return salvarArquivoJSON('../data/colaboradores/inativos.json', $colaboradoresInativos);
+}
+
+// Processar confirmação de devolução (marcar como inativo)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_devolucao'])) {
+    $colaboradorId = $_POST['colaborador_id'] ?? null;
+    if ($colaboradorId) {
+        // Verificar se realmente não tem mais equipamentos pendentes
+        if (!temEquipamentosPendentes($colaboradorId, $equipamentos)) {
+            if (marcarComoInativo($colaboradorId, $colaboradoresInativos)) {
+                $_SESSION['mensagem'] = 'Colaborador confirmado como inativo!';
+                $_SESSION['mensagem_tipo'] = 'success';
+            } else {
+                $_SESSION['mensagem'] = 'Erro ao confirmar inativação.';
+                $_SESSION['mensagem_tipo'] = 'error';
+            }
+        } else {
+            $_SESSION['mensagem'] = 'Não é possível confirmar inativação. Ainda existem equipamentos pendentes.';
+            $_SESSION['mensagem_tipo'] = 'error';
+        }
+        header('Location: inativos.php');
+        exit;
     }
 }
 
@@ -125,31 +166,15 @@ function excluirPermanente($colaboradorId, $colaboradoresInativos) {
     }
 }
 
-// Processar reativação
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['reativar'])) {
-        $colaboradorId = $_POST['colaborador_id'] ?? null;
-        if ($colaboradorId) {
-            $colaboradoresAtivos = lerArquivoJSON('../data/colaboradores/ativos.json');
-            if ($colaboradoresAtivos === false) $colaboradoresAtivos = [];
-            
-            $resultado = reativarColaborador($colaboradorId, $colaboradoresInativos, $colaboradoresAtivos);
-            $_SESSION['mensagem'] = $resultado['message'];
-            $_SESSION['mensagem_tipo'] = $resultado['success'] ? 'success' : 'error';
-            
-            header('Location: inativos.php');
-            exit;
-        }
-    } elseif (isset($_POST['excluir_permanente'])) {
-        $colaboradorId = $_POST['colaborador_id'] ?? null;
-        if ($colaboradorId) {
-            $resultado = excluirPermanente($colaboradorId, $colaboradoresInativos);
-            $_SESSION['mensagem'] = $resultado['message'];
-            $_SESSION['mensagem_tipo'] = $resultado['success'] ? 'success' : 'error';
-            
-            header('Location: inativos.php');
-            exit;
-        }
+// Processar exclusão permanente
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['excluir_permanente'])) {
+    $colaboradorId = $_POST['colaborador_id'] ?? null;
+    if ($colaboradorId) {
+        $resultado = excluirPermanente($colaboradorId, $colaboradoresInativos);
+        $_SESSION['mensagem'] = $resultado['message'];
+        $_SESSION['mensagem_tipo'] = $resultado['success'] ? 'success' : 'error';
+        header('Location: inativos.php');
+        exit;
     }
 }
 ?>
@@ -165,12 +190,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-<!-- ==================== HEADER ==================== -->
+<!-- HEADER -->
 <header class="header">
     <div class="header-content">
         <div class="logo">
             <a href="../index.php">
-                <i class="fas fa-users"></i>
+                <i class="fas fa-archive"></i>
                 <h1>Gestão de Colaboradores</h1>
             </a>
         </div>
@@ -189,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <ul class="nav-menu">
             <li class="nav-item"><a href="../index.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
             <li class="nav-item"><a href="index.php" class="nav-link"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
-            <li class="nav-item"><a href="inativos.php" class="nav-link active"><i class="fas fa-archive"></i><span>Inativos</span></a></li>
+            <li class="nav-item"><a href="inativos.php" class="nav-link active"><i class="fas fa-archive"></i><span>Arquivo</span></a></li>
             <li class="nav-item"><a href="../equipamentos/index.php" class="nav-link"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
             <li class="nav-item"><a href="../linhas/index.php" class="nav-link"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
             <li class="nav-item"><a href="../termos/index.php" class="nav-link"><i class="fas fa-file-contract"></i><span>Termos</span></a></li>
@@ -198,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </nav>
 </header>
 
-<!-- Mensagens de alerta -->
+<!-- Alertas -->
 <?php if (isset($_SESSION['mensagem'])): ?>
     <div class="global-alert" style="background: <?php echo $_SESSION['mensagem_tipo'] === 'success' ? 'rgba(76,175,80,0.1)' : 'rgba(244,67,54,0.1)'; ?>; border-left: 4px solid <?php echo $_SESSION['mensagem_tipo'] === 'success' ? '#4CAF50' : '#F44336'; ?>;">
         <div style="display: flex; align-items: center; gap: 0.75rem;">
@@ -210,12 +235,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php unset($_SESSION['mensagem']); unset($_SESSION['mensagem_tipo']); ?>
 <?php endif; ?>
 
-<!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
+<!-- CONTEÚDO PRINCIPAL -->
 <main class="main-container">
     <div class="page-header">
         <div>
-            <h1><i class="fas fa-archive"></i> Colaboradores Inativos</h1>
-            <p class="page-subtitle">Colaboradores que foram inativados do sistema</p>
+            <h1><i class="fas fa-archive"></i> Arquivo de Colaboradores</h1>
+            <p class="page-subtitle">Colaboradores que não estão mais na empresa</p>
         </div>
         <a href="index.php" class="btn btn-primary">
             <i class="fas fa-arrow-left"></i> Voltar para Ativos
@@ -227,50 +252,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="stat-card">
             <div class="stat-icon gray"><i class="fas fa-users"></i></div>
             <div class="stat-content">
-                <h3>Total Inativos</h3>
+                <h3>Total no Arquivo</h3>
                 <div class="stat-number"><?php echo $totalInativos; ?></div>
             </div>
         </div>
         <div class="stat-card">
-            <div class="stat-icon warning"><i class="fas fa-home"></i></div>
+            <div class="stat-icon warning"><i class="fas fa-clock"></i></div>
             <div class="stat-content">
-                <h3>Home Office Inativos</h3>
-                <div class="stat-number"><?php echo $totalHomeOfficeInativos; ?></div>
+                <h3>Aguardando Devolução</h3>
+                <div class="stat-number"><?php echo $totalPendentes; ?></div>
             </div>
         </div>
         <div class="stat-card">
-            <div class="stat-icon danger"><i class="fas fa-calendar-alt"></i></div>
+            <div class="stat-icon danger"><i class="fas fa-box"></i></div>
             <div class="stat-content">
-                <h3>Período de Retenção</h3>
-                <div class="stat-number">90 dias</div>
-                <div class="stat-label">para exclusão automática</div>
+                <h3>Equipamentos Pendentes</h3>
+                <div class="stat-number"><?php echo $totalEquipamentosPendentes; ?></div>
             </div>
         </div>
     </div>
 
+    <!-- Filtros Rápidos com contadores -->
+<div class="filter-tabs">
+    <a href="?status=todos" class="filter-tab <?php echo $filtroStatus === 'todos' ? 'active' : ''; ?>" data-status="todos">
+        <i class="fas fa-list"></i> 
+        <span>Todos</span>
+        <span class="count"><?php echo $totalInativos; ?></span>
+    </a>
+    <a href="?status=pendentes" class="filter-tab <?php echo $filtroStatus === 'pendentes' ? 'active' : ''; ?>" data-status="pendentes">
+        <i class="fas fa-clock"></i> 
+        <span>Aguardando Devolução</span>
+        <span class="count"><?php echo $totalPendentes; ?></span>
+    </a>
+    <a href="?status=inativos" class="filter-tab <?php echo $filtroStatus === 'inativos' ? 'active' : ''; ?>" data-status="inativos">
+        <i class="fas fa-check-circle"></i> 
+        <span>Finalizados</span>
+        <span class="count"><?php echo $totalInativos - $totalPendentes; ?></span>
+    </a>
+</div>
+
     <!-- Busca -->
     <div class="search-section">
         <form method="GET" action="">
+            <input type="hidden" name="status" value="<?php echo htmlspecialchars($filtroStatus); ?>">
             <div class="search-wrapper">
                 <i class="fas fa-search search-icon"></i>
                 <input type="text" name="busca" class="search-input" placeholder="Buscar por nome, chamado, CPF, e-mail ou departamento..." value="<?php echo htmlspecialchars($busca); ?>">
                 <button type="submit" class="btn btn-primary search-btn">Buscar</button>
                 <?php if ($busca): ?>
-                    <a href="inativos.php" class="btn btn-secondary">Limpar</a>
+                    <a href="inativos.php?status=<?php echo $filtroStatus; ?>" class="btn btn-secondary">Limpar</a>
                 <?php endif; ?>
             </div>
         </form>
     </div>
 
-    <!-- Grid de Colaboradores Inativos -->
+    <!-- Grid de Colaboradores -->
     <?php if (empty($colaboradoresInativos)): ?>
         <div class="empty-state">
             <i class="fas fa-archive"></i>
-            <p>Nenhum colaborador inativo encontrado</p>
-            <small>Colaboradores inativados aparecerão aqui</small>
+            <p>Nenhum colaborador encontrado no arquivo</p>
+            <small>Colaboradores que saírem da empresa aparecerão aqui</small>
             <?php if ($busca): ?>
                 <div style="margin-top: 1rem;">
-                    <a href="inativos.php" class="btn btn-secondary">Limpar busca</a>
+                    <a href="inativos.php?status=<?php echo $filtroStatus; ?>" class="btn btn-secondary">Limpar busca</a>
                 </div>
             <?php endif; ?>
         </div>
@@ -278,11 +322,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="colaboradores-grid">
             <?php foreach ($colaboradoresInativos as $colaborador):
                 $tipoTrabalho = $colaborador['tipo_trabalho'] ?? 'local';
+                $temPendencia = temEquipamentosPendentes($colaborador['id'], $equipamentos);
+                $totalPendentesColab = contarEquipamentosPendentes($colaborador['id'], $equipamentos);
                 $dataInativacao = isset($colaborador['data_inativacao']) ? date('d/m/Y H:i', strtotime($colaborador['data_inativacao'])) : 'Data não registrada';
-                $motivoInativacao = $colaborador['motivo_inativacao'] ?? 'Inativado pelo sistema';
                 ?>
-                <div class="colaborador-card">
-                    <div class="card-header">
+                <div class="colaborador-card <?php echo $temPendencia ? 'pendente' : ''; ?>">
+                    <div class="card-header <?php echo $temPendencia ? 'pendente-header' : ''; ?>">
                         <div class="colaborador-nome">
                             <h3><i class="fas fa-user-circle"></i> <?php echo htmlspecialchars($colaborador['nome']); ?></h3>
                             <span class="tipo-badge-header">
@@ -290,9 +335,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <?php echo $tipoTrabalho === 'home' ? 'Home Office' : 'Presencial'; ?>
                             </span>
                         </div>
-                        <div class="inativo-badge">
-                            <i class="fas fa-user-slash"></i> Inativo
-                        </div>
+                        <?php if ($temPendencia): ?>
+                            <div class="status-badge pendente">
+                                <i class="fas fa-clock"></i> Aguardando Devolução
+                            </div>
+                        <?php else: ?>
+                            <div class="status-badge inativo">
+                                <i class="fas fa-check-circle"></i> Inativo
+                            </div>
+                        <?php endif; ?>
                         <?php if (!empty($colaborador['matricula'])): ?>
                             <div class="matricula-badge-header">
                                 <i class="fas fa-id-badge"></i> <?php echo htmlspecialchars($colaborador['matricula']); ?>
@@ -301,10 +352,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
                     <div class="card-body">
-                        <div class="inativo-info">
-                            <p><i class="fas fa-calendar-times"></i> <strong>Inativado em:</strong> <?php echo $dataInativacao; ?></p>
-                            <p><i class="fas fa-info-circle"></i> <strong>Motivo:</strong> <?php echo htmlspecialchars($motivoInativacao); ?></p>
-                        </div>
+                        <?php if ($temPendencia): ?>
+                            <div class="pendencia-info">
+                                <p><i class="fas fa-box"></i> <strong>Pendência de devolução:</strong></p>
+                                <p><?php echo $totalPendentesColab; ?> equipamento(s) ainda não foram devolvidos</p>
+                                <p><small>Equipamentos devem ser devolvidos antes de finalizar a inativação</small></p>
+                            </div>
+                        <?php else: ?>
+                            <div class="inativo-info">
+                                <p><i class="fas fa-calendar-times"></i> <strong>Inativado em:</strong> <?php echo $dataInativacao; ?></p>
+                            </div>
+                        <?php endif; ?>
 
                         <div class="info-group">
                             <div class="info-label"><i class="fas fa-briefcase"></i> Cargo</div>
@@ -345,20 +403,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
                     <div class="card-footer">
-                        <form method="POST" style="display: inline-block;" onsubmit="return confirm('Tem certeza que deseja reativar este colaborador?')">
-                            <input type="hidden" name="colaborador_id" value="<?php echo $colaborador['id']; ?>">
-                            <button type="submit" name="reativar" class="action-btn reativar" title="Reativar">
-                                <i class="fas fa-user-plus"></i><span>Reativar</span>
-                            </button>
-                        </form>
-                        <!--
-                        <form method="POST" style="display: inline-block;" onsubmit="return confirm('Tem certeza que deseja excluir permanentemente este colaborador? Esta ação não pode ser desfeita.')">
-                            <input type="hidden" name="colaborador_id" value="<?php echo $colaborador['id']; ?>">
-                            <button type="submit" name="excluir_permanente" class="action-btn delete" title="Excluir Permanentemente">
-                                <i class="fas fa-trash-alt"></i><span>Excluir</span>
-                            </button>
-                        </form>
-                        -->
+                        <?php if ($temPendencia): ?>
+                            <a href="../equipamentos/index.php?colaborador=<?php echo $colaborador['id']; ?>" class="action-btn equipments" title="Ver Equipamentos Pendentes">
+                                <i class="fas fa-box"></i><span>Ver Pendências</span>
+                            </a>
+                            <form method="POST" style="display: inline-block;" onsubmit="return confirm('Tem certeza que todos os equipamentos foram devolvidos? Esta ação finaliza a inativação.')">
+                                <input type="hidden" name="colaborador_id" value="<?php echo $colaborador['id']; ?>">
+                                <button type="submit" name="confirmar_devolucao" class="action-btn confirm" title="Confirmar Devolução">
+                                    <i class="fas fa-check-circle"></i><span>Confirmar Devolução</span>
+                                </button>
+                            </form>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -366,7 +421,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 </main>
 
-<!-- ==================== FOOTER ==================== -->
+<!-- FOOTER -->
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
@@ -390,7 +445,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ?>
             <div class="footer-stats">
                 <div class="footer-stat"><span class="stat-number"><?php echo $total_ativos; ?></span><span class="stat-label">Ativos</span></div>
-                <div class="footer-stat"><span class="stat-number"><?php echo $total_inativos; ?></span><span class="stat-label">Inativos</span></div>
+                <div class="footer-stat"><span class="stat-number"><?php echo $total_inativos; ?></span><span class="stat-label">Arquivo</span></div>
                 <div class="footer-stat"><span class="stat-number"><?php echo $total_equipamentos; ?></span><span class="stat-label">Equipamentos</span></div>
             </div>
         </div>
