@@ -80,158 +80,99 @@ $totalHomeOffice = count(array_filter($colaboradores, function($c) {
     return ($c['tipo_trabalho'] ?? 'local') === 'home';
 }));
 
-// Função para inativar colaborador (apenas para presencial - devolve equipamentos)
-function inativarColaboradorPresencial($colaboradorId, $colaboradores, $equipamentos, $linhas) {
-    // Buscar colaborador
-    $colaboradorEncontrado = null;
-    $colaboradorIndex = null;
-    foreach ($colaboradores as $index => $colab) {
-        if ($colab['id'] == $colaboradorId) {
-            $colaboradorEncontrado = $colab;
-            $colaboradorIndex = $index;
-            break;
-        }
-    }
-    
-    if (!$colaboradorEncontrado) {
-        return ['success' => false, 'message' => 'Colaborador não encontrado.'];
-    }
-    
-    // Adicionar data de inativação
-    $colaboradorEncontrado['data_inativacao'] = date('Y-m-d H:i:s');
-    $colaboradorEncontrado['motivo_inativacao'] = 'Inativado pelo sistema';
-    $colaboradorEncontrado['status_inativacao'] = 'inativo'; // Já inativo (presencial)
-    
-    // Carregar colaboradores inativos
-    $inativos = lerArquivoJSON('../data/colaboradores/inativos.json');
-    if ($inativos === false) $inativos = [];
-    
-    // Adicionar aos inativos
-    $inativos[] = $colaboradorEncontrado;
-    
-    // Remover dos ativos
-    array_splice($colaboradores, $colaboradorIndex, 1);
-    
-    // Devolver todos os equipamentos do colaborador para o estoque
-    $equipamentosAtualizados = 0;
-    foreach ($equipamentos as $index => &$equip) {
-        if ($equip['colaborador_id'] == $colaboradorId) {
-            $equip['colaborador_id'] = null;
-            $equip['status'] = 'estoque';
-            $equip['data_atribuicao'] = null;
-            $equip['data_atualizacao'] = date('Y-m-d H:i:s');
-            
-            // Adicionar observação de inativação
-            $observacaoAtual = $equip['observacoes'] ?? '';
-            $novaObservacao = "\n\n[INATIVAÇÃO DE COLABORADOR - PRESENCIAL] " . date('d/m/Y H:i:s');
-            $novaObservacao .= "\nColaborador inativado: {$colaboradorEncontrado['nome']}";
-            $novaObservacao .= "\nEquipamento devolvido ao estoque.";
-            $equip['observacoes'] = $observacaoAtual . $novaObservacao;
-            
-            $equipamentosAtualizados++;
-        }
-    }
-    
-    // Remover vínculo das linhas
-    foreach ($linhas as $index => &$linha) {
-        if ($linha['colaborador_id'] == $colaboradorId) {
-            $linha['colaborador_id'] = null;
-            $linha['data_atualizacao'] = date('Y-m-d H:i:s');
-        }
-    }
-    
-    // Salvar alterações
-    $saveAtivos = salvarArquivoJSON('../data/colaboradores/ativos.json', $colaboradores);
-    $saveInativos = salvarArquivoJSON('../data/colaboradores/inativos.json', $inativos);
-    $saveEquipamentos = salvarArquivoJSON('../data/equipamentos.json', $equipamentos);
-    $saveLinhas = salvarArquivoJSON('../data/linhas.json', $linhas);
-    
-    if ($saveAtivos && $saveInativos && $saveEquipamentos && $saveLinhas) {
-        return ['success' => true, 'message' => "Colaborador inativado com sucesso! {$equipamentosAtualizados} equipamento(s) devolvido(s) ao estoque."];
-    } else {
-        return ['success' => false, 'message' => 'Erro ao inativar colaborador. Tente novamente.'];
-    }
-}
-
-// Função para mover colaborador para inativos com status pendente (Home Office)
-function moverParaInativoPendente($colaboradorId, $colaboradores, $equipamentos, $linhas) {
-    // Buscar colaborador
-    $colaboradorEncontrado = null;
-    $colaboradorIndex = null;
-    foreach ($colaboradores as $index => $colab) {
-        if ($colab['id'] == $colaboradorId) {
-            $colaboradorEncontrado = $colab;
-            $colaboradorIndex = $index;
-            break;
-        }
-    }
-    
-    if (!$colaboradorEncontrado) {
-        return ['success' => false, 'message' => 'Colaborador não encontrado.'];
-    }
-    
-    // Adicionar data de inativação pendente
-    $colaboradorEncontrado['data_inativacao'] = date('Y-m-d H:i:s');
-    $colaboradorEncontrado['motivo_inativacao'] = 'Aguardando devolução de equipamentos (Home Office)';
-    $colaboradorEncontrado['status_inativacao'] = 'pendente'; // Pendente de devolução
-    
-    // Carregar colaboradores inativos
-    $inativos = lerArquivoJSON('../data/colaboradores/inativos.json');
-    if ($inativos === false) $inativos = [];
-    
-    // Adicionar aos inativos
-    $inativos[] = $colaboradorEncontrado;
-    
-    // Remover dos ativos
-    array_splice($colaboradores, $colaboradorIndex, 1);
-    
-    // NÃO devolve os equipamentos automaticamente (vai ficar pendente)
-    // Apenas remove o vínculo das linhas
-    foreach ($linhas as $index => &$linha) {
-        if ($linha['colaborador_id'] == $colaboradorId) {
-            $linha['colaborador_id'] = null;
-            $linha['data_atualizacao'] = date('Y-m-d H:i:s');
-        }
-    }
-    
-    // Salvar alterações
-    $saveAtivos = salvarArquivoJSON('../data/colaboradores/ativos.json', $colaboradores);
-    $saveInativos = salvarArquivoJSON('../data/colaboradores/inativos.json', $inativos);
-    $saveEquipamentos = salvarArquivoJSON('../data/equipamentos.json', $equipamentos);
-    $saveLinhas = salvarArquivoJSON('../data/linhas.json', $linhas);
-    
-    if ($saveAtivos && $saveInativos && $saveEquipamentos && $saveLinhas) {
-        return ['success' => true, 'message' => "Colaborador movido para inativos com pendência de devolução de equipamentos."];
-    } else {
-        return ['success' => false, 'message' => 'Erro ao mover colaborador. Tente novamente.'];
-    }
-}
-
 // Processar inativação (verifica tipo de trabalho)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inativar'])) {
     $colaboradorId = $_POST['colaborador_id'] ?? null;
     if ($colaboradorId) {
-        // Buscar o tipo de trabalho do colaborador
+        // Buscar o tipo de trabalho e os dados do colaborador
         $tipoTrabalho = 'local';
-        foreach ($colaboradores as $colab) {
+        $colaboradorEncontrado = null;
+        $colaboradorIndex = null;
+        
+        foreach ($colaboradores as $index => $colab) {
             if ($colab['id'] == $colaboradorId) {
                 $tipoTrabalho = $colab['tipo_trabalho'] ?? 'local';
+                $colaboradorEncontrado = $colab;
+                $colaboradorIndex = $index;
                 break;
             }
         }
         
-        if ($tipoTrabalho === 'home') {
-            // Home Office: vai para inativos com status pendente
-            $resultado = moverParaInativoPendente($colaboradorId, $colaboradores, $equipamentos, $linhas);
-        } else {
-            // Presencial: inativa e devolve equipamentos
-            $resultado = inativarColaboradorPresencial($colaboradorId, $colaboradores, $equipamentos, $linhas);
+        if (!$colaboradorEncontrado) {
+            $_SESSION['mensagem'] = 'Colaborador não encontrado.';
+            $_SESSION['mensagem_tipo'] = 'error';
+            header('Location: index.php');
+            exit;
         }
         
-        $_SESSION['mensagem'] = $resultado['message'];
-        $_SESSION['mensagem_tipo'] = $resultado['success'] ? 'success' : 'error';
+        // Adicionar data de inativação
+        $colaboradorEncontrado['data_inativacao'] = date('Y-m-d H:i:s');
         
-        // Recarregar dados após modificação
+        if ($tipoTrabalho === 'home') {
+            $colaboradorEncontrado['motivo_inativacao'] = 'Aguardando devolução de equipamentos (Home Office)';
+            $colaboradorEncontrado['status_inativacao'] = 'pendente';
+        } else {
+            $colaboradorEncontrado['motivo_inativacao'] = 'Inativado pelo sistema';
+            $colaboradorEncontrado['status_inativacao'] = 'inativo';
+        }
+        
+        // Carregar colaboradores inativos
+        $inativos = lerArquivoJSON('../data/colaboradores/inativos.json');
+        if ($inativos === false) $inativos = [];
+        
+        // Adicionar aos inativos
+        $inativos[] = $colaboradorEncontrado;
+        
+        // Remover dos ativos - USANDO array_values para reindexar
+        unset($colaboradores[$colaboradorIndex]);
+        $colaboradores = array_values($colaboradores);
+        
+        // Devolver equipamentos (apenas para presencial)
+        $equipamentosAtualizados = 0;
+        foreach ($equipamentos as $index => &$equip) {
+            if ($equip['colaborador_id'] == $colaboradorId) {
+                $equip['colaborador_id'] = null;
+                $equip['status'] = 'estoque';
+                $equip['data_atribuicao'] = null;
+                $equip['data_atualizacao'] = date('Y-m-d H:i:s');
+                
+                // Adicionar observação de inativação
+                $observacaoAtual = $equip['observacoes'] ?? '';
+                $novaObservacao = "\n\n[INATIVAÇÃO DE COLABORADOR] " . date('d/m/Y H:i:s');
+                $novaObservacao .= "\nColaborador inativado: {$colaboradorEncontrado['nome']}";
+                $novaObservacao .= "\nEquipamento devolvido ao estoque.";
+                $equip['observacoes'] = $observacaoAtual . $novaObservacao;
+                
+                $equipamentosAtualizados++;
+            }
+        }
+        
+        // Remover vínculo das linhas
+        foreach ($linhas as $index => &$linha) {
+            if ($linha['colaborador_id'] == $colaboradorId) {
+                $linha['colaborador_id'] = null;
+                $linha['data_atualizacao'] = date('Y-m-d H:i:s');
+            }
+        }
+        
+        // Salvar alterações
+        $saveAtivos = salvarArquivoJSON('../data/colaboradores/ativos.json', $colaboradores);
+        $saveInativos = salvarArquivoJSON('../data/colaboradores/inativos.json', $inativos);
+        $saveEquipamentos = salvarArquivoJSON('../data/equipamentos.json', $equipamentos);
+        $saveLinhas = salvarArquivoJSON('../data/linhas.json', $linhas);
+        
+        if ($saveAtivos && $saveInativos && $saveEquipamentos && $saveLinhas) {
+            if ($tipoTrabalho === 'home') {
+                $_SESSION['mensagem'] = "Colaborador movido para inativos com pendência de devolução de equipamentos.";
+            } else {
+                $_SESSION['mensagem'] = "Colaborador inativado com sucesso! {$equipamentosAtualizados} equipamento(s) devolvido(s) ao estoque.";
+            }
+            $_SESSION['mensagem_tipo'] = 'success';
+        } else {
+            $_SESSION['mensagem'] = 'Erro ao inativar colaborador. Tente novamente.';
+            $_SESSION['mensagem_tipo'] = 'error';
+        }
+        
         header('Location: index.php');
         exit;
     }
