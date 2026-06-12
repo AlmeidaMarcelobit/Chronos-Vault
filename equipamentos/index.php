@@ -207,41 +207,41 @@ $totalFiltrado = count($equipamentosFiltrados);
                         <span>Alocar Múltiplos</span>
                     </a>
                 </div>
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="addEquipmentDropdown">
-                        <i class="fas fa-plus"></i>
-                        <span>Adicionar Equipamento</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="adicionar.php?tipo=desktop">
-                            <i class="fas fa-desktop"></i> Desktop
-                        </a>
-                        <a class="dropdown-item" href="adicionar.php?tipo=notebook">
-                            <i class="fas fa-laptop"></i> Notebook
-                        </a>
-                        <a class="dropdown-item" href="adicionar.php?tipo=monitor">
-                            <i class="fas fa-tv"></i> Monitor
-                        </a>
-                        <a class="dropdown-item" href="adicionar.php?tipo=teclado">
-                            <i class="fas fa-keyboard"></i> Teclado
-                        </a>
-                        <a class="dropdown-item" href="adicionar.php?tipo=mouse">
-                            <i class="fas fa-mouse"></i> Mouse
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="adicionar.php?tipo=celular">
-                            <i class="fas fa-mobile-alt"></i> Celular
-                        </a>
-                        <a class="dropdown-item" href="adicionar.php?tipo=suporte">
-                            <i class="fas fa-toolbox"></i> Suporte de Notebook
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="adicionar.php">
-                            <i class="fas fa-plus-circle"></i> Outros...
-                        </a>
-                    </div>
-                </div>
+               <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="addEquipmentDropdown">
+        <i class="fas fa-plus"></i>
+        <span>Adicionar Equipamento</span>
+        <i class="fas fa-chevron-down"></i>
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="adicionar.php?tipo=desktop">
+            <i class="fas fa-desktop"></i> Desktop
+        </a>
+        <a class="dropdown-item" href="adicionar.php?tipo=notebook">
+            <i class="fas fa-laptop"></i> Notebook
+        </a>
+        <a class="dropdown-item" href="adicionar.php?tipo=monitor">
+            <i class="fas fa-tv"></i> Monitor
+        </a>
+        <a class="dropdown-item" href="adicionar.php?tipo=teclado">
+            <i class="fas fa-keyboard"></i> Teclado
+        </a>
+        <a class="dropdown-item" href="adicionar.php?tipo=mouse">
+            <i class="fas fa-mouse"></i> Mouse
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="adicionar.php?tipo=celular">
+            <i class="fas fa-mobile-alt"></i> Celular
+        </a>
+        <a class="dropdown-item" href="adicionar.php?tipo=suporte">
+            <i class="fas fa-toolbox"></i> Suporte de Notebook
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="adicionar.php">
+            <i class="fas fa-plus-circle"></i> Outros...
+        </a>
+    </div>
+</div>
             </div>
         <?php endif; ?>
     </div>
