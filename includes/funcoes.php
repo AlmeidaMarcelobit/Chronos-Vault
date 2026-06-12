@@ -169,11 +169,11 @@ function formatarTelefone($telefone) {
     $telefone = preg_replace('/[^0-9]/', '', $telefone);
     $tamanho = strlen($telefone);
 
-    if ($tamanho == 10) { // (99) 9999-9999 -> 99 9999-9999
+    if ($tamanho == 10) {
         return substr($telefone, 0, 2) . ' ' .
             substr($telefone, 2, 4) . '-' .
             substr($telefone, 6, 4);
-    } elseif ($tamanho == 11) { // (99) 99999-9999 -> 99 99999-9999
+    } elseif ($tamanho == 11) {
         return substr($telefone, 0, 2) . ' ' .
             substr($telefone, 2, 5) . '-' .
             substr($telefone, 7, 4);
@@ -181,7 +181,6 @@ function formatarTelefone($telefone) {
 
     return $telefone;
 }
-
 
 // Formatar valor monetário
 function formatarMoeda($valor) {
@@ -207,12 +206,10 @@ function validarCPF($cpf) {
         return false;
     }
 
-    // Verifica se todos os dígitos são iguais
     if (preg_match('/^(\d)\1*$/', $cpf)) {
         return false;
     }
 
-    // Validação do CPF usando algoritmo oficial
     for ($t = 9; $t < 11; $t++) {
         $soma = 0;
         for ($c = 0; $c < $t; $c++) {
@@ -242,7 +239,6 @@ function validarEmail($email) {
 function validarTelefone($numero) {
     $numero = preg_replace('/[^0-9]/', '', $numero);
     $tamanho = strlen($numero);
-    // Aceita: 10 (DDD+fixo) ou 11 (DDD+celular)
     return in_array($tamanho, [10, 11]);
 }
 
@@ -267,8 +263,192 @@ function validarUF($uf) {
 // ============================================
 
 /**
+ * Obtém o caminho do arquivo JSON baseado no status do equipamento
+ */
+function getCaminhoEquipamentoPorStatus($status) {
+    $caminhos = [
+        'estoque' => '../data/equipamentos/estoque.json',
+        'alocado' => '../data/equipamentos/alocados.json',
+        'emprestado' => '../data/equipamentos/emprestados.json',
+        'manutencao' => '../data/equipamentos/manutencao.json',
+        'fora_uso' => '../data/equipamentos/fora_uso.json'
+    ];
+    return $caminhos[$status] ?? '../data/equipamentos/estoque.json';
+}
+
+/**
+ * Carrega equipamentos de um status específico
+ */
+function carregarEquipamentosPorStatus($status) {
+    $caminho = getCaminhoEquipamentoPorStatus($status);
+    $equipamentos = lerArquivoJSON($caminho);
+    return is_array($equipamentos) ? $equipamentos : [];
+}
+
+/**
+ * Carrega todos os equipamentos de todos os status
+ */
+function carregarTodosEquipamentos() {
+    $statuses = ['estoque', 'alocado', 'emprestado', 'manutencao', 'fora_uso'];
+    $todosEquipamentos = [];
+    
+    foreach ($statuses as $status) {
+        $equipamentos = carregarEquipamentosPorStatus($status);
+        $todosEquipamentos = array_merge($todosEquipamentos, $equipamentos);
+    }
+    
+    return $todosEquipamentos;
+}
+
+/**
+ * Busca equipamento por ID em todos os status
+ */
+function buscarEquipamentoPorId($id) {
+    $statuses = ['estoque', 'alocado', 'emprestado', 'manutencao', 'fora_uso'];
+    
+    foreach ($statuses as $status) {
+        $equipamentos = carregarEquipamentosPorStatus($status);
+        foreach ($equipamentos as $equipamento) {
+            if ($equipamento['id'] == $id) {
+                $equipamento['status_origem'] = $status;
+                return $equipamento;
+            }
+        }
+    }
+    
+    return null;
+}
+
+/**
+ * Adiciona um novo equipamento
+ */
+function adicionarEquipamento($equipamento) {
+    $status = $equipamento['status'];
+    $caminho = getCaminhoEquipamentoPorStatus($status);
+    $equipamentos = carregarEquipamentosPorStatus($status);
+    
+    if (!isset($equipamento['id'])) {
+        $todosEquipamentos = carregarTodosEquipamentos();
+        $equipamento['id'] = gerarId($todosEquipamentos);
+    }
+    
+    $equipamentos[] = $equipamento;
+    return salvarArquivoJSON($caminho, $equipamentos);
+}
+
+/**
+ * Move um equipamento de um status para outro
+ */
+function moverEquipamentoParaStatus($equipamento, $novoStatus) {
+    $statusAntigo = $equipamento['status'];
+    
+    if ($statusAntigo === $novoStatus) {
+        return atualizarEquipamento($equipamento);
+    }
+    
+    $equipamentosAntigos = carregarEquipamentosPorStatus($statusAntigo);
+    
+    foreach ($equipamentosAntigos as $index => $eq) {
+        if ($eq['id'] == $equipamento['id']) {
+            array_splice($equipamentosAntigos, $index, 1);
+            break;
+        }
+    }
+    
+    $equipamento['status'] = $novoStatus;
+    $equipamento['data_atualizacao'] = date('Y-m-d H:i:s');
+    
+    if (in_array($novoStatus, ['alocado', 'emprestado'])) {
+        $equipamento['data_atribuicao'] = date('Y-m-d H:i:s');
+    } else {
+        $equipamento['data_atribuicao'] = null;
+        if (in_array($novoStatus, ['manutencao', 'fora_uso', 'estoque'])) {
+            $equipamento['colaborador_id'] = null;
+        }
+    }
+    
+    $caminhoAntigo = getCaminhoEquipamentoPorStatus($statusAntigo);
+    if (!salvarArquivoJSON($caminhoAntigo, $equipamentosAntigos)) {
+        return false;
+    }
+    
+    $equipamentosNovos = carregarEquipamentosPorStatus($novoStatus);
+    $equipamentosNovos[] = $equipamento;
+    $caminhoNovo = getCaminhoEquipamentoPorStatus($novoStatus);
+    
+    return salvarArquivoJSON($caminhoNovo, $equipamentosNovos);
+}
+
+/**
+ * Atualiza um equipamento existente
+ */
+function atualizarEquipamento($equipamento) {
+    $status = $equipamento['status'];
+    $caminho = getCaminhoEquipamentoPorStatus($status);
+    $equipamentos = carregarEquipamentosPorStatus($status);
+    
+    foreach ($equipamentos as $index => $eq) {
+        if ($eq['id'] == $equipamento['id']) {
+            $equipamentos[$index] = $equipamento;
+            return salvarArquivoJSON($caminho, $equipamentos);
+        }
+    }
+    
+    return false;
+}
+
+/**
+ * Verifica se patrimônio já existe em qualquer status
+ */
+function patrimonioExiste($patrimonio, $idIgnorar = null) {
+    $todosEquipamentos = carregarTodosEquipamentos();
+    foreach ($todosEquipamentos as $equip) {
+        if ($equip['patrimonio'] === $patrimonio) {
+            if ($idIgnorar && $equip['id'] == $idIgnorar) {
+                continue;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Verifica se serial já existe em qualquer status
+ */
+function serialExiste($serial, $idIgnorar = null) {
+    if (empty($serial)) return false;
+    $todosEquipamentos = carregarTodosEquipamentos();
+    foreach ($todosEquipamentos as $equip) {
+        if (isset($equip['serial']) && $equip['serial'] === $serial) {
+            if ($idIgnorar && $equip['id'] == $idIgnorar) {
+                continue;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Verifica se hostname já existe em qualquer status
+ */
+function hostnameExiste($hostname, $idIgnorar = null) {
+    if (empty($hostname)) return false;
+    $todosEquipamentos = carregarTodosEquipamentos();
+    foreach ($todosEquipamentos as $equip) {
+        if (isset($equip['hostname']) && $equip['hostname'] === $hostname) {
+            if ($idIgnorar && $equip['id'] == $idIgnorar) {
+                continue;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
  * Retorna a lista de tipos de equipamentos com ícones
- * @return array
  */
 function getTiposEquipamentosComIcones() {
     return [
@@ -285,7 +465,6 @@ function getTiposEquipamentosComIcones() {
 
 /**
  * Retorna os tipos de equipamentos (versão simples)
- * @return array
  */
 function getTiposEquipamentos() {
     return [
@@ -302,8 +481,6 @@ function getTiposEquipamentos() {
 
 /**
  * Retorna as especificações que cada tipo de equipamento possui
- * @param string $tipo
- * @return array
  */
 function getEspecificacoesPorTipo($tipo) {
     $especificacoes = [
@@ -321,8 +498,6 @@ function getEspecificacoesPorTipo($tipo) {
 
 /**
  * Retorna o ícone correspondente ao tipo de equipamento
- * @param string $tipo
- * @return string
  */
 function getIconByType($tipo) {
     $icones = [
@@ -340,8 +515,6 @@ function getIconByType($tipo) {
 
 /**
  * Retorna o texto do tipo de equipamento
- * @param string $tipo
- * @return string
  */
 function getTipoTexto($tipo) {
     $tipos = getTiposEquipamentos();
@@ -350,8 +523,6 @@ function getTipoTexto($tipo) {
 
 /**
  * Retorna o ícone correspondente ao status do equipamento
- * @param string $status
- * @return string
  */
 function getIconByStatus($status) {
     $icones = [
@@ -366,8 +537,6 @@ function getIconByStatus($status) {
 
 /**
  * Retorna o texto do status do equipamento
- * @param string $status
- * @return string
  */
 function getStatusTexto($status) {
     $statusList = [
@@ -532,10 +701,8 @@ function criarSlug($texto) {
         return '';
     }
 
-    // Converte para minúsculas
     $texto = mb_strtolower($texto, 'UTF-8');
 
-    // Remove acentos
     $texto = preg_replace('/[áàâãä]/u', 'a', $texto);
     $texto = preg_replace('/[éèêë]/u', 'e', $texto);
     $texto = preg_replace('/[íìîï]/u', 'i', $texto);
@@ -544,10 +711,7 @@ function criarSlug($texto) {
     $texto = preg_replace('/[ç]/u', 'c', $texto);
     $texto = preg_replace('/[ñ]/u', 'n', $texto);
 
-    // Substitui espaços e caracteres especiais por hífen
     $texto = preg_replace('/[^a-z0-9]+/', '-', $texto);
-
-    // Remove hífens do início e fim
     $texto = trim($texto, '-');
     return $texto;
 }
@@ -587,7 +751,11 @@ function criarBackup($diretorio = 'backups/') {
     $arquivos = [
         'data/colaboradores/ativos.json',
         'data/colaboradores/inativos.json',
-        'data/equipamentos.json',
+        'data/equipamentos/estoque.json',
+        'data/equipamentos/alocados.json',
+        'data/equipamentos/emprestados.json',
+        'data/equipamentos/manutencao.json',
+        'data/equipamentos/fora_uso.json',
         'data/linhas.json',
         'data/usuarios.json'
     ];
@@ -601,7 +769,6 @@ function criarBackup($diretorio = 'backups/') {
 
     foreach ($arquivos as $arquivo) {
         if (file_exists($arquivo)) {
-            // Criar diretório se necessário
             $destino = $pastaBackup . basename($arquivo);
             copy($arquivo, $destino);
         }
@@ -643,7 +810,6 @@ function atualizarCentroCustoLinha(&$linha, $colaborador, $usuario) {
         return false;
     }
 
-    // Registrar histórico de centro de custo
     if (!isset($linha['historico_centro_custo']) || !is_array($linha['historico_centro_custo'])) {
         $linha['historico_centro_custo'] = [];
     }
