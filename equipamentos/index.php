@@ -23,10 +23,7 @@ $equipamentosEmprestados = carregarEquipamentosPorStatus('emprestado');
 $equipamentosManutencao = carregarEquipamentosPorStatus('manutencao');
 $equipamentosForaUso = carregarEquipamentosPorStatus('fora_uso');
 
-// Combinar todos os equipamentos ativos (estoque, alocados, emprestados)
-$equipamentosAtivosTotal = array_merge($equipamentosEstoque, $equipamentosAlocados, $equipamentosEmprestados);
-
-// Combinar TODOS os equipamentos para filtros gerais
+// Combinar todos os equipamentos para estatísticas
 $todosEquipamentos = array_merge(
     $equipamentosEstoque,
     $equipamentosAlocados,
@@ -91,7 +88,7 @@ if ($filtro === "estoque") {
 
 $equipamentosFiltrados = $equipamentosFonte;
 
-// Filtrar por colaborador (se especificado)
+// Filtrar por colaborador
 if ($colaboradorId) {
     $equipamentosFiltrados = array_filter($equipamentosFiltrados, function ($equipamento) use ($colaboradorId) {
         return ($equipamento["colaborador_id"] ?? null) == $colaboradorId;
@@ -105,7 +102,7 @@ if ($tipo !== "todos") {
     });
 }
 
-// Filtrar por status (apenas se não for filtro específico)
+// Filtrar por status
 if ($status !== "todos" && $filtro === "todos" && !$colaboradorId) {
     $equipamentosFiltrados = array_filter($equipamentosFiltrados, function ($e) use ($status) {
         return ($e["status"] ?? '') === $status;
@@ -217,6 +214,10 @@ $totalFiltrado = count($equipamentosFiltrados);
         .btn-secondary:hover { background: var(--gray-200); transform: translateY(-1px); }
         .btn-outline { background: transparent; color: var(--primary); border: 1px solid var(--primary); }
         .btn-outline:hover { background: var(--primary); color: var(--white); }
+        .btn-warning { background: var(--warning); color: var(--white); }
+        .btn-warning:hover { background: #e67e22; transform: translateY(-1px); }
+        .btn-danger { background: var(--danger); color: var(--white); }
+        .btn-danger:hover { background: #c0392b; transform: translateY(-1px); }
 
         /* FILTER TABS */
         .filter-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
@@ -231,7 +232,7 @@ $totalFiltrado = count($equipamentosFiltrados);
         .filter-group.full-width { grid-column: 1 / -1; }
         .filter-group label { font-size: 0.7rem; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; }
         .filter-group label i { margin-right: 0.25rem; color: var(--primary); }
-        .form-control { width: 100%; padding: 0.5rem 0.75rem; font-size: 0.875rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); transition: var(--transition); background: var(--white); }
+        .form-control { width: 100%; padding: 0.5rem 0.75rem; font-size: 0.875rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); transition: var(--transition); background: var(--white); font-family: 'Inter', sans-serif; }
         .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1); }
         .filter-actions { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem; }
 
@@ -301,6 +302,24 @@ $totalFiltrado = count($equipamentosFiltrados);
         .dropdown-item i { width: 1.25rem; color: var(--primary); }
         .dropdown-divider { height: 1px; background: var(--gray-200); margin: 0.25rem 0; }
 
+        /* MODAL */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.2s ease; }
+        .modal-content { background: var(--white); margin: 10% auto; max-width: 500px; width: 90%; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); animation: slideIn 0.2s ease; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem; border-bottom: 1px solid var(--gray-200); }
+        .modal-header h3 { display: flex; align-items: center; gap: 0.5rem; color: var(--primary); font-size: 1.125rem; }
+        .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray-500); transition: var(--transition); }
+        .modal-close:hover { color: var(--danger); }
+        .modal-body { padding: 1.25rem; }
+        .modal-actions { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem; }
+
+        /* DETAILS MODAL */
+        .equipment-details { display: flex; flex-direction: column; gap: 1rem; }
+        .detail-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; padding: 0.5rem 0; border-bottom: 1px solid var(--gray-100); }
+        .detail-item.full-width { grid-column: 1 / -1; }
+        .detail-item strong { font-size: 0.7rem; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 0.25rem; }
+        .historico-list { margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+        .historico-item { padding: 0.75rem; background: var(--gray-50); border-radius: var(--radius-md); border-left: 3px solid var(--primary); }
+
         /* FOOTER */
         .footer { background: var(--white); border-top: 1px solid var(--gray-200); margin-top: 2rem; }
         .footer-content { max-width: 1440px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
@@ -315,6 +334,10 @@ $totalFiltrado = count($equipamentosFiltrados);
         .footer-stat .stat-number { display: block; font-size: 1.25rem; font-weight: 600; color: var(--primary); }
         .footer-stat .stat-label { font-size: 0.7rem; color: var(--gray-500); }
         .footer-bottom { max-width: 1440px; margin: 0 auto; padding: 1rem 2rem; border-top: 1px solid var(--gray-200); text-align: center; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.7rem; color: var(--gray-500); }
+
+        /* ANIMAÇÕES */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
         /* RESPONSIVIDADE */
         @media (max-width: 1024px) {
@@ -335,6 +358,7 @@ $totalFiltrado = count($equipamentosFiltrados);
             .footer-bottom { flex-direction: column; }
             .dropdown-menu { position: fixed; top: auto; bottom: 0; left: 0; right: 0; width: 100%; border-radius: var(--radius-lg) var(--radius-lg) 0 0; max-height: 70vh; overflow-y: auto; }
             .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; }
+            .detail-row { grid-template-columns: 1fr; gap: 0.5rem; }
         }
         @media (max-width: 480px) {
             .user-name { display: none; }
@@ -346,6 +370,7 @@ $totalFiltrado = count($equipamentosFiltrados);
 </head>
 <body>
 
+<!-- ==================== HEADER ==================== -->
 <header class="header">
     <div class="header-content">
         <div class="logo">
@@ -369,7 +394,7 @@ $totalFiltrado = count($equipamentosFiltrados);
         <ul class="nav-menu">
             <li class="nav-item"><a href="../index.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
             <li class="nav-item"><a href="../colaboradores/index.php" class="nav-link"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
-            <li class="nav-item"><a href="../equipamentos/index.php" class="nav-link active"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
+            <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
             <li class="nav-item"><a href="../linhas/index.php" class="nav-link"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
             <?php if ($is_admin): ?>
                 <li class="nav-item"><a href="../termos/index.php" class="nav-link"><i class="fas fa-file-contract"></i><span>Termos</span></a></li>
@@ -379,6 +404,7 @@ $totalFiltrado = count($equipamentosFiltrados);
     </nav>
 </header>
 
+<!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
 <main class="main-container">
 
     <!-- HEADER DA PÁGINA -->
@@ -551,13 +577,13 @@ $totalFiltrado = count($equipamentosFiltrados);
                                 <a href="devolver.php?id=<?php echo $equipamento["id"]; ?>" class="action-btn action-return" title="Devolver" onclick="return confirm('Devolver este equipamento para o estoque?')"><i class="fas fa-undo"></i></a>
                             <?php endif; ?>
                             <?php if ($can_edit && !in_array($equipamento["status"], ["manutencao", "fora_uso"])): ?>
-                                <a href="enviar_manutencao.php?id=<?php echo $equipamento["id"]; ?>" class="action-btn action-warning" title="Enviar para Manutenção" onclick="return confirm('Enviar este equipamento para manutenção?')"><i class="fas fa-tools"></i></a>
+                                <button onclick="enviarManutencao('<?php echo $equipamento["id"]; ?>')" class="action-btn action-warning" title="Enviar para Manutenção"><i class="fas fa-tools"></i></button>
                             <?php endif; ?>
                             <?php if ($can_edit && $equipamento["status"] == "manutencao"): ?>
-                                <a href="finalizar_manutencao.php?id=<?php echo $equipamento["id"]; ?>" class="action-btn action-success" title="Finalizar Manutenção" onclick="return confirm('Finalizar manutenção deste equipamento?')"><i class="fas fa-check"></i></a>
+                                <button onclick="retornarManutencao('<?php echo $equipamento["id"]; ?>')" class="action-btn action-success" title="Retornar da Manutenção"><i class="fas fa-arrow-left"></i></button>
                             <?php endif; ?>
                             <?php if ($can_edit && $equipamento["status"] != "fora_uso"): ?>
-                                <a href="marcar_fora_uso.php?id=<?php echo $equipamento["id"]; ?>" class="action-btn action-delete" title="Marcar Fora de Uso" onclick="return confirm('Marcar este equipamento como FORA DE USO? Esta ação irá desassociar o colaborador e mover para fora de uso.')"><i class="fas fa-times-circle"></i></a>
+                                <button onclick="marcarForaUso('<?php echo $equipamento["id"]; ?>')" class="action-btn action-delete" title="Marcar Fora de Uso"><i class="fas fa-times-circle"></i></button>
                             <?php endif; ?>
                             <button type="button" class="action-btn action-view" onclick="showEquipmentDetails(<?php echo htmlspecialchars(json_encode($equipamento)); ?>)" title="Ver Detalhes"><i class="fas fa-eye"></i></button>
                         </div>
@@ -579,6 +605,57 @@ $totalFiltrado = count($equipamentosFiltrados);
 
 </main>
 
+<!-- ==================== MODAL MANUTENÇÃO ==================== -->
+<div id="modalManutencao" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-tools"></i> Enviar para Manutenção</h3>
+            <button class="modal-close" onclick="closeModalManutencao()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Informe o problema do equipamento:</p>
+            <textarea id="problemaManutencao" class="form-control" rows="3" placeholder="Descreva o problema..."></textarea>
+            <input type="hidden" id="equipamentoIdManutencao" value="">
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModalManutencao()">Cancelar</button>
+                <button class="btn btn-warning" onclick="confirmarEnviarManutencao()">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== MODAL FORA DE USO ==================== -->
+<div id="modalForaUso" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-times-circle"></i> Marcar como Fora de Uso</h3>
+            <button class="modal-close" onclick="closeModalForaUso()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p><strong>Atenção!</strong> Esta ação é irreversível.</p>
+            <p>Informe o motivo:</p>
+            <textarea id="motivoForaUso" class="form-control" rows="3" placeholder="Descreva o motivo..."></textarea>
+            <input type="hidden" id="equipamentoIdForaUso" value="">
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModalForaUso()">Cancelar</button>
+                <button class="btn btn-danger" onclick="confirmarForaUso()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== MODAL DETALHES ==================== -->
+<div id="equipmentModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-laptop"></i> Detalhes do Equipamento</h3>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
@@ -608,42 +685,144 @@ $totalFiltrado = count($equipamentosFiltrados);
     </div>
 </footer>
 
-<!-- MODAL -->
-<div id="equipmentModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3><i class="fas fa-laptop"></i> Detalhes do Equipamento</h3>
-            <button class="modal-close" onclick="closeModal()">&times;</button>
-        </div>
-        <div class="modal-body" id="modalBody"></div>
-    </div>
-</div>
-
-<style>
-    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.2s ease; }
-    .modal-content { background: var(--white); margin: 5% auto; max-width: 700px; width: 90%; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); animation: slideIn 0.2s ease; }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem; border-bottom: 1px solid var(--gray-200); }
-    .modal-header h3 { display: flex; align-items: center; gap: 0.5rem; color: var(--primary); }
-    .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray-500); transition: var(--transition); }
-    .modal-close:hover { color: var(--danger); }
-    .modal-body { padding: 1.25rem; max-height: 60vh; overflow-y: auto; }
-    .equipment-details { display: flex; flex-direction: column; gap: 1rem; }
-    .detail-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; padding: 0.5rem 0; border-bottom: 1px solid var(--gray-100); }
-    .detail-item.full-width { grid-column: 1 / -1; }
-    .detail-item strong { font-size: 0.7rem; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 0.25rem; }
-    .historico-list { margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
-    .historico-item { padding: 0.75rem; background: var(--gray-50); border-radius: var(--radius-md); border-left: 3px solid var(--primary); }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes slideIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    @media (max-width: 768px) { .detail-row { grid-template-columns: 1fr; gap: 0.5rem; } }
-</style>
-
 <script>
+    // ==================== FUNÇÕES PARA MANUTENÇÃO ====================
+    let equipamentoIdManutencao = null;
+    
+    function enviarManutencao(id) {
+        equipamentoIdManutencao = id;
+        document.getElementById('equipamentoIdManutencao').value = id;
+        document.getElementById('problemaManutencao').value = '';
+        document.getElementById('modalManutencao').style.display = 'block';
+    }
+    
+    function closeModalManutencao() {
+        document.getElementById('modalManutencao').style.display = 'none';
+        equipamentoIdManutencao = null;
+    }
+    
+    function confirmarEnviarManutencao() {
+        const problema = document.getElementById('problemaManutencao').value.trim();
+        if (!problema) {
+            alert('Por favor, descreva o problema do equipamento.');
+            return;
+        }
+        
+        fetch('ajax/manutencao.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                acao: 'enviar', 
+                id: equipamentoIdManutencao,
+                problema: problema 
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showSuccessMessage(data.message || 'Equipamento enviado para manutenção!');
+                setTimeout(() => location.reload(), 1500);
+            } else {
+                alert('Erro: ' + (data.message || 'Erro ao processar solicitação'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Erro ao processar solicitação');
+        });
+        closeModalManutencao();
+    }
+    
+    function retornarManutencao(id) {
+        if (!confirm('Retornar este equipamento da manutenção? Ele voltará para o estoque.')) return;
+        
+        fetch('ajax/manutencao.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ acao: 'retornar', id: id })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showSuccessMessage(data.message || 'Equipamento retornado da manutenção!');
+                setTimeout(() => location.reload(), 1500);
+            } else {
+                alert('Erro: ' + (data.message || 'Erro ao processar solicitação'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Erro ao processar solicitação');
+        });
+    }
+    
+    // ==================== FUNÇÕES PARA FORA DE USO ====================
+    let equipamentoIdForaUso = null;
+    
+    function marcarForaUso(id) {
+        equipamentoIdForaUso = id;
+        document.getElementById('equipamentoIdForaUso').value = id;
+        document.getElementById('motivoForaUso').value = '';
+        document.getElementById('modalForaUso').style.display = 'block';
+    }
+    
+    function closeModalForaUso() {
+        document.getElementById('modalForaUso').style.display = 'none';
+        equipamentoIdForaUso = null;
+    }
+    
+    function confirmarForaUso() {
+        const motivo = document.getElementById('motivoForaUso').value.trim();
+        if (!motivo) {
+            alert('Por favor, informe o motivo para marcar como fora de uso.');
+            return;
+        }
+        
+        fetch('ajax/fora_uso.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                id: equipamentoIdForaUso,
+                motivo: motivo 
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showSuccessMessage(data.message || 'Equipamento marcado como Fora de Uso!');
+                setTimeout(() => location.reload(), 1500);
+            } else {
+                alert('Erro: ' + (data.message || 'Erro ao processar solicitação'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Erro ao processar solicitação');
+        });
+        closeModalForaUso();
+    }
+    
+    // ==================== FUNÇÕES DE UTILIDADE ====================
+    function showSuccessMessage(message) {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'global-alert';
+        alertDiv.style.cssText = 'position: fixed; top: 80px; right: 20px; z-index: 1000; background: rgba(76,175,80,0.1); border-left: 4px solid #4CAF50; color: #2e7d32; padding: 1rem; border-radius: 8px; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);';
+        alertDiv.innerHTML = `
+            <i class="fas fa-check-circle" style="color: #4CAF50;"></i>
+            <span>${message}</span>
+            <button onclick="this.parentElement.remove()" style="background: none; border: none; font-size: 1.25rem; cursor: pointer; margin-left: 0.5rem;">&times;</button>
+        `;
+        document.body.appendChild(alertDiv);
+        setTimeout(() => alertDiv.remove(), 3000);
+    }
+    
+    // ==================== FUNÇÕES DO MODAL DE DETALHES ====================
     function showEquipmentDetails(equipamento) {
         function formatarData(dataString) {
             if (!dataString) return '---';
             return new Date(dataString).toLocaleDateString('pt-BR');
         }
+        
         let historico = '';
         if (equipamento.historico_manutencao && equipamento.historico_manutencao.length > 0) {
             historico = '<h4><i class="fas fa-history"></i> Histórico de Manutenção</h4><div class="historico-list">';
@@ -654,7 +833,9 @@ $totalFiltrado = count($equipamentosFiltrados);
         } else {
             historico = '<p><i class="fas fa-info-circle"></i> Nenhuma manutenção registrada.</p>';
         }
+        
         const hostnameHtml = equipamento.hostname ? `<div class="detail-item"><strong>Hostname:</strong> <span class="hostname-badge ${equipamento.tipo === 'notebook' ? 'hostname-notebook' : ''}"><i class="fas fa-${equipamento.tipo === 'notebook' ? 'laptop' : 'network-wired'}"></i> ${equipamento.hostname}</span></div>` : '';
+        
         const especificacoesHtml = equipamento.especificacoes ? `
             <div class="detail-row">
                 ${equipamento.especificacoes.ram ? `<div class="detail-item"><strong>Memória RAM:</strong> ${equipamento.especificacoes.ram}</div>` : ''}
@@ -662,20 +843,63 @@ $totalFiltrado = count($equipamentosFiltrados);
                 ${equipamento.especificacoes.hd ? `<div class="detail-item"><strong>Armazenamento:</strong> ${equipamento.especificacoes.hd}</div>` : ''}
             </div>
         ` : '';
-        const content = `<div class="equipment-details"><div class="detail-row"><div class="detail-item"><strong>Patrimônio:</strong> ${equipamento.patrimonio}</div><div class="detail-item"><strong>Status:</strong> <span class="status-badge">${getStatusText(equipamento.status)}</span></div></div><div class="detail-row"><div class="detail-item"><strong>Tipo:</strong> ${getTipoText(equipamento.tipo)}</div><div class="detail-item"><strong>Marca/Modelo:</strong> ${equipamento.marca || '---'} ${equipamento.modelo || ''}</div></div><div class="detail-row">${hostnameHtml}<div class="detail-item"><strong>Nº Série:</strong> ${equipamento.serial || '---'}</div></div><div class="detail-row"><div class="detail-item"><strong>Centro de Custo:</strong> ${equipamento.centro_custo || '---'}</div><div class="detail-item"><strong>Colaborador:</strong> ${getColaboradorNome(equipamento.colaborador_id)}</div></div>${especificacoesHtml}<div class="detail-row"><div class="detail-item full-width"><strong>Observações:</strong><br>${equipamento.observacoes || 'Nenhuma observação registrada.'}</div></div>${historico}</div>`;
+        
+        const content = `<div class="equipment-details">
+            <div class="detail-row">
+                <div class="detail-item"><strong>Patrimônio:</strong> ${equipamento.patrimonio}</div>
+                <div class="detail-item"><strong>Status:</strong> <span class="status-badge">${getStatusText(equipamento.status)}</span></div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-item"><strong>Tipo:</strong> ${getTipoText(equipamento.tipo)}</div>
+                <div class="detail-item"><strong>Marca/Modelo:</strong> ${equipamento.marca || '---'} ${equipamento.modelo || ''}</div>
+            </div>
+            <div class="detail-row">
+                ${hostnameHtml}
+                <div class="detail-item"><strong>Nº Série:</strong> ${equipamento.serial || '---'}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-item"><strong>Centro de Custo:</strong> ${equipamento.centro_custo || '---'}</div>
+                <div class="detail-item"><strong>Colaborador:</strong> ${getColaboradorNome(equipamento.colaborador_id)}</div>
+            </div>
+            ${especificacoesHtml}
+            <div class="detail-row">
+                <div class="detail-item full-width"><strong>Observações:</strong><br>${equipamento.observacoes || 'Nenhuma observação registrada.'}</div>
+            </div>
+            ${historico}
+        </div>`;
+        
         document.getElementById('modalBody').innerHTML = content;
         document.getElementById('equipmentModal').style.display = 'block';
     }
-
+    
+    function closeModal() {
+        document.getElementById('equipmentModal').style.display = 'none';
+    }
+    
     function getColaboradorNome(id) {
         const colaboradores = <?php echo json_encode($mapaColaboradores); ?>;
         return colaboradores[id] ? colaboradores[id].nome : 'N/A';
     }
-
-    function closeModal() { document.getElementById('equipmentModal').style.display = 'none'; }
-    window.onclick = function(event) { if (event.target == document.getElementById('equipmentModal')) closeModal(); };
-    function getStatusText(status) { const map = { 'estoque': 'Em Estoque', 'alocado': 'Alocado', 'emprestado': 'Emprestado', 'manutencao': 'Em Manutenção', 'fora_uso': 'Fora de Uso' }; return map[status] || status; }
-    function getTipoText(tipo) { const tipoMap = <?php echo json_encode(getTiposEquipamentos()); ?>; return tipoMap[tipo] || tipo; }
+    
+    function getStatusText(status) {
+        const map = { 'estoque': 'Em Estoque', 'alocado': 'Alocado', 'emprestado': 'Emprestado', 'manutencao': 'Em Manutenção', 'fora_uso': 'Fora de Uso' };
+        return map[status] || status;
+    }
+    
+    function getTipoText(tipo) {
+        const tipoMap = <?php echo json_encode(getTiposEquipamentos()); ?>;
+        return tipoMap[tipo] || tipo;
+    }
+    
+    // Fechar modais ao clicar fora
+    window.onclick = function(event) {
+        const modalManutencao = document.getElementById('modalManutencao');
+        const modalForaUso = document.getElementById('modalForaUso');
+        const modalDetails = document.getElementById('equipmentModal');
+        if (event.target === modalManutencao) closeModalManutencao();
+        if (event.target === modalForaUso) closeModalForaUso();
+        if (event.target === modalDetails) closeModal();
+    }
 </script>
 
 </body>
