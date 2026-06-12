@@ -15,59 +15,51 @@ if (!$id) {
     exit;
 }
 
-$equipamentos = lerArquivoJSON('../data/equipamentos/equipamentos.json');
-$foraUso = lerArquivoJSON('../data/equipamentos/fora_uso.json');
-
-// Procurar em equipamentos ativos
+// Carregar equipamentos de todas as origens possíveis
+$statuses = ['estoque', 'alocado', 'emprestado', 'manutencao'];
 $equipamentoEncontrado = null;
-$index = null;
-foreach ($equipamentos as $i => $e) {
-    if ($e['id'] === $id) {
-        $equipamentoEncontrado = $e;
-        $index = $i;
-        break;
-    }
-}
+$statusOrigem = null;
+$indexOrigem = null;
 
-// Se não achou, procurar na manutenção
-if (!$equipamentoEncontrado) {
-    $manutencao = lerArquivoJSON('../data/equipamentos/manutencao.json');
-    foreach ($manutencao as $i => $e) {
-        if ($e['id'] === $id) {
+foreach ($statuses as $status) {
+    $equipamentos = carregarEquipamentosPorStatus($status);
+    foreach ($equipamentos as $i => $e) {
+        if ($e['id'] == $id) {
             $equipamentoEncontrado = $e;
-            $index = $i;
-            $deManutencao = true;
-            break;
+            $statusOrigem = $status;
+            $indexOrigem = $i;
+            break 2;
         }
     }
 }
 
-if ($equipamentoEncontrado) {
-    // Desassociar colaborador
-    $equipamentoEncontrado['colaborador_id'] = null;
-    $equipamentoEncontrado['status_anterior'] = $equipamentoEncontrado['status'];
-    $equipamentoEncontrado['status'] = 'fora_uso';
-    $equipamentoEncontrado['data_fora_uso'] = date('Y-m-d H:i:s');
-    $equipamentoEncontrado['motivo_fora_uso'] = $data['motivo'] ?? 'Marcado como fora de uso';
-    
-    // Remover da origem e adicionar ao fora_uso
-    if (isset($deManutencao)) {
-        $manutencao = lerArquivoJSON('../data/equipamentos/manutencao.json');
-        array_splice($manutencao, $index, 1);
-        salvarArquivoJSON('../data/equipamentos/manutencao.json', $manutencao);
-    } else {
-        array_splice($equipamentos, $index, 1);
-        salvarArquivoJSON('../data/equipamentos/equipamentos.json', $equipamentos);
-    }
-    
-    $foraUso[] = $equipamentoEncontrado;
-    
-    if (salvarArquivoJSON('../data/equipamentos/fora_uso.json', $foraUso)) {
-        echo json_encode(['success' => true]);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Erro ao salvar']);
-    }
-} else {
+if (!$equipamentoEncontrado) {
     echo json_encode(['success' => false, 'message' => 'Equipamento não encontrado']);
+    exit;
+}
+
+// Desassociar colaborador se houver
+$equipamentoEncontrado['colaborador_id'] = null;
+$equipamentoEncontrado['status_anterior'] = $equipamentoEncontrado['status'];
+$equipamentoEncontrado['status'] = 'fora_uso';
+$equipamentoEncontrado['data_fora_uso'] = date('Y-m-d H:i:s');
+$equipamentoEncontrado['motivo_fora_uso'] = $data['motivo'] ?? 'Marcado como fora de uso';
+$equipamentoEncontrado['data_atualizacao'] = date('Y-m-d H:i:s');
+
+// Remover da origem
+$equipamentosOrigem = carregarEquipamentosPorStatus($statusOrigem);
+array_splice($equipamentosOrigem, $indexOrigem, 1);
+$caminhoOrigem = getCaminhoEquipamentoPorStatus($statusOrigem);
+salvarArquivoJSON($caminhoOrigem, $equipamentosOrigem);
+
+// Adicionar ao fora_uso
+$foraUso = carregarEquipamentosPorStatus('fora_uso');
+$foraUso[] = $equipamentoEncontrado;
+$caminhoForaUso = getCaminhoEquipamentoPorStatus('fora_uso');
+
+if (salvarArquivoJSON($caminhoForaUso, $foraUso)) {
+    echo json_encode(['success' => true, 'message' => 'Equipamento movido para Fora de Uso']);
+} else {
+    echo json_encode(['success' => false, 'message' => 'Erro ao salvar']);
 }
 ?>
