@@ -266,14 +266,15 @@ function validarUF($uf) {
  * Obtém o caminho do arquivo JSON baseado no status do equipamento
  */
 function getCaminhoEquipamentoPorStatus($status) {
+    $base = __DIR__ . '/../data/equipamentos/';
     $caminhos = [
-        'estoque' => '../data/equipamentos/estoque.json',
-        'alocado' => '../data/equipamentos/alocados.json',
-        'emprestado' => '../data/equipamentos/emprestados.json',
-        'manutencao' => '../data/equipamentos/manutencao.json',
-        'fora_uso' => '../data/equipamentos/fora_uso.json'
+        'estoque'   => $base . 'estoque.json',
+        'alocado'   => $base . 'alocados.json',
+        'emprestado'=> $base . 'emprestados.json',
+        'manutencao'=> $base . 'manutencao.json',
+        'fora_uso'  => $base . 'fora_uso.json'
     ];
-    return $caminhos[$status] ?? '../data/equipamentos/estoque.json';
+    return $caminhos[$status] ?? $base . 'estoque.json';
 }
 
 /**
