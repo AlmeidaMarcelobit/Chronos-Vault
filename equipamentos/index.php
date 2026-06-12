@@ -182,6 +182,14 @@ $totalFiltrado = count($equipamentosFiltrados);
 <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
 <main class="main-container">
 
+    <?php if (!empty($_SESSION['mensagem'])): ?>
+        <div class="global-alert" style="background:<?php echo ($_SESSION['mensagem_tipo'] === 'success') ? 'rgba(76,175,80,0.1)' : 'rgba(239,68,68,0.1)'; ?>;border-left:4px solid <?php echo ($_SESSION['mensagem_tipo'] === 'success') ? '#4CAF50' : '#EF4444'; ?>;color:<?php echo ($_SESSION['mensagem_tipo'] === 'success') ? '#2e7d32' : '#b91c1c'; ?>;padding:1rem 1.25rem;border-radius:8px;margin-bottom:1rem;display:flex;align-items:center;gap:.75rem;">
+            <i class="fas fa-<?php echo ($_SESSION['mensagem_tipo'] === 'success') ? 'check-circle' : 'exclamation-circle'; ?>"></i>
+            <span><?php echo htmlspecialchars($_SESSION['mensagem']); ?></span>
+        </div>
+        <?php unset($_SESSION['mensagem'], $_SESSION['mensagem_tipo']); ?>
+    <?php endif; ?>
+
     <!-- HEADER DA PÁGINA -->
     <div class="page-header">
         <div class="page-title-section">
@@ -352,15 +360,15 @@ $totalFiltrado = count($equipamentosFiltrados);
                                 <a href="devolver.php?id=<?php echo $equipamento["id"]; ?>" class="action-btn action-return" title="Devolver" onclick="return confirm('Devolver este equipamento para o estoque?')"><i class="fas fa-undo"></i></a>
                             <?php endif; ?>
                             <?php if ($can_edit && !in_array($equipamento["status"], ["manutencao", "fora_uso"])): ?>
-                                <button onclick="enviarManutencao(<?php echo json_encode((string)$equipamento['id']); ?>)" class="action-btn action-warning" title="Enviar para Manutenção"><i class="fas fa-tools"></i></button>
+                                <a href="enviar_manutencao.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-warning" title="Enviar para Manutenção"><i class="fas fa-tools"></i></a>
                             <?php endif; ?>
                             <?php if ($can_edit && $equipamento["status"] == "manutencao"): ?>
-                                <button onclick="retornarManutencao(<?php echo json_encode((string)$equipamento['id']); ?>)" class="action-btn action-success" title="Retornar da Manutenção"><i class="fas fa-arrow-left"></i></button>
+                                <a href="retornar_manutencao.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-success" title="Retornar da Manutenção" onclick="return confirm('Retornar este equipamento para o estoque?')"><i class="fas fa-arrow-left"></i></a>
                             <?php endif; ?>
                             <?php if ($can_edit && $equipamento["status"] != "fora_uso"): ?>
-                                <button onclick="marcarForaUso(<?php echo json_encode((string)$equipamento['id']); ?>)" class="action-btn action-delete" title="Marcar Fora de Uso"><i class="fas fa-times-circle"></i></button>
+                                <a href="marcar_fora_uso.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-delete" title="Marcar Fora de Uso"><i class="fas fa-times-circle"></i></a>
                             <?php endif; ?>
-                            <button type="button" class="action-btn action-view" onclick="showEquipmentDetails(<?php echo htmlspecialchars(json_encode($equipamento)); ?>)" title="Ver Detalhes"><i class="fas fa-eye"></i></button>
+                            <button type="button" class="action-btn action-view" data-equipamento="<?php echo htmlspecialchars(json_encode($equipamento), ENT_QUOTES, 'UTF-8'); ?>" onclick="showEquipmentDetailsFromBtn(this)" title="Ver Detalhes"><i class="fas fa-eye"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -496,13 +504,17 @@ $totalFiltrado = count($equipamentosFiltrados);
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(requestData)
     })
-    .then(response => {
-        console.log('Resposta recebida:', response); // Debug
-        return response.json();
-    })
-    .then(data => {
-        console.log('Dados:', data); // Debug
+    .then(response => response.text())
+    .then(text => {
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch(e) {
+            alert('Erro na resposta do servidor:\n' + text.substring(0, 200));
+            return;
+        }
         if (data.success) {
+            closeModalManutencao();
             showSuccessMessage(data.message || 'Equipamento enviado para manutenção!');
             setTimeout(() => location.reload(), 1500);
         } else {
@@ -510,10 +522,8 @@ $totalFiltrado = count($equipamentosFiltrados);
         }
     })
     .catch(error => {
-        console.error('Error:', error);
         alert('Erro ao processar solicitação: ' + error.message);
     });
-    closeModalManutencao();
 }
     
     function retornarManutencao(id) {
@@ -560,18 +570,26 @@ $totalFiltrado = count($equipamentosFiltrados);
             alert('Por favor, informe o motivo para marcar como fora de uso.');
             return;
         }
-        
+
         fetch('ajax/fora_uso.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
+            body: JSON.stringify({
                 id: equipamentoIdForaUso,
-                motivo: motivo 
+                motivo: motivo
             })
         })
-        .then(response => response.json())
-        .then(data => {
+        .then(response => response.text())
+        .then(text => {
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch(e) {
+                alert('Erro na resposta do servidor:\n' + text.substring(0, 200));
+                return;
+            }
             if (data.success) {
+                closeModalForaUso();
                 showSuccessMessage(data.message || 'Equipamento marcado como Fora de Uso!');
                 setTimeout(() => location.reload(), 1500);
             } else {
@@ -579,10 +597,8 @@ $totalFiltrado = count($equipamentosFiltrados);
             }
         })
         .catch(error => {
-            console.error('Error:', error);
-            alert('Erro ao processar solicitação');
+            alert('Erro ao processar solicitação: ' + error.message);
         });
-        closeModalForaUso();
     }
     
     // ==================== FUNÇÕES DE UTILIDADE ====================
@@ -600,6 +616,11 @@ $totalFiltrado = count($equipamentosFiltrados);
     }
     
     // ==================== FUNÇÕES DO MODAL DE DETALHES ====================
+    function showEquipmentDetailsFromBtn(btn) {
+        const equipamento = JSON.parse(btn.dataset.equipamento);
+        showEquipmentDetails(equipamento);
+    }
+
     function showEquipmentDetails(equipamento) {
         function formatarData(dataString) {
             if (!dataString) return '---';
