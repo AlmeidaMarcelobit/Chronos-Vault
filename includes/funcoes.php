@@ -266,19 +266,118 @@ function validarUF($uf) {
 // FUNÇÕES PARA EQUIPAMENTOS
 // ============================================
 
-// Obter tipos de equipamentos
+/**
+ * Retorna a lista de tipos de equipamentos com ícones
+ * @return array
+ */
+function getTiposEquipamentosComIcones() {
+    return [
+        'desktop' => ['nome' => 'Desktop', 'icone' => 'desktop'],
+        'notebook' => ['nome' => 'Notebook', 'icone' => 'laptop'],
+        'monitor' => ['nome' => 'Monitor', 'icone' => 'tv'],
+        'teclado' => ['nome' => 'Teclado', 'icone' => 'keyboard'],
+        'mouse' => ['nome' => 'Mouse', 'icone' => 'mouse'],
+        'celular' => ['nome' => 'Celular', 'icone' => 'mobile-alt'],
+        'suporte' => ['nome' => 'Suporte de Notebook', 'icone' => 'toolbox'],
+        'outro' => ['nome' => 'Outro', 'icone' => 'plus-circle']
+    ];
+}
+
+/**
+ * Retorna os tipos de equipamentos (versão simples)
+ * @return array
+ */
 function getTiposEquipamentos() {
     return [
+        'desktop' => 'Desktop',
         'notebook' => 'Notebook',
-        'celular' => 'Celular',
-        'suporte' => 'Suporte',
         'monitor' => 'Monitor',
         'teclado' => 'Teclado',
         'mouse' => 'Mouse',
-        'adaptador' => 'Adaptador de Rede',
-        'fone' => 'Fone de Ouvido',
-        'outros' => 'Outros'
+        'celular' => 'Celular',
+        'suporte' => 'Suporte de Notebook',
+        'outro' => 'Outro'
     ];
+}
+
+/**
+ * Retorna as especificações que cada tipo de equipamento possui
+ * @param string $tipo
+ * @return array
+ */
+function getEspecificacoesPorTipo($tipo) {
+    $especificacoes = [
+        'desktop' => ['ram' => true, 'processador' => true, 'hd' => true],
+        'notebook' => ['ram' => true, 'processador' => true, 'hd' => true],
+        'monitor' => ['ram' => false, 'processador' => false, 'hd' => false],
+        'teclado' => ['ram' => false, 'processador' => false, 'hd' => false],
+        'mouse' => ['ram' => false, 'processador' => false, 'hd' => false],
+        'celular' => ['ram' => true, 'processador' => true, 'hd' => true],
+        'suporte' => ['ram' => false, 'processador' => false, 'hd' => false],
+        'outro' => ['ram' => false, 'processador' => false, 'hd' => false]
+    ];
+    return $especificacoes[$tipo] ?? ['ram' => false, 'processador' => false, 'hd' => false];
+}
+
+/**
+ * Retorna o ícone correspondente ao tipo de equipamento
+ * @param string $tipo
+ * @return string
+ */
+function getIconByType($tipo) {
+    $icones = [
+        'notebook' => 'laptop',
+        'desktop' => 'desktop',
+        'monitor' => 'tv',
+        'teclado' => 'keyboard',
+        'mouse' => 'mouse',
+        'celular' => 'mobile-alt',
+        'suporte' => 'toolbox',
+        'outro' => 'plus-circle'
+    ];
+    return $icones[$tipo] ?? 'question-circle';
+}
+
+/**
+ * Retorna o texto do tipo de equipamento
+ * @param string $tipo
+ * @return string
+ */
+function getTipoTexto($tipo) {
+    $tipos = getTiposEquipamentos();
+    return $tipos[$tipo] ?? $tipo;
+}
+
+/**
+ * Retorna o ícone correspondente ao status do equipamento
+ * @param string $status
+ * @return string
+ */
+function getIconByStatus($status) {
+    $icones = [
+        'estoque' => 'warehouse',
+        'alocado' => 'user-check',
+        'emprestado' => 'handshake',
+        'manutencao' => 'tools',
+        'fora_uso' => 'times-circle'
+    ];
+    return $icones[$status] ?? 'question-circle';
+}
+
+/**
+ * Retorna o texto do status do equipamento
+ * @param string $status
+ * @return string
+ */
+function getStatusTexto($status) {
+    $statusList = [
+        'estoque' => 'Em Estoque',
+        'alocado' => 'Alocado',
+        'emprestado' => 'Emprestado',
+        'manutencao' => 'Em Manutenção',
+        'fora_uso' => 'Fora de Uso'
+    ];
+    return $statusList[$status] ?? $status;
 }
 
 // Obter status disponíveis para equipamentos
@@ -290,18 +389,6 @@ function getStatusEquipamentos() {
         'manutencao' => 'Em Manutenção',
         'emprestado' => 'Emprestado'
     ];
-}
-
-// Obter texto do status do equipamento
-function getStatusTexto($status) {
-    $statuses = getStatusEquipamentos();
-    return $statuses[$status] ?? 'Desconhecido';
-}
-
-// Obter texto do tipo de equipamento
-function getTipoTexto($tipo) {
-    $tipos = getTiposEquipamentos();
-    return $tipos[$tipo] ?? 'Outro';
 }
 
 // Verificar se um status permite atribuição a colaborador
@@ -316,46 +403,17 @@ function statusPermiteEstoque($status) {
     return in_array($status, $statusesComEstoque);
 }
 
-// Obter ícone baseado no tipo de equipamento
-function getIconByType($tipo) {
-    $icones = [
-        'notebook' => 'laptop',
-        'celular' => 'mobile-alt',
-        'suporte' => 'desktop',
-        'monitor' => 'tv',
-        'teclado' => 'keyboard',
-        'mouse' => 'mouse',
-        'adaptador' => 'plug',
-        'fone' => 'headphones',
-        'outros' => 'laptop-medical'
-    ];
-    return $icones[$tipo] ?? 'laptop-medical';
-}
-
-// Obter ícone baseado no status do equipamento
-function getIconByStatus($status) {
-    $icons = [
-        'estoque' => 'warehouse',
-        'alocado' => 'user-check',
-        'fora_uso' => 'times-circle',
-        'manutencao' => 'tools',
-        'emprestado' => 'handshake'
-    ];
-    return $icons[$status] ?? 'question-circle';
-}
-
 // Obter valor estimado do equipamento
 function getValorEstimadoEquipamento($tipo) {
     $valores = [
         'notebook' => 3500.00,
+        'desktop' => 3000.00,
         'celular' => 2000.00,
         'suporte' => 1200.00,
         'monitor' => 800.00,
         'teclado' => 150.00,
         'mouse' => 80.00,
-        'adaptador' => 120.00,
-        'fone' => 200.00,
-        'outros' => 500.00
+        'outro' => 500.00
     ];
     return $valores[$tipo] ?? 500.00;
 }
@@ -527,7 +585,8 @@ function exibirAlerta($mensagem, $tipo = 'info') {
 // Criar backup dos dados
 function criarBackup($diretorio = 'backups/') {
     $arquivos = [
-        'data/colaboradores.json',
+        'data/colaboradores/ativos.json',
+        'data/colaboradores/inativos.json',
         'data/equipamentos.json',
         'data/linhas.json',
         'data/usuarios.json'
@@ -542,7 +601,9 @@ function criarBackup($diretorio = 'backups/') {
 
     foreach ($arquivos as $arquivo) {
         if (file_exists($arquivo)) {
-            copy($arquivo, $pastaBackup . basename($arquivo));
+            // Criar diretório se necessário
+            $destino = $pastaBackup . basename($arquivo);
+            copy($arquivo, $destino);
         }
     }
 
@@ -569,6 +630,7 @@ function registrarLog($acao, $detalhes = '') {
     return true;
 }
 
+// Atualizar centro de custo da linha
 function atualizarCentroCustoLinha(&$linha, $colaborador, $usuario) {
     if (empty($colaborador['centro_custo'])) {
         return false;
@@ -600,6 +662,7 @@ function atualizarCentroCustoLinha(&$linha, $colaborador, $usuario) {
     return true;
 }
 
+// Obter centro de custo padrão
 function getCentroCustoPadrao() {
     return '9999';
 }
