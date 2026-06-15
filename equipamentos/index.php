@@ -357,7 +357,7 @@ $totalFiltrado = count($equipamentosFiltrados);
                                 <a href="atribuir.php?id=<?php echo $equipamento["id"]; ?>" class="action-btn action-equipments" title="Atribuir"><i class="fas fa-user-check"></i></a>
                             <?php endif; ?>
                             <?php if ($can_edit && in_array($equipamento["status"], ["alocado", "emprestado"])): ?>
-                                <a href="devolver.php?id=<?php echo $equipamento["id"]; ?>" class="action-btn action-return" title="Devolver" onclick="return confirm('Devolver este equipamento para o estoque?')"><i class="fas fa-undo"></i></a>
+                                <a href="devolver.php?id=<?php echo $equipamento["id"]; ?>" class="action-btn action-return" title="Devolver"><i class="fas fa-undo"></i></a>
                             <?php endif; ?>
                             <?php if ($can_edit && !in_array($equipamento["status"], ["manutencao", "fora_uso"])): ?>
                                 <a href="enviar_manutencao.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-warning" title="Enviar para Manutenção"><i class="fas fa-tools"></i></a>
