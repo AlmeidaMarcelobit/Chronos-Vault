@@ -529,7 +529,7 @@ foreach ($equipamentos_data as $e) {
                            name="centro_custo"
                            value="<?php echo htmlspecialchars($_POST['centro_custo'] ?? ''); ?>"
                            class="form-control cc-mask"
-                           placeholder="Ex: TI001, ADM002">
+                           placeholder="Ex: 12001, 12002">
                     <small class="form-text">Código do centro de custo</small>
                 </div>
             </div>
