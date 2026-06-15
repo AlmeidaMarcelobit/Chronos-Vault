@@ -396,31 +396,21 @@ foreach ($equipamentos_data as $e) {
                 </div>
             </div>
 
-            <div class="form-grid">
+              <div class="form-grid">
                 <div class="form-group">
-                    <label for="departamento"><i class="fas fa-building"></i> Departamento <span class="required">*</span></label>
-                    <select id="departamento" name="departamento" required class="form-select">
-                        <option value="">Selecione o departamento</option>
-                        <?php
-                        $departamentos = [
-                            'Administração', 'Comercial', 'Compras', 'Contabilidade', 'Desenvolvimento',
-                            'Diretoria', 'Financeiro', 'Jurídico', 'Marketing', 'Recursos Humanos',
-                            'Suporte Técnico', 'Tecnologia da Informação', 'Vendas'
-                        ];
-                        foreach ($departamentos as $dept):
-                        ?>
-                            <option value="<?php echo $dept; ?>" <?php echo ($colaboradorAtual['departamento'] ?? '') == $dept ? 'selected' : ''; ?>>
-                                <?php echo $dept; ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                    <label for="departamento">
+                        <i class="fas fa-building"></i>
+                        <span>Departamento</span>
+                        
+                    </label>
+                    <?php include '../includes/departamentos.php' ?>
                 </div>
 
                 <div class="form-group">
                     <label for="centro_custo"><i class="fas fa-dollar-sign"></i> Centro de Custo <span class="required">*</span></label>
                     <input type="text" id="centro_custo" name="centro_custo"
                            value="<?php echo htmlspecialchars($colaboradorAtual['centro_custo']); ?>" required
-                           class="form-control cc-mask" placeholder="Ex: TI001, ADM002">
+                           class="form-control cc-mask" placeholder="Ex: 12001, 12002">
                     <small class="form-text">Código do centro de custo</small>
                 </div>
             </div>
