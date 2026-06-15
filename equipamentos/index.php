@@ -363,7 +363,14 @@ $totalFiltrado = count($equipamentosFiltrados);
                                 <a href="enviar_manutencao.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-warning" title="Enviar para Manutenção"><i class="fas fa-tools"></i></a>
                             <?php endif; ?>
                             <?php if ($can_edit && $equipamento["status"] == "manutencao"): ?>
-                                <a href="retornar_manutencao.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-success" title="Retornar da Manutenção" onclick="return confirm('Retornar este equipamento para o estoque?')"><i class="fas fa-arrow-left"></i></a>
+                                <?php
+                                    $statusAnteriorLabel = match($equipamento['status_anterior'] ?? 'estoque') {
+                                        'alocado'   => 'alocado (' . ($mapaColaboradores[$equipamento['colaborador_id'] ?? '']['nome'] ?? 'colaborador') . ')',
+                                        'emprestado' => 'emprestado',
+                                        default     => 'estoque',
+                                    };
+                                ?>
+                                <a href="retornar_manutencao.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-success" title="Retornar da Manutenção" onclick="return confirm('Retornar este equipamento para: <?php echo addslashes($statusAnteriorLabel); ?>?')"><i class="fas fa-arrow-left"></i></a>
                             <?php endif; ?>
                             <?php if ($can_edit && $equipamento["status"] != "fora_uso"): ?>
                                 <a href="marcar_fora_uso.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-delete" title="Marcar Fora de Uso"><i class="fas fa-times-circle"></i></a>
