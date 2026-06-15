@@ -350,24 +350,24 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
 
                 <div class="form-group">
                     <label for="hostname"><i class="fas fa-network-wired"></i> Hostname <span id="hostname-required" class="required" style="display: none;">*</span></label>
-                    <input type="text" id="hostname" name="hostname" value="<?php echo htmlspecialchars($_POST['hostname'] ?? ''); ?>" class="form-control" placeholder="Ex: NOTEBOOK-001, PC-123">
+                    <input type="text" id="hostname" name="hostname" value="<?php echo htmlspecialchars($_POST['hostname'] ?? ''); ?>" class="form-control" placeholder="Ex: AS-NOTE-01">
                     <small class="form-text" id="hostname-help">Obrigatório apenas para Notebooks e Desktops</small>
                 </div>
 
                 <div class="form-group">
                     <label for="patrimonio"><i class="fas fa-barcode"></i> Número de Patrimônio <span class="required">*</span></label>
-                    <input type="text" id="patrimonio" name="patrimonio" value="<?php echo htmlspecialchars($_POST['patrimonio'] ?? ''); ?>" required class="form-control" placeholder="Ex: PAT001, TI-2023-001">
+                    <input type="text" id="patrimonio" name="patrimonio" value="<?php echo htmlspecialchars($_POST['patrimonio'] ?? ''); ?>" required class="form-control" placeholder="Ex: 001, 002">
                 </div>
 
                 <div class="form-group">
                     <label for="serial"><i class="fas fa-hashtag"></i> Número de Série</label>
-                    <input type="text" id="serial" name="serial" value="<?php echo htmlspecialchars($_POST['serial'] ?? ''); ?>" class="form-control" placeholder="Ex: SN123456789">
+                    <input type="text" id="serial" name="serial" value="<?php echo htmlspecialchars($_POST['serial'] ?? ''); ?>" class="form-control" placeholder="Ex: PE34F4">
                     <small class="form-text">Opcional</small>
                 </div>
 
                 <div class="form-group">
                     <label for="centro_custo"><i class="fas fa-dollar-sign"></i> Centro de Custo</label>
-                    <input type="text" id="centro_custo" name="centro_custo" value="<?php echo htmlspecialchars($_POST['centro_custo'] ?? ''); ?>" class="form-control cc-mask" placeholder="Ex: TI001, ADM002">
+                    <input type="text" id="centro_custo" name="centro_custo" value="<?php echo htmlspecialchars($_POST['centro_custo'] ?? ''); ?>" class="form-control cc-mask" placeholder="Ex: 12001, 12002">
                     <small class="form-text">Opcional</small>
                 </div>
             </div>
