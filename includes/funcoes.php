@@ -356,16 +356,24 @@ function moverEquipamentoParaStatus($equipamento, $novoStatus) {
         }
     }
     
+    // Preservar vínculo com colaborador ao enviar para manutenção
+    if ($novoStatus === 'manutencao') {
+        $equipamento['status_anterior'] = $statusAntigo;
+        $equipamento['data_manutencao'] = date('Y-m-d H:i:s');
+        // colaborador_id é mantido intencionalmente
+    } elseif ($novoStatus === 'fora_uso' || $novoStatus === 'estoque') {
+        $equipamento['colaborador_id'] = null;
+        $equipamento['data_atribuicao'] = null;
+        unset($equipamento['status_anterior']);
+    }
+
     $equipamento['status'] = $novoStatus;
     $equipamento['data_atualizacao'] = date('Y-m-d H:i:s');
-    
+
     if (in_array($novoStatus, ['alocado', 'emprestado'])) {
         $equipamento['data_atribuicao'] = date('Y-m-d H:i:s');
-    } else {
+    } elseif ($novoStatus !== 'manutencao') {
         $equipamento['data_atribuicao'] = null;
-        if (in_array($novoStatus, ['manutencao', 'fora_uso', 'estoque'])) {
-            $equipamento['colaborador_id'] = null;
-        }
     }
     
     $caminhoAntigo = getCaminhoEquipamentoPorStatus($statusAntigo);
