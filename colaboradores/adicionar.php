@@ -98,6 +98,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erros[] = 'CPF inválido.';
     }
 
+    // CPF deve ser único (apenas se informado)
+    if (!empty($cpf)) {
+        foreach ($colaboradores as $colab) {
+            if (!empty($colab['cpf']) && preg_replace('/[^0-9]/', '', $colab['cpf']) === $cpf) {
+                $erros[] = 'CPF já cadastrado para o colaborador "' . htmlspecialchars($colab['nome'] ?? 'sem nome') . '".';
+                break;
+            }
+        }
+    }
+
     // Validar e-mail se informado
     if (!empty($email) && !validarEmail($email)) {
         $erros[] = 'E-mail inválido.';
