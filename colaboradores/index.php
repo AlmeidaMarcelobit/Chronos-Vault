@@ -12,171 +12,171 @@ if (!isset($_SESSION['usuario_id'])) {
 $usuario_nivel = $_SESSION['usuario_nivel'] ?? 'user';
 $is_admin = ($usuario_nivel === 'admin');
 
-// Carregar dados dos novos caminhos
-$colaboradores = lerArquivoJSON('../data/colaboradores/ativos.json');
-$equipamentos = lerArquivoJSON('../data/equipamentos.json');
-$linhas = lerArquivoJSON('../data/linhas.json');
-
-// Garantir que todos os colaboradores tenham os campos necessários
-foreach ($colaboradores as &$colab) {
-    if (!isset($colab['matricula'])) $colab['matricula'] = '';
-    if (!isset($colab['cpf'])) $colab['cpf'] = '';
-    if (!isset($colab['departamento'])) $colab['departamento'] = '';
-    if (!isset($colab['email'])) $colab['email'] = '';
-    if (!isset($colab['tipo_trabalho'])) $colab['tipo_trabalho'] = 'local';
-}
-
-// Ordenar colaboradores em ordem alfabética por nome
-usort($colaboradores, function($a, $b) {
-    return strcmp($a['nome'], $b['nome']);
-});
-
-// Criar mapa de equipamentos por colaborador
-$equipamentosPorColaborador = [];
-foreach ($equipamentos as $equipamento) {
-    if ($equipamento['colaborador_id'] !== null) {
-        $colaboradorId = $equipamento['colaborador_id'];
-        if (!isset($equipamentosPorColaborador[$colaboradorId])) {
-            $equipamentosPorColaborador[$colaboradorId] = [];
-        }
-        $equipamentosPorColaborador[$colaboradorId][] = $equipamento;
-    }
-}
-
-// Criar mapa de linhas por colaborador
-$linhasPorColaborador = [];
-foreach ($linhas as $linha) {
-    if (!empty($linha['colaborador_id'])) {
-        $colaboradorId = $linha['colaborador_id'];
-        if (!isset($linhasPorColaborador[$colaboradorId])) {
-            $linhasPorColaborador[$colaboradorId] = [];
-        }
-        $linhasPorColaborador[$colaboradorId][] = $linha;
-    }
-}
-
-// Buscar por nome (se aplicável)
-$busca = $_GET['busca'] ?? '';
-if ($busca) {
-    $colaboradores = array_filter($colaboradores, function($colaborador) use ($busca) {
-        return stripos($colaborador['nome'], $busca) !== false ||
-                (isset($colaborador['matricula']) && stripos($colaborador['matricula'], $busca) !== false) ||
-                (isset($colaborador['cpf']) && stripos($colaborador['cpf'], $busca) !== false) ||
-                (isset($colaborador['departamento']) && stripos($colaborador['departamento'], $busca) !== false) ||
-                (isset($colaborador['email']) && stripos($colaborador['email'], $busca) !== false);
-    });
-    
-    // Reordenar após o filtro
-    usort($colaboradores, function($a, $b) {
-        return strcmp($a['nome'], $b['nome']);
-    });
-}
-
-// Estatísticas
-$totalColaboradores = count($colaboradores);
-$totalEquipamentosAlocados = count($equipamentos);
-$totalLinhasAtivas = count($linhas);
-$totalHomeOffice = count(array_filter($colaboradores, function($c) {
-    return ($c['tipo_trabalho'] ?? 'local') === 'home';
-}));
-
-// Processar inativação (verifica tipo de trabalho)
+// ── INATIVAÇÃO (POST deve rodar ANTES de qualquer filtro/sort) ────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inativar'])) {
     $colaboradorId = $_POST['colaborador_id'] ?? null;
+
     if ($colaboradorId) {
-        // Buscar o tipo de trabalho e os dados do colaborador
-        $tipoTrabalho = 'local';
+        // Recarregar lista COMPLETA direto do arquivo — nunca usar array já filtrado
+        $ativosCompleto = lerArquivoJSON('../data/colaboradores/ativos.json');
+        if (!is_array($ativosCompleto)) $ativosCompleto = [];
+
         $colaboradorEncontrado = null;
-        $colaboradorIndex = null;
-        
-        foreach ($colaboradores as $index => $colab) {
+        $novosAtivos = [];
+
+        foreach ($ativosCompleto as $colab) {
             if ($colab['id'] == $colaboradorId) {
-                $tipoTrabalho = $colab['tipo_trabalho'] ?? 'local';
                 $colaboradorEncontrado = $colab;
-                $colaboradorIndex = $index;
-                break;
+                // não adiciona em $novosAtivos → remove dos ativos
+            } else {
+                $novosAtivos[] = $colab;
             }
         }
-        
+
         if (!$colaboradorEncontrado) {
-            $_SESSION['mensagem'] = 'Colaborador não encontrado.';
+            $_SESSION['mensagem']      = 'Colaborador não encontrado.';
             $_SESSION['mensagem_tipo'] = 'error';
             header('Location: index.php');
             exit;
         }
-        
-        // Adicionar data de inativação
-        $colaboradorEncontrado['data_inativacao'] = date('Y-m-d H:i:s');
-        
-        if ($tipoTrabalho === 'home') {
-            $colaboradorEncontrado['motivo_inativacao'] = 'Aguardando devolução de equipamentos (Home Office)';
-            $colaboradorEncontrado['status_inativacao'] = 'pendente';
-        } else {
-            $colaboradorEncontrado['motivo_inativacao'] = 'Inativado pelo sistema';
-            $colaboradorEncontrado['status_inativacao'] = 'inativo';
-        }
-        
-        // Carregar colaboradores inativos
-        $inativos = lerArquivoJSON('../data/colaboradores/inativos.json');
-        if ($inativos === false) $inativos = [];
-        
+
+        $tipoTrabalho = $colaboradorEncontrado['tipo_trabalho'] ?? 'local';
+
+        $colaboradorEncontrado['data_inativacao']    = date('Y-m-d H:i:s');
+        $colaboradorEncontrado['motivo_inativacao']  = $tipoTrabalho === 'home'
+            ? 'Aguardando devolução de equipamentos (Home Office)'
+            : 'Inativado pelo sistema';
+        $colaboradorEncontrado['status_inativacao']  = $tipoTrabalho === 'home' ? 'pendente' : 'inativo';
+
         // Adicionar aos inativos
+        $inativos = lerArquivoJSON('../data/colaboradores/inativos.json');
+        if (!is_array($inativos)) $inativos = [];
         $inativos[] = $colaboradorEncontrado;
-        
-        // Remover dos ativos - USANDO array_values para reindexar
-        unset($colaboradores[$colaboradorIndex]);
-        $colaboradores = array_values($colaboradores);
-        
-        // Devolver equipamentos (apenas para presencial)
+
+        // ── Devolver equipamentos (arquitetura atual: arquivos por status) ──────
         $equipamentosAtualizados = 0;
-        foreach ($equipamentos as $index => &$equip) {
-            if ($equip['colaborador_id'] == $colaboradorId) {
-                $equip['colaborador_id'] = null;
-                $equip['status'] = 'estoque';
-                $equip['data_atribuicao'] = null;
-                $equip['data_atualizacao'] = date('Y-m-d H:i:s');
-                
-                // Adicionar observação de inativação
-                $observacaoAtual = $equip['observacoes'] ?? '';
-                $novaObservacao = "\n\n[INATIVAÇÃO DE COLABORADOR] " . date('d/m/Y H:i:s');
-                $novaObservacao .= "\nColaborador inativado: {$colaboradorEncontrado['nome']}";
-                $novaObservacao .= "\nEquipamento devolvido ao estoque.";
-                $equip['observacoes'] = $observacaoAtual . $novaObservacao;
-                
-                $equipamentosAtualizados++;
+
+        if ($tipoTrabalho !== 'home') {
+            foreach (['alocado', 'emprestado'] as $statusEquip) {
+                $listaStatus = carregarEquipamentosPorStatus($statusEquip);
+                $ficam       = [];
+                $devolver    = [];
+
+                foreach ($listaStatus as $equip) {
+                    if ($equip['colaborador_id'] == $colaboradorId) {
+                        $obs = $equip['observacoes'] ?? '';
+                        $equip['observacoes']    = trim($obs . "\n\n[INATIVAÇÃO] " . date('d/m/Y H:i:s')
+                            . "\nColaborador: {$colaboradorEncontrado['nome']} — devolvido ao estoque.");
+                        $equip['colaborador_id'] = null;
+                        $equip['status']         = 'estoque';
+                        $equip['data_atribuicao']= null;
+                        $equip['tipo_atribuicao']= null;
+                        $equip['data_atualizacao']= date('Y-m-d H:i:s');
+                        unset($equip['data_devolucao_prevista']);
+                        $devolver[] = $equip;
+                        $equipamentosAtualizados++;
+                    } else {
+                        $ficam[] = $equip;
+                    }
+                }
+
+                // Salvar lista sem os equipamentos devolvidos
+                salvarArquivoJSON(getCaminhoEquipamentoPorStatus($statusEquip), $ficam);
+
+                // Adicionar em lote ao estoque
+                if (!empty($devolver)) {
+                    $estoque = carregarEquipamentosPorStatus('estoque');
+                    $estoque = array_merge($estoque, $devolver);
+                    salvarArquivoJSON(getCaminhoEquipamentoPorStatus('estoque'), $estoque);
+                }
             }
         }
-        
-        // Remover vínculo das linhas
-        foreach ($linhas as $index => &$linha) {
-            if ($linha['colaborador_id'] == $colaboradorId) {
-                $linha['colaborador_id'] = null;
+
+        // ── Remover vínculo das linhas ────────────────────────────────────────
+        $linhasAll = lerArquivoJSON('../data/linhas.json');
+        if (!is_array($linhasAll)) $linhasAll = [];
+        foreach ($linhasAll as &$linha) {
+            if (($linha['colaborador_id'] ?? null) == $colaboradorId) {
+                $linha['colaborador_id']   = null;
                 $linha['data_atualizacao'] = date('Y-m-d H:i:s');
             }
         }
-        
-        // Salvar alterações
-        $saveAtivos = salvarArquivoJSON('../data/colaboradores/ativos.json', $colaboradores);
+        unset($linha);
+
+        // ── Salvar tudo ───────────────────────────────────────────────────────
+        $saveAtivos   = salvarArquivoJSON('../data/colaboradores/ativos.json',   $novosAtivos);
         $saveInativos = salvarArquivoJSON('../data/colaboradores/inativos.json', $inativos);
-        $saveEquipamentos = salvarArquivoJSON('../data/equipamentos.json', $equipamentos);
-        $saveLinhas = salvarArquivoJSON('../data/linhas.json', $linhas);
-        
-        if ($saveAtivos && $saveInativos && $saveEquipamentos && $saveLinhas) {
-            if ($tipoTrabalho === 'home') {
-                $_SESSION['mensagem'] = "Colaborador movido para inativos com pendência de devolução de equipamentos.";
-            } else {
-                $_SESSION['mensagem'] = "Colaborador inativado com sucesso! {$equipamentosAtualizados} equipamento(s) devolvido(s) ao estoque.";
-            }
+        $saveLinhas   = salvarArquivoJSON('../data/linhas.json', $linhasAll);
+
+        if ($saveAtivos && $saveInativos && $saveLinhas) {
+            $_SESSION['mensagem'] = $tipoTrabalho === 'home'
+                ? "Colaborador movido para inativos com pendência de devolução de equipamentos."
+                : "Colaborador inativado com sucesso! {$equipamentosAtualizados} equipamento(s) devolvido(s) ao estoque.";
             $_SESSION['mensagem_tipo'] = 'success';
         } else {
-            $_SESSION['mensagem'] = 'Erro ao inativar colaborador. Tente novamente.';
+            $_SESSION['mensagem']      = 'Erro ao inativar colaborador. Tente novamente.';
             $_SESSION['mensagem_tipo'] = 'error';
         }
-        
+
         header('Location: index.php');
         exit;
     }
 }
+
+// ── CARREGAR DADOS PARA EXIBIÇÃO ──────────────────────────────────────────────
+$colaboradores = lerArquivoJSON('../data/colaboradores/ativos.json');
+if (!is_array($colaboradores)) $colaboradores = [];
+
+$linhas = lerArquivoJSON('../data/linhas.json');
+if (!is_array($linhas)) $linhas = [];
+
+// Normalizar campos
+foreach ($colaboradores as &$colab) {
+    if (!isset($colab['matricula']))    $colab['matricula']    = '';
+    if (!isset($colab['cpf']))          $colab['cpf']          = '';
+    if (!isset($colab['departamento'])) $colab['departamento'] = '';
+    if (!isset($colab['email']))        $colab['email']        = '';
+    if (!isset($colab['tipo_trabalho']))$colab['tipo_trabalho']= 'local';
+}
+unset($colab);
+
+// Ordenar alfabeticamente
+usort($colaboradores, fn($a, $b) => strcmp($a['nome'], $b['nome']));
+
+// Mapa de equipamentos por colaborador (arquitetura atual)
+$equipamentosPorColaborador = [];
+foreach (carregarTodosEquipamentos() as $equip) {
+    if (!empty($equip['colaborador_id']) && in_array($equip['status'], ['alocado', 'emprestado'])) {
+        $equipamentosPorColaborador[$equip['colaborador_id']][] = $equip;
+    }
+}
+
+// Mapa de linhas por colaborador
+$linhasPorColaborador = [];
+foreach ($linhas as $linha) {
+    if (!empty($linha['colaborador_id'])) {
+        $linhasPorColaborador[$linha['colaborador_id']][] = $linha;
+    }
+}
+
+// Filtro de busca (só afeta a exibição, nunca os dados salvos)
+$busca = $_GET['busca'] ?? '';
+if ($busca) {
+    $colaboradores = array_values(array_filter($colaboradores, function($c) use ($busca) {
+        return stripos($c['nome'],        $busca) !== false
+            || stripos($c['matricula']  ?? '', $busca) !== false
+            || stripos($c['cpf']        ?? '', $busca) !== false
+            || stripos($c['departamento']?? '', $busca) !== false
+            || stripos($c['email']      ?? '', $busca) !== false;
+    }));
+    usort($colaboradores, fn($a, $b) => strcmp($a['nome'], $b['nome']));
+}
+
+// Estatísticas
+$totalColaboradores        = count($colaboradores);
+$totalEquipamentosAlocados = count(carregarEquipamentosPorStatus('alocado')) + count(carregarEquipamentosPorStatus('emprestado'));
+$totalLinhasAtivas         = count($linhas);
+$totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['tipo_trabalho'] ?? 'local') === 'home'));
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -470,7 +470,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inativar'])) {
             <h3>Estatísticas</h3>
             <?php
             $total_colaboradores = count(lerArquivoJSON('../data/colaboradores/ativos.json'));
-            $total_equipamentos = count(lerArquivoJSON('../data/equipamentos.json'));
+            $total_equipamentos  = count(carregarTodosEquipamentos());
             ?>
             <div class="footer-stats">
                 <div class="footer-stat"><span class="stat-number"><?php echo $total_colaboradores; ?></span><span class="stat-label">Colaboradores</span></div>
