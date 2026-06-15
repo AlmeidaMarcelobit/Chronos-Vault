@@ -172,9 +172,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
 
         // Salvar: mover entre arquivos se status mudou, ou atualizar no mesmo
-        $sucesso = ($statusAnterior !== $status)
-            ? moverEquipamentoParaStatus($equipamentoAtualizado, $status)
-            : atualizarEquipamento($equipamentoAtualizado);
+        if ($statusAnterior !== $status) {
+            // moverEquipamentoParaStatus usa $equipamento['status'] para localizar o arquivo de origem.
+            // Como $equipamentoAtualizado já tem o novo status, precisamos passar o status anterior
+            // para que a função encontre o equipamento no arquivo correto.
+            $equipamentoParaMover = $equipamentoAtualizado;
+            $equipamentoParaMover['status'] = $statusAnterior;
+            $sucesso = moverEquipamentoParaStatus($equipamentoParaMover, $status);
+        } else {
+            $sucesso = atualizarEquipamento($equipamentoAtualizado);
+        }
 
         if ($sucesso) {
             $_SESSION['mensagem'] = 'Equipamento atualizado com sucesso!';
