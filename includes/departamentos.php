@@ -42,6 +42,7 @@ $departamentos = [
     'Remuneração E Beneficios',
     'Retenção',
     'RT Dentista',
+    'RT Medico',
     'SAC',
     'SAF',
     'Suporte',
