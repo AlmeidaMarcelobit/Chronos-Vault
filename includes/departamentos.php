@@ -21,6 +21,7 @@ $departamentos = [
     'Diretoria CEO',
     'Diretoria de Marketing',
     'Diretoria de Pessoas e Cultura',
+    'Diretoria de Expansão',
     'Financeiro',
     'Gerência Técnica',
     'Gestão de Rede',
