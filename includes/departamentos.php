@@ -30,6 +30,7 @@ $departamentos = [
     'Inteligência de Negócio',
     'Internacional',
     'Marketing Internacional',
+    'Marketing',
     'Novos Negócios',
     'Operações de Laboratórios',
     'Pessoas e Cultura',
