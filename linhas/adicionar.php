@@ -11,13 +11,13 @@ if (!isset($_SESSION['usuario_id'])) {
 $mensagem = '';
 $tipoMensagem = '';
 
-$colaboradores = lerArquivoJSON('../data/colaboradores.json');
+$colaboradores = lerArquivoJSON('../data/colaboradores/ativos.json');
 
 // Processar o formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $numero = preg_replace('/[^0-9]/', '', $_POST['numero'] ?? '');
     $tipo = $_POST['tipo'] ?? 'chip';
-    $centro_custo = trim($_POST['centro_custo'] ?? '');
+    $centro_custo = '11001'; // Sempre entra com CC padrão
     $status = $_POST['status'] ?? 'disponivel';
     $colaborador_id = !empty($_POST['colaborador_id']) ? $_POST['colaborador_id'] : null;
     $observacoes = trim($_POST['observacoes'] ?? '');
@@ -28,10 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erros[] = 'O número da linha é obrigatório.';
     } elseif (!validarTelefone($numero)) {
         $erros[] = 'Número de telefone inválido. Use o formato (DDD) 99999-9999';
-    }
-
-    if (empty($centro_custo)) {
-        $erros[] = 'O centro de custo é obrigatório.';
     }
 
     // Verificar se número já existe
@@ -163,8 +159,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="form-group">
-                    <label for="centro_custo"><i class="fas fa-dollar-sign"></i> Centro de Custo <span class="required">*</span></label>
-                    <input type="text" id="centro_custo" name="centro_custo" value="<?php echo htmlspecialchars($_POST['centro_custo'] ?? ''); ?>" required class="form-control" placeholder="Ex: TI001, ADM002">
+                    <label for="centro_custo"><i class="fas fa-dollar-sign"></i> Centro de Custo</label>
+                    <input type="text" id="centro_custo" name="centro_custo" value="11001" readonly class="form-control" style="background:#f5f5f5;color:#888;cursor:not-allowed;">
+                    <small class="form-text">Padrão 11001 — atualizado automaticamente ao vincular colaborador</small>
                 </div>
 
                 <div class="form-group">
