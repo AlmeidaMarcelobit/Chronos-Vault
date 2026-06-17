@@ -22,7 +22,7 @@ if (!$can_edit) {
 }
 
 $linhas = lerArquivoJSON('../data/linhas.json');
-$colaboradores = lerArquivoJSON('../data/colaboradores.json');
+$colaboradores = lerArquivoJSON('../data/colaboradores/ativos.json');
 
 // Filtrar apenas linhas disponíveis
 $linhasDisponiveis = array_filter($linhas, function($l) {
