@@ -2,7 +2,6 @@
 session_start();
 require_once '../includes/funcoes.php';
 
-// Verificar se o usuário está logado
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: ../login.php');
     exit;
@@ -13,24 +12,38 @@ $tipoMensagem = '';
 
 $colaboradores = lerArquivoJSON('../data/colaboradores/ativos.json');
 
-// Processar o formulário
+// Criar mapa de colaboradores para buscar CC rapidamente
+$mapaColaboradores = [];
+foreach ($colaboradores as $c) {
+    $mapaColaboradores[$c['id']] = $c;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $numero = preg_replace('/[^0-9]/', '', $_POST['numero'] ?? '');
-    $tipo = $_POST['tipo'] ?? 'chip';
-    $centro_custo = '11001'; // Sempre entra com CC padrão
-    $status = $_POST['status'] ?? 'disponivel';
+    $numero        = preg_replace('/[^0-9]/', '', $_POST['numero'] ?? '');
+    $tipo          = $_POST['tipo'] ?? 'chip';
+    $status        = $_POST['status'] ?? 'disponivel';
     $colaborador_id = !empty($_POST['colaborador_id']) ? $_POST['colaborador_id'] : null;
-    $observacoes = trim($_POST['observacoes'] ?? '');
+    $observacoes   = trim($_POST['observacoes'] ?? '');
+
+    // Centro de custo: do colaborador se alocado, senão 11001
+    if ($status === 'alocado' && $colaborador_id && isset($mapaColaboradores[$colaborador_id])) {
+        $centro_custo = $mapaColaboradores[$colaborador_id]['centro_custo'] ?? '11001';
+    } else {
+        $centro_custo = '11001';
+    }
 
     $erros = [];
 
     if (empty($numero)) {
         $erros[] = 'O número da linha é obrigatório.';
     } elseif (!validarTelefone($numero)) {
-        $erros[] = 'Número de telefone inválido. Use o formato (DDD) 99999-9999';
+        $erros[] = 'Número inválido. Use o formato DDD + número (ex: 16 99999-9999)';
     }
 
-    // Verificar se número já existe
+    if ($status === 'alocado' && empty($colaborador_id)) {
+        $erros[] = 'Selecione um colaborador para alocar a linha.';
+    }
+
     $linhas = lerArquivoJSON('../data/linhas.json');
     foreach ($linhas as $linha) {
         if ($linha['numero'] === $numero) {
@@ -39,30 +52,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Se status for alocado, precisa de colaborador
-    if ($status === 'alocado' && empty($colaborador_id)) {
-        $erros[] = 'Selecione um colaborador para alocar a linha.';
-    }
-
     if (empty($erros)) {
         $novaLinha = [
-            'id' => gerarId($linhas),
-            'numero' => $numero,
-            'tipo' => $tipo,
-            'centro_custo' => $centro_custo,
-            'status' => $status,
+            'id'             => gerarId($linhas),
+            'numero'         => $numero,
+            'tipo'           => $tipo,
+            'centro_custo'   => $centro_custo,
+            'status'         => $status,
             'colaborador_id' => ($status === 'alocado') ? $colaborador_id : null,
-            'observacoes' => $observacoes,
-            'data_cadastro' => date('Y-m-d H:i:s'),
+            'observacoes'    => $observacoes,
+            'data_cadastro'  => date('Y-m-d H:i:s'),
             'data_atualizacao' => date('Y-m-d H:i:s')
         ];
 
         $linhas[] = $novaLinha;
 
         if (salvarArquivoJSON('../data/linhas.json', $linhas)) {
-            $mensagem = 'Linha cadastrada com sucesso!';
+            $mensagem = 'Linha cadastrada com sucesso! Centro de custo: ' . $centro_custo;
             $tipoMensagem = 'success';
             $_POST = [];
+            $colaborador_id = null;
+            $status = 'disponivel';
         } else {
             $mensagem = 'Erro ao salvar a linha. Tente novamente.';
             $tipoMensagem = 'error';
@@ -72,8 +82,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tipoMensagem = 'error';
     }
 }
+
+// CC preview para exibir no formulário
+$ccPreview = '11001';
+if (!empty($_POST['colaborador_id']) && isset($mapaColaboradores[$_POST['colaborador_id']])) {
+    $ccPreview = $mapaColaboradores[$_POST['colaborador_id']]['centro_custo'] ?? '11001';
+}
+
+// Passar mapa de CCs para JS
+$ccMap = [];
+foreach ($colaboradores as $c) {
+    $ccMap[$c['id']] = $c['centro_custo'] ?? '11001';
+}
 ?>
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -81,9 +102,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Adicionar Linha - Sistema de Gestão</title>
     <link rel="stylesheet" href="../css/linhas/adicionar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="icon" href="../img/favicon/favicon.png">
 </head>
 <body>
+
+<!-- HEADER -->
 <header class="header">
     <div class="header-content">
         <div class="logo">
@@ -137,6 +161,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="form-card-container">
         <form method="POST" action="" class="form-card" id="form-linha">
             <div class="form-grid">
+
+                <!-- Número -->
                 <div class="form-group">
                     <label for="numero"><i class="fas fa-phone"></i> Número da Linha <span class="required">*</span></label>
                     <input type="text"
@@ -144,61 +170,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                            name="numero"
                            value="<?php echo htmlspecialchars($_POST['numero'] ?? ''); ?>"
                            required
-                           class="form-control telefone-mask"
+                           class="form-control"
                            placeholder="16 99999-9999"
                            maxlength="14">
-                    <small class="form-text">Formato: DDD + espaço + número (ex: 16 99999-9999)</small>
+                    <small class="form-text">Formato: DDD + número (ex: 16 99999-9999)</small>
                 </div>
 
+                <!-- Tipo -->
                 <div class="form-group">
                     <label for="tipo"><i class="fas fa-sim-card"></i> Tipo de Linha <span class="required">*</span></label>
                     <select id="tipo" name="tipo" required class="form-control">
-                        <option value="chip" <?php echo ($_POST['tipo'] ?? 'chip') == 'chip' ? 'selected' : ''; ?>>Chip Físico</option>
-                        <option value="echip" <?php echo ($_POST['tipo'] ?? '') == 'echip' ? 'selected' : ''; ?>>E-Chip (eSIM)</option>
+                        <option value="chip"  <?php echo ($_POST['tipo'] ?? 'chip') === 'chip'  ? 'selected' : ''; ?>>Chip Físico</option>
+                        <option value="echip" <?php echo ($_POST['tipo'] ?? '')      === 'echip' ? 'selected' : ''; ?>>E-Chip (eSIM)</option>
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="centro_custo"><i class="fas fa-dollar-sign"></i> Centro de Custo</label>
-                    <input type="text" id="centro_custo" name="centro_custo" value="11001" readonly class="form-control" style="background:#f5f5f5;color:#888;cursor:not-allowed;">
-                    <small class="form-text">Padrão 11001 — atualizado automaticamente ao vincular colaborador</small>
-                </div>
-
+                <!-- Status -->
                 <div class="form-group">
                     <label for="status"><i class="fas fa-circle"></i> Status <span class="required">*</span></label>
                     <select id="status" name="status" required class="form-control" onchange="toggleColaborador()">
-                        <option value="disponivel" <?php echo ($_POST['status'] ?? 'disponivel') == 'disponivel' ? 'selected' : ''; ?>>Disponível</option>
-                        <option value="alocado" <?php echo ($_POST['status'] ?? '') == 'alocado' ? 'selected' : ''; ?>>Alocado</option>
+                        <option value="disponivel" <?php echo ($_POST['status'] ?? 'disponivel') === 'disponivel' ? 'selected' : ''; ?>>Disponível</option>
+                        <option value="alocado"    <?php echo ($_POST['status'] ?? '')            === 'alocado'    ? 'selected' : ''; ?>>Alocado</option>
                     </select>
                 </div>
 
-                <div class="form-group" id="colaborador-group" style="display: <?php echo (($_POST['status'] ?? 'disponivel') == 'alocado') ? 'block' : 'none'; ?>;">
+                <!-- Centro de Custo (informativo, sem input) -->
+                <div class="form-group">
+                    <label><i class="fas fa-tag"></i> Centro de Custo</label>
+                    <div class="cc-info-box" id="cc-info-box">
+                        <span class="cc-badge" id="cc-valor"><?php echo htmlspecialchars($ccPreview); ?></span>
+                        <span class="cc-desc" id="cc-desc">
+                            <?php echo $ccPreview === '11001' ? 'Padrão — sem colaborador alocado' : 'Do colaborador selecionado'; ?>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Colaborador (só aparece se alocado) -->
+                <div class="form-group full-width" id="colaborador-group" style="display: <?php echo (($_POST['status'] ?? 'disponivel') === 'alocado') ? 'block' : 'none'; ?>;">
                     <label for="colaborador_id"><i class="fas fa-user"></i> Colaborador <span class="required">*</span></label>
-                    <select id="colaborador_id" name="colaborador_id" class="form-control">
+                    <select id="colaborador_id" name="colaborador_id" class="form-control" onchange="atualizarCC()">
                         <option value="">Selecione um colaborador</option>
                         <?php foreach ($colaboradores as $colaborador): ?>
-                            <option value="<?php echo $colaborador['id']; ?>" <?php echo (isset($_POST['colaborador_id']) && $_POST['colaborador_id'] == $colaborador['id']) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($colaborador['nome'] . ' - ' . $colaborador['cargo']); ?>
+                            <option value="<?php echo $colaborador['id']; ?>"
+                                    data-cc="<?php echo htmlspecialchars($colaborador['centro_custo'] ?? '11001'); ?>"
+                                    <?php echo (isset($_POST['colaborador_id']) && $_POST['colaborador_id'] == $colaborador['id']) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($colaborador['nome'] . ' — ' . ($colaborador['cargo'] ?? '') . ' | CC: ' . ($colaborador['centro_custo'] ?? '11001')); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
 
+                <!-- Observações -->
                 <div class="form-group full-width">
                     <label for="observacoes"><i class="fas fa-sticky-note"></i> Observações</label>
                     <textarea id="observacoes" name="observacoes" class="form-control" rows="3" placeholder="Observações sobre a linha..."><?php echo htmlspecialchars($_POST['observacoes'] ?? ''); ?></textarea>
                 </div>
+
             </div>
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar Linha</button>
-                <button type="reset" class="btn btn-secondary" onclick="resetForm()"><i class="fas fa-redo"></i> Limpar</button>
+                <button type="button" class="btn btn-secondary" onclick="resetForm()"><i class="fas fa-redo"></i> Limpar</button>
                 <a href="index.php" class="btn btn-secondary"><i class="fas fa-times"></i> Cancelar</a>
             </div>
         </form>
     </div>
 </main>
 
+<!-- FOOTER -->
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
@@ -211,6 +250,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <li><a href="../index.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="../colaboradores/index.php"><i class="fas fa-users"></i> Colaboradores</a></li>
                 <li><a href="../equipamentos/index.php"><i class="fas fa-laptop"></i> Equipamentos</a></li>
+                <li><a href="index.php"><i class="fas fa-phone"></i> Linhas</a></li>
             </ul>
         </div>
         <div class="footer-section">
@@ -223,57 +263,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <div class="footer-bottom">
         <p>Sistema de Gestão &copy; <?php echo date('Y'); ?> - Todos os direitos reservados</p>
-        <p class="footer-version">Última atualização: <?php echo date('d/m/Y H:i'); ?></p>
+        <p>Última atualização: <?php echo date('d/m/Y H:i'); ?></p>
     </div>
 </footer>
 
 <script>
+    const CC_PADRAO = '11001';
+
     function toggleColaborador() {
         const status = document.getElementById('status').value;
-        const colaboradorGroup = document.getElementById('colaborador-group');
-        const colaboradorSelect = document.getElementById('colaborador_id');
+        const grupo  = document.getElementById('colaborador-group');
+        const select = document.getElementById('colaborador_id');
 
         if (status === 'alocado') {
-            colaboradorGroup.style.display = 'block';
-            colaboradorSelect.required = true;
+            grupo.style.display = 'block';
+            select.required = true;
         } else {
-            colaboradorGroup.style.display = 'none';
-            colaboradorSelect.required = false;
-            colaboradorSelect.value = '';
+            grupo.style.display = 'none';
+            select.required = false;
+            select.value = '';
         }
+        atualizarCC();
+    }
+
+    function atualizarCC() {
+        const status   = document.getElementById('status').value;
+        const select   = document.getElementById('colaborador_id');
+        const ccValor  = document.getElementById('cc-valor');
+        const ccDesc   = document.getElementById('cc-desc');
+        const opt      = select.options[select.selectedIndex];
+
+        let cc, desc;
+        if (status === 'alocado' && opt && opt.value) {
+            cc   = opt.getAttribute('data-cc') || CC_PADRAO;
+            desc = 'Do colaborador selecionado';
+        } else {
+            cc   = CC_PADRAO;
+            desc = 'Padrão — sem colaborador alocado';
+        }
+
+        ccValor.textContent = cc;
+        ccDesc.textContent  = desc;
     }
 
     function resetForm() {
-        if (confirm('Tem certeza que deseja limpar todos os campos?')) {
+        if (confirm('Limpar todos os campos?')) {
             document.getElementById('form-linha').reset();
             toggleColaborador();
         }
     }
 
-    // Máscara para telefone
-    const telefoneInput = document.getElementById('numero');
-    if (telefoneInput) {
-        telefoneInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 11) value = value.substring(0, 11);
+    // Máscara telefone
+    document.getElementById('numero').addEventListener('input', function(e) {
+        let v = e.target.value.replace(/\D/g, '').substring(0, 11);
+        if (v.length === 11) v = v.replace(/(\d{2})(\d{5})(\d{4})/, '$1 $2-$3');
+        else if (v.length === 10) v = v.replace(/(\d{2})(\d{4})(\d{4})/, '$1 $2-$3');
+        e.target.value = v;
+    });
 
-            if (value.length <= 11) {
-                if (value.length === 11) {
-                    value = value.replace(/(\d{2})(\d{5})(\d{4})/, '$1 $2-$3');
-                } else if (value.length === 10) {
-                    value = value.replace(/(\d{2})(\d{4})(\d{4})/, '$1 $2-$3');
-                }
-            }
-            e.target.value = value;
-        });
-    }
-
+    // Auto-fechar alerta
     setTimeout(function() {
-        const alert = document.querySelector('.global-alert');
-        if (alert) {
-            alert.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => alert.remove(), 300);
-        }
+        const a = document.querySelector('.global-alert');
+        if (a) { a.style.animation = 'slideOut 0.3s ease'; setTimeout(() => a.remove(), 300); }
     }, 5000);
 </script>
 </body>
