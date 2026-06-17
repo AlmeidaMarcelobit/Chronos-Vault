@@ -111,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desvincular Linha - Sistema de Gestão</title>
     <link rel="stylesheet" href="../css/linhas/desvincular.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="../img/favicon/favicon.png">
 </head>
@@ -195,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
             <ul>
                 <li>O status será alterado para <strong>"Disponível"</strong></li>
                 <li>O vínculo com o colaborador será removido</li>
-                <li>O centro de custo será alterado para <strong>9999 (Padrão)</strong></li>
+                <li>O centro de custo será alterado para <strong>11001 (Padrão)</strong></li>
                 <li>Um registro será adicionado ao histórico</li>
                 <li>A linha ficará disponível para nova atribuição</li>
             </ul>
@@ -213,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
                 <div class="info-item">
                     <span class="info-label">Novo Centro de Custo:</span>
                     <span class="info-value" style="color: var(--success); font-weight: bold;">
-                            <i class="fas fa-arrow-right"></i> 9999 (Padrão)
+                            <i class="fas fa-arrow-right"></i> 11001 (Padrão)
                         </span>
                 </div>
             </div>
@@ -226,7 +227,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
                     <span class="checkbox-custom"></span>
                     <span class="checkbox-text">
                             Confirmo que desejo desvincular esta linha do colaborador.
-                            O centro de custo será alterado para <strong>9999</strong>.
+                            O centro de custo será alterado para <strong>11001</strong>.
                         </span>
                 </label>
             </div>
@@ -283,4 +284,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
     }, 5000);
 </script>
 </body>
-</html>
+</html
