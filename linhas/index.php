@@ -339,7 +339,7 @@ $totalFiltrado = count($linhas);
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
-            <h3><i class="fas fa-laptop-house"></i> Sistema de Gestão</h3>
+            <h3><i class="fas fa-laptop-house"></i>Gestão de Linhas</h3>
             <p>Controle de colaboradores e equipamentos</p>
         </div>
         <div class="footer-section">
