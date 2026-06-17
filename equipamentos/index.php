@@ -198,12 +198,14 @@ $totalFiltrado = count($equipamentosFiltrados);
         </div>
         <?php if ($can_edit): ?>
             <div class="page-actions">
+                <!--
                 <div class="action-group">
                     <a href="alocar_multiplos.php" class="btn btn-outline">
                         <i class="fas fa-layer-group"></i>
                         <span>Alocar Múltiplos</span>
                     </a>
                 </div>
+                -->
                 <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="addEquipmentDropdown">
                         <i class="fas fa-plus"></i>
