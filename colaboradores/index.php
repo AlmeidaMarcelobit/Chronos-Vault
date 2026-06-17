@@ -178,7 +178,6 @@ $totalEquipamentosAlocados = count(carregarEquipamentosPorStatus('alocado')) + c
 $totalLinhasAtivas         = count($linhas);
 $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['tipo_trabalho'] ?? 'local') === 'home'));
 ?>
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
