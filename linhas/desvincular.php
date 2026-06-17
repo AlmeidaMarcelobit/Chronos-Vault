@@ -19,10 +19,10 @@ if (!$id) {
 }
 
 $linhas = lerArquivoJSON('../data/linhas.json');
-$colaboradores = lerArquivoJSON('../data/colaboradores.json');
+$colaboradores = lerArquivoJSON('../data/colaboradores/ativos.json');
 
 // Definir centro de custo padrão para linhas desvinculadas
-define('CENTRO_CUSTO_PADRAO', '9999');
+define('CENTRO_CUSTO_PADRAO', '11001');
 
 // Encontrar linha
 $linhaIndex = null;
