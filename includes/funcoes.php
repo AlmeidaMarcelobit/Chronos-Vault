@@ -839,6 +839,6 @@ function atualizarCentroCustoLinha(&$linha, $colaborador, $usuario) {
 
 // Obter centro de custo padrão
 function getCentroCustoPadrao() {
-    return '9999';
+    return '11001';
 }
 ?>
