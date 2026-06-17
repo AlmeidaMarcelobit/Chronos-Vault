@@ -15,7 +15,7 @@ $is_view = ($usuario_nivel === 'view');
 $can_edit = ($is_admin || $usuario_nivel === 'user'); // Admin e usuário comum podem editar
 
 $linhas = lerArquivoJSON('../data/linhas.json');
-$colaboradores = lerArquivoJSON('../data/colaboradores.json');
+$colaboradores = lerArquivoJSON('../data/colaboradores/ativos.json');
 
 // Criar mapa de colaboradores
 $mapaColaboradores = [];
@@ -32,6 +32,9 @@ usort($linhas, function($a, $b) {
 $totalLinhas = count($linhas);
 $totalDisponiveis = count(array_filter($linhas, function($l) { return $l['status'] === 'disponivel'; }));
 $totalAlocados = count(array_filter($linhas, function($l) { return $l['status'] === 'alocado'; }));
+$totalChips = count(array_filter($linhas, function($l) { return $l['tipo'] === 'chip'; }));
+$totalEChips = count(array_filter($linhas, function($l) { return $l['tipo'] === 'echip'; }));
+$pctAlocados = $totalLinhas > 0 ? round(($totalAlocados / $totalLinhas) * 100) : 0;
 
 // Aplicar filtros
 $busca = $_GET['busca'] ?? '';
@@ -148,6 +151,10 @@ $totalFiltrado = count($linhas);
             <div class="stat-content">
                 <h3>Total de Linhas</h3>
                 <p class="stat-number"><?php echo $totalLinhas; ?></p>
+                <div class="stat-meta">
+                    <span><i class="fas fa-sim-card"></i> <?php echo $totalChips; ?> chips</span>
+                    <span><i class="fas fa-microchip"></i> <?php echo $totalEChips; ?> e-chips</span>
+                </div>
             </div>
         </div>
         <div class="stat-card stat-success">
@@ -155,6 +162,9 @@ $totalFiltrado = count($linhas);
             <div class="stat-content">
                 <h3>Disponíveis</h3>
                 <p class="stat-number"><?php echo $totalDisponiveis; ?></p>
+                <div class="stat-bar-wrap">
+                    <div class="stat-bar stat-bar-success" style="width:<?php echo $totalLinhas > 0 ? round(($totalDisponiveis/$totalLinhas)*100) : 0; ?>%"></div>
+                </div>
             </div>
         </div>
         <div class="stat-card stat-warning">
@@ -162,6 +172,19 @@ $totalFiltrado = count($linhas);
             <div class="stat-content">
                 <h3>Alocados</h3>
                 <p class="stat-number"><?php echo $totalAlocados; ?></p>
+                <div class="stat-bar-wrap">
+                    <div class="stat-bar stat-bar-warning" style="width:<?php echo $pctAlocados; ?>%"></div>
+                </div>
+            </div>
+        </div>
+        <div class="stat-card stat-info">
+            <div class="stat-icon"><i class="fas fa-users"></i></div>
+            <div class="stat-content">
+                <h3>Colaboradores Ativos</h3>
+                <p class="stat-number"><?php echo count($colaboradores); ?></p>
+                <div class="stat-meta">
+                    <span><i class="fas fa-database"></i> colaboradores/ativos.json</span>
+                </div>
             </div>
         </div>
     </div>
@@ -205,10 +228,10 @@ $totalFiltrado = count($linhas);
             <tr>
                 <th>Número</th>
                 <th>Tipo</th>
-                <th>Operadora</th>
                 <th>Centro de Custo</th>
                 <th>Status</th>
                 <th>Colaborador</th>
+                <th>Cadastro</th>
                 <th>Ações</th>
             </tr>
             </thead>
@@ -247,11 +270,6 @@ $totalFiltrado = count($linhas);
                                 <?php echo getTipoLinhaTexto($linha['tipo']); ?>
                             </span>
                         </td>
-                        <td data-label="Operadora">
-                            <span class="operadora-badge">
-                                <i class="fas fa-signal"></i> Vivo
-                            </span>
-                        </td>
                         <td data-label="Centro de Custo">
                             <span class="departamento-badge">
                                 <?php echo htmlspecialchars($linha['centro_custo']); ?>
@@ -272,6 +290,11 @@ $totalFiltrado = count($linhas);
                             <?php else: ?>
                                 <span class="text-muted">---</span>
                             <?php endif; ?>
+                        </td>
+                        <td data-label="Cadastro">
+                            <span class="data-cadastro">
+                                <?php echo !empty($linha['data_cadastro']) ? date('d/m/Y', strtotime($linha['data_cadastro'])) : '---'; ?>
+                            </span>
                         </td>
                         <td data-label="Ações">
                             <div class="action-buttons">
