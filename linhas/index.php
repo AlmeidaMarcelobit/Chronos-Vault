@@ -70,7 +70,6 @@ if (!empty($tipo)) {
 
 $totalFiltrado = count($linhas);
 ?>
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -78,6 +77,7 @@ $totalFiltrado = count($linhas);
     <title>Linhas Telefônicas - Sistema de Gestão</title>
     <link rel="stylesheet" href="../css/linhas/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="icon" href="../img/favicon/favicon.png">
 </head>
 <body>
@@ -309,7 +309,7 @@ $totalFiltrado = count($linhas);
                                         <i class="fas fa-user-plus"></i>
                                     </a>
                                 <?php elseif ($can_edit && $linha['status'] === 'alocado'): ?>
-                                    <a href="desvincular.php?id=<?php echo $linha['id']; ?>" class="action-btn action-return" title="Desvincular" onclick="return confirm('Desvincular esta linha do colaborador? O centro de custo será alterado para 9999.')">
+                                    <a href="desvincular.php?id=<?php echo $linha['id']; ?>" class="action-btn action-return" title="Desvincular" onclick="return confirm('Desvincular esta linha do colaborador? O centro de custo será alterado para 11001 .')">
                                         <i class="fas fa-user-slash"></i>
                                     </a>
                                 <?php endif; ?>
