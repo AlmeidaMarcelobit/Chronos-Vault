@@ -15,7 +15,7 @@ if (!$id) {
 }
 
 $linhas = lerArquivoJSON('../data/linhas.json');
-$colaboradores = lerArquivoJSON('../data/colaboradores.json');
+$colaboradores = lerArquivoJSON('../data/colaboradores/ativos.json');
 
 // Encontrar linha
 $linhaIndex = null;
