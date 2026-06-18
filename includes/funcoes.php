@@ -468,6 +468,7 @@ function getTiposEquipamentosComIcones() {
         'mouse' => ['nome' => 'Mouse', 'icone' => 'mouse'],
         'celular' => ['nome' => 'Celular', 'icone' => 'mobile-alt'],
         'suporte' => ['nome' => 'Suporte de Notebook', 'icone' => 'toolbox'],
+        'fone' => ['nome' => 'Fone', 'icone' => 'headphones'],
         'outro' => ['nome' => 'Outro', 'icone' => 'plus-circle']
     ];
 }
@@ -484,6 +485,7 @@ function getTiposEquipamentos() {
         'mouse' => 'Mouse',
         'celular' => 'Celular',
         'suporte' => 'Suporte de Notebook',
+        'fone' => 'Fone',
         'outro' => 'Outro'
     ];
 }
@@ -500,6 +502,7 @@ function getEspecificacoesPorTipo($tipo) {
         'mouse' => ['ram' => false, 'processador' => false, 'hd' => false],
         'celular' => ['ram' => true, 'processador' => true, 'hd' => true],
         'suporte' => ['ram' => false, 'processador' => false, 'hd' => false],
+        'fone' => ['ram' => false, 'processador' => false, 'hd' => false],
         'outro' => ['ram' => false, 'processador' => false, 'hd' => false]
     ];
     return $especificacoes[$tipo] ?? ['ram' => false, 'processador' => false, 'hd' => false];
@@ -517,6 +520,7 @@ function getIconByType($tipo) {
         'mouse' => 'mouse',
         'celular' => 'mobile-alt',
         'suporte' => 'toolbox',
+        'fone' => 'headphones',
         'outro' => 'plus-circle'
     ];
     return $icones[$tipo] ?? 'question-circle';
