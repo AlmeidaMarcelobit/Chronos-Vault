@@ -221,6 +221,7 @@ $totalFiltrado = count($equipamentosFiltrados);
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="adicionar.php?tipo=celular"><i class="fas fa-mobile-alt"></i> Celular</a>
                         <a class="dropdown-item" href="adicionar.php?tipo=suporte"><i class="fas fa-toolbox"></i> Suporte de Notebook</a>
+                        <a class="dropdown-item" href="adicionar.php?tipo=fone"><i class="fas fa-headphones"></i> Fone</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="adicionar.php"><i class="fas fa-plus-circle"></i> Outros...</a>
                     </div>
