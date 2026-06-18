@@ -348,10 +348,10 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
                     <small class="form-text">Opcional</small>
                 </div>
 
-                <div class="form-group">
-                    <label for="hostname"><i class="fas fa-network-wired"></i> Hostname <span id="hostname-required" class="required" style="display: none;">*</span></label>
+                <div class="form-group" id="hostname-group" style="display: none;">
+                    <label for="hostname"><i class="fas fa-network-wired"></i> Hostname <span class="required">*</span></label>
                     <input type="text" id="hostname" name="hostname" value="<?php echo htmlspecialchars($_POST['hostname'] ?? ''); ?>" class="form-control" placeholder="Ex: AS-NOTE-01">
-                    <small class="form-text" id="hostname-help">Obrigatório apenas para Notebooks e Desktops</small>
+                    <small class="form-text">Obrigatório para Notebooks e Desktops</small>
                 </div>
 
                 <div class="form-group">
@@ -504,28 +504,20 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
     }
 
     function toggleEspecificacoes() {
-        const tipoSelect = document.getElementById('tipo');
+        const tipo = document.getElementById('tipo').value;
+        const hostnameGroup = document.getElementById('hostname-group');
         const hostnameInput = document.getElementById('hostname');
-        const hostnameRequiredSpan = document.getElementById('hostname-required');
-        const hostnameHelp = document.getElementById('hostname-help');
         const especificacoesSection = document.getElementById('especificacoes-section');
-        const tipo = tipoSelect.value;
-        
-        if (tipo === 'notebook' || tipo === 'desktop') {
+        const comHostname = (tipo === 'notebook' || tipo === 'desktop');
+
+        if (comHostname) {
+            hostnameGroup.style.display = 'block';
             hostnameInput.required = true;
-            hostnameRequiredSpan.style.display = 'inline';
-            hostnameHelp.innerHTML = '<strong>Obrigatório</strong> para ' + (tipo === 'notebook' ? 'Notebooks' : 'Desktops');
-            hostnameHelp.style.color = 'var(--danger)';
-        } else {
-            hostnameInput.required = false;
-            hostnameRequiredSpan.style.display = 'none';
-            hostnameHelp.innerHTML = 'Opcional - Apenas para identificação na rede.';
-            hostnameHelp.style.color = 'var(--gray-500)';
-        }
-        
-        if (tipo === 'desktop' || tipo === 'notebook') {
             especificacoesSection.style.display = 'block';
         } else {
+            hostnameGroup.style.display = 'none';
+            hostnameInput.required = false;
+            hostnameInput.value = '';
             especificacoesSection.style.display = 'none';
         }
     }
