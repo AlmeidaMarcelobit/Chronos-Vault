@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
         <div class="logo">
             <a href="../index.php">
                 <i class="fas fa-laptop-house"></i>
-                <h1>Sistema de Gestão</h1>
+                <h1>Gestão de Linhas</h1>
             </a>
         </div>
         <div class="user-menu">
@@ -247,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
-            <h3><i class="fas fa-laptop-house"></i> Sistema de Gestão</h3>
+            <h3><i class="fas fa-laptop-house"></i>Gestão de Linhas</h3>
             <p>Controle de colaboradores e equipamentos</p>
         </div>
         <div class="footer-section">
