@@ -45,6 +45,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $centro_custo = trim($_POST['centro_custo'] ?? '');
     $status = $_POST['status'] ?? 'estoque';
     $colaborador_id = $_POST['colaborador_id'] ?? null;
+
+    // Puxar centro de custo do colaborador quando alocado/emprestado
+    if (($status === 'alocado' || $status === 'emprestado') && !empty($colaborador_id)) {
+        $colaboradores_ativos = lerArquivoJSON('../data/colaboradores/ativos.json');
+        foreach ($colaboradores_ativos as $col) {
+            if ($col['id'] == $colaborador_id && !empty($col['centro_custo'])) {
+                $centro_custo = $col['centro_custo'];
+                break;
+            }
+        }
+    }
     $hostname = trim($_POST['hostname'] ?? '');
     $observacoes = trim($_POST['observacoes'] ?? '');
     
@@ -296,6 +307,10 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
             <li class="nav-item"><a href="../colaboradores/index.php" class="nav-link"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
             <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
             <li class="nav-item"><a href="../linhas/index.php" class="nav-link"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
+            <?php if ($is_admin): ?>
+                <li class="nav-item"><a href="../Termos/index.php" class="nav-link"><i class="fas fa-file-contract"></i><span>Termos</span></a></li>
+                <li class="nav-item"><a href="../usuarios/index.php" class="nav-link"><i class="fas fa-user-cog"></i><span>Usuários</span></a></li>
+            <?php endif; ?>
         </ul>
     </nav>
 </header>

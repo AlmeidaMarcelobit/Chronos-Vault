@@ -161,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="logo">
             <a href="../index.php">
                 <i class="fas fa-laptop-house"></i>
-                <h1>Sistema de Gestão</h1>
+                <h1>Gestão de Equipamentos</h1>
             </a>
         </div>
         <div class="user-menu">
@@ -181,6 +181,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <li class="nav-item"><a href="../colaboradores/index.php" class="nav-link"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
             <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
             <li class="nav-item"><a href="../linhas/index.php" class="nav-link"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
+            <?php if (($_SESSION['usuario_nivel'] ?? '') === 'admin'): ?>
+                <li class="nav-item"><a href="../Termos/index.php" class="nav-link"><i class="fas fa-file-contract"></i><span>Termos</span></a></li>
+                <li class="nav-item"><a href="../usuarios/index.php" class="nav-link"><i class="fas fa-user-cog"></i><span>Usuários</span></a></li>
+            <?php endif; ?>
         </ul>
     </nav>
 </header>

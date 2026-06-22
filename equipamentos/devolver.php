@@ -289,6 +289,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             .card-body { padding: 1.25rem; }
             .equip-banner { flex-direction: column; align-items: flex-start; }
         }
+        .nav-container { background: var(--white); border-top: 1px solid var(--gray-100); }
+        .nav-menu { max-width: 1440px; margin: 0 auto; padding: 0 2rem; list-style: none; display: flex; gap: 2rem; }
+        .nav-link { display: flex; align-items: center; gap: .5rem; padding: 1rem 0; color: var(--gray-600); text-decoration: none; font-size: .875rem; font-weight: 500; transition: var(--transition); border-bottom: 2px solid transparent; }
+        .nav-link:hover { color: var(--primary); }
+        .nav-link.active { color: var(--primary); border-bottom-color: var(--primary); }
     </style>
 </head>
 <body>
@@ -312,6 +317,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </header>
+    <nav class="nav-container">
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="../index.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+            <li class="nav-item"><a href="../colaboradores/index.php" class="nav-link"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
+            <li class="nav-item"><a href="../equipamentos/index.php" class="nav-link active"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
+            <li class="nav-item"><a href="../linhas/index.php" class="nav-link"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
+            <?php if (($_SESSION['usuario_nivel'] ?? '') === 'admin'): ?>
+                <li class="nav-item"><a href="../Termos/index.php" class="nav-link"><i class="fas fa-file-contract"></i><span>Termos</span></a></li>
+                <li class="nav-item"><a href="../usuarios/index.php" class="nav-link"><i class="fas fa-user-cog"></i><span>Usuários</span></a></li>
+            <?php endif; ?>        </ul>
+    </nav>
 
 <main class="main">
 
