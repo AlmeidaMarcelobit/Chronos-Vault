@@ -86,6 +86,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erros[] = 'O hostname deve conter apenas letras, números, hífen ou underline.';
     }
 
+    // Auto-atualizar centro_custo com o do colaborador ao alocar/emprestar
+    if (($status === 'alocado' || $status === 'emprestado') && !empty($colaborador_id)) {
+        foreach ($colaboradores as $col) {
+            if ($col['id'] == $colaborador_id) {
+                if (!empty($col['centro_custo'])) {
+                    $centro_custo = $col['centro_custo'];
+                }
+                break;
+            }
+        }
+    }
+
     // Validar status
     if (!in_array($status, ['estoque', 'alocado', 'emprestado', 'manutencao', 'fora_uso'])) {
         $erros[] = 'Status inválido.';
@@ -673,6 +685,7 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
 
 <script>
     const centroCustoOriginal = <?php echo json_encode($equipamento['centro_custo'] ?? ''); ?>;
+    const colaboradoresData = <?php echo json_encode(array_column($colaboradores, null, 'id')); ?>;
 
     function toggleColaboradorSelect(show) {
         const selectDiv = document.getElementById('colaborador-select');
@@ -683,6 +696,22 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
         } else {
             selectDiv.style.display = 'none';
             if (selectElement) { selectElement.required = false; selectElement.value = ''; }
+        }
+    }
+
+    function atualizarCentroCustoDoColaborador() {
+        const selectElement = document.getElementById('colaborador_id');
+        const ccInput = document.getElementById('centro_custo');
+        if (!selectElement || !ccInput) return;
+
+        const colaboradorId = selectElement.value;
+        if (colaboradorId && colaboradoresData[colaboradorId]) {
+            const cc = colaboradoresData[colaboradorId]['centro_custo'] || '';
+            if (cc) {
+                ccInput.value = cc;
+                // Disparar o evento para mostrar motivo de alteração se necessário
+                ccInput.dispatchEvent(new Event('input'));
+            }
         }
     }
 
@@ -736,6 +765,12 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
             toggleColaboradorSelect(statusRadio.value === 'alocado' || statusRadio.value === 'emprestado');
         }
         toggleEspecificacoes();
+
+        // Atualizar centro de custo ao trocar colaborador
+        const colaboradorSelect = document.getElementById('colaborador_id');
+        if (colaboradorSelect) {
+            colaboradorSelect.addEventListener('change', atualizarCentroCustoDoColaborador);
+        }
 
         const form = document.getElementById('form-equipamento');
         if (form) {
