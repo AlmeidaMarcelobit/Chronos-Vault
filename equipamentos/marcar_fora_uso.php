@@ -86,72 +86,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marcar Fora de Uso - Sistema de Gestão</title>
+    <link rel="stylesheet" href="../css/equipamentos/marcar_fora_uso.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="../img/favicon/favicon.png">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-            --danger: #EF4444; --danger-dark: #DC2626; --danger-light: #FEF2F2;
-            --gray-50: #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB;
-            --gray-500: #6B7280; --gray-700: #374151; --gray-900: #111827;
-            --white: #FFFFFF; --radius: 8px; --radius-lg: 12px;
-            --shadow: 0 1px 3px rgba(0,0,0,.1); --shadow-lg: 0 10px 25px rgba(0,0,0,.1);
-        }
-        body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-900); min-height: 100vh; }
-
-        .header { background: var(--white); border-bottom: 1px solid var(--gray-200); padding: 0 1.5rem; box-shadow: var(--shadow); }
-        .header-content { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-        .logo a { display: flex; align-items: center; gap: .75rem; text-decoration: none; color: #2563EB; }
-        .logo h1 { font-size: 1.125rem; font-weight: 700; }
-        .user-menu { display: flex; align-items: center; gap: 1rem; }
-        .user-info { display: flex; align-items: center; gap: .5rem; color: var(--gray-700); font-size: .875rem; }
-        .logout-btn { display: flex; align-items: center; gap: .5rem; padding: .5rem 1rem; border-radius: var(--radius); background: var(--gray-100); color: var(--gray-700); text-decoration: none; font-size: .875rem; transition: background .2s; }
-        .logout-btn:hover { background: var(--gray-200); }
-
-        .main-container { max-width: 640px; margin: 2rem auto; padding: 0 1rem; }
-
-        .card { background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); overflow: hidden; }
-        .card-header { background: linear-gradient(135deg, var(--danger) 0%, var(--danger-dark) 100%); padding: 1.5rem 2rem; color: var(--white); }
-        .card-header h2 { font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: .75rem; }
-        .card-header p { margin-top: .25rem; opacity: .9; font-size: .9rem; }
-        .card-body { padding: 2rem; }
-
-        .alert-warning { background: #FFFBEB; border: 1px solid #FDE68A; color: #92400E; padding: .875rem 1rem; border-radius: var(--radius); margin-bottom: 1.25rem; display: flex; align-items: flex-start; gap: .5rem; font-size: .875rem; }
-        .alert-warning i { margin-top: 2px; flex-shrink: 0; }
-
-        .equip-info { background: var(--danger-light); border: 1px solid #FECACA; border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: .5rem .75rem; }
-        .equip-info-item { display: flex; flex-direction: column; gap: 2px; }
-        .equip-info-label { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--danger-dark); }
-        .equip-info-value { font-size: .9rem; font-weight: 600; color: var(--gray-900); }
-
-        .form-group { margin-bottom: 1.25rem; }
-        .form-group label { display: block; font-size: .875rem; font-weight: 600; color: var(--gray-700); margin-bottom: .5rem; }
-        .form-group label span.required { color: var(--danger); margin-left: 2px; }
-        textarea.form-control { width: 100%; padding: .75rem 1rem; border: 1px solid var(--gray-200); border-radius: var(--radius); font-family: inherit; font-size: .9rem; resize: vertical; min-height: 110px; transition: border-color .2s; }
-        textarea.form-control:focus { outline: none; border-color: var(--danger); box-shadow: 0 0 0 3px rgba(239,68,68,.15); }
-
-        .alert-error { background: var(--danger-light); border: 1px solid #FECACA; color: var(--danger-dark); padding: .875rem 1rem; border-radius: var(--radius); margin-bottom: 1.25rem; display: flex; align-items: center; gap: .5rem; font-size: .875rem; }
-
-        .form-actions { display: flex; gap: .75rem; justify-content: flex-end; margin-top: 1.5rem; }
-        .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .625rem 1.25rem; border-radius: var(--radius); font-size: .875rem; font-weight: 600; cursor: pointer; text-decoration: none; border: none; transition: background .2s, transform .1s; }
-        .btn:active { transform: scale(.98); }
-        .btn-secondary { background: var(--gray-100); color: var(--gray-700); }
-        .btn-secondary:hover { background: var(--gray-200); }
-        .btn-danger { background: var(--danger); color: var(--white); }
-        .btn-danger:hover { background: var(--danger-dark); }
-        .nav-container { background: var(--white); border-top: 1px solid var(--gray-100); }
-        .nav-menu { max-width: 1440px; margin: 0 auto; padding: 0 2rem; list-style: none; display: flex; gap: 2rem; }
-        .nav-link { display: flex; align-items: center; gap: .5rem; padding: 1rem 0; color: var(--gray-600); text-decoration: none; font-size: .875rem; font-weight: 500; transition: var(--transition); border-bottom: 2px solid transparent; }
-        .nav-link:hover { color: var(--primary); }
-        .nav-link.active { color: var(--primary); border-bottom-color: var(--primary); }
-    </style>
 </head>
 <body>
 
@@ -159,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="header-content">
         <div class="logo">
             <a href="../index.php">
-                <i class="fas fa-laptop-house"></i>
+                <i class="fas fa-times-circle"></i>
                 <h1>Gestão de Equipamentos</h1>
             </a>
         </div>
