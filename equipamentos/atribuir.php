@@ -8,6 +8,7 @@ if (!isset($_SESSION['usuario_id'])) {
 }
 
 $usuario_nivel = $_SESSION['usuario_nivel'] ?? 'user';
+$is_admin = ($usuario_nivel === 'admin');
 if ($usuario_nivel === 'view') {
     header('Location: index.php');
     exit;
@@ -396,4 +397,9 @@ document.getElementById('formAtribuir').addEventListener('submit', function(e) {
         e.preventDefault();
         document.getElementById('colabList').style.border = '2px solid var(--danger)';
         document.getElementById('buscaColab').focus();
-        setTimeout(() => document.getElementByI
+        setTimeout(() => document.getElementById('colabList').style.border = '', 2000);
+    }
+});
+</script>
+</body>
+</html>

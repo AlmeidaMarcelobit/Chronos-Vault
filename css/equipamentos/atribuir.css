@@ -609,34 +609,3 @@
          padding: 1.25rem;
      }
  }
- .nav-container {
-     background: var(--white);
-     border-top: 1px solid var(--gray-100);
- }
- .nav-menu {
-     max-width: 1440px;
-     margin: 0 auto;
-     padding: 0 2rem;
-     list-style: none;
-     display: flex;
-     gap: 2rem;
- }
- .nav-link {
-     display: flex;
-     align-items: center;
-     gap: 0.5rem;
-     padding: 1rem 0;
-     color: var(--gray-600);
-     text-decoration: none;
-     font-size: 0.875rem;
-     font-weight: 500;
-     transition: var(--transition);
-     border-bottom: 2px solid transparent;
- }
- .nav-link:hover {
-     color: var(--primary);
- }
- .nav-link.active {
-     color: var(--primary);
-     border-bottom-color: var(--primary);
- }
