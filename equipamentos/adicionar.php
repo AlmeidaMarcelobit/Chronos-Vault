@@ -365,11 +365,7 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
                     <small class="form-text">Opcional</small>
                 </div>
 
-                <div class="form-group">
-                    <label for="centro_custo"><i class="fas fa-dollar-sign"></i> Centro de Custo</label>
-                    <input type="text" id="centro_custo" name="centro_custo" value="<?php echo htmlspecialchars($_POST['centro_custo'] ?? ''); ?>" class="form-control cc-mask" placeholder="Ex: 12001, 12002">
-                    <small class="form-text">Opcional</small>
-                </div>
+                <input type="hidden" name="centro_custo" value="11001">
             </div>
 
             <div id="especificacoes-section" class="specs-section" style="display: none;">
