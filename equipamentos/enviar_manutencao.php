@@ -166,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="logo">
             <a href="../index.php">
                 <i class="fas fa-laptop-house"></i>
-                <h1>Sistema de Gestão</h1>
+                <h1>Gestão de Equipamentos</h1>
             </a>
         </div>
         <div class="user-menu">
