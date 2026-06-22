@@ -82,15 +82,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Usuário - Sistema de Gestão</title>
     <link rel="stylesheet" href="../css/usuarios.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 <header class="header">
     <div class="header-content">
-        <div class="logo"><a href="../index.php"><i class="fas fa-laptop-house"></i><h1>Sistema de Gestão</h1></a></div>
+        <div class="logo">
+            <a href="../index.php">
+                <i class="fas fa-laptop-house"></i>
+                <h1>Gestão de Equipamentos</h1>
+            </a>
+        </div>
         <div class="user-menu">
-            <div class="user-info"><i class="fas fa-user-circle"></i><span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span><span class="user-level user-level-admin">Admin</span></div>
-            <a href="../logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i><span>Sair</span></a>
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
+            </div>
+            <a href="../logout.php" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Sair</span>
+            </a>
         </div>
     </div>
     <nav class="nav-container">
@@ -99,8 +111,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <li class="nav-item"><a href="../colaboradores/index.php" class="nav-link"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
             <li class="nav-item"><a href="../equipamentos/index.php" class="nav-link"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
             <li class="nav-item"><a href="../linhas/index.php" class="nav-link"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
-                        <li class="nav-item"><a href="../Termos/index.php" class="nav-link"><i class="fas fa-file-contract"></i><span>Termos</span></a></li>
-<li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-user-cog"></i><span>Usuários</span></a></li>
+            <li class="nav-item"><a href="../Termos/index.php" class="nav-link"><i class="fas fa-file-contract"></i><span>Termos</span></a></li>
+            <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-user-cog"></i><span>Usuários</span></a></li>
         </ul>
     </nav>
 </header>
