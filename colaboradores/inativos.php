@@ -425,7 +425,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['excluir_permanente'])
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
-            <h3><i class="fas fa-archive"></i> Sistema de Gestão</h3>
+            <h3><i class="fas fa-archive"></i> Gestão de Colaboradores</h3>
             <p>Controle de colaboradores e equipamentos</p>
         </div>
         <div class="footer-section">
