@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
     <div class="header-content">
         <div class="logo">
             <a href="../index.php">
-                <i class="fas fa-laptop-house"></i>
+                <i class="fas fa-trash-alt"></i>
                 <h1>Gestão de Linhas</h1>
             </a>
         </div>
@@ -162,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
-            <h3><i class="fas fa-laptop-house"></i> Gestão de Linhas</h3>
+            <h3><i class="fas fa-phone"></i> Gestão de Linhas</h3>
             <p>Controle de colaboradores e equipamentos</p>
         </div>
         <div class="footer-section">
