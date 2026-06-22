@@ -302,7 +302,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="header-content">
         <div class="logo">
             <a href="../index.php">
-                <i class="fas fa-laptop-house"></i>
+                <i class="fas fa-user-check"></i>
                 <h1>Gestão de Equipamentos</h1>
             </a>
         </div>
