@@ -7,6 +7,9 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
+$usuario_nivel = $_SESSION['usuario_nivel'] ?? 'user';
+$is_admin = ($usuario_nivel === 'admin');
+
 // Carregar dados
 $colaboradores = lerArquivoJSON('../data/colaboradores/ativos.json');
 if (!is_array($colaboradores)) $colaboradores = [];
@@ -201,7 +204,7 @@ $total_colaboradores  = count($colaboradores);
     <div class="header-content">
         <div class="logo">
             <a href="../index.php">
-                <i class="fas fa-laptop"></i>
+                <i class="fas fa-file-signature"></i>
                 <h1>Gestão de Termos</h1>
             </a>
         </div>
@@ -218,11 +221,14 @@ $total_colaboradores  = count($colaboradores);
     </div>
     <nav class="nav-container">
         <ul class="nav-menu">
-            <li><a href="../index.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-            <li><a href="../colaboradores/index.php" class="nav-link"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
-            <li><a href="../equipamentos/index.php" class="nav-link"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
-            <li><a href="../linhas/index.php" class="nav-link"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
-            <li><a href="index.php" class="nav-link active"><i class="fas fa-file-signature"></i><span>Termos</span></a></li>
+            <li class="nav-item"><a href="../index.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+            <li class="nav-item"><a href="../colaboradores/index.php" class="nav-link"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
+            <li class="nav-item"><a href="../equipamentos/index.php" class="nav-link"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
+            <li class="nav-item"><a href="../linhas/index.php" class="nav-link"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
+            <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-file-contract"></i><span>Termos</span></a></li>
+            <?php if ($is_admin): ?>
+                <li class="nav-item"><a href="../usuarios/index.php" class="nav-link"><i class="fas fa-user-cog"></i><span>Usuários</span></a></li>
+            <?php endif; ?>
         </ul>
     </nav>
 </header>
