@@ -202,7 +202,7 @@ $total_colaboradores  = count($colaboradores);
         <div class="logo">
             <a href="../index.php">
                 <i class="fas fa-laptop"></i>
-                <h1>Sistema de Gestão</h1>
+                <h1>Gestão de Termos</h1>
             </a>
         </div>
         <div class="user-menu">
@@ -340,7 +340,7 @@ $total_colaboradores  = count($colaboradores);
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
-            <h3><i class="fas fa-laptop"></i> Sistema de Gestão</h3>
+            <h3><i class="fas fa-laptop"></i> Gestão de Termos</h3>
             <p>Controle de colaboradores e equipamentos</p>
         </div>
         <div class="footer-section">
@@ -556,32 +556,29 @@ function fmtCPF(cpf) {
 }
 
 function buildTabela(equips) {
-    const linhasVazias = Math.max(0, 6 - equips.length);
-    let rows = equips.map(eq => `<tr>
+    return equips.map(eq => `<tr>
         <td>${NOMES[eq.tipo] || eq.tipo}</td>
         <td>${[eq.marca, eq.modelo].filter(Boolean).join('/') || ''}</td>
         <td>${eq.serial || ''}</td>
         <td>${eq.imei || ''}</td>
         <td>${eq.patrimonio || ''}</td>
     </tr>`).join('');
-    for (let i = 0; i < linhasVazias; i++)
-        rows += `<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>`;
-    return rows;
 }
 
 // ── CSS comum dos termos ──────────────────────────────────────────────────────
 const TERMO_BASE_CSS = `
-    @page { size: A4; margin: 20mm 20mm 15mm 20mm; }
+    @page { size: A4; margin: 15mm 18mm 15mm 18mm; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Arial, Helvetica, sans-serif; font-size: 11pt; color: #000; line-height: 1.55; }
-    table { width: 100%; border-collapse: collapse; font-size: 10pt; }
-    table th { background: #f0f0f0; font-weight: bold; text-align: center; border: 1px solid #999; padding: 6px 4px; font-size: 9pt; }
-    table td { border: 1px solid #999; padding: 5px 4px; text-align: center; }
-    table td:first-child { text-align: left; padding-left: 6px; }
-    .footer-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #00BCD4;
-        color: #fff; text-align: center; padding: 10px 20px;
-        display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 10pt; }
-    @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+    body { font-family: Arial, Helvetica, sans-serif; font-size: 9.5pt; color: #000; line-height: 1.45; }
+    table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+    table th { background: #f0f0f0; font-weight: bold; text-align: center; border: 1px solid #999; padding: 5px 3px; font-size: 8pt; }
+    table td { border: 1px solid #999; padding: 4px 3px; text-align: center; }
+    table td:first-child { text-align: left; padding-left: 5px; }
+    .footer-bar { background: #00BCD4; color: #fff; text-align: center; padding: 8px 20px;
+        display: flex; align-items: center; justify-content: center; gap: 10px;
+        font-size: 9pt; margin-top: 18px; border-radius: 4px; }
+    @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .footer-bar { margin-top: 12px; border-radius: 0; } }
 `;
 
 // ── Geração ───────────────────────────────────────────────────────────────────
@@ -609,22 +606,20 @@ function htmlEntrega(col, equips) {
 <title>Termo de Entrega — ${col.nome}</title>
 <style>
 ${TERMO_BASE_CSS}
-.page { padding-bottom: 60px; }
-.logo-wrap { text-align: center; margin-bottom: 28px; }
-.logo-wrap img { height: 68px; }
-h2 { font-size: 11.5pt; font-weight: bold; text-transform: uppercase; margin-bottom: 22px; }
-.section-lbl { font-weight: normal; text-transform: uppercase; margin-bottom: 10px; letter-spacing: .03em; }
-.ident { margin-bottom: 20px; }
-.ident p { margin-bottom: 3px; }
-.body-text { text-align: justify; margin-bottom: 20px; }
-ol { padding-left: 22px; margin-bottom: 26px; }
-ol li { margin-bottom: 8px; text-align: justify; }
-.sig { margin-bottom: 28px; }
-.sig p { margin-bottom: 14px; }
-.linha { display: inline-block; width: 300px; border-bottom: 1px solid #000; }
-.table-wrap { margin-top: 6px; }
+.logo-wrap { text-align: center; margin-bottom: 16px; }
+.logo-wrap img { height: 55px; }
+h2 { font-size: 10pt; font-weight: bold; text-transform: uppercase; margin-bottom: 14px; }
+.section-lbl { font-weight: normal; text-transform: uppercase; margin-bottom: 7px; letter-spacing: .03em; }
+.ident { margin-bottom: 13px; }
+.ident p { margin-bottom: 2px; }
+.body-text { text-align: justify; margin-bottom: 13px; }
+ol { padding-left: 20px; margin-bottom: 16px; }
+ol li { margin-bottom: 5px; text-align: justify; }
+.sig { margin-bottom: 16px; }
+.sig p { margin-bottom: 10px; }
+.linha { display: inline-block; width: 280px; border-bottom: 1px solid #000; }
+.table-wrap { margin-top: 4px; }
 </style></head><body>
-<div class="page">
     <div class="logo-wrap"><img src="${LOGO_URL}" alt="Amor Saúde"></div>
 
     <h2>Termo de Responsabilidade pela Guarda e Uso de Equipamento de Trabalho</h2>
@@ -668,8 +663,7 @@ ol li { margin-bottom: 8px; text-align: justify; }
             <tbody>${buildTabela(equips)}</tbody>
         </table>
     </div>
-</div>
-<div class="footer-bar"><span style="font-size:18pt;">♥</span> R. Magid Antônio Calil, 176, Jardim Botânico - Ribeirão Preto-SP</div>
+<div class="footer-bar"><span style="font-size:16pt;">♥</span> R. Magid Antônio Calil, 176, Jardim Botânico - Ribeirão Preto-SP</div>
 </body></html>`;
 }
 
@@ -686,21 +680,19 @@ function htmlDevolucao(col, equips) {
 <title>Termo de Devolução — ${col.nome}</title>
 <style>
 ${TERMO_BASE_CSS}
-.page { padding-bottom: 60px; }
-.logo-wrap { margin-bottom: 6px; }
-.logo-wrap img { height: 58px; }
-h2 { font-size: 14pt; font-weight: bold; text-align: center; margin-bottom: 30px; }
-.ident { margin: 8px 0 14px; }
-.ident p { margin-bottom: 3px; }
-.table-wrap { margin: 14px 0; }
-.conds { margin: 18px 0; }
-.conds p { margin-bottom: 8px; }
-.sig-block { margin-top: 26px; }
-.sig-block p { margin-bottom: 5px; }
-.linha-sig { display: block; width: 320px; border-bottom: 1px solid #000; margin: 5px 0 2px; }
-.sig-label { font-size: 9.5pt; color: #444; }
+.logo-wrap { margin-bottom: 4px; }
+.logo-wrap img { height: 52px; }
+h2 { font-size: 12pt; font-weight: bold; text-align: center; margin-bottom: 18px; }
+.ident { margin: 6px 0 10px; }
+.ident p { margin-bottom: 2px; }
+.table-wrap { margin: 10px 0; }
+.conds { margin: 13px 0; }
+.conds p { margin-bottom: 6px; }
+.sig-block { margin-top: 18px; }
+.sig-block p { margin-bottom: 4px; }
+.linha-sig { display: block; width: 300px; border-bottom: 1px solid #000; margin: 4px 0 2px; }
+.sig-label { font-size: 8.5pt; color: #444; }
 </style></head><body>
-<div class="page">
     <div class="logo-wrap"><img src="${LOGO_URL}" alt="Amor Saúde"></div>
 
     <h2>Termo de Devolução de Equipamento</h2>
@@ -741,8 +733,7 @@ h2 { font-size: 14pt; font-weight: bold; text-align: center; margin-bottom: 30px
         <span class="linha-sig"></span>
         <span class="sig-label">(Nome / Data)</span>
     </div>
-</div>
-<div class="footer-bar"><span style="font-size:18pt;">♥</span> R. Magid Antônio Calil, 176, Jardim Botânico - Ribeirão Preto-SP</div>
+<div class="footer-bar"><span style="font-size:16pt;">♥</span> R. Magid Antônio Calil, 176, Jardim Botânico - Ribeirão Preto-SP</div>
 </body></html>`;
 }
 </script>
