@@ -454,7 +454,7 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
-            <h3><i class="fas fa-users"></i> Sistema de Gestão</h3>
+            <h3><i class="fas fa-users"></i> Gestão de Colaboradores</h3>
             <p>Controle de colaboradores e equipamentos</p>
         </div>
         <div class="footer-section">
