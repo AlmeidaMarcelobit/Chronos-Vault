@@ -122,212 +122,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atribuir Equipamento — Sistema de Gestão</title>
+    <link rel="stylesheet" href="../css/equipamentos/atribuir.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="../img/favicon/favicon.png">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-            --primary:       #2563EB;
-            --primary-dark:  #1D4ED8;
-            --primary-light: #EFF6FF;
-            --success:       #10B981;
-            --success-dark:  #059669;
-            --success-light: #ECFDF5;
-            --info:          #0EA5E9;
-            --info-dark:     #0284C7;
-            --info-light:    #F0F9FF;
-            --warning:       #F59E0B;
-            --warning-light: #FFFBEB;
-            --danger:        #EF4444;
-            --danger-light:  #FEF2F2;
-            --gray-50:  #F9FAFB;
-            --gray-100: #F3F4F6;
-            --gray-200: #E5E7EB;
-            --gray-300: #D1D5DB;
-            --gray-400: #9CA3AF;
-            --gray-500: #6B7280;
-            --gray-700: #374151;
-            --gray-900: #111827;
-            --white:    #FFFFFF;
-            --radius:   8px;
-            --radius-lg: 14px;
-            --shadow:   0 1px 3px rgba(0,0,0,.08);
-            --shadow-lg: 0 10px 30px rgba(0,0,0,.1);
-        }
-
-        body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-900); min-height: 100vh; }
-
-        /* HEADER */
-        .header { background: var(--white); border-bottom: 1px solid var(--gray-200); padding: 0 1.5rem; box-shadow: var(--shadow); }
-        .header-content { display: flex; align-items: center; justify-content: space-between; height: 64px; max-width: 960px; margin: 0 auto; }
-        .logo a { display: flex; align-items: center; gap: .75rem; text-decoration: none; color: var(--primary); }
-        .logo h1 { font-size: 1.125rem; font-weight: 700; }
-        .user-menu { display: flex; align-items: center; gap: 1rem; }
-        .user-info { display: flex; align-items: center; gap: .5rem; color: var(--gray-700); font-size: .875rem; }
-        .logout-btn { display: flex; align-items: center; gap: .5rem; padding: .5rem 1rem; border-radius: var(--radius); background: var(--gray-100); color: var(--gray-700); text-decoration: none; font-size: .875rem; transition: background .2s; }
-        .logout-btn:hover { background: var(--gray-200); }
-
-        /* MAIN */
-        .main { max-width: 960px; margin: 2rem auto; padding: 0 1rem 3rem; }
-
-        /* PAGE TITLE */
-        .page-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.75rem; gap: 1rem; flex-wrap: wrap; }
-        .page-title h2 { font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: .625rem; }
-        .page-title h2 i { color: var(--primary); }
-        .page-title p { color: var(--gray-500); font-size: .875rem; margin-top: .25rem; }
-
-        /* CARD */
-        .card { background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); overflow: hidden; }
-
-        /* EQUIP INFO */
-        .equip-banner { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: 1.5rem 2rem; color: var(--white); display: flex; align-items: center; gap: 1.25rem; }
-        .equip-icon { width: 56px; height: 56px; border-radius: 12px; background: rgba(255,255,255,.15); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
-        .equip-details h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .25rem; }
-        .equip-meta { display: flex; flex-wrap: wrap; gap: .5rem .75rem; margin-top: .5rem; }
-        .equip-tag { font-size: .75rem; background: rgba(255,255,255,.2); padding: 2px 10px; border-radius: 99px; font-weight: 500; }
-
-        /* BODY */
-        .card-body { padding: 2rem; }
-
-        /* TYPE TOGGLE */
-        .type-toggle { display: flex; gap: .75rem; margin-bottom: 2rem; }
-        .toggle-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: .625rem; padding: .875rem 1rem; border: 2px solid var(--gray-200); border-radius: var(--radius); background: var(--white); font-size: .875rem; font-weight: 600; cursor: pointer; transition: all .2s; color: var(--gray-500); }
-        .toggle-btn:hover { border-color: var(--gray-300); color: var(--gray-700); }
-        .toggle-btn.active-alocar { border-color: var(--success); background: var(--success-light); color: var(--success-dark); }
-        .toggle-btn.active-emprestar { border-color: var(--info); background: var(--info-light); color: var(--info-dark); }
-
-        /* SECTION LABEL */
-        .section-label { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--gray-400); margin-bottom: .625rem; }
-
-        /* SEARCH + SELECT */
-        .search-wrap { position: relative; margin-bottom: .5rem; }
-        .search-wrap i { position: absolute; left: .875rem; top: 50%; transform: translateY(-50%); color: var(--gray-400); font-size: .875rem; pointer-events: none; }
-        .search-input { width: 100%; padding: .625rem .875rem .625rem 2.5rem; border: 1px solid var(--gray-200); border-radius: var(--radius); font-family: inherit; font-size: .875rem; background: var(--gray-50); transition: border-color .2s; }
-        .search-input:focus { outline: none; border-color: var(--primary); background: var(--white); box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
-
-        .colab-list { border: 1px solid var(--gray-200); border-radius: var(--radius); max-height: 260px; overflow-y: auto; }
-        .colab-item { display: flex; align-items: center; gap: .875rem; padding: .75rem 1rem; cursor: pointer; transition: background .15s; border-bottom: 1px solid var(--gray-100); }
-        .colab-item:last-child { border-bottom: none; }
-        .colab-item:hover { background: var(--gray-50); }
-        .colab-item.selected { background: var(--primary-light); }
-        .colab-item.hidden { display: none; }
-        .colab-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; color: var(--primary); flex-shrink: 0; }
-        .colab-item.selected .colab-avatar { background: var(--primary); color: var(--white); }
-        .colab-name { font-size: .875rem; font-weight: 600; color: var(--gray-900); }
-        .colab-sub { font-size: .75rem; color: var(--gray-500); margin-top: 1px; }
-        .colab-check { margin-left: auto; color: var(--primary); display: none; }
-        .colab-item.selected .colab-check { display: block; }
-        .colab-empty { padding: 1.5rem; text-align: center; color: var(--gray-400); font-size: .875rem; }
-
-        /* HIDDEN INPUT */
-        input[name="colaborador_id"] { display: none; }
-
-        /* COLAB INFO CARD */
-        .colab-card { display: none; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1rem 1.25rem; margin-top: .875rem; }
-        .colab-card.show { display: block; }
-        .colab-card-row { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .colab-card-item { flex: 1; min-width: 140px; }
-        .colab-card-label { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--gray-400); margin-bottom: 2px; }
-        .colab-card-value { font-size: .875rem; font-weight: 600; color: var(--gray-900); }
-
-        /* CC UPDATE */
-        .cc-update-row { display: flex; align-items: flex-start; gap: .75rem; background: var(--warning-light); border: 1px solid #FDE68A; border-radius: var(--radius); padding: .875rem 1rem; margin-top: .875rem; }
-        .cc-update-row input[type=checkbox] { margin-top: 2px; width: 16px; height: 16px; accent-color: var(--warning); flex-shrink: 0; cursor: pointer; }
-        .cc-label { font-size: .8rem; color: var(--gray-700); cursor: pointer; }
-        .cc-label strong { display: block; margin-bottom: 2px; }
-        .cc-arrow { color: var(--warning); margin: 0 .25rem; }
-
-        /* FORM FIELDS */
-        .form-section { margin-top: 1.75rem; }
-        .form-group { margin-bottom: 1.25rem; }
-        .form-group label { display: block; font-size: .875rem; font-weight: 600; color: var(--gray-700); margin-bottom: .5rem; }
-        .form-group label span.req { color: var(--danger); margin-left: 2px; }
-        .form-control { width: 100%; padding: .625rem .875rem; border: 1px solid var(--gray-200); border-radius: var(--radius); font-family: inherit; font-size: .875rem; transition: border-color .2s; background: var(--white); }
-        .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
-        textarea.form-control { resize: vertical; min-height: 90px; }
-
-        /* DATE FIELD hidden by default */
-        #wrap-devolucao { display: none; }
-        #wrap-devolucao.show { display: block; }
-
-        /* ALERT */
-        .alert-error { background: var(--danger-light); border: 1px solid #FECACA; color: #DC2626; padding: .875rem 1rem; border-radius: var(--radius); margin-bottom: 1.25rem; display: flex; align-items: center; gap: .625rem; font-size: .875rem; }
-
-        /* CONFIRM CARD */
-        .confirm-card { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1rem 1.25rem; margin: 1.5rem 0 1.25rem; }
-        .confirm-card p { font-size: .8rem; color: var(--gray-500); line-height: 1.6; }
-        .confirm-card p strong { color: var(--gray-700); }
-
-        /* ACTIONS */
-        .form-actions { display: flex; gap: .75rem; justify-content: flex-end; padding-top: 1.25rem; border-top: 1px solid var(--gray-100); }
-        .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .625rem 1.25rem; border-radius: var(--radius); font-size: .875rem; font-weight: 600; cursor: pointer; text-decoration: none; border: none; transition: background .2s, transform .1s; }
-        .btn:active { transform: scale(.98); }
-        .btn-secondary { background: var(--gray-100); color: var(--gray-700); }
-        .btn-secondary:hover { background: var(--gray-200); }
-        .btn-success { background: var(--success); color: var(--white); }
-        .btn-success:hover { background: var(--success-dark); }
-        .btn-info { background: var(--info); color: var(--white); }
-        .btn-info:hover { background: var(--info-dark); }
-        .btn-submit { transition: background .2s; }
-
-        /* SCROLLBAR */
-        .colab-list::-webkit-scrollbar { width: 4px; }
-        .colab-list::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 4px; }
-
-        @media (max-width: 640px) {
-            .equip-banner { flex-direction: column; align-items: flex-start; }
-            .type-toggle { flex-direction: column; }
-            .form-actions { flex-direction: column-reverse; }
-            .btn { justify-content: center; }
-            .card-body { padding: 1.25rem; }
-        }
-        .nav-container { background: var(--white); border-top: 1px solid var(--gray-100); }
-        .nav-menu { max-width: 1440px; margin: 0 auto; padding: 0 2rem; list-style: none; display: flex; gap: 2rem; }
-        .nav-link { display: flex; align-items: center; gap: .5rem; padding: 1rem 0; color: var(--gray-600); text-decoration: none; font-size: .875rem; font-weight: 500; transition: var(--transition); border-bottom: 2px solid transparent; }
-        .nav-link:hover { color: var(--primary); }
-        .nav-link.active { color: var(--primary); border-bottom-color: var(--primary); }
-    </style>
 </head>
 <body>
-
 <header class="header">
     <div class="header-content">
         <div class="logo">
             <a href="../index.php">
-                <i class="fas fa-user-check"></i>
+                <i class="fas fa-laptop-house"></i>
                 <h1>Gestão de Equipamentos</h1>
             </a>
         </div>
         <div class="user-menu">
             <div class="user-info">
                 <i class="fas fa-user-circle"></i>
-                <span><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
+                <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
             </div>
             <a href="../logout.php" class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i> Sair
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Sair</span>
             </a>
         </div>
     </div>
-</header>
     <nav class="nav-container">
         <ul class="nav-menu">
             <li class="nav-item"><a href="../index.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
             <li class="nav-item"><a href="../colaboradores/index.php" class="nav-link"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
-            <li class="nav-item"><a href="../equipamentos/index.php" class="nav-link active"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
+            <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
             <li class="nav-item"><a href="../linhas/index.php" class="nav-link"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
-            <?php if (($_SESSION['usuario_nivel'] ?? '') === 'admin'): ?>
+            <?php if ($is_admin): ?>
                 <li class="nav-item"><a href="../Termos/index.php" class="nav-link"><i class="fas fa-file-contract"></i><span>Termos</span></a></li>
                 <li class="nav-item"><a href="../usuarios/index.php" class="nav-link"><i class="fas fa-user-cog"></i><span>Usuários</span></a></li>
-            <?php endif; ?>        </ul>
+            <?php endif; ?>
+        </ul>
     </nav>
+</header>
 
 <main class="main">
 
@@ -559,10 +396,4 @@ document.getElementById('formAtribuir').addEventListener('submit', function(e) {
         e.preventDefault();
         document.getElementById('colabList').style.border = '2px solid var(--danger)';
         document.getElementById('buscaColab').focus();
-        setTimeout(() => document.getElementById('colabList').style.border = '', 2000);
-    }
-});
-</script>
-
-</body>
-</html>
+        setTimeout(() => document.getElementByI
