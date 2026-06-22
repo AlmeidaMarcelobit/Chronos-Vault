@@ -209,7 +209,7 @@ foreach ($equipamentos_data as $e) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Colaborador - Sistema de Gestão</title>
+    <title>Editar Colaborador - Gestão de Colaboradores</title>
     <link rel="stylesheet" href="../css/colaboradores/editar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
@@ -427,7 +427,7 @@ foreach ($equipamentos_data as $e) {
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
-            <h3><i class="fas fa-users"></i> Sistema de Gestão</h3>
+            <h3><i class="fas fa-users"></i>Gestão de Colaboradores</h3>
             <p>Controle de colaboradores e equipamentos</p>
         </div>
         <div class="footer-section">
