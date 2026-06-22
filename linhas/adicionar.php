@@ -113,7 +113,7 @@ foreach ($colaboradores as $c) {
         <div class="logo">
             <a href="../index.php">
                 <i class="fas fa-laptop-house"></i>
-                <h1>Sistema de Gestão</h1>
+                <h1>Gestão de Linhas</h1>
             </a>
         </div>
         <div class="user-menu">
