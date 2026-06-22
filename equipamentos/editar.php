@@ -376,7 +376,7 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
         <div class="logo">
             <a href="../index.php">
                 <i class="fas fa-laptop"></i>
-                <h1>Sistema de Gestão</h1>
+                <h1>Gestão de Equipamentos</h1>
             </a>
         </div>
         <div class="user-menu">
@@ -657,7 +657,7 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
-            <h3><i class="fas fa-laptop"></i> Sistema de Gestão</h3>
+            <h3><i class="fas fa-laptop"></i>Gestão de Equipamentos</h3>
             <p>Controle de colaboradores e equipamentos</p>
         </div>
         <div class="footer-section">
