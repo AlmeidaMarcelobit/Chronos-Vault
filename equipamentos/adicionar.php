@@ -75,9 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erros[] = 'O número de patrimônio é obrigatório.';
     }
     
-    // Validar hostname (obrigatório apenas para notebooks e desktops)
-    if (($tipo === 'notebook' || $tipo === 'desktop') && empty($hostname)) {
-        $erros[] = 'O hostname é obrigatório para equipamentos do tipo ' . ($tipo === 'notebook' ? 'Notebook' : 'Desktop') . '.';
+    // Validar hostname (obrigatório para notebooks, desktops e TVs)
+    $tiposComHostname = ['notebook', 'desktop', 'tv'];
+    if (in_array($tipo, $tiposComHostname) && empty($hostname)) {
+        $nomes = ['notebook' => 'Notebook', 'desktop' => 'Desktop', 'tv' => 'TV'];
+        $erros[] = 'O hostname é obrigatório para equipamentos do tipo ' . ($nomes[$tipo] ?? $tipo) . '.';
     } elseif (!empty($hostname) && !preg_match('/^[a-zA-Z0-9\-_]+$/', $hostname)) {
         $erros[] = 'O hostname deve conter apenas letras, números, hífen ou underline.';
     }
@@ -103,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     // Verificar se hostname já existe
-    if (!empty($hostname) && ($tipo === 'notebook' || $tipo === 'desktop') && hostnameExiste($hostname)) {
+    if (!empty($hostname) && in_array($tipo, ['notebook', 'desktop', 'tv']) && hostnameExiste($hostname)) {
         $erros[] = 'Este hostname já está cadastrado no sistema.';
     }
     
@@ -123,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'modelo' => $modelo ?: null,
             'patrimonio' => $patrimonio,
             'serial' => $serial ?: null,
-            'hostname' => ($tipo === 'notebook' || $tipo === 'desktop') ? $hostname : null,
+            'hostname' => in_array($tipo, ['notebook', 'desktop', 'tv']) ? $hostname : null,
             'centro_custo' => $centro_custo ?: null,
             'especificacoes' => !empty($especificacoes) ? $especificacoes : null,
             'colaborador_id' => ($status === 'alocado' || $status === 'emprestado') ? (int)$colaborador_id : null,
@@ -519,16 +521,20 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
         const hostnameGroup = document.getElementById('hostname-group');
         const hostnameInput = document.getElementById('hostname');
         const especificacoesSection = document.getElementById('especificacoes-section');
-        const comHostname = (tipo === 'notebook' || tipo === 'desktop');
+        const comHostname = (tipo === 'notebook' || tipo === 'desktop' || tipo === 'tv');
+        const comEspecificacoes = (tipo === 'notebook' || tipo === 'desktop');
 
         if (comHostname) {
             hostnameGroup.style.display = 'block';
             hostnameInput.required = true;
-            especificacoesSection.style.display = 'block';
         } else {
             hostnameGroup.style.display = 'none';
             hostnameInput.required = false;
             hostnameInput.value = '';
+        }
+        if (comEspecificacoes) {
+            especificacoesSection.style.display = 'block';
+        } else {
             especificacoesSection.style.display = 'none';
         }
     }
@@ -592,8 +598,10 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
                     e.preventDefault();
                     return false;
                 }
-                if ((tipo === 'notebook' || tipo === 'desktop') && hostname === '') {
-                    alert('O hostname é obrigatório para equipamentos do tipo ' + (tipo === 'notebook' ? 'Notebook' : 'Desktop') + '.');
+                const tiposComHostname = ['notebook', 'desktop', 'tv'];
+                const nomesTipo = { 'notebook': 'Notebook', 'desktop': 'Desktop', 'tv': 'TV' };
+                if (tiposComHostname.includes(tipo) && hostname === '') {
+                    alert('O hostname é obrigatório para equipamentos do tipo ' + (nomesTipo[tipo] || tipo) + '.');
                     e.preventDefault();
                     return false;
                 }
