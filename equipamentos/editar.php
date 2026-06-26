@@ -79,9 +79,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erros[] = 'O número de patrimônio é obrigatório.';
     }
 
-    // Hostname obrigatório apenas para notebooks e desktops
-    if (($tipo === 'notebook' || $tipo === 'desktop') && empty($hostname)) {
-        $erros[] = 'O hostname é obrigatório para equipamentos do tipo ' . ($tipo === 'notebook' ? 'Notebook' : 'Desktop') . '.';
+    // Hostname obrigatório para notebooks, desktops e TVs
+    $tiposComHostname = ['notebook', 'desktop', 'tv'];
+    if (in_array($tipo, $tiposComHostname) && empty($hostname)) {
+        $nomes = ['notebook' => 'Notebook', 'desktop' => 'Desktop', 'tv' => 'TV'];
+        $erros[] = 'O hostname é obrigatório para equipamentos do tipo ' . ($nomes[$tipo] ?? $tipo) . '.';
     } elseif (!empty($hostname) && !preg_match('/^[a-zA-Z0-9\-_]+$/', $hostname)) {
         $erros[] = 'O hostname deve conter apenas letras, números, hífen ou underline.';
     }
@@ -117,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erros[] = 'Este número de série já está cadastrado para outro equipamento.';
     }
 
-    if (!empty($hostname) && ($tipo === 'notebook' || $tipo === 'desktop') && hostnameExiste($hostname, $equipamento['id'])) {
+    if (!empty($hostname) && in_array($tipo, ['notebook', 'desktop', 'tv']) && hostnameExiste($hostname, $equipamento['id'])) {
         $erros[] = 'Este hostname já está cadastrado para outro equipamento.';
     }
 
@@ -169,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'modelo'                  => $modelo ?: null,
             'patrimonio'              => $patrimonio,
             'serial'                  => $serial ?: null,
-            'hostname'                => ($tipo === 'notebook' || $tipo === 'desktop') ? ($hostname ?: null) : null,
+            'hostname'                => in_array($tipo, ['notebook', 'desktop', 'tv']) ? ($hostname ?: null) : null,
             'centro_custo'            => $centro_custo ?: null,
             'especificacoes'          => !empty($especificacoes) ? $especificacoes : null,
             'status'                  => $status,
@@ -513,13 +515,14 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
                 </div>
 
                 <div class="form-group">
-                    <label for="hostname"><i class="fas fa-network-wired"></i> Hostname <span id="hostname-required" class="required" style="display: <?php echo in_array($equipamento['tipo'], ['notebook', 'desktop']) ? 'inline' : 'none'; ?>;">*</span></label>
-                    <input type="text" id="hostname" name="hostname" value="<?php echo htmlspecialchars($equipamento['hostname'] ?? ''); ?>" class="form-control" placeholder="Ex: NOTEBOOK-001, PC-123">
+                    <label for="hostname"><i class="fas fa-network-wired"></i> Hostname <span id="hostname-required" class="required" style="display: <?php echo in_array($equipamento['tipo'], ['notebook', 'desktop', 'tv']) ? 'inline' : 'none'; ?>;">*</span></label>
+                    <input type="text" id="hostname" name="hostname" value="<?php echo htmlspecialchars($equipamento['hostname'] ?? ''); ?>" class="form-control" placeholder="Ex: NOTEBOOK-001, PC-123, TV-01">
                     <small class="form-text" id="hostname-help">
-                        <?php if (in_array($equipamento['tipo'], ['notebook', 'desktop'])): ?>
-                            <strong>Obrigatório</strong> para <?php echo $equipamento['tipo'] === 'notebook' ? 'Notebooks' : 'Desktops'; ?>
+                        <?php if (in_array($equipamento['tipo'], ['notebook', 'desktop', 'tv'])): ?>
+                            <?php $nomeTipo = ['notebook' => 'Notebooks', 'desktop' => 'Desktops', 'tv' => 'TVs'][$equipamento['tipo']]; ?>
+                            <strong>Obrigatório</strong> para <?php echo $nomeTipo; ?>
                         <?php else: ?>
-                            Obrigatório apenas para Notebooks e Desktops
+                            Obrigatório para Notebooks, Desktops e TVs
                         <?php endif; ?>
                     </small>
                 </div>
@@ -726,15 +729,17 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
         const hostnameHelp = document.getElementById('hostname-help');
         const especificacoesSection = document.getElementById('especificacoes-section');
 
-        if (tipo === 'notebook' || tipo === 'desktop') {
+        const tiposComHostname = ['notebook', 'desktop', 'tv'];
+        const nomesTipo = { 'notebook': 'Notebooks', 'desktop': 'Desktops', 'tv': 'TVs' };
+        if (tiposComHostname.includes(tipo)) {
             hostnameInput.required = true;
             hostnameRequiredSpan.style.display = 'inline';
-            hostnameHelp.innerHTML = '<strong>Obrigatório</strong> para ' + (tipo === 'notebook' ? 'Notebooks' : 'Desktops');
+            hostnameHelp.innerHTML = '<strong>Obrigatório</strong> para ' + (nomesTipo[tipo] || tipo);
             hostnameHelp.style.color = 'var(--danger)';
         } else {
             hostnameInput.required = false;
             hostnameRequiredSpan.style.display = 'none';
-            hostnameHelp.innerHTML = 'Obrigatório apenas para Notebooks e Desktops';
+            hostnameHelp.innerHTML = 'Obrigatório para Notebooks, Desktops e TVs';
             hostnameHelp.style.color = 'var(--gray-500)';
         }
 
@@ -799,8 +804,10 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
                     alert('Selecione o tipo de equipamento.');
                     e.preventDefault(); return false;
                 }
-                if ((tipo === 'notebook' || tipo === 'desktop') && hostname === '') {
-                    alert('O hostname é obrigatório para equipamentos do tipo ' + (tipo === 'notebook' ? 'Notebook' : 'Desktop') + '.');
+                const tiposComHostnameSubmit = ['notebook', 'desktop', 'tv'];
+                const nomesTipoSubmit = { 'notebook': 'Notebook', 'desktop': 'Desktop', 'tv': 'TV' };
+                if (tiposComHostnameSubmit.includes(tipo) && hostname === '') {
+                    alert('O hostname é obrigatório para equipamentos do tipo ' + (nomesTipoSubmit[tipo] || tipo) + '.');
                     e.preventDefault(); return false;
                 }
                 if ((status === 'alocado' || status === 'emprestado') && colaborador === '') {
