@@ -284,8 +284,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <?php if ($can_edit): ?>
             <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                <a href="alocar_sequencial.php" class="btn btn-outline">
-                    <i class="fas fa-list-ol"></i> Alocar Sequencial
+                <a href="relatorio_centro_custo.php" class="btn btn-outline">
+                    <i class="fas fa-list-ol"></i>Relatorio Centro Custo
                 </a>
                 <a href="adicionar.php" class="btn btn-primary">
                     <i class="fas fa-plus"></i> Adicionar Linha
@@ -327,7 +327,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
         </div>
-        <div class="stat-card" style="border-left: 4px solid var(--warning);">
+        <div class="stat-card">
             <div class="stat-icon" style="background: rgba(255, 193, 7, 0.15); color: var(--warning);">
                 <i class="fas fa-ban"></i>
             </div>
