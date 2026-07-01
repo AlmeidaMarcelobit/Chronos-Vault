@@ -72,25 +72,77 @@ if (!empty($tipo)) {
 $totalFiltrado = count($linhas);
 
 // Processar ação de indisponível
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['indisponivel'])) {
-    $id = $_POST['id'] ?? null;
-    if ($id) {
-        foreach ($linhas as $index => $linha) {
-            if ($linha['id'] == $id) {
-                $linhas[$index]['status'] = 'indisponivel';
-                $linhas[$index]['data_atualizacao'] = date('Y-m-d H:i:s');
-                break;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['indisponivel'])) {
+        $id = $_POST['id'] ?? null;
+        if ($id) {
+            foreach ($linhas as $index => $linha) {
+                if ($linha['id'] == $id) {
+                    // Marcar como indisponível, remover colaborador e colocar centro de custo padrão
+                    $linhas[$index]['status'] = 'indisponivel';
+                    $linhas[$index]['colaborador_id'] = null;
+                    $linhas[$index]['centro_custo'] = '11001';
+                    $linhas[$index]['data_atualizacao'] = date('Y-m-d H:i:s');
+                    
+                    // Adicionar observação no histórico
+                    if (!isset($linhas[$index]['historico'])) {
+                        $linhas[$index]['historico'] = [];
+                    }
+                    $linhas[$index]['historico'][] = [
+                        'data' => date('Y-m-d H:i:s'),
+                        'acao' => 'Marcado como Indisponível',
+                        'centro_custo_anterior' => $linha['centro_custo'],
+                        'centro_custo_novo' => '11001'
+                    ];
+                    break;
+                }
             }
+            if (salvarArquivoJSON('../data/linhas.json', $linhas)) {
+                $_SESSION['mensagem'] = 'Linha marcada como indisponível! Centro de custo alterado para 11001.';
+                $_SESSION['mensagem_tipo'] = 'success';
+            } else {
+                $_SESSION['mensagem'] = 'Erro ao marcar linha como indisponível.';
+                $_SESSION['mensagem_tipo'] = 'error';
+            }
+            header('Location: index.php');
+            exit;
         }
-        if (salvarArquivoJSON('../data/linhas.json', $linhas)) {
-            $_SESSION['mensagem'] = 'Linha marcada como indisponível com sucesso!';
-            $_SESSION['mensagem_tipo'] = 'success';
-        } else {
-            $_SESSION['mensagem'] = 'Erro ao marcar linha como indisponível.';
-            $_SESSION['mensagem_tipo'] = 'error';
+    }
+    
+    if (isset($_POST['disponivel'])) {
+        $id = $_POST['id'] ?? null;
+        if ($id) {
+            foreach ($linhas as $index => $linha) {
+                if ($linha['id'] == $id) {
+                    // Marcar como disponível, remover colaborador e colocar centro de custo padrão
+                    $linhas[$index]['status'] = 'disponivel';
+                    $linhas[$index]['colaborador_id'] = null;
+                    $linhas[$index]['centro_custo'] = '11001';
+                    $linhas[$index]['data_atualizacao'] = date('Y-m-d H:i:s');
+                    
+                    // Adicionar observação no histórico
+                    if (!isset($linhas[$index]['historico'])) {
+                        $linhas[$index]['historico'] = [];
+                    }
+                    $linhas[$index]['historico'][] = [
+                        'data' => date('Y-m-d H:i:s'),
+                        'acao' => 'Marcado como Disponível',
+                        'centro_custo_anterior' => $linha['centro_custo'],
+                        'centro_custo_novo' => '11001'
+                    ];
+                    break;
+                }
+            }
+            if (salvarArquivoJSON('../data/linhas.json', $linhas)) {
+                $_SESSION['mensagem'] = 'Linha marcada como disponível! Centro de custo alterado para 11001.';
+                $_SESSION['mensagem_tipo'] = 'success';
+            } else {
+                $_SESSION['mensagem'] = 'Erro ao marcar linha como disponível.';
+                $_SESSION['mensagem_tipo'] = 'error';
+            }
+            header('Location: index.php');
+            exit;
         }
-        header('Location: index.php');
-        exit;
     }
 }
 ?>
@@ -106,12 +158,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['indisponivel'])) {
     <link rel="icon" href="../img/favicon/favicon.png">
     <style>
         /* ========================================
-           NOVOS ESTILOS PARA O BOTÃO INDISPONÍVEL
+           NOVOS ESTILOS PARA OS BOTÕES
            ======================================== */
         .action-indisponivel:hover {
             background: var(--warning);
             color: var(--white);
             border-color: var(--warning);
+        }
+
+        .action-disponivel:hover {
+            background: var(--success);
+            color: var(--white);
+            border-color: var(--success);
         }
 
         .status-indisponivel {
@@ -386,10 +444,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['indisponivel'])) {
                                 <!-- Botão Indisponível (apenas para linhas Disponíveis ou Alocadas) -->
                                 <?php if ($can_edit && in_array($linha['status'], ['disponivel', 'alocado'])): ?>
                                     <form method="POST" style="display: inline-block;" 
-                                          onsubmit="return confirm('Tem certeza que deseja marcar esta linha como INDISPONÍVEL?')">
+                                          onsubmit="return confirm('Tem certeza que deseja marcar esta linha como INDISPONÍVEL? O centro de custo será alterado para 11001 e o vínculo com colaborador será removido.')">
                                         <input type="hidden" name="id" value="<?php echo $linha['id']; ?>">
                                         <button type="submit" name="indisponivel" class="action-btn action-indisponivel" title="Marcar como Indisponível">
                                             <i class="fas fa-ban"></i>
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
+
+                                <!-- Botão Disponível (apenas para linhas Indisponíveis) -->
+                                <?php if ($can_edit && $linha['status'] === 'indisponivel'): ?>
+                                    <form method="POST" style="display: inline-block;" 
+                                          onsubmit="return confirm('Tem certeza que deseja marcar esta linha como DISPONÍVEL? O centro de custo será alterado para 11001.')">
+                                        <input type="hidden" name="id" value="<?php echo $linha['id']; ?>">
+                                        <button type="submit" name="disponivel" class="action-btn action-disponivel" title="Marcar como Disponível">
+                                            <i class="fas fa-check-circle"></i>
                                         </button>
                                     </form>
                                 <?php endif; ?>
