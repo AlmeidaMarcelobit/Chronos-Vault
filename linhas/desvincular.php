@@ -177,6 +177,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])) {
             <h3><i class="fas fa-phone"></i> Dados da Linha</h3>
             <div class="info-grid">
                 <div class="info-item"><span class="info-label">Número:</span><span class="info-value"><?php echo formatarTelefone($linhaAtual['numero']); ?></span></div>
+                <div class="info-item">
+    <span class="info-label">IMEI:</span>
+    <span class="info-value"><?php echo !empty($linhaAtual['imei']) ? htmlspecialchars($linhaAtual['imei']) : '---'; ?></span>
+</div>
                 <div class="info-item"><span class="info-label">Tipo:</span><span class="info-value"><?php echo getTipoLinhaTexto($linhaAtual['tipo']); ?></span></div>
                 <div class="info-item">
                     <span class="info-label">Centro de Custo Atual:</span>

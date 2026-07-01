@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status        = $_POST['status'] ?? 'disponivel';
     $colaborador_id = !empty($_POST['colaborador_id']) ? $_POST['colaborador_id'] : null;
     $observacoes   = trim($_POST['observacoes'] ?? '');
+    $imei          = trim($_POST['imei'] ?? '');
 
     // Centro de custo: do colaborador se alocado, senão 11001
     if ($status === 'alocado' && $colaborador_id && isset($mapaColaboradores[$colaborador_id])) {
@@ -40,6 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erros[] = 'Número inválido. Use o formato DDD + número (ex: 16 99999-9999)';
     }
 
+    // Validar IMEI se informado (15 dígitos)
+    if (!empty($imei)) {
+        $imeiLimpo = preg_replace('/[^0-9]/', '', $imei);
+        if (strlen($imeiLimpo) !== 15) {
+            $erros[] = 'IMEI inválido. Deve conter exatamente 15 dígitos.';
+        }
+    }
+
     if ($status === 'alocado' && empty($colaborador_id)) {
         $erros[] = 'Selecione um colaborador para alocar a linha.';
     }
@@ -48,6 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($linhas as $linha) {
         if ($linha['numero'] === $numero) {
             $erros[] = 'Este número já está cadastrado no sistema.';
+            break;
+        }
+        // Verificar IMEI duplicado
+        if (!empty($imei) && isset($linha['imei']) && $linha['imei'] === $imei) {
+            $erros[] = 'Este IMEI já está cadastrado no sistema.';
             break;
         }
     }
@@ -60,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'centro_custo'   => $centro_custo,
             'status'         => $status,
             'colaborador_id' => ($status === 'alocado') ? $colaborador_id : null,
+            'imei'           => !empty($imei) ? preg_replace('/[^0-9]/', '', $imei) : null,
             'observacoes'    => $observacoes,
             'data_cadastro'  => date('Y-m-d H:i:s'),
             'data_atualizacao' => date('Y-m-d H:i:s')
@@ -178,6 +193,19 @@ foreach ($colaboradores as $c) {
                            placeholder="16 99999-9999"
                            maxlength="14">
                     <small class="form-text">Formato: DDD + número (ex: 16 99999-9999)</small>
+                </div>
+
+                <!-- IMEI -->
+                <div class="form-group">
+                    <label for="imei"><i class="fas fa-microchip"></i> IMEI</label>
+                    <input type="text"
+                           id="imei"
+                           name="imei"
+                           value="<?php echo htmlspecialchars($_POST['imei'] ?? ''); ?>"
+                           class="form-control"
+                           placeholder="123456789012345"
+                           maxlength="15">
+                    <small class="form-text">Opcional - 15 dígitos. Apenas números.</small>
                 </div>
 
                 <!-- Tipo -->
@@ -323,6 +351,11 @@ foreach ($colaboradores as $c) {
         if (v.length === 11) v = v.replace(/(\d{2})(\d{5})(\d{4})/, '$1 $2-$3');
         else if (v.length === 10) v = v.replace(/(\d{2})(\d{4})(\d{4})/, '$1 $2-$3');
         e.target.value = v;
+    });
+
+    // Máscara IMEI (apenas números)
+    document.getElementById('imei').addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/\D/g, '').substring(0, 15);
     });
 
     // Auto-fechar alerta

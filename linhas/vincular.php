@@ -185,6 +185,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <span class="info-value numero-link"><?php echo formatarTelefone($linhaAtual['numero']); ?></span>
                 </div>
                 <div class="info-item">
+    <span class="info-label">IMEI:</span>
+    <span class="info-value"><?php echo !empty($linhaAtual['imei']) ? htmlspecialchars($linhaAtual['imei']) : '---'; ?></span>
+</div>
+                <div class="info-item">
                     <span class="info-label">Tipo:</span>
                     <span class="info-value"><?php echo getTipoLinhaTexto($linhaAtual['tipo']); ?></span>
                 </div>

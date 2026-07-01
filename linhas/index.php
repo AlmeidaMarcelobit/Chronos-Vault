@@ -51,7 +51,8 @@ if (!empty($busca)) {
         $numeroPuro = preg_replace('/[^0-9]/', '', $linha['numero']);
         return stripos($linha['numero'], $buscaLower) !== false ||
                 stripos($numeroPuro, $buscaNumeros) !== false ||
-                stripos($linha['centro_custo'], $buscaLower) !== false;
+                stripos($linha['centro_custo'], $buscaLower) !== false ||
+                stripos($linha['imei'] ?? '', $buscaLower) !== false;
     });
 }
 
@@ -70,6 +71,7 @@ if (!empty($tipo)) {
 }
 
 $totalFiltrado = count($linhas);
+
 // Processar ações (INDISPONÍVEL e DISPONÍVEL)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Recarregar o array completo de linhas (sem filtros)
@@ -165,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 ?>
-
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -202,6 +204,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         /* Badge Indisponível */
+        .status-badge.status-indisponivel {
+            background: rgba(255, 193, 7, 0.15);
+            color: #856404;
+        }
+
+        .status-badge.status-indisponivel i {
+            color: var(--warning);
+        }
+
+        /* IMEI Badge */
+        .imei-badge {
+            font-family: monospace;
+            font-size: 0.7rem;
+            background: var(--gray-100);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--gray-600);
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+
+        .imei-badge.empty {
+            background: transparent;
+            color: var(--gray-400);
+        }
+
         .status-badge.status-indisponivel {
             background: rgba(255, 193, 7, 0.15);
             color: #856404;
@@ -319,7 +347,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="filter-grid">
                 <div class="filter-group">
                     <label><i class="fas fa-search"></i> Buscar</label>
-                    <input type="text" name="busca" class="form-control" placeholder="Número (ex: 16 99618-5975) ou Centro de Custo..." value="<?php echo htmlspecialchars($busca); ?>">
+                    <input type="text" name="busca" class="form-control" placeholder="Número, Centro de Custo ou IMEI..." value="<?php echo htmlspecialchars($busca); ?>">
                 </div>
                 <div class="filter-group">
                     <label><i class="fas fa-tag"></i> Tipo</label>
@@ -356,6 +384,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <th>Centro de Custo</th>
                 <th>Status</th>
                 <th>Colaborador</th>
+                <th>IMEI</th>
                 <th>Cadastro</th>
                 <th>Ações</th>
             </tr>
@@ -363,7 +392,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <tbody>
             <?php if (empty($linhas)): ?>
                 <tr>
-                    <td colspan="7" class="empty-state">
+                    <td colspan="8" class="empty-state">
                         <i class="fas fa-phone-slash"></i>
                         <p>Nenhuma linha encontrada</p>
                         <?php if ($busca || $status || $tipo): ?>
@@ -391,6 +420,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                     
                     $tipoClass = $linha['tipo'] === 'chip' ? 'tipo-badge-chip' : 'tipo-badge-echip';
+                    
+                    // IMEI
+                    $imeiDisplay = '---';
+                    if (!empty($linha['imei'])) {
+                        $imeiDisplay = '<span class="imei-badge">' . htmlspecialchars($linha['imei']) . '</span>';
+                    }
                     ?>
                     <tr>
                         <td data-label="Número">
@@ -436,6 +471,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <?php else: ?>
                                 <span class="text-muted">---</span>
                             <?php endif; ?>
+                        </td>
+                        <td data-label="IMEI">
+                            <?php echo $imeiDisplay; ?>
                         </td>
                         <td data-label="Cadastro">
                             <span class="data-cadastro">
