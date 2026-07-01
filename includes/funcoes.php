@@ -1,4 +1,7 @@
 <?php
+// Define o fuso horário para América/São Paulo (Brasília)
+date_default_timezone_set('America/Sao_Paulo');
+
 // Inicia a sessão se não estiver iniciada
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
