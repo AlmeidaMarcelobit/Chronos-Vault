@@ -70,38 +70,48 @@ if (!empty($tipo)) {
 }
 
 $totalFiltrado = count($linhas);
-
-// Processar ação de indisponível
+// Processar ações (INDISPONÍVEL e DISPONÍVEL)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Recarregar o array completo de linhas (sem filtros)
+    $todasLinhas = lerArquivoJSON('../data/linhas.json');
+    
     if (isset($_POST['indisponivel'])) {
         $id = $_POST['id'] ?? null;
         if ($id) {
-            foreach ($linhas as $index => $linha) {
+            $linhaEncontrada = false;
+            foreach ($todasLinhas as $index => $linha) {
                 if ($linha['id'] == $id) {
                     // Marcar como indisponível, remover colaborador e colocar centro de custo padrão
-                    $linhas[$index]['status'] = 'indisponivel';
-                    $linhas[$index]['colaborador_id'] = null;
-                    $linhas[$index]['centro_custo'] = '11001';
-                    $linhas[$index]['data_atualizacao'] = date('Y-m-d H:i:s');
+                    $todasLinhas[$index]['status'] = 'indisponivel';
+                    $todasLinhas[$index]['colaborador_id'] = null;
+                    $todasLinhas[$index]['centro_custo'] = '11001';
+                    $todasLinhas[$index]['data_atualizacao'] = date('Y-m-d H:i:s');
                     
                     // Adicionar observação no histórico
-                    if (!isset($linhas[$index]['historico'])) {
-                        $linhas[$index]['historico'] = [];
+                    if (!isset($todasLinhas[$index]['historico'])) {
+                        $todasLinhas[$index]['historico'] = [];
                     }
-                    $linhas[$index]['historico'][] = [
+                    $todasLinhas[$index]['historico'][] = [
                         'data' => date('Y-m-d H:i:s'),
                         'acao' => 'Marcado como Indisponível',
                         'centro_custo_anterior' => $linha['centro_custo'],
                         'centro_custo_novo' => '11001'
                     ];
+                    $linhaEncontrada = true;
                     break;
                 }
             }
-            if (salvarArquivoJSON('../data/linhas.json', $linhas)) {
-                $_SESSION['mensagem'] = 'Linha marcada como indisponível! Centro de custo alterado para 11001.';
-                $_SESSION['mensagem_tipo'] = 'success';
+            
+            if ($linhaEncontrada) {
+                if (salvarArquivoJSON('../data/linhas.json', $todasLinhas)) {
+                    $_SESSION['mensagem'] = 'Linha marcada como indisponível! Centro de custo alterado para 11001.';
+                    $_SESSION['mensagem_tipo'] = 'success';
+                } else {
+                    $_SESSION['mensagem'] = 'Erro ao marcar linha como indisponível.';
+                    $_SESSION['mensagem_tipo'] = 'error';
+                }
             } else {
-                $_SESSION['mensagem'] = 'Erro ao marcar linha como indisponível.';
+                $_SESSION['mensagem'] = 'Linha não encontrada.';
                 $_SESSION['mensagem_tipo'] = 'error';
             }
             header('Location: index.php');
@@ -112,32 +122,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['disponivel'])) {
         $id = $_POST['id'] ?? null;
         if ($id) {
-            foreach ($linhas as $index => $linha) {
+            $linhaEncontrada = false;
+            foreach ($todasLinhas as $index => $linha) {
                 if ($linha['id'] == $id) {
                     // Marcar como disponível, remover colaborador e colocar centro de custo padrão
-                    $linhas[$index]['status'] = 'disponivel';
-                    $linhas[$index]['colaborador_id'] = null;
-                    $linhas[$index]['centro_custo'] = '11001';
-                    $linhas[$index]['data_atualizacao'] = date('Y-m-d H:i:s');
+                    $todasLinhas[$index]['status'] = 'disponivel';
+                    $todasLinhas[$index]['colaborador_id'] = null;
+                    $todasLinhas[$index]['centro_custo'] = '11001';
+                    $todasLinhas[$index]['data_atualizacao'] = date('Y-m-d H:i:s');
                     
                     // Adicionar observação no histórico
-                    if (!isset($linhas[$index]['historico'])) {
-                        $linhas[$index]['historico'] = [];
+                    if (!isset($todasLinhas[$index]['historico'])) {
+                        $todasLinhas[$index]['historico'] = [];
                     }
-                    $linhas[$index]['historico'][] = [
+                    $todasLinhas[$index]['historico'][] = [
                         'data' => date('Y-m-d H:i:s'),
                         'acao' => 'Marcado como Disponível',
                         'centro_custo_anterior' => $linha['centro_custo'],
                         'centro_custo_novo' => '11001'
                     ];
+                    $linhaEncontrada = true;
                     break;
                 }
             }
-            if (salvarArquivoJSON('../data/linhas.json', $linhas)) {
-                $_SESSION['mensagem'] = 'Linha marcada como disponível! Centro de custo alterado para 11001.';
-                $_SESSION['mensagem_tipo'] = 'success';
+            
+            if ($linhaEncontrada) {
+                if (salvarArquivoJSON('../data/linhas.json', $todasLinhas)) {
+                    $_SESSION['mensagem'] = 'Linha marcada como disponível! Centro de custo alterado para 11001.';
+                    $_SESSION['mensagem_tipo'] = 'success';
+                } else {
+                    $_SESSION['mensagem'] = 'Erro ao marcar linha como disponível.';
+                    $_SESSION['mensagem_tipo'] = 'error';
+                }
             } else {
-                $_SESSION['mensagem'] = 'Erro ao marcar linha como disponível.';
+                $_SESSION['mensagem'] = 'Linha não encontrada.';
                 $_SESSION['mensagem_tipo'] = 'error';
             }
             header('Location: index.php');
@@ -145,8 +163,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
 ?>
-<!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
