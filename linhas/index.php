@@ -12,7 +12,7 @@ if (!isset($_SESSION['usuario_id'])) {
 $usuario_nivel = $_SESSION['usuario_nivel'] ?? 'user';
 $is_admin = ($usuario_nivel === 'admin');
 $is_view = ($usuario_nivel === 'view');
-$can_edit = ($is_admin || $usuario_nivel === 'user'); // Admin e usuário comum podem editar
+$can_edit = ($is_admin || $usuario_nivel === 'user');
 
 $linhas = lerArquivoJSON('../data/linhas.json');
 $colaboradores = lerArquivoJSON('../data/colaboradores/ativos.json');
@@ -32,6 +32,7 @@ usort($linhas, function($a, $b) {
 $totalLinhas = count($linhas);
 $totalDisponiveis = count(array_filter($linhas, function($l) { return $l['status'] === 'disponivel'; }));
 $totalAlocados = count(array_filter($linhas, function($l) { return $l['status'] === 'alocado'; }));
+$totalIndisponiveis = count(array_filter($linhas, function($l) { return $l['status'] === 'indisponivel'; }));
 $totalChips = count(array_filter($linhas, function($l) { return $l['tipo'] === 'chip'; }));
 $totalEChips = count(array_filter($linhas, function($l) { return $l['tipo'] === 'echip'; }));
 $pctAlocados = $totalLinhas > 0 ? round(($totalAlocados / $totalLinhas) * 100) : 0;
@@ -41,7 +42,7 @@ $busca = $_GET['busca'] ?? '';
 $status = $_GET['status'] ?? '';
 $tipo = $_GET['tipo'] ?? '';
 
-// Filtrar por busca (apenas uma vez)
+// Filtrar por busca
 if (!empty($busca)) {
     $buscaLower = strtolower($busca);
     $buscaNumeros = preg_replace('/[^0-9]/', '', $busca);
@@ -69,7 +70,31 @@ if (!empty($tipo)) {
 }
 
 $totalFiltrado = count($linhas);
+
+// Processar ação de indisponível
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['indisponivel'])) {
+    $id = $_POST['id'] ?? null;
+    if ($id) {
+        foreach ($linhas as $index => $linha) {
+            if ($linha['id'] == $id) {
+                $linhas[$index]['status'] = 'indisponivel';
+                $linhas[$index]['data_atualizacao'] = date('Y-m-d H:i:s');
+                break;
+            }
+        }
+        if (salvarArquivoJSON('../data/linhas.json', $linhas)) {
+            $_SESSION['mensagem'] = 'Linha marcada como indisponível com sucesso!';
+            $_SESSION['mensagem_tipo'] = 'success';
+        } else {
+            $_SESSION['mensagem'] = 'Erro ao marcar linha como indisponível.';
+            $_SESSION['mensagem_tipo'] = 'error';
+        }
+        header('Location: index.php');
+        exit;
+    }
+}
 ?>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -77,8 +102,38 @@ $totalFiltrado = count($linhas);
     <title>Linhas Telefônicas - Sistema de Gestão</title>
     <link rel="stylesheet" href="../css/linhas/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="icon" href="../img/favicon/favicon.png">
+    <style>
+        /* ========================================
+           NOVOS ESTILOS PARA O BOTÃO INDISPONÍVEL
+           ======================================== */
+        .action-indisponivel:hover {
+            background: var(--warning);
+            color: var(--white);
+            border-color: var(--warning);
+        }
+
+        .status-indisponivel {
+            background: rgba(255, 193, 7, 0.15);
+            color: #856404;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .status-indisponivel i {
+            color: var(--warning);
+        }
+
+        /* Badge Indisponível */
+        .status-badge.status-indisponivel {
+            background: rgba(255, 193, 7, 0.15);
+            color: #856404;
+        }
+
+        .status-badge.status-indisponivel i {
+            color: var(--warning);
+        }
+    </style>
 </head>
 <body>
 <!-- HEADER -->
@@ -94,13 +149,6 @@ $totalFiltrado = count($linhas);
             <div class="user-info">
                 <i class="fas fa-user-circle"></i>
                 <span class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?></span>
-<!--                --><?php //if ($is_admin): ?>
-<!--                    <span class="user-level user-level-admin">Admin</span>-->
-<!--                --><?php //elseif ($is_view): ?>
-<!--                    <span class="user-level user-level-view">Visualizador</span>-->
-<!--                --><?php //else: ?>
-<!--                    <span class="user-level user-level-user">Usuário</span>-->
-<!--                --><?php //endif; ?>
             </div>
             <a href="../logout.php" class="logout-btn">
                 <i class="fas fa-sign-out-alt"></i>
@@ -114,8 +162,8 @@ $totalFiltrado = count($linhas);
             <li class="nav-item"><a href="../colaboradores/index.php" class="nav-link"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
             <li class="nav-item"><a href="../equipamentos/index.php" class="nav-link"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
             <li class="nav-item"><a href="../linhas/index.php" class="nav-link active"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
-           <?php if ($is_admin): ?>
-                <li class="nav-item"><a href="../Termos/index.php" class="nav-link"><i class="fas fa-file-contract"></i><span>Termos</span></a></li>
+            <?php if ($is_admin): ?>
+                <li class="nav-item"><a href="../termos/index.php" class="nav-link"><i class="fas fa-file-contract"></i><span>Termos</span></a></li>
                 <li class="nav-item"><a href="../usuarios/index.php" class="nav-link"><i class="fas fa-user-cog"></i><span>Usuários</span></a></li>
             <?php endif; ?>
         </ul>
@@ -130,13 +178,14 @@ $totalFiltrado = count($linhas);
             <p class="page-subtitle">Gerencie as linhas Vivo (Chip e E-Chip) da organização</p>
         </div>
         <?php if ($can_edit): ?>
-            <a href="alocar_sequencial.php" class="btn btn-outline">
-                <i class="fas fa-list-ol"></i> Alocar Sequencial
-            </a>
-            <a href="adicionar.php" class="btn btn-primary">
-                <i class="fas fa-plus"></i> Adicionar Linha
-            </a>
-
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="alocar_sequencial.php" class="btn btn-outline">
+                    <i class="fas fa-list-ol"></i> Alocar Sequencial
+                </a>
+                <a href="adicionar.php" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Adicionar Linha
+                </a>
+            </div>
         <?php endif; ?>
     </div>
 
@@ -173,12 +222,16 @@ $totalFiltrado = count($linhas);
                 </div>
             </div>
         </div>
-        <div class="stat-card stat-info">
-            <div class="stat-icon"><i class="fas fa-users"></i></div>
+        <div class="stat-card" style="border-left: 4px solid var(--warning);">
+            <div class="stat-icon" style="background: rgba(255, 193, 7, 0.15); color: var(--warning);">
+                <i class="fas fa-ban"></i>
+            </div>
             <div class="stat-content">
-                <h3>Colaboradores Ativos</h3>
-                <p class="stat-number"><?php echo count($colaboradores); ?></p>
-            
+                <h3>Indisponíveis</h3>
+                <p class="stat-number"><?php echo $totalIndisponiveis; ?></p>
+                <div class="stat-bar-wrap">
+                    <div class="stat-bar" style="width:<?php echo $totalLinhas > 0 ? round(($totalIndisponiveis/$totalLinhas)*100) : 0; ?>%; background: var(--warning);"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -205,6 +258,7 @@ $totalFiltrado = count($linhas);
                         <option value="">Todos</option>
                         <option value="disponivel" <?php echo $status == 'disponivel' ? 'selected' : ''; ?>>Disponível</option>
                         <option value="alocado" <?php echo $status == 'alocado' ? 'selected' : ''; ?>>Alocado</option>
+                        <option value="indisponivel" <?php echo $status == 'indisponivel' ? 'selected' : ''; ?>>Indisponível</option>
                     </select>
                 </div>
             </div>
@@ -248,7 +302,17 @@ $totalFiltrado = count($linhas);
                     if (!empty($linha['colaborador_id']) && isset($mapaColaboradores[$linha['colaborador_id']])) {
                         $colaboradorNome = $mapaColaboradores[$linha['colaborador_id']]['nome'];
                     }
-                    $statusClass = $linha['status'] === 'disponivel' ? 'status-ativo' : 'status-inativo';
+                    
+                    // Classes de status
+                    $statusClass = '';
+                    if ($linha['status'] === 'disponivel') {
+                        $statusClass = 'status-ativo';
+                    } elseif ($linha['status'] === 'alocado') {
+                        $statusClass = 'status-inativo';
+                    } elseif ($linha['status'] === 'indisponivel') {
+                        $statusClass = 'status-indisponivel';
+                    }
+                    
                     $tipoClass = $linha['tipo'] === 'chip' ? 'tipo-badge-chip' : 'tipo-badge-echip';
                     ?>
                     <tr>
@@ -271,8 +335,19 @@ $totalFiltrado = count($linhas);
                         </td>
                         <td data-label="Status">
                             <span class="status-badge <?php echo $statusClass; ?>">
-                                <i class="fas fa-<?php echo $linha['status'] === 'disponivel' ? 'check-circle' : 'user-check'; ?>"></i>
-                                <?php echo getStatusLinhaTexto($linha['status']); ?>
+                                <i class="fas fa-<?php 
+                                    echo $linha['status'] === 'disponivel' ? 'check-circle' : 
+                                        ($linha['status'] === 'alocado' ? 'user-check' : 'ban'); 
+                                ?>"></i>
+                                <?php 
+                                    if ($linha['status'] === 'disponivel') {
+                                        echo 'Disponível';
+                                    } elseif ($linha['status'] === 'alocado') {
+                                        echo 'Alocado';
+                                    } elseif ($linha['status'] === 'indisponivel') {
+                                        echo 'Indisponível';
+                                    }
+                                ?>
                             </span>
                         </td>
                         <td data-label="Colaborador">
@@ -303,9 +378,20 @@ $totalFiltrado = count($linhas);
                                         <i class="fas fa-user-plus"></i>
                                     </a>
                                 <?php elseif ($can_edit && $linha['status'] === 'alocado'): ?>
-                                    <a href="desvincular.php?id=<?php echo $linha['id']; ?>" class="action-btn action-return" title="Desvincular" onclick="return confirm('Desvincular esta linha do colaborador? O centro de custo será alterado para 11001 .')">
+                                    <a href="desvincular.php?id=<?php echo $linha['id']; ?>" class="action-btn action-return" title="Desvincular" onclick="return confirm('Desvincular esta linha do colaborador? O centro de custo será alterado para 11001.')">
                                         <i class="fas fa-user-slash"></i>
                                     </a>
+                                <?php endif; ?>
+
+                                <!-- Botão Indisponível (apenas para linhas Disponíveis ou Alocadas) -->
+                                <?php if ($can_edit && in_array($linha['status'], ['disponivel', 'alocado'])): ?>
+                                    <form method="POST" style="display: inline-block;" 
+                                          onsubmit="return confirm('Tem certeza que deseja marcar esta linha como INDISPONÍVEL?')">
+                                        <input type="hidden" name="id" value="<?php echo $linha['id']; ?>">
+                                        <button type="submit" name="indisponivel" class="action-btn action-indisponivel" title="Marcar como Indisponível">
+                                            <i class="fas fa-ban"></i>
+                                        </button>
+                                    </form>
                                 <?php endif; ?>
 
                                 <?php if ($can_edit): ?>
