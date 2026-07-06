@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($imei)) {
         $imeiLimpo = preg_replace('/[^0-9]/', '', $imei);
         if (strlen($imeiLimpo) !== 22) {
-            $erros[] = 'IMEI inválido. Deve conter exatamente 15 dígitos.';
+            $erros[] = 'IMEI inválido. Deve conter exatamente 22 dígitos.';
         }
     }
 
