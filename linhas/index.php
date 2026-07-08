@@ -33,6 +33,7 @@ $totalLinhas = count($linhas);
 $totalDisponiveis = count(array_filter($linhas, function($l) { return $l['status'] === 'disponivel'; }));
 $totalAlocados = count(array_filter($linhas, function($l) { return $l['status'] === 'alocado'; }));
 $totalIndisponiveis = count(array_filter($linhas, function($l) { return $l['status'] === 'indisponivel'; }));
+$totalWhatsappBloqueado = count(array_filter($linhas, function($l) { return $l['status'] === 'whatsapp_bloqueado'; }));
 $totalChips = count(array_filter($linhas, function($l) { return $l['tipo'] === 'chip'; }));
 $totalEChips = count(array_filter($linhas, function($l) { return $l['tipo'] === 'echip'; }));
 $pctAlocados = $totalLinhas > 0 ? round(($totalAlocados / $totalLinhas) * 100) : 0;
@@ -121,6 +122,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     
+    if (isset($_POST['whatsapp_bloqueado'])) {
+        $id = $_POST['id'] ?? null;
+        if ($id) {
+            $linhaEncontrada = false;
+            $naoAlocada = false;
+            foreach ($todasLinhas as $index => $linha) {
+                if ($linha['id'] == $id) {
+                    if ($linha['status'] !== 'alocado') {
+                        $naoAlocada = true;
+                        break;
+                    }
+                    // Marcar como Whatsapp Bloqueado, remover colaborador e colocar centro de custo padrão
+                    $todasLinhas[$index]['status'] = 'whatsapp_bloqueado';
+                    $todasLinhas[$index]['colaborador_id'] = null;
+                    $todasLinhas[$index]['centro_custo'] = '11001';
+                    $todasLinhas[$index]['data_atualizacao'] = date('Y-m-d H:i:s');
+
+                    // Adicionar observação no histórico
+                    if (!isset($todasLinhas[$index]['historico'])) {
+                        $todasLinhas[$index]['historico'] = [];
+                    }
+                    $todasLinhas[$index]['historico'][] = [
+                        'data' => date('Y-m-d H:i:s'),
+                        'acao' => 'Marcado como Whatsapp Bloqueado',
+                        'centro_custo_anterior' => $linha['centro_custo'],
+                        'centro_custo_novo' => '11001'
+                    ];
+                    $linhaEncontrada = true;
+                    break;
+                }
+            }
+
+            if ($linhaEncontrada) {
+                if (salvarArquivoJSON('../data/linhas.json', $todasLinhas)) {
+                    $_SESSION['mensagem'] = 'Linha marcada como Whatsapp Bloqueado! Centro de custo alterado para 11001.';
+                    $_SESSION['mensagem_tipo'] = 'success';
+                } else {
+                    $_SESSION['mensagem'] = 'Erro ao marcar linha como Whatsapp Bloqueado.';
+                    $_SESSION['mensagem_tipo'] = 'error';
+                }
+            } elseif ($naoAlocada) {
+                $_SESSION['mensagem'] = 'Apenas linhas Alocadas podem ser marcadas como Whatsapp Bloqueado.';
+                $_SESSION['mensagem_tipo'] = 'error';
+            } else {
+                $_SESSION['mensagem'] = 'Linha não encontrada.';
+                $_SESSION['mensagem_tipo'] = 'error';
+            }
+            header('Location: index.php');
+            exit;
+        }
+    }
+
     if (isset($_POST['disponivel'])) {
         $id = $_POST['id'] ?? null;
         if ($id) {
@@ -191,6 +244,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background: var(--success);
             color: var(--white);
             border-color: var(--success);
+        }
+
+        .action-whatsapp-bloqueado:hover {
+            background: #8e24aa;
+            color: var(--white);
+            border-color: #8e24aa;
+        }
+
+        .status-whatsapp-bloqueado {
+            background: rgba(156, 39, 176, 0.15);
+            color: #6a1b9a;
+            border: 1px solid rgba(156, 39, 176, 0.3);
+        }
+
+        .status-whatsapp-bloqueado i {
+            color: #8e24aa;
+        }
+
+        .status-badge.status-whatsapp-bloqueado {
+            background: rgba(156, 39, 176, 0.15);
+            color: #6a1b9a;
+        }
+
+        .status-badge.status-whatsapp-bloqueado i {
+            color: #8e24aa;
         }
 
         .status-indisponivel {
@@ -339,6 +417,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
         </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(156, 39, 176, 0.15); color: #8e24aa;">
+                <i class="fas fa-comment-slash"></i>
+            </div>
+            <div class="stat-content">
+                <h3>Whatsapp Bloqueado</h3>
+                <p class="stat-number"><?php echo $totalWhatsappBloqueado; ?></p>
+                <div class="stat-bar-wrap">
+                    <div class="stat-bar" style="width:<?php echo $totalLinhas > 0 ? round(($totalWhatsappBloqueado/$totalLinhas)*100) : 0; ?>%; background: #8e24aa;"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Filtros -->
@@ -364,6 +454,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="disponivel" <?php echo $status == 'disponivel' ? 'selected' : ''; ?>>Disponível</option>
                         <option value="alocado" <?php echo $status == 'alocado' ? 'selected' : ''; ?>>Alocado</option>
                         <option value="indisponivel" <?php echo $status == 'indisponivel' ? 'selected' : ''; ?>>Indisponível</option>
+                        <option value="whatsapp_bloqueado" <?php echo $status == 'whatsapp_bloqueado' ? 'selected' : ''; ?>>Whatsapp Bloqueado</option>
                     </select>
                 </div>
             </div>
@@ -417,8 +508,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $statusClass = 'status-inativo';
                     } elseif ($linha['status'] === 'indisponivel') {
                         $statusClass = 'status-indisponivel';
+                    } elseif ($linha['status'] === 'whatsapp_bloqueado') {
+                        $statusClass = 'status-whatsapp-bloqueado';
                     }
-                    
+
                     $tipoClass = $linha['tipo'] === 'chip' ? 'tipo-badge-chip' : 'tipo-badge-echip';
                     
                     // IMEI
@@ -447,17 +540,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </td>
                         <td data-label="Status">
                             <span class="status-badge <?php echo $statusClass; ?>">
-                                <i class="fas fa-<?php 
-                                    echo $linha['status'] === 'disponivel' ? 'check-circle' : 
-                                        ($linha['status'] === 'alocado' ? 'user-check' : 'ban'); 
+                                <i class="fas fa-<?php
+                                    echo $linha['status'] === 'disponivel' ? 'check-circle' :
+                                        ($linha['status'] === 'alocado' ? 'user-check' :
+                                        ($linha['status'] === 'indisponivel' ? 'ban' : 'comment-slash'));
                                 ?>"></i>
-                                <?php 
+                                <?php
                                     if ($linha['status'] === 'disponivel') {
                                         echo 'Disponível';
                                     } elseif ($linha['status'] === 'alocado') {
                                         echo 'Alocado';
                                     } elseif ($linha['status'] === 'indisponivel') {
                                         echo 'Indisponível';
+                                    } elseif ($linha['status'] === 'whatsapp_bloqueado') {
+                                        echo 'Whatsapp Bloqueado';
                                     }
                                 ?>
                             </span>
@@ -498,6 +594,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </a>
                                 <?php endif; ?>
 
+                                <!-- Botão Whatsapp Bloqueado (apenas para linhas Alocadas) -->
+                                <?php if ($can_edit && $linha['status'] === 'alocado'): ?>
+                                    <form method="POST" style="display: inline-block;"
+                                          onsubmit="return confirm('Tem certeza que deseja marcar esta linha como WHATSAPP BLOQUEADO? O centro de custo será alterado para 11001 e o vínculo com colaborador será removido.')">
+                                        <input type="hidden" name="id" value="<?php echo $linha['id']; ?>">
+                                        <button type="submit" name="whatsapp_bloqueado" class="action-btn action-whatsapp-bloqueado" title="Marcar como Whatsapp Bloqueado">
+                                            <i class="fas fa-comment-slash"></i>
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
+
                                 <!-- Botão Indisponível (apenas para linhas Disponíveis ou Alocadas) -->
                                 <?php if ($can_edit && in_array($linha['status'], ['disponivel', 'alocado'])): ?>
                                     <form method="POST" style="display: inline-block;" 
@@ -509,9 +616,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </form>
                                 <?php endif; ?>
 
-                                <!-- Botão Disponível (apenas para linhas Indisponíveis) -->
-                                <?php if ($can_edit && $linha['status'] === 'indisponivel'): ?>
-                                    <form method="POST" style="display: inline-block;" 
+                                <!-- Botão Disponível (para linhas Indisponíveis ou Whatsapp Bloqueado) -->
+                                <?php if ($can_edit && in_array($linha['status'], ['indisponivel', 'whatsapp_bloqueado'])): ?>
+                                    <form method="POST" style="display: inline-block;"
                                           onsubmit="return confirm('Tem certeza que deseja marcar esta linha como DISPONÍVEL? O centro de custo será alterado para 11001.')">
                                         <input type="hidden" name="id" value="<?php echo $linha['id']; ?>">
                                         <button type="submit" name="disponivel" class="action-btn action-disponivel" title="Marcar como Disponível">

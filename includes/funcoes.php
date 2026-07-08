@@ -641,7 +641,9 @@ function getTipoLinhaTexto($tipo) {
 function getStatusLinhaTexto($status) {
     $statuses = [
         'disponivel' => 'Disponível',
-        'alocado' => 'Alocado'
+        'alocado' => 'Alocado',
+        'indisponivel' => 'Indisponível',
+        'whatsapp_bloqueado' => 'Whatsapp Bloqueado'
     ];
     return $statuses[$status] ?? 'Desconhecido';
 }
