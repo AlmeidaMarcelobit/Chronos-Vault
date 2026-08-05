@@ -12,8 +12,7 @@ if (!isset($_SESSION['usuario_id'])) {
 $colaboradores = lerArquivoJSON('data/colaboradores/ativos.json');
 if ($colaboradores === false) $colaboradores = [];
 
-$equipamentos = lerArquivoJSON('data/equipamentos.json');
-if ($equipamentos === false) $equipamentos = [];
+$equipamentos = carregarTodosEquipamentos();
 
 $linhas = lerArquivoJSON('data/linhas.json');
 if ($linhas === false) $linhas = [];

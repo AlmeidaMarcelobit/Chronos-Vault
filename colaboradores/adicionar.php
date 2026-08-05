@@ -233,12 +233,8 @@ function formatarCEP($cep) {
 
 // Estatísticas para o footer
 $total_colaboradores = count(lerArquivoJSON('../data/colaboradores/ativos.json'));
-$total_equipamentos = count(lerArquivoJSON('../data/equipamentos.json'));
-$equipamentos_data = lerArquivoJSON('../data/equipamentos.json');
-$equipamentos_estoque = 0;
-foreach ($equipamentos_data as $e) {
-    if (($e['status'] ?? '') === 'estoque') $equipamentos_estoque++;
-}
+$total_equipamentos = count(carregarTodosEquipamentos());
+$equipamentos_estoque = count(carregarEquipamentosPorStatus('estoque'));
 ?>
 <html lang="pt-BR">
 <head>

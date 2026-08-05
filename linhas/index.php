@@ -673,7 +673,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="footer-section">
             <h3>Estatísticas</h3>
             <?php
-            $total_equipamentos = count(lerArquivoJSON('../data/equipamentos.json'));
+            $total_equipamentos = count(carregarTodosEquipamentos());
             ?>
             <div class="footer-stats">
                 <div class="footer-stat"><span class="stat-number"><?php echo $totalLinhas; ?></span><span class="stat-label">Linhas</span></div>

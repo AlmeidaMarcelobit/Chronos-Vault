@@ -24,8 +24,7 @@ $colaboradoresInativos = lerArquivoJSON('../data/colaboradores/inativos.json');
 if ($colaboradoresInativos === false) $colaboradoresInativos = [];
 
 // Carregar equipamentos para verificar pendências
-$equipamentos = lerArquivoJSON('../data/equipamentos.json');
-if ($equipamentos === false) $equipamentos = [];
+$equipamentos = carregarTodosEquipamentos();
 
 // Garantir que todos os colaboradores tenham os campos necessários
 foreach ($colaboradoresInativos as &$colab) {
@@ -443,7 +442,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['excluir_permanente'])
             <?php
             $total_ativos = count(lerArquivoJSON('../data/colaboradores/ativos.json'));
             $total_inativos = count(lerArquivoJSON('../data/colaboradores/inativos.json'));
-            $total_equipamentos = count(lerArquivoJSON('../data/equipamentos.json'));
+            $total_equipamentos = count(carregarTodosEquipamentos());
             ?>
             <div class="footer-stats">
                 <div class="footer-stat"><span class="stat-number"><?php echo $total_ativos; ?></span><span class="stat-label">Ativos</span></div>
