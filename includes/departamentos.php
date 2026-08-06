@@ -2,6 +2,7 @@
 $departamentoAtual = $colaboradorAtual['departamento'] ?? '';
 
 $departamentos = [
+    'Empressa'
     'Administrativo',
     'Administrativo Soluções em Saúde',
     'AmorLab',
