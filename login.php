@@ -531,7 +531,7 @@ $lembrarChecked = !empty($usuarioSalvo);
             </div>
         </div>
 
-        <div class="panel-footer">&copy; <?php echo date('Y'); ?> — Amor Saúde</div>
+        <div class="panel-footer">&copy; 2024 - 2026 — Amor Saúde</div>
     </div>
 
     <!-- ── PAINEL DIREITO (formulário) ── -->
