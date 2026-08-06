@@ -137,6 +137,7 @@ foreach ($colaboradores as &$colab) {
     if (!isset($colab['departamento'])) $colab['departamento'] = '';
     if (!isset($colab['email']))        $colab['email']        = '';
     if (!isset($colab['tipo_trabalho']))$colab['tipo_trabalho']= 'local';
+    if (!isset($colab['equipamentos']) || !is_array($colab['equipamentos'])) $colab['equipamentos'] = [];
 }
 unset($colab);
 
