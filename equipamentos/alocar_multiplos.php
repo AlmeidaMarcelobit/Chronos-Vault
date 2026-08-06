@@ -8,8 +8,9 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
-$equipamentos = lerArquivoJSON('../data/equipamentos.json');
-$colaboradores = lerArquivoJSON('../data/colaboradores.json');
+$equipamentos = carregarTodosEquipamentos();
+$colaboradores = lerArquivoJSON('../data/colaboradores/ativos.json');
+if (!is_array($colaboradores)) $colaboradores = [];
 
 // Criar mapa de colaboradores
 $mapaColaboradores = [];
@@ -18,9 +19,7 @@ foreach ($colaboradores as $colaborador) {
 }
 
 // Filtrar apenas equipamentos disponíveis (em estoque)
-$equipamentosDisponiveis = array_filter($equipamentos, function($e) {
-    return $e['status'] === 'estoque';
-});
+$equipamentosDisponiveis = carregarEquipamentosPorStatus('estoque');
 
 // Ordenar equipamentos por patrimônio
 usort($equipamentosDisponiveis, function($a, $b) {
@@ -67,20 +66,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $centroCustoColaborador = $colaboradorSelecionado['centro_custo'];
             $colaboradorNome = $colaboradorSelecionado['nome'];
 
-            foreach ($equipamentos as $index => &$equip) {
-                if (in_array($equip['id'], $equipamentos_selecionados) && $equip['status'] === 'estoque') {
+            // Recarregar equipamentos em estoque para processar
+            $estoqueAtual = carregarEquipamentosPorStatus('estoque');
+            
+            foreach ($estoqueAtual as $index => &$equip) {
+                if (in_array($equip['id'], $equipamentos_selecionados)) {
                     $centroCustoOriginal = $equip['centro_custo'];
 
-                    $equipamentos[$index]['colaborador_id'] = (int)$colaborador_id;
-                    $equipamentos[$index]['status'] = $status;
-                    $equipamentos[$index]['data_atribuicao'] = date('Y-m-d H:i:s');
-                    $equipamentos[$index]['data_atualizacao'] = date('Y-m-d H:i:s');
-                    $equipamentos[$index]['tipo_atribuicao'] = $status === 'emprestado' ? 'emprestimo' : 'alocacao';
+                    $equip['colaborador_id'] = (int)$colaborador_id;
+                    $equip['data_atribuicao'] = date('Y-m-d H:i:s');
+                    $equip['data_atualizacao'] = date('Y-m-d H:i:s');
+                    $equip['tipo_atribuicao'] = $status === 'emprestado' ? 'emprestimo' : 'alocacao';
 
                     // Atualizar centro de custo se a opção estiver marcada
                     if ($atualizar_centro_custo && $centroCustoColaborador) {
                         if (!isset($equip['historico_centro_custo']) || !is_array($equip['historico_centro_custo'])) {
-                            $equipamentos[$index]['historico_centro_custo'] = [];
+                            $equip['historico_centro_custo'] = [];
                         }
 
                         $historicoCC = [
@@ -90,15 +91,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 'centro_custo_novo' => $centroCustoColaborador,
                                 'motivo' => "Alocação múltipla - Equipamento alocado para {$colaboradorNome}"
                         ];
-                        $equipamentos[$index]['historico_centro_custo'][] = $historicoCC;
+                        $equip['historico_centro_custo'][] = $historicoCC;
 
                         if ($centroCustoOriginal != $centroCustoColaborador) {
-                            $equipamentos[$index]['centro_custo'] = $centroCustoColaborador;
+                            $equip['centro_custo'] = $centroCustoColaborador;
                             $centroCustoAlterados[] = $equip['patrimonio'];
                         }
                     }
 
-                    $observacaoAtual = $equipamentos[$index]['observacoes'] ?? '';
+                    $observacaoAtual = $equip['observacoes'] ?? '';
                     $novaObservacao = "\n\n[ALOCAÇÃO MÚLTIPLA] " . date('d/m/Y H:i:s');
                     $novaObservacao .= "\nEquipamento alocado para {$colaboradorNome}";
 
@@ -110,30 +111,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $novaObservacao .= "\nObservações: " . $observacoes;
                     }
 
-                    $equipamentos[$index]['observacoes'] = $observacaoAtual . $novaObservacao;
-
-                    $equipamentosAtualizados++;
-                    $equipamentosAlterados[] = $equip['patrimonio'];
+                    $equip['observacoes'] = $observacaoAtual . $novaObservacao;
+                    
+                    // Mover equipamento para o novo status
+                    $sucessoMover = moverEquipamentoParaStatus($equip, $status);
+                    if ($sucessoMover) {
+                        $equipamentosAtualizados++;
+                        $equipamentosAlterados[] = $equip['patrimonio'];
+                    }
                 }
             }
 
             if ($equipamentosAtualizados > 0) {
-                if (salvarArquivoJSON('../data/equipamentos.json', $equipamentos)) {
-                    $mensagemExtra = '';
-                    if ($atualizar_centro_custo && $centroCustoColaborador) {
-                        $quantidadeCC = count($centroCustoAlterados);
-                        if ($quantidadeCC > 0) {
-                            $mensagemExtra = " O centro de custo de {$quantidadeCC} equipamento(s) foi atualizado para {$centroCustoColaborador}.";
-                        }
+                $mensagemExtra = '';
+                if ($atualizar_centro_custo && $centroCustoColaborador) {
+                    $quantidadeCC = count($centroCustoAlterados);
+                    if ($quantidadeCC > 0) {
+                        $mensagemExtra = " O centro de custo de {$quantidadeCC} equipamento(s) foi atualizado para {$centroCustoColaborador}.";
                     }
-                    $mensagem = "{$equipamentosAtualizados} equipamento(s) alocado(s) com sucesso para {$colaboradorNome}!" . $mensagemExtra;
-                    $tipoMensagem = 'success';
-
-                    $_POST = [];
-                } else {
-                    $mensagem = 'Erro ao salvar as alterações. Tente novamente.';
-                    $tipoMensagem = 'error';
                 }
+                $mensagem = "{$equipamentosAtualizados} equipamento(s) alocado(s) com sucesso para {$colaboradorNome}!" . $mensagemExtra;
+                $tipoMensagem = 'success';
+
+                $_POST = [];
+                
+                // Recarregar dados após a alteração
+                $equipamentos = carregarTodosEquipamentos();
+                $equipamentosDisponiveis = carregarEquipamentosPorStatus('estoque');
+                usort($equipamentosDisponiveis, function($a, $b) {
+                    return strcmp($a['patrimonio'], $b['patrimonio']);
+                });
             } else {
                 $mensagem = 'Nenhum equipamento disponível foi selecionado.';
                 $tipoMensagem = 'warning';
