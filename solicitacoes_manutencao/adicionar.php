@@ -104,7 +104,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-$equipamentosDisponiveis = carregarTodosEquipamentos();
+$equipamentosDisponiveis = array_values(array_filter(carregarTodosEquipamentos(), function($eq) {
+    return isset($eq["id"]) && !empty($eq["id"]);
+}));
 usort($equipamentosDisponiveis, function($a, $b) {
     return strcmp($a["patrimonio"] ?? "", $b["patrimonio"] ?? "");
 });
@@ -120,8 +122,9 @@ if ($equipamento_id_url && empty($_POST)) {
             "notebook" => "notebook",
             "celular"  => "celular"
         ];
-        if (isset($mapaTipoSolicitacao[$eq["tipo"] ?? ""])) {
-            $_POST["tipo_equipamento"] = $mapaTipoSolicitacao[$eq["tipo"]];
+        $eqTipo = $eq["tipo"] ?? "";
+        if (isset($mapaTipoSolicitacao[$eqTipo])) {
+            $_POST["tipo_equipamento"] = $mapaTipoSolicitacao[$eqTipo];
         }
     }
 }
@@ -243,16 +246,18 @@ if ($equipamento_id_url && empty($_POST)) {
                         <select id="equipamento_relacionado" name="equipamento_relacionado" class="form-control" onchange="preencherPatrimonio()">
                             <option value="">Nenhum (não cadastrado)</option>
                             <?php foreach ($equipamentosDisponiveis as $eq):
+                                $eqId = $eq["id"] ?? "";
+                                $eqPatrimonio = $eq["patrimonio"] ?? "(sem patrimônio)";
                                 $infoExtra = [];
                                 if (!empty($eq["marca"])) $infoExtra[] = $eq["marca"];
                                 if (!empty($eq["modelo"])) $infoExtra[] = $eq["modelo"];
                                 $infoText = $infoExtra ? " - " . implode(" ", $infoExtra) : "";
                             ?>
-                                <option value="<?php echo $eq['id']; ?>"
+                                <option value="<?php echo htmlspecialchars($eqId); ?>"
                                     data-patrimonio="<?php echo htmlspecialchars($eq['patrimonio'] ?? ''); ?>"
                                     data-tipo="<?php echo htmlspecialchars($eq['tipo'] ?? ''); ?>"
-                                    <?php echo (($_POST['equipamento_relacionado'] ?? '') == $eq['id']) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars("Patrimônio: {$eq['patrimonio']}" . $infoText); ?>
+                                    <?php echo (($_POST['equipamento_relacionado'] ?? '') == $eqId) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars("Patrimônio: {$eqPatrimonio}" . $infoText); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>

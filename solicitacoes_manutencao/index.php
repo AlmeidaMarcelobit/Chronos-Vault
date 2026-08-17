@@ -118,7 +118,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $can_edit) {
 // ============================================
 // CARREGAR DADOS E APLICAR FILTROS
 // ============================================
-$solicitacoes = carregarSolicitacoesManutencao();
+$solicitacoes = array_values(array_filter(carregarSolicitacoesManutencao(), function($s) {
+    return isset($s["id"]) && !empty($s["id"]);
+}));
 $filtro_status = $_GET["status"] ?? "todos";
 $filtro_prioridade = $_GET["prioridade"] ?? "todos";
 $filtro_destino = $_GET["destino"] ?? "todos";
@@ -400,6 +402,7 @@ $tiposLista = getTiposEquipamentoSolicitacao();
                 </tr>
             <?php else: ?>
                 <?php foreach ($solicitacoes as $s):
+                    $solId = $s["id"] ?? "";
                     $statusAtual = $s["status"] ?? "aguardando_envio";
                     $statusInfo = $statusLista[$statusAtual] ?? $statusLista["aguardando_envio"];
                     $prioridadeInfo = $prioridadesLista[$s["prioridade"] ?? "normal"] ?? $prioridadesLista["normal"];
@@ -413,7 +416,7 @@ $tiposLista = getTiposEquipamentoSolicitacao();
                 ?>
                 <tr>
                     <td data-label="Protocolo">
-                        <strong style="color: var(--primary);">#<?php echo $s["id"]; ?></strong>
+                        <strong style="color: var(--primary);">#<?php echo htmlspecialchars($solId); ?></strong>
                     </td>
                     <td data-label="Data">
                         <?php echo formatarData($s["data_envio"] ?? ""); ?>
@@ -451,10 +454,10 @@ $tiposLista = getTiposEquipamentoSolicitacao();
                         <?php if ($can_edit): ?>
                             <form method="POST" class="status-form-inline" data-status-atual="<?php echo $statusAtual; ?>">
                                 <input type="hidden" name="acao" value="atualizar_status">
-                                <input type="hidden" name="id" value="<?php echo $s['id']; ?>">
+                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($solId); ?>">
                                 <input type="hidden" name="destino_conclusao" class="destino-conclusao-hidden" value="colaborador">
                                 <select name="novo_status" class="status-select select-status-solicitacao"
-                                    data-id="<?php echo $s['id']; ?>"
+                                    data-id="<?php echo htmlspecialchars($solId); ?>"
                                     data-tem-equipamento="<?php echo (!empty($s["equipamento_relacionado_id"]) ? '1' : '0'); ?>"
                                     data-status-atual="<?php echo $statusAtual; ?>"
                                     style="background: <?php echo $statusInfo['cor']; ?>15; color: <?php echo $statusInfo['cor']; ?>; border-color: <?php echo $statusInfo['cor']; ?>40; font-weight:600;">
@@ -488,9 +491,9 @@ $tiposLista = getTiposEquipamentoSolicitacao();
                             <?php endif; ?>
                             <?php if ($is_admin): ?>
                                 <form method="POST" style="display:inline;"
-                                    onsubmit="return confirm('Tem certeza que deseja excluir a solicitação #<?php echo $s['id']; ?>? Esta ação é irreversível.');">
+                                    onsubmit="return confirm('Tem certeza que deseja excluir a solicitação #<?php echo htmlspecialchars($solId); ?>? Esta ação é irreversível.');">
                                     <input type="hidden" name="acao" value="excluir">
-                                    <input type="hidden" name="id" value="<?php echo $s['id']; ?>">
+                                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($solId); ?>">
                                     <button type="submit" class="action-btn action-delete" title="Excluir">
                                         <i class="fas fa-trash"></i>
                                     </button>
