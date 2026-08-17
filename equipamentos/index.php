@@ -170,6 +170,7 @@ $totalFiltrado = count($equipamentosFiltrados);
             <li class="nav-item"><a href="../index.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
             <li class="nav-item"><a href="../colaboradores/index.php" class="nav-link"><i class="fas fa-users"></i><span>Colaboradores</span></a></li>
             <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
+            <li class="nav-item"><a href="../solicitacoes_manutencao/index.php" class="nav-link"><i class="fas fa-tools"></i><span>Solicitações Manutenção</span></a></li>
             <li class="nav-item"><a href="../linhas/index.php" class="nav-link"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
             <?php if ($is_admin): ?>
                 <li class="nav-item"><a href="../Termos/index.php" class="nav-link"><i class="fas fa-file-contract"></i><span>Termos</span></a></li>
@@ -198,14 +199,10 @@ $totalFiltrado = count($equipamentosFiltrados);
         </div>
         <?php if ($can_edit): ?>
             <div class="page-actions">
-                <!--
-                <div class="action-group">
-                    <a href="alocar_multiplos.php" class="btn btn-outline">
-                        <i class="fas fa-layer-group"></i>
-                        <span>Alocar Múltiplos</span>
-                    </a>
-                </div>
-                -->
+                <a href="../solicitacoes_manutencao/adicionar.php" class="btn btn-warning">
+                    <i class="fas fa-tools"></i>
+                    <span>Solicitar Manutenção</span>
+                </a>
                 <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="addEquipmentDropdown">
                         <i class="fas fa-plus"></i>

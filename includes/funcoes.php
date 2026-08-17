@@ -854,4 +854,102 @@ function atualizarCentroCustoLinha(&$linha, $colaborador, $usuario) {
 function getCentroCustoPadrao() {
     return '11001';
 }
+
+// ============================================
+// FUNÇÕES PARA SOLICITAÇÕES DE MANUTENÇÃO
+// ============================================
+
+function getCaminhoSolicitacoesManutencao() {
+    return __DIR__ . '/../data/solicitacoes_manutencao/solicitacoes.json';
+}
+
+function carregarSolicitacoesManutencao() {
+    $caminho = getCaminhoSolicitacoesManutencao();
+    $solicitacoes = lerArquivoJSON($caminho);
+    return is_array($solicitacoes) ? $solicitacoes : [];
+}
+
+function salvarSolicitacoesManutencao($solicitacoes) {
+    $caminho = getCaminhoSolicitacoesManutencao();
+    return salvarArquivoJSON($caminho, $solicitacoes);
+}
+
+function getTiposEquipamentoSolicitacao() {
+    return [
+        'notebook' => 'Notebook',
+        'celular'  => 'Celular',
+        'outro'    => 'Outro (especificar)'
+    ];
+}
+
+function getDestinosReparo() {
+    return [
+        'claudio'       => ['nome' => 'Claudio', 'icone' => 'wrench', 'descricao' => 'Notebook'],
+        'diego'         => ['nome' => 'Diego',   'icone' => 'mobile-alt', 'descricao' => 'Celular'],
+        'reparo_interno'=> ['nome' => 'Reparo Interno', 'icone' => 'building', 'descricao' => 'Interno']
+    ];
+}
+
+function getDestinoSugeridoPorTipo($tipoEquipamento) {
+    $map = [
+        'notebook' => 'claudio',
+        'celular'  => 'diego',
+        'outro'    => 'reparo_interno'
+    ];
+    return $map[$tipoEquipamento] ?? 'reparo_interno';
+}
+
+function getPrioridadesSolicitacao() {
+    return [
+        'urgente' => ['nome' => 'Urgente', 'icone' => 'circle', 'cor' => '#E74C3C'],
+        'normal'  => ['nome' => 'Normal',  'icone' => 'circle', 'cor' => '#F39C12'],
+        'baixa'   => ['nome' => 'Baixa',   'icone' => 'circle', 'cor' => '#2ECC71']
+    ];
+}
+
+function getStatusSolicitacaoManutencao() {
+    return [
+        'aguardando_envio' => ['nome' => 'Aguardando Envio', 'icone' => 'clock',       'cor' => '#6C757D'],
+        'em_manutencao'    => ['nome' => 'Em Manutenção',    'icone' => 'tools',       'cor' => '#F39C12'],
+        'concluido'        => ['nome' => 'Concluído',        'icone' => 'check-circle','cor' => '#2ECC71'],
+        'devolvido'        => ['nome' => 'Devolvido',        'icone' => 'undo',        'cor' => '#3498DB']
+    ];
+}
+
+function getStatusSolicitacaoTexto($status) {
+    $statuses = getStatusSolicitacaoManutencao();
+    return $statuses[$status]['nome'] ?? $status;
+}
+
+function getPrioridadeSolicitacaoTexto($prioridade) {
+    $prioridades = getPrioridadesSolicitacao();
+    return $prioridades[$prioridade]['nome'] ?? $prioridade;
+}
+
+function getDestinoReparoTexto($destino) {
+    $destinos = getDestinosReparo();
+    return $destinos[$destino]['nome'] ?? $destino;
+}
+
+function buscarSolicitacaoPorId($id) {
+    $solicitacoes = carregarSolicitacoesManutencao();
+    foreach ($solicitacoes as $i => $s) {
+        if ($s['id'] == $id) {
+            return ['solicitacao' => $s, 'index' => $i];
+        }
+    }
+    return null;
+}
+
+function contarSolicitacoesPorStatus($status = null) {
+    $solicitacoes = carregarSolicitacoesManutencao();
+    if ($status === null) {
+        return count($solicitacoes);
+    }
+    $count = 0;
+    foreach ($solicitacoes as $s) {
+        if (($s['status'] ?? '') === $status) $count++;
+    }
+    return $count;
+}
 ?>

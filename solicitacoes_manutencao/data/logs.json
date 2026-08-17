@@ -1,0 +1,83 @@
+[
+    {
+        "id": 1,
+        "usuario_id": 1,
+        "usuario_nome": "Administrador",
+        "acao": "Criação de Solicitação de Manutenção",
+        "detalhes": "ID: 1 | Tipo: notebook | Prioridade: urgente | Destino: claudio",
+        "ip": "::1",
+        "data": "2026-08-17 13:41:34"
+    },
+    {
+        "id": 2,
+        "usuario_id": 1,
+        "usuario_nome": "Administrador",
+        "acao": "Atualização de Solicitação",
+        "detalhes": "ID: 1 | Status alterado para: em_manutencao",
+        "ip": "::1",
+        "data": "2026-08-17 13:41:43"
+    },
+    {
+        "id": 3,
+        "usuario_id": 1,
+        "usuario_nome": "Administrador",
+        "acao": "Atualização de Solicitação",
+        "detalhes": "ID: 1 | Status alterado para: devolvido",
+        "ip": "::1",
+        "data": "2026-08-17 13:41:49"
+    },
+    {
+        "id": 4,
+        "usuario_id": 1,
+        "usuario_nome": "Administrador",
+        "acao": "Atualização de Solicitação",
+        "detalhes": "ID: 1 | Status alterado para: em_manutencao",
+        "ip": "::1",
+        "data": "2026-08-17 13:42:04"
+    },
+    {
+        "id": 5,
+        "usuario_id": 1,
+        "usuario_nome": "Administrador",
+        "acao": "Atualização de Solicitação",
+        "detalhes": "ID: 1 | Status alterado para: devolvido",
+        "ip": "::1",
+        "data": "2026-08-17 13:42:36"
+    },
+    {
+        "id": 6,
+        "usuario_id": 1,
+        "usuario_nome": "Administrador",
+        "acao": "Criação de Solicitação de Manutenção",
+        "detalhes": "ID: 2 | Tipo: notebook | Prioridade: normal | Destino: claudio",
+        "ip": "::1",
+        "data": "2026-08-17 13:48:46"
+    },
+    {
+        "id": 7,
+        "usuario_id": 1,
+        "usuario_nome": "Administrador",
+        "acao": "Atualização de Solicitação",
+        "detalhes": "ID: 2 | Status alterado para: em_manutencao",
+        "ip": "::1",
+        "data": "2026-08-17 13:48:54"
+    },
+    {
+        "id": 8,
+        "usuario_id": 1,
+        "usuario_nome": "Administrador",
+        "acao": "Criação de Solicitação de Manutenção",
+        "detalhes": "ID: 3 | Tipo: notebook | Prioridade: normal | Destino: claudio",
+        "ip": "::1",
+        "data": "2026-08-17 13:49:36"
+    },
+    {
+        "id": 9,
+        "usuario_id": 1,
+        "usuario_nome": "Administrador",
+        "acao": "Atualização de Solicitação",
+        "detalhes": "ID: 3 | Status alterado para: em_manutencao",
+        "ip": "::1",
+        "data": "2026-08-17 13:49:43"
+    }
+]
