@@ -952,4 +952,117 @@ function contarSolicitacoesPorStatus($status = null) {
     }
     return $count;
 }
+
+// ============================================
+// INTEGRAÇÃO: EQUIPAMENTO ↔ SOLICITAÇÃO DE MANUTENÇÃO
+// ============================================
+
+function vincularEquipamentoSolicitacaoManutencao($equipamentoId, $solicitacaoId, $statusInterno = 'aguardando_envio') {
+    $busca = buscarEquipamentoPorId($equipamentoId);
+    if (!$busca) return false;
+
+    $equipamento = $busca['equipamento'];
+
+    if (($equipamento['status'] ?? '') === 'fora_uso') {
+        return false;
+    }
+
+    $statusAntes = $equipamento['status'];
+    $colaboradorIdAntes = $equipamento['colaborador_id'] ?? null;
+    $colaboradorNomeAntes = $equipamento['colaborador_nome'] ?? null;
+    $linhaIdAntes = $equipamento['linha_id'] ?? null;
+
+    $equipamento['status_anterior'] = $statusAntes;
+    $equipamento['manutencao_status_interno'] = $statusInterno;
+    $equipamento['solicitacao_manutencao_id'] = $solicitacaoId;
+    $equipamento['data_inicio_manutencao_solicitacao'] = date('Y-m-d H:i:s');
+    $equipamento['colaborador_id_antes_manutencao'] = $colaboradorIdAntes;
+    $equipamento['colaborador_nome_antes_manutencao'] = $colaboradorNomeAntes;
+    $equipamento['linha_id_antes_manutencao'] = $linhaIdAntes;
+    $equipamento['data_atualizacao'] = date('Y-m-d H:i:s');
+
+    if ($statusAntes === 'manutencao') {
+        return atualizarEquipamento($equipamento);
+    } else {
+        return moverEquipamentoParaStatus($equipamento, 'manutencao');
+    }
+}
+
+function atualizarStatusInternoEquipamentoManutencao($equipamentoId, $novoStatusInterno) {
+    $busca = buscarEquipamentoPorId($equipamentoId);
+    if (!$busca) return false;
+
+    $equipamento = $busca['equipamento'];
+    $statusAtual = $equipamento['status'] ?? '';
+
+    if ($statusAtual !== 'manutencao') {
+        $equipamento['status_anterior'] = $statusAtual;
+        $equipamento['colaborador_id_antes_manutencao'] = $equipamento['colaborador_id'] ?? null;
+        $equipamento['colaborador_nome_antes_manutencao'] = $equipamento['colaborador_nome'] ?? null;
+        $equipamento['linha_id_antes_manutencao'] = $equipamento['linha_id'] ?? null;
+    }
+
+    $equipamento['manutencao_status_interno'] = $novoStatusInterno;
+    $equipamento['data_atualizacao'] = date('Y-m-d H:i:s');
+
+    if ($statusAtual === 'manutencao') {
+        return atualizarEquipamento($equipamento);
+    } else {
+        return moverEquipamentoParaStatus($equipamento, 'manutencao');
+    }
+}
+
+function concluirSolicitacaoRetornarEquipamento($equipamentoId, $destino = 'colaborador') {
+    $busca = buscarEquipamentoPorId($equipamentoId);
+    if (!$busca) return false;
+
+    $equipamento = $busca['equipamento'];
+
+    $statusAnterior = $equipamento['status_anterior'] ?? 'estoque';
+    $colaboradorIdAntes = $equipamento['colaborador_id_antes_manutencao'] ?? null;
+    $colaboradorNomeAntes = $equipamento['colaborador_nome_antes_manutencao'] ?? null;
+    $linhaIdAntes = $equipamento['linha_id_antes_manutencao'] ?? null;
+
+    unset($equipamento['manutencao_status_interno']);
+    unset($equipamento['solicitacao_manutencao_id']);
+    unset($equipamento['data_inicio_manutencao_solicitacao']);
+    unset($equipamento['colaborador_id_antes_manutencao']);
+    unset($equipamento['colaborador_nome_antes_manutencao']);
+    unset($equipamento['linha_id_antes_manutencao']);
+    unset($equipamento['status_anterior']);
+    $equipamento['data_atualizacao'] = date('Y-m-d H:i:s');
+    $equipamento['data_retorno_manutencao'] = date('Y-m-d H:i:s');
+
+    if ($destino === 'estoque') {
+        $equipamento['colaborador_id'] = null;
+        $equipamento['colaborador_nome'] = null;
+        $equipamento['centro_custo'] = null;
+        $equipamento['local'] = 'Estoque';
+        $equipamento['data_alocacao'] = null;
+        $statusRetorno = 'estoque';
+    } else {
+        if ($colaboradorIdAntes && in_array($statusAnterior, ['alocado', 'emprestado'])) {
+            $equipamento['colaborador_id'] = $colaboradorIdAntes;
+            $equipamento['colaborador_nome'] = $colaboradorNomeAntes;
+            $equipamento['linha_id'] = $linhaIdAntes;
+            $statusRetorno = $statusAnterior;
+        } else {
+            $equipamento['colaborador_id'] = null;
+            $equipamento['colaborador_nome'] = null;
+            $equipamento['centro_custo'] = null;
+            $equipamento['local'] = 'Estoque';
+            $equipamento['data_alocacao'] = null;
+            $statusRetorno = 'estoque';
+        }
+    }
+
+    $equipamento['status'] = $statusRetorno;
+
+    $statusAtualArquivo = $busca['status_atual'] ?? 'manutencao';
+    if ($statusAtualArquivo === $statusRetorno) {
+        return atualizarEquipamento($equipamento);
+    } else {
+        return moverEquipamentoParaStatus($equipamento, $statusRetorno);
+    }
+}
 ?>

@@ -73,11 +73,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $solicitacoes[] = $novaSolicitacao;
 
+        $vinculoSucesso = true;
+        $vinculoMensagem = "";
+
         if (salvarSolicitacoesManutencao($solicitacoes)) {
+            if (!empty($equipamento_relacionado)) {
+                $vinculo = vincularEquipamentoSolicitacaoManutencao(
+                    $equipamento_relacionado,
+                    $novaSolicitacao["id"],
+                    "aguardando_envio"
+                );
+                if (!$vinculo) {
+                    $vinculoSucesso = false;
+                    $vinculoMensagem = " (Atenção: não foi possível atualizar o status do equipamento)";
+                } else {
+                    registrarLog("Atualização de Equipamento",
+                        "Equipamento ID: {$equipamento_relacionado} | Movido para manutenção via Solicitação #{$novaSolicitacao['id']}");
+                }
+            }
+
             registrarLog("Criação de Solicitação de Manutenção",
-                "ID: {$novaSolicitacao['id']} | Tipo: {$tipo_equipamento} | Prioridade: {$prioridade} | Destino: {$destino_reparo}");
-            $_SESSION["mensagem"] = "Solicitação de manutenção criada com sucesso! Protocolo: #{$novaSolicitacao['id']}";
-            $_SESSION["mensagem_tipo"] = "success";
+                "ID: {$novaSolicitacao['id']} | Tipo: {$tipo_equipamento} | Prioridade: {$prioridade} | Destino: {$destino_reparo} | Equip. Rel: " . ($equipamento_relacionado ?: 'Nenhum'));
+            $_SESSION["mensagem"] = "Solicitação de manutenção criada com sucesso! Protocolo: #{$novaSolicitacao['id']}{$vinculoMensagem}";
+            $_SESSION["mensagem_tipo"] = $vinculoSucesso ? "success" : "error";
             header("Location: index.php");
             exit();
         } else {
@@ -90,6 +108,23 @@ $equipamentosDisponiveis = carregarTodosEquipamentos();
 usort($equipamentosDisponiveis, function($a, $b) {
     return strcmp($a["patrimonio"] ?? "", $b["patrimonio"] ?? "");
 });
+
+$equipamento_id_url = trim($_GET["equipamento_id"] ?? "");
+if ($equipamento_id_url && empty($_POST)) {
+    $_POST["equipamento_relacionado"] = $equipamento_id_url;
+    $eqBusca = buscarEquipamentoPorId($equipamento_id_url);
+    if ($eqBusca) {
+        $eq = $eqBusca["equipamento"];
+        $_POST["patrimonio"] = $eq["patrimonio"] ?? "";
+        $mapaTipoSolicitacao = [
+            "notebook" => "notebook",
+            "celular"  => "celular"
+        ];
+        if (isset($mapaTipoSolicitacao[$eq["tipo"] ?? ""])) {
+            $_POST["tipo_equipamento"] = $mapaTipoSolicitacao[$eq["tipo"]];
+        }
+    }
+}
 ?>
 <html lang="pt-BR">
 <head>

@@ -26,11 +26,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $can_edit) {
         $novoStatus = trim($_POST["novo_status"] ?? "");
         $statusValidos = array_keys(getStatusSolicitacaoManutencao());
 
+        if ($novoStatus === "concluido") {
+            $destino = $_POST["destino_conclusao"] ?? "colaborador";
+            if (!in_array($destino, ["colaborador", "estoque"])) $destino = "colaborador";
+        }
+
         if (in_array($novoStatus, $statusValidos)) {
             $busca = buscarSolicitacaoPorId($idSolicitacao);
             if ($busca) {
                 $solicitacoes = carregarSolicitacoesManutencao();
                 $solicitacao = &$solicitacoes[$busca["index"]];
+                $statusAnteriorSolic = $solicitacao["status"] ?? "";
                 $solicitacao["status"] = $novoStatus;
 
                 if (!isset($solicitacao["historico_status"]) || !is_array($solicitacao["historico_status"])) {
@@ -40,20 +46,43 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $can_edit) {
                 $solicitacao["historico_status"][] = [
                     "status"  => $novoStatus,
                     "data"    => date("Y-m-d H:i:s"),
-                    "usuario" => $_SESSION["usuario_nome"] ?? "Sistema"
+                    "usuario" => $_SESSION["usuario_nome"] ?? "Sistema",
+                    "destino_conclusao" => ($novoStatus === "concluido") ? ($_POST["destino_conclusao"] ?? null) : null
                 ];
 
                 if ($novoStatus === "devolvido") {
                     $solicitacao["data_devolucao"] = date("Y-m-d H:i:s");
                 } elseif ($novoStatus === "concluido") {
                     $solicitacao["data_conclusao"] = date("Y-m-d H:i:s");
+                    $solicitacao["destino_conclusao"] = $destino;
                 }
 
-                if (salvarSolicitacoesManutencao($solicitacoes)) {
+                $salvouSolicitacao = salvarSolicitacoesManutencao($solicitacoes);
+                $msgEquipamento = "";
+
+                if ($salvouSolicitacao) {
+                    $equipamentoRelId = $solicitacao["equipamento_relacionado_id"] ?? null;
+                    if ($equipamentoRelId) {
+                        if ($novoStatus === "concluido") {
+                            $retorno = concluirSolicitacaoRetornarEquipamento($equipamentoRelId, $destino);
+                            if (!$retorno) {
+                                $msgEquipamento = " (Atenção: não foi possível retornar o equipamento da manutenção)";
+                            } else {
+                                registrarLog("Retorno de Equipamento",
+                                    "Equipamento ID: {$equipamentoRelId} | Destino: {$destino} | Via Solicitação #{$idSolicitacao}");
+                            }
+                        } else {
+                            $atualizou = atualizarStatusInternoEquipamentoManutencao($equipamentoRelId, $novoStatus);
+                            if (!$atualizou) {
+                                $msgEquipamento = " (Atenção: não foi possível atualizar o status do equipamento)";
+                            }
+                        }
+                    }
+
                     registrarLog("Atualização de Solicitação",
-                        "ID: {$idSolicitacao} | Status alterado para: {$novoStatus}");
-                    $_SESSION["mensagem"] = "Status da solicitação #{$idSolicitacao} atualizado para: " . getStatusSolicitacaoTexto($novoStatus);
-                    $_SESSION["mensagem_tipo"] = "success";
+                        "ID: {$idSolicitacao} | Status alterado: {$statusAnteriorSolic} → {$novoStatus} | Equip. Rel: {$equipamentoRelId}");
+                    $_SESSION["mensagem"] = "Status da solicitação #{$idSolicitacao} atualizado para: " . getStatusSolicitacaoTexto($novoStatus) . $msgEquipamento;
+                    $_SESSION["mensagem_tipo"] = empty($msgEquipamento) ? "success" : "error";
                     header("Location: index.php" . (!empty($_GET) ? "?" . http_build_query($_GET) : ""));
                     exit();
                 }
@@ -64,10 +93,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $can_edit) {
     if ($acao === "excluir" && $idSolicitacao && $is_admin) {
         $busca = buscarSolicitacaoPorId($idSolicitacao);
         if ($busca) {
+            $equipamentoRelId = $busca["solicitacao"]["equipamento_relacionado_id"] ?? null;
+
             $solicitacoes = carregarSolicitacoesManutencao();
             array_splice($solicitacoes, $busca["index"], 1);
 
             if (salvarSolicitacoesManutencao($solicitacoes)) {
+                if ($equipamentoRelId) {
+                    $buscaEq = buscarEquipamentoPorId($equipamentoRelId);
+                    if ($buscaEq && ($buscaEq["equipamento"]["status"] ?? "") === "manutencao") {
+                        concluirSolicitacaoRetornarEquipamento($equipamentoRelId, "colaborador");
+                    }
+                }
                 registrarLog("Exclusão de Solicitação de Manutenção", "ID: {$idSolicitacao}");
                 $_SESSION["mensagem"] = "Solicitação #{$idSolicitacao} excluída com sucesso.";
                 $_SESSION["mensagem_tipo"] = "success";
@@ -412,10 +449,14 @@ $tiposLista = getTiposEquipamentoSolicitacao();
                     </td>
                     <td data-label="Status">
                         <?php if ($can_edit): ?>
-                            <form method="POST" style="display:inline;" onchange="this.submit()">
+                            <form method="POST" class="status-form-inline" data-status-atual="<?php echo $statusAtual; ?>">
                                 <input type="hidden" name="acao" value="atualizar_status">
                                 <input type="hidden" name="id" value="<?php echo $s['id']; ?>">
-                                <select name="novo_status" class="status-select"
+                                <input type="hidden" name="destino_conclusao" class="destino-conclusao-hidden" value="colaborador">
+                                <select name="novo_status" class="status-select select-status-solicitacao"
+                                    data-id="<?php echo $s['id']; ?>"
+                                    data-tem-equipamento="<?php echo (!empty($s["equipamento_relacionado_id"]) ? '1' : '0'); ?>"
+                                    data-status-atual="<?php echo $statusAtual; ?>"
                                     style="background: <?php echo $statusInfo['cor']; ?>15; color: <?php echo $statusInfo['cor']; ?>; border-color: <?php echo $statusInfo['cor']; ?>40; font-weight:600;">
                                     <?php foreach ($statusLista as $chave => $st): ?>
                                         <option value="<?php echo $chave; ?>"
@@ -485,6 +526,67 @@ $tiposLista = getTiposEquipamentoSolicitacao();
     </div>
 </div>
 
+<!-- ==================== MODAL CONCLUIR SOLICITAÇÃO ==================== -->
+<div id="modalConcluir" class="modal">
+    <div class="modal-content" style="max-width: 520px;">
+        <div class="modal-header" style="border-color: rgba(46,204,113,0.3);">
+            <h3 style="color: #2ECC71;"><i class="fas fa-check-double"></i> Concluir Solicitação <span id="modalConcluirProtocolo"></span></h3>
+            <button class="modal-close" onclick="closeModalConcluir()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p style="margin-bottom: 1rem; color: var(--gray-700);">
+                A manutenção foi concluída. Selecione o destino para o <strong id="modalConcluirEquipamentoNome">equipamento</strong>:
+            </p>
+
+            <div id="semEquipamentoAviso" style="display:none;" class="detail-item"
+                style="padding:0.75rem 1rem; background:rgba(255,193,7,0.1); border-left:3px solid #F39C12; border-radius:8px; margin-bottom:1rem;">
+                <i class="fas fa-exclamation-triangle" style="color:#F39C12;"></i>
+                <span style="color: var(--gray-700);"> Esta solicitação não possui equipamento vinculado. O status será atualizado mas nenhum equipamento será movido.</span>
+            </div>
+
+            <div class="destino-opcoes" style="display:flex; gap:1rem; flex-direction:column; margin:1rem 0;">
+                <label class="destino-opcao" id="opcao-colaborador"
+                    style="display:flex; gap:1rem; align-items:flex-start; padding:1.25rem 1rem; border:2px solid var(--gray-200); border-radius:16px; cursor:pointer; transition: all .2s ease; flex:1; background:var(--gray-50);">
+                    <input type="radio" name="destino_conclusao_modal" value="colaborador" checked style="margin-top:2px; accent-color: var(--primary);">
+                    <div style="flex:1;">
+                        <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.25rem;">
+                            <i class="fas fa-user-check" style="color: var(--primary);"></i>
+                            <strong style="color: var(--gray-800); font-size: 0.95rem;">Voltar para o Colaborador</strong>
+                        </div>
+                        <p style="font-size: 0.825rem; color: var(--gray-600); line-height: 1.45;">
+                            O equipamento retorna para o colaborador que estava alocado anteriormente, mantendo o vínculo existente.<br>
+                            <span id="nomeColaboradorAtual" style="display:block; margin-top:0.35rem; color: var(--primary-dark); font-weight:600;"></span>
+                        </p>
+                    </div>
+                </label>
+
+                <label class="destino-opcao" id="opcao-estoque"
+                    style="display:flex; gap:1rem; align-items:flex-start; padding:1.25rem 1rem; border:2px solid var(--gray-200); border-radius:16px; cursor:pointer; transition: all .2s ease; flex:1; background:var(--gray-50);">
+                    <input type="radio" name="destino_conclusao_modal" value="estoque" style="margin-top:2px; accent-color: var(--primary);">
+                    <div style="flex:1;">
+                        <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.25rem;">
+                            <i class="fas fa-warehouse" style="color: var(--primary-dark);"></i>
+                            <strong style="color: var(--gray-800); font-size: 0.95rem;">Voltar para o Estoque</strong>
+                        </div>
+                        <p style="font-size: 0.825rem; color: var(--gray-600); line-height: 1.45;">
+                            O equipamento é desassociado do colaborador e retorna para o estoque, disponível para nova alocação.
+                        </p>
+                    </div>
+                </label>
+            </div>
+
+            <div class="modal-actions" style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:1rem; padding-top:1rem; border-top:1px solid var(--gray-200);">
+                <button type="button" class="btn btn-secondary" onclick="closeModalConcluir()">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button type="button" class="btn btn-success" onclick="confirmarConclusaoDestino()">
+                    <i class="fas fa-check"></i> Confirmar Conclusão
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section">
@@ -529,6 +631,28 @@ $tiposLista = getTiposEquipamentoSolicitacao();
     const prioridadesLista = <?php echo json_encode($prioridadesLista); ?>;
     const destinosLista = <?php echo json_encode($destinosLista); ?>;
     const tiposLista = <?php echo json_encode($tiposLista); ?>;
+
+    <?php
+    $solicitacoesParaJS = [];
+    foreach ($solicitacoes as $s) {
+        $item = $s;
+        if (!empty($s["equipamento_relacionado_id"])) {
+            $buscaEq = buscarEquipamentoPorId($s["equipamento_relacionado_id"]);
+            if ($buscaEq) {
+                $eq = $buscaEq["equipamento"];
+                $colabNome = $eq["colaborador_nome_antes_manutencao"] ?? ($eq["colaborador_nome"] ?? null);
+                $item["_colaborador_nome"] = $colabNome;
+                $item["_status_anterior_equip"] = $eq["status_anterior"] ?? null;
+                $item["_equip_patrimonio"] = $eq["patrimonio"] ?? null;
+                if (!isset($item["patrimonio"]) && !empty($eq["patrimonio"])) {
+                    $item["patrimonio"] = $eq["patrimonio"];
+                }
+            }
+        }
+        $solicitacoesParaJS[] = $item;
+    }
+    ?>
+    window._solicitacoesData = <?php echo json_encode($solicitacoesParaJS); ?>;
 
     function formatarData(dataString) {
         if (!dataString) return '---';
@@ -686,12 +810,128 @@ $tiposLista = getTiposEquipamentoSolicitacao();
     }
 
     window.onclick = function(event) {
-        const modal = document.getElementById('modalDetalhes');
-        if (event.target === modal) closeModal();
+        const modalDet = document.getElementById('modalDetalhes');
+        const modalConc = document.getElementById('modalConcluir');
+        if (event.target === modalDet) closeModal();
+        if (event.target === modalConc) closeModalConcluir();
     }
 
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closeModal();
+        if (e.key === 'Escape') {
+            closeModal();
+            closeModalConcluir();
+        }
+    });
+
+    // ==================== MODAL CONCLUIR SOLICITAÇÃO ====================
+    let formularioStatusPendente = null;
+    let solicitacaoPendente = null;
+
+    function closeModalConcluir() {
+        const modal = document.getElementById('modalConcluir');
+        if (!modal) return;
+        modal.style.display = 'none';
+        formularioStatusPendente = null;
+        solicitacaoPendente = null;
+    }
+
+    function destacarOpcaoModalConcluir() {
+        const opcaoColab = document.getElementById('opcao-colaborador');
+        const opcaoEstoque = document.getElementById('opcao-estoque');
+        if (!opcaoColab || !opcaoEstoque) return;
+
+        const radioSelecionado = document.querySelector('input[name="destino_conclusao_modal"]:checked');
+        const valor = radioSelecionado ? radioSelecionado.value : 'colaborador';
+
+        opcaoColab.style.borderColor = valor === 'colaborador' ? 'var(--primary)' : 'var(--gray-200)';
+        opcaoColab.style.background = valor === 'colaborador' ? 'rgba(33,150,243,0.05)' : 'var(--gray-50)';
+        opcaoColab.style.boxShadow = valor === 'colaborador' ? '0 0 0 3px rgba(33,150,243,0.1)' : 'none';
+
+        opcaoEstoque.style.borderColor = valor === 'estoque' ? 'var(--primary-dark)' : 'var(--gray-200)';
+        opcaoEstoque.style.background = valor === 'estoque' ? 'rgba(25,118,210,0.05)' : 'var(--gray-50)';
+        opcaoEstoque.style.boxShadow = valor === 'estoque' ? '0 0 0 3px rgba(25,118,210,0.1)' : 'none';
+    }
+
+    document.querySelectorAll('input[name="destino_conclusao_modal"]').forEach(r => {
+        r.addEventListener('change', destacarOpcaoModalConcluir);
+    });
+
+    function confirmarConclusaoDestino() {
+        if (!formularioStatusPendente) return;
+
+        const radioSelecionado = document.querySelector('input[name="destino_conclusao_modal"]:checked');
+        const destino = radioSelecionado ? radioSelecionado.value : 'colaborador';
+
+        const campoDestino = formularioStatusPendente.querySelector('.destino-conclusao-hidden');
+        if (campoDestino) campoDestino.value = destino;
+
+        const campoStatus = formularioStatusPendente.querySelector('select[name="novo_status"]');
+        if (campoStatus) campoStatus.value = 'concluido';
+
+        formularioStatusPendente.submit();
+    }
+
+    // ==================== INTERCEPTA MUDANÇA DE STATUS NA TABELA ====================
+    document.addEventListener('DOMContentLoaded', function() {
+        destacarOpcaoModalConcluir();
+
+        const selects = document.querySelectorAll('.select-status-solicitacao');
+        selects.forEach(sel => {
+            sel.addEventListener('change', function(e) {
+                const novoValor = this.value;
+                const statusAtual = this.dataset.statusAtual || '';
+                const temEquipamento = this.dataset.temEquipamento === '1';
+                const idSolicitacao = this.dataset.id;
+
+                if (novoValor === statusAtual) return;
+
+                const form = this.closest('.status-form-inline');
+
+                if (novoValor === 'concluido') {
+                    e.preventDefault();
+                    this.value = statusAtual;
+                    formularioStatusPendente = form;
+
+                    document.getElementById('modalConcluirProtocolo').textContent = '#' + idSolicitacao;
+
+                    const avisoSemEquip = document.getElementById('semEquipamentoAviso');
+                    const opcaoColab = document.getElementById('opcao-colaborador');
+                    const nomeColabSpan = document.getElementById('nomeColaboradorAtual');
+                    const equipNomeEl = document.getElementById('modalConcluirEquipamentoNome');
+
+                    const solicitacao = solicitacaoPendente || window._solicitacoesData ? (window._solicitacoesData.find(x => x.id == idSolicitacao) || null) : null;
+
+                    if (!temEquipamento) {
+                        avisoSemEquip.style.display = 'block';
+                        equipNomeEl.textContent = 'processo';
+                    } else {
+                        avisoSemEquip.style.display = 'none';
+                        equipNomeEl.textContent = 'equipamento';
+
+                        if (solicitacao && solicitacao.patrimonio) {
+                            equipNomeEl.textContent = 'equipamento (Patrimônio: ' + solicitacao.patrimonio + ')';
+                        }
+                    }
+
+                    if (solicitacao && solicitacao._colaborador_nome) {
+                        nomeColabSpan.innerHTML = '<i class="fas fa-user-tag"></i> Colaborador atual: ' + solicitacao._colaborador_nome;
+                        opcaoColab.style.display = 'flex';
+                    } else {
+                        nomeColabSpan.innerHTML = '';
+                    }
+
+                    const radios = document.querySelectorAll('input[name="destino_conclusao_modal"]');
+                    radios.forEach(r => { r.checked = (r.value === 'colaborador'); });
+                    destacarOpcaoModalConcluir();
+
+                    const modal = document.getElementById('modalConcluir');
+                    modal.style.display = 'flex';
+                    modal.scrollTop = 0;
+                } else {
+                    if (form) form.submit();
+                }
+            });
+        });
     });
 </script>
 

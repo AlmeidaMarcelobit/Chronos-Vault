@@ -79,5 +79,23 @@
         "detalhes": "ID: 3 | Status alterado para: em_manutencao",
         "ip": "::1",
         "data": "2026-08-17 13:49:43"
+    },
+    {
+        "id": 10,
+        "usuario_id": 1,
+        "usuario_nome": "Administrador",
+        "acao": "Atualização de Equipamento",
+        "detalhes": "Equipamento ID: 30 | Movido para manutenção via Solicitação #4",
+        "ip": "::1",
+        "data": "2026-08-17 14:09:19"
+    },
+    {
+        "id": 11,
+        "usuario_id": 1,
+        "usuario_nome": "Administrador",
+        "acao": "Criação de Solicitação de Manutenção",
+        "detalhes": "ID: 4 | Tipo: notebook | Prioridade: normal | Destino: claudio | Equip. Rel: 30",
+        "ip": "::1",
+        "data": "2026-08-17 14:09:19"
     }
 ]

@@ -361,17 +361,18 @@ $totalFiltrado = count($equipamentosFiltrados);
                                 <a href="devolver.php?id=<?php echo $equipamento["id"]; ?>" class="action-btn action-return" title="Devolver"><i class="fas fa-undo"></i></a>
                             <?php endif; ?>
                             <?php if ($can_edit && !in_array($equipamento["status"], ["manutencao", "fora_uso"])): ?>
-                                <a href="enviar_manutencao.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-warning" title="Enviar para Manutenção"><i class="fas fa-tools"></i></a>
+                                <a href="../solicitacoes_manutencao/adicionar.php?equipamento_id=<?php echo $equipamento['id']; ?>" class="action-btn action-warning" title="Solicitar Manutenção"><i class="fas fa-tools"></i></a>
                             <?php endif; ?>
                             <?php if ($can_edit && $equipamento["status"] == "manutencao"): ?>
                                 <?php
-                                    $statusAnteriorLabel = match($equipamento['status_anterior'] ?? 'estoque') {
-                                        'alocado'   => 'alocado (' . ($mapaColaboradores[$equipamento['colaborador_id'] ?? '']['nome'] ?? 'colaborador') . ')',
-                                        'emprestado' => 'emprestado',
-                                        default     => 'estoque',
-                                    };
+                                    $solicitacaoVinculadaId = $equipamento["solicitacao_manutencao_id"] ?? null;
+                                    $statusManutInterno = $equipamento["manutencao_status_interno"] ?? "aguardando_envio";
+                                    $statusManutLabel = ucwords(str_replace(["_", " "], [" ", " "], $statusManutInterno));
+                                    $urlSolicitacao = $solicitacaoVinculadaId
+                                        ? "../solicitacoes_manutencao/index.php?busca=" . urlencode("#" . $solicitacaoVinculadaId)
+                                        : "../solicitacoes_manutencao/index.php";
                                 ?>
-                                <a href="retornar_manutencao.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-success" title="Retornar da Manutenção" onclick="return confirm('Retornar este equipamento para: <?php echo addslashes($statusAnteriorLabel); ?>?')"><i class="fas fa-arrow-left"></i></a>
+                                <a href="<?php echo $urlSolicitacao; ?>" class="action-btn action-info" title="Ver Solicitação (<?php echo htmlspecialchars(trim($statusManutLabel)); ?>)"><i class="fas fa-external-link-alt"></i></a>
                             <?php endif; ?>
                             <?php if ($can_edit && $equipamento["status"] != "fora_uso"): ?>
                                 <a href="marcar_fora_uso.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-delete" title="Marcar Fora de Uso"><i class="fas fa-times-circle"></i></a>
@@ -395,25 +396,6 @@ $totalFiltrado = count($equipamentosFiltrados);
     </div>
 
 </main>
-
-<!-- ==================== MODAL MANUTENÇÃO ==================== -->
-<div id="modalManutencao" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3><i class="fas fa-tools"></i> Enviar para Manutenção</h3>
-            <button class="modal-close" onclick="closeModalManutencao()">&times;</button>
-        </div>
-        <div class="modal-body">
-            <p>Informe o problema do equipamento:</p>
-            <textarea id="problemaManutencao" class="form-control" rows="3" placeholder="Descreva o problema..."></textarea>
-            <input type="hidden" id="equipamentoIdManutencao" value="">
-            <div class="modal-actions">
-                <button class="btn btn-secondary" onclick="closeModalManutencao()">Cancelar</button>
-                <button class="btn btn-warning" onclick="confirmarEnviarManutencao()">Enviar</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- ==================== MODAL FORA DE USO ==================== -->
 <div id="modalForaUso" class="modal">
@@ -477,87 +459,6 @@ $totalFiltrado = count($equipamentosFiltrados);
 </footer>
 
 <script>
-    // ==================== FUNÇÕES PARA MANUTENÇÃO ====================
-    let equipamentoIdManutencao = null;
-    
-    function enviarManutencao(id) {
-        equipamentoIdManutencao = id;
-        document.getElementById('equipamentoIdManutencao').value = id;
-        document.getElementById('problemaManutencao').value = '';
-        document.getElementById('modalManutencao').style.display = 'block';
-        document.getElementById('modalManutencao').scrollTop = 0;
-    }
-    
-    function closeModalManutencao() {
-        document.getElementById('modalManutencao').style.display = 'none';
-        equipamentoIdManutencao = null;
-    }
-    
-    function confirmarEnviarManutencao() {
-    const problema = document.getElementById('problemaManutencao').value.trim();
-    if (!problema) {
-        alert('Por favor, descreva o problema do equipamento.');
-        return;
-    }
-    
-    const requestData = { 
-        acao: 'enviar', 
-        id: equipamentoIdManutencao,
-        problema: problema 
-    };
-    
-    console.log('Enviando requisição:', requestData); // Debug
-    
-    fetch('ajax/manutencao.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestData)
-    })
-    .then(response => response.text())
-    .then(text => {
-        let data;
-        try {
-            data = JSON.parse(text);
-        } catch(e) {
-            alert('Erro na resposta do servidor:\n' + text.substring(0, 200));
-            return;
-        }
-        if (data.success) {
-            closeModalManutencao();
-            showSuccessMessage(data.message || 'Equipamento enviado para manutenção!');
-            setTimeout(() => location.reload(), 1500);
-        } else {
-            alert('Erro: ' + (data.message || 'Erro ao processar solicitação'));
-        }
-    })
-    .catch(error => {
-        alert('Erro ao processar solicitação: ' + error.message);
-    });
-}
-    
-    function retornarManutencao(id) {
-        if (!confirm('Retornar este equipamento da manutenção? Ele voltará para o estoque.')) return;
-        
-        fetch('ajax/manutencao.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ acao: 'retornar', id: id })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                showSuccessMessage(data.message || 'Equipamento retornado da manutenção!');
-                setTimeout(() => location.reload(), 1500);
-            } else {
-                alert('Erro: ' + (data.message || 'Erro ao processar solicitação'));
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Erro ao processar solicitação');
-        });
-    }
-    
     // ==================== FUNÇÕES PARA FORA DE USO ====================
     let equipamentoIdForaUso = null;
     
@@ -636,10 +537,61 @@ $totalFiltrado = count($equipamentosFiltrados);
             if (!dataString) return '---';
             return new Date(dataString).toLocaleDateString('pt-BR');
         }
+
+        let solicitacaoHtml = '';
+        if (equipamento.status === 'manutencao') {
+            const statusInterno = equipamento.manutencao_status_interno || 'aguardando_envio';
+            const mapStatusInt = {
+                'aguardando_envio': 'Aguardando Envio',
+                'em_manutencao': 'Em Manutenção',
+                'concluido': 'Concluído',
+                'devolvido': 'Devolvido'
+            };
+            const statusLabel = mapStatusInt[statusInterno] || statusInterno;
+            const corStatus = {
+                'aguardando_envio': '#6C757D',
+                'em_manutencao': '#F39C12',
+                'concluido': '#2ECC71',
+                'devolvido': '#3498DB'
+            }[statusInterno] || '#6C757D';
+
+            const solId = equipamento.solicitacao_manutencao_id;
+            const dataInicio = equipamento.data_inicio_manutencao_solicitacao ? formatarData(equipamento.data_inicio_manutencao_solicitacao) : '---';
+            const linkSolicitacao = solId
+                ? `../solicitacoes_manutencao/index.php?busca=${encodeURIComponent('#' + solId)}`
+                : `../solicitacoes_manutencao/index.php`;
+
+            const colabAntes = equipamento.colaborador_nome_antes_manutencao || '';
+            const colabHtml = colabAntes
+                ? `<small style="color:var(--gray-600);"><i class="fas fa-user-check" style="color:var(--primary);"></i> Colaborador anterior: <strong>${colabAntes}</strong> (vínculo preservado)</small>`
+                : '';
+
+            solicitacaoHtml = `
+                <h4 style="font-size:0.875rem; font-weight:600; color:var(--gray-700); margin: 0.75rem 0 0.5rem; display:flex; align-items:center; gap:0.5rem; padding-top:0.5rem; border-top:1px solid var(--gray-100);">
+                    <i class="fas fa-tools" style="color: var(--primary);"></i>
+                    Solicitação de Manutenção
+                </h4>
+                <div class="historico-list" style="margin-top:0;">
+                    <div class="historico-item" style="border-left-color:${corStatus};">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;">
+                            <strong style="color: ${corStatus};"><i class="fas fa-circle" style="font-size:0.5rem; margin-right:0.375rem;"></i>${statusLabel}</strong>
+                            <small>Desde: ${dataInicio}</small>
+                        </div>
+                        ${solId ? `<small><i class="fas fa-hashtag"></i> Protocolo: <strong>#${solId}</strong></small><br>` : ''}
+                        <div style="margin-top:0.5rem;">
+                            <a href="${linkSolicitacao}" target="_blank" class="btn btn-primary btn-sm" style="font-size:0.75rem; padding:0.25rem 0.625rem; text-decoration:none; display:inline-flex; align-items:center; gap:0.375rem;">
+                                <i class="fas fa-external-link-alt"></i> Abrir Solicitação
+                            </a>
+                        </div>
+                        ${colabHtml ? `<div style="margin-top:0.5rem;">${colabHtml}</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
         
         let historico = '';
         if (equipamento.historico_manutencao && equipamento.historico_manutencao.length > 0) {
-            historico = '<h4><i class="fas fa-history"></i> Histórico de Manutenção</h4><div class="historico-list">';
+            historico = '<h4 style="font-size:0.875rem; font-weight:600; color:var(--gray-700); margin: 0.75rem 0 0.5rem; display:flex; align-items:center; gap:0.5rem; padding-top:0.5rem; border-top:1px solid var(--gray-100);"><i class="fas fa-history"></i> Histórico de Manutenção</h4><div class="historico-list">';
             equipamento.historico_manutencao.forEach(item => {
                 historico += `<div class="historico-item"><strong>${formatarData(item.data_envio)}</strong>${item.data_retorno ? ` até ${formatarData(item.data_retorno)}` : '(em andamento)'}<br><small>Problema: ${item.problema || '---'}</small>${item.resultado ? `<br><small>Resultado: ${item.resultado}</small>` : ''}</div>`;
             });
@@ -661,7 +613,7 @@ $totalFiltrado = count($equipamentosFiltrados);
         const content = `<div class="equipment-details">
             <div class="detail-row">
                 <div class="detail-item"><strong>Patrimônio:</strong> ${equipamento.patrimonio}</div>
-                <div class="detail-item"><strong>Status:</strong> <span class="status-badge">${getStatusText(equipamento.status)}</span></div>
+                <div class="detail-item"><strong>Status:</strong> <span class="status-badge">${getStatusText(equipamento.status, equipamento)}</span></div>
             </div>
             <div class="detail-row">
                 <div class="detail-item"><strong>Tipo:</strong> ${getTipoText(equipamento.tipo)}</div>
@@ -676,6 +628,7 @@ $totalFiltrado = count($equipamentosFiltrados);
                 <div class="detail-item"><strong>Colaborador:</strong> ${getColaboradorNome(equipamento.colaborador_id)}</div>
             </div>
             ${especificacoesHtml}
+            ${solicitacaoHtml}
             <div class="detail-row">
                 <div class="detail-item full-width observacoes-item"><strong>Observações:</strong><br>${equipamento.observacoes || 'Nenhuma observação registrada.'}</div>
             </div>
@@ -697,7 +650,16 @@ $totalFiltrado = count($equipamentosFiltrados);
         return colaboradores[id] ? colaboradores[id].nome : 'N/A';
     }
     
-    function getStatusText(status) {
+    function getStatusText(status, equipamento = null) {
+        if (status === 'manutencao' && equipamento && equipamento.manutencao_status_interno) {
+            const mapInt = {
+                'aguardando_envio': 'Em Manutenção (Aguardando Envio)',
+                'em_manutencao': 'Em Manutenção (Em Reparo)',
+                'concluido': 'Em Manutenção (Concluído)',
+                'devolvido': 'Em Manutenção (Devolvido)'
+            };
+            return mapInt[equipamento.manutencao_status_interno] || 'Em Manutenção';
+        }
         const map = { 'estoque': 'Em Estoque', 'alocado': 'Alocado', 'emprestado': 'Emprestado', 'manutencao': 'Em Manutenção', 'fora_uso': 'Fora de Uso' };
         return map[status] || status;
     }
@@ -709,10 +671,8 @@ $totalFiltrado = count($equipamentosFiltrados);
     
     // Fechar modais ao clicar fora
     window.onclick = function(event) {
-        const modalManutencao = document.getElementById('modalManutencao');
         const modalForaUso = document.getElementById('modalForaUso');
         const modalDetails = document.getElementById('equipmentModal');
-        if (event.target === modalManutencao) closeModalManutencao();
         if (event.target === modalForaUso) closeModalForaUso();
         if (event.target === modalDetails) closeModal();
 
