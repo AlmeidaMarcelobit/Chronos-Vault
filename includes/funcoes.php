@@ -313,7 +313,7 @@ function buscarEquipamentoPorId($id) {
     foreach ($statuses as $status) {
         $equipamentos = carregarEquipamentosPorStatus($status);
         foreach ($equipamentos as $equipamento) {
-            if ($equipamento['id'] == $id) {
+            if (($equipamento['id'] ?? null) == $id) {
                 $equipamento['status_origem'] = $status;
                 return $equipamento;
             }
@@ -327,7 +327,7 @@ function buscarEquipamentoPorId($id) {
  * Adiciona um novo equipamento
  */
 function adicionarEquipamento($equipamento) {
-    $status = $equipamento['status'];
+    $status = $equipamento['status'] ?? 'estoque';
     $caminho = getCaminhoEquipamentoPorStatus($status);
     $equipamentos = carregarEquipamentosPorStatus($status);
     
@@ -344,7 +344,8 @@ function adicionarEquipamento($equipamento) {
  * Move um equipamento de um status para outro
  */
 function moverEquipamentoParaStatus($equipamento, $novoStatus) {
-    $statusAntigo = $equipamento['status'];
+    $statusAntigo = $equipamento['status'] ?? 'estoque';
+    $equipamentoId = $equipamento['id'] ?? null;
     
     if ($statusAntigo === $novoStatus) {
         return atualizarEquipamento($equipamento);
@@ -353,7 +354,7 @@ function moverEquipamentoParaStatus($equipamento, $novoStatus) {
     $equipamentosAntigos = carregarEquipamentosPorStatus($statusAntigo);
     
     foreach ($equipamentosAntigos as $index => $eq) {
-        if ($eq['id'] == $equipamento['id']) {
+        if (($eq['id'] ?? null) == $equipamentoId) {
             array_splice($equipamentosAntigos, $index, 1);
             break;
         }
@@ -395,12 +396,13 @@ function moverEquipamentoParaStatus($equipamento, $novoStatus) {
  * Atualiza um equipamento existente
  */
 function atualizarEquipamento($equipamento) {
-    $status = $equipamento['status'];
+    $status = $equipamento['status'] ?? 'estoque';
+    $equipamentoId = $equipamento['id'] ?? null;
     $caminho = getCaminhoEquipamentoPorStatus($status);
     $equipamentos = carregarEquipamentosPorStatus($status);
     
     foreach ($equipamentos as $index => $eq) {
-        if ($eq['id'] == $equipamento['id']) {
+        if (($eq['id'] ?? null) == $equipamentoId) {
             $equipamentos[$index] = $equipamento;
             return salvarArquivoJSON($caminho, $equipamentos);
         }
@@ -415,8 +417,8 @@ function atualizarEquipamento($equipamento) {
 function patrimonioExiste($patrimonio, $idIgnorar = null) {
     $todosEquipamentos = carregarTodosEquipamentos();
     foreach ($todosEquipamentos as $equip) {
-        if ($equip['patrimonio'] === $patrimonio) {
-            if ($idIgnorar && $equip['id'] == $idIgnorar) {
+        if (($equip['patrimonio'] ?? null) === $patrimonio) {
+            if ($idIgnorar && ($equip['id'] ?? null) == $idIgnorar) {
                 continue;
             }
             return true;
@@ -433,7 +435,7 @@ function serialExiste($serial, $idIgnorar = null) {
     $todosEquipamentos = carregarTodosEquipamentos();
     foreach ($todosEquipamentos as $equip) {
         if (isset($equip['serial']) && $equip['serial'] === $serial) {
-            if ($idIgnorar && $equip['id'] == $idIgnorar) {
+            if ($idIgnorar && ($equip['id'] ?? null) == $idIgnorar) {
                 continue;
             }
             return true;
@@ -450,7 +452,7 @@ function hostnameExiste($hostname, $idIgnorar = null) {
     $todosEquipamentos = carregarTodosEquipamentos();
     foreach ($todosEquipamentos as $equip) {
         if (isset($equip['hostname']) && $equip['hostname'] === $hostname) {
-            if ($idIgnorar && $equip['id'] == $idIgnorar) {
+            if ($idIgnorar && ($equip['id'] ?? null) == $idIgnorar) {
                 continue;
             }
             return true;
@@ -611,8 +613,8 @@ function getValorEstimadoEquipamento($tipo) {
 function contarEquipamentosColaborador($colaboradorId, $equipamentos) {
     $count = 0;
     foreach ($equipamentos as $equipamento) {
-        if ($equipamento['colaborador_id'] == $colaboradorId &&
-            in_array($equipamento['status'], ['alocado', 'emprestado'])) {
+        if (($equipamento['colaborador_id'] ?? null) == $colaboradorId &&
+            in_array($equipamento['status'] ?? '', ['alocado', 'emprestado'])) {
             $count++;
         }
     }
@@ -967,7 +969,7 @@ function vincularEquipamentoSolicitacaoManutencao($equipamentoId, $solicitacaoId
         return false;
     }
 
-    $statusAntes = $equipamento['status'];
+    $statusAntes = $equipamento['status'] ?? 'estoque';
     $colaboradorIdAntes = $equipamento['colaborador_id'] ?? null;
     $colaboradorNomeAntes = $equipamento['colaborador_nome'] ?? null;
     $linhaIdAntes = $equipamento['linha_id'] ?? null;

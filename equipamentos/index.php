@@ -55,8 +55,9 @@ $totalForaUso = count($equipamentosForaUso);
 // Calcular centros de custo únicos
 $centrosCustoUnicos = [];
 foreach ($todosEquipamentos as $equipamento) {
-    if (!empty($equipamento["centro_custo"])) {
-        $centrosCustoUnicos[$equipamento["centro_custo"]] = $equipamento["centro_custo"];
+    $cc = $equipamento["centro_custo"] ?? null;
+    if (!empty($cc)) {
+        $centrosCustoUnicos[$cc] = $cc;
     }
 }
 sort($centrosCustoUnicos);
@@ -328,12 +329,14 @@ $totalFiltrado = count($equipamentosFiltrados);
             <?php else: ?>
                 <?php foreach ($equipamentosFiltrados as $equipamento):
                     $statusClasses = ["estoque" => "status-ativo", "alocado" => "status-inativo", "emprestado" => "status-info", "manutencao" => "status-warning", "fora_uso" => "status-danger"];
-                    $statusClass = $statusClasses[$equipamento["status"]] ?? "status-ativo";
-                    $colaboradorNome = ($equipamento["colaborador_id"] && isset($mapaColaboradores[$equipamento["colaborador_id"]])) ? $mapaColaboradores[$equipamento["colaborador_id"]]["nome"] : "N/A";
+                    $statusClass = $statusClasses[$equipamento["status"] ?? "estoque"] ?? "status-ativo";
+                    $colabId = $equipamento["colaborador_id"] ?? null;
+                    $colaboradorNome = ($colabId && isset($mapaColaboradores[$colabId])) ? $mapaColaboradores[$colabId]["nome"] : "N/A";
+                    $tipoEquip = $equipamento["tipo"] ?? "notebook";
                     $hostnameDisplay = "---";
                     if (!empty($equipamento["hostname"])) {
                         $hostnameDisplay = htmlspecialchars($equipamento["hostname"]);
-                        if ($equipamento["tipo"] === "notebook") {
+                        if ($tipoEquip === "notebook") {
                             $hostnameDisplay = '<span class="hostname-badge hostname-notebook"><i class="fas fa-laptop"></i> ' . $hostnameDisplay . '</span>';
                         } else {
                             $hostnameDisplay = '<span class="hostname-badge"><i class="fas fa-network-wired"></i> ' . $hostnameDisplay . '</span>';
@@ -341,29 +344,29 @@ $totalFiltrado = count($equipamentosFiltrados);
                     }
                 ?>
                 <tr>
-                    <td data-label="Tipo"><span class="tipo-badge"><i class="fas fa-<?php echo getIconByType($equipamento["tipo"]); ?>"></i> <?php echo getTipoTexto($equipamento["tipo"]); ?></span></td>
-                    <td data-label="Patrimônio"><strong><?php echo htmlspecialchars($equipamento["patrimonio"]); ?></strong></td>
+                    <td data-label="Tipo"><span class="tipo-badge"><i class="fas fa-<?php echo getIconByType($tipoEquip); ?>"></i> <?php echo getTipoTexto($tipoEquip); ?></span></td>
+                    <td data-label="Patrimônio"><strong><?php echo htmlspecialchars($equipamento["patrimonio"] ?? ""); ?></strong></td>
                     <td data-label="Hostname"><?php echo $hostnameDisplay; ?></td>
                     <td data-label="Marca/Modelo"><?php echo htmlspecialchars(($equipamento["marca"] ?? '') . ' ' . ($equipamento["modelo"] ?? '')); ?></td>
                     <td data-label="Nº Série"><?php echo !empty($equipamento["serial"]) ? htmlspecialchars($equipamento["serial"]) : "---"; ?></td>
                     <td data-label="Centro de Custo"><?php echo htmlspecialchars($equipamento["centro_custo"] ?? '---'); ?></td>
-                    <td data-label="Status"><span class="status-badge <?php echo $statusClass; ?>"><i class="fas fa-<?php echo getIconByStatus($equipamento["status"]); ?>"></i> <?php echo getStatusTexto($equipamento["status"]); ?></span></td>
+                    <td data-label="Status"><span class="status-badge <?php echo $statusClass; ?>"><i class="fas fa-<?php echo getIconByStatus($equipamento["status"] ?? "estoque"); ?>"></i> <?php echo getStatusTexto($equipamento["status"] ?? "estoque"); ?></span></td>
                     <td data-label="Colaborador"><?php echo htmlspecialchars($colaboradorNome); ?></td>
                     <td data-label="Ações">
                         <div class="action-buttons">
                             <?php if ($can_edit): ?>
-                                <a href="editar.php?id=<?php echo $equipamento["id"]; ?>" class="action-btn action-edit" title="Editar"><i class="fas fa-edit"></i></a>
+                                <a href="editar.php?id=<?php echo $equipamento["id"] ?? ""; ?>" class="action-btn action-edit" title="Editar"><i class="fas fa-edit"></i></a>
                             <?php endif; ?>
-                            <?php if ($can_edit && $equipamento["status"] == "estoque"): ?>
-                                <a href="atribuir.php?id=<?php echo $equipamento["id"]; ?>" class="action-btn action-equipments" title="Atribuir"><i class="fas fa-user-check"></i></a>
+                            <?php if ($can_edit && ($equipamento["status"] ?? "") == "estoque"): ?>
+                                <a href="atribuir.php?id=<?php echo $equipamento["id"] ?? ""; ?>" class="action-btn action-equipments" title="Atribuir"><i class="fas fa-user-check"></i></a>
                             <?php endif; ?>
-                            <?php if ($can_edit && in_array($equipamento["status"], ["alocado", "emprestado"])): ?>
-                                <a href="devolver.php?id=<?php echo $equipamento["id"]; ?>" class="action-btn action-return" title="Devolver"><i class="fas fa-undo"></i></a>
+                            <?php if ($can_edit && in_array($equipamento["status"] ?? "", ["alocado", "emprestado"])): ?>
+                                <a href="devolver.php?id=<?php echo $equipamento["id"] ?? ""; ?>" class="action-btn action-return" title="Devolver"><i class="fas fa-undo"></i></a>
                             <?php endif; ?>
-                            <?php if ($can_edit && !in_array($equipamento["status"], ["manutencao", "fora_uso"])): ?>
-                                <a href="../solicitacoes_manutencao/adicionar.php?equipamento_id=<?php echo $equipamento['id']; ?>" class="action-btn action-warning" title="Solicitar Manutenção"><i class="fas fa-tools"></i></a>
+                            <?php if ($can_edit && !in_array($equipamento["status"] ?? "", ["manutencao", "fora_uso"])): ?>
+                                <a href="../solicitacoes_manutencao/adicionar.php?equipamento_id=<?php echo $equipamento['id'] ?? ''; ?>" class="action-btn action-warning" title="Solicitar Manutenção"><i class="fas fa-tools"></i></a>
                             <?php endif; ?>
-                            <?php if ($can_edit && $equipamento["status"] == "manutencao"): ?>
+                            <?php if ($can_edit && ($equipamento["status"] ?? "") == "manutencao"): ?>
                                 <?php
                                     $solicitacaoVinculadaId = $equipamento["solicitacao_manutencao_id"] ?? null;
                                     $statusManutInterno = $equipamento["manutencao_status_interno"] ?? "aguardando_envio";
@@ -374,8 +377,8 @@ $totalFiltrado = count($equipamentosFiltrados);
                                 ?>
                                 <a href="<?php echo $urlSolicitacao; ?>" class="action-btn action-info" title="Ver Solicitação (<?php echo htmlspecialchars(trim($statusManutLabel)); ?>)"><i class="fas fa-external-link-alt"></i></a>
                             <?php endif; ?>
-                            <?php if ($can_edit && $equipamento["status"] != "fora_uso"): ?>
-                                <a href="marcar_fora_uso.php?id=<?php echo $equipamento['id']; ?>" class="action-btn action-delete" title="Marcar Fora de Uso"><i class="fas fa-times-circle"></i></a>
+                            <?php if ($can_edit && ($equipamento["status"] ?? "") != "fora_uso"): ?>
+                                <a href="marcar_fora_uso.php?id=<?php echo $equipamento["id"] ?? ""; ?>" class="action-btn action-delete" title="Marcar Fora de Uso"><i class="fas fa-times-circle"></i></a>
                             <?php endif; ?>
                             <button type="button" class="action-btn action-view" data-equipamento="<?php echo htmlspecialchars(json_encode($equipamento), ENT_QUOTES, 'UTF-8'); ?>" onclick="showEquipmentDetailsFromBtn(this)" title="Ver Detalhes"><i class="fas fa-eye"></i></button>
                         </div>
