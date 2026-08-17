@@ -488,6 +488,7 @@ $totalFiltrado = count($equipamentosFiltrados);
         document.getElementById('equipamentoIdManutencao').value = id;
         document.getElementById('problemaManutencao').value = '';
         document.getElementById('modalManutencao').style.display = 'block';
+        document.getElementById('modalManutencao').scrollTop = 0;
     }
     
     function closeModalManutencao() {
@@ -568,6 +569,7 @@ $totalFiltrado = count($equipamentosFiltrados);
         document.getElementById('equipamentoIdForaUso').value = id;
         document.getElementById('motivoForaUso').value = '';
         document.getElementById('modalForaUso').style.display = 'block';
+        document.getElementById('modalForaUso').scrollTop = 0;
     }
     
     function closeModalForaUso() {
@@ -678,13 +680,15 @@ $totalFiltrado = count($equipamentosFiltrados);
             </div>
             ${especificacoesHtml}
             <div class="detail-row">
-                <div class="detail-item full-width"><strong>Observações:</strong><br>${equipamento.observacoes || 'Nenhuma observação registrada.'}</div>
+                <div class="detail-item full-width observacoes-item"><strong>Observações:</strong><br>${equipamento.observacoes || 'Nenhuma observação registrada.'}</div>
             </div>
             ${historico}
         </div>`;
         
         document.getElementById('modalBody').innerHTML = content;
         document.getElementById('equipmentModal').style.display = 'block';
+        document.getElementById('equipmentModal').scrollTop = 0;
+        document.getElementById('modalBody').scrollTop = 0;
     }
     
     function closeModal() {
