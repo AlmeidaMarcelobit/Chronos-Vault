@@ -26,50 +26,84 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $can_edit) {
         $novoStatus = trim($_POST["novo_status"] ?? "");
         $statusValidos = array_keys(getStatusSolicitacaoManutencao());
 
+        $destinoConclusao = null;
         if ($novoStatus === "concluido") {
-            $destino = $_POST["destino_conclusao"] ?? "colaborador";
-            if (!in_array($destino, ["colaborador", "estoque"])) $destino = "colaborador";
+            $destinoConclusao = $_POST["destino_conclusao"] ?? "colaborador";
+            if (!in_array($destinoConclusao, ["colaborador", "estoque", "manter"])) $destinoConclusao = "colaborador";
         }
 
         if (in_array($novoStatus, $statusValidos)) {
-            $busca = buscarSolicitacaoPorId($idSolicitacao);
-            if ($busca) {
-                $solicitacoes = carregarSolicitacoesManutencao();
-                $solicitacao = &$solicitacoes[$busca["index"]];
-                $statusAnteriorSolic = $solicitacao["status"] ?? "";
-                $solicitacao["status"] = $novoStatus;
+            $solicitacoesRaw = carregarSolicitacoesManutencao();
+            $encontrouIndice = null;
+            foreach ($solicitacoesRaw as $idx => $s) {
+                if (($s["id"] ?? null) == $idSolicitacao) {
+                    $encontrouIndice = $idx;
+                    break;
+                }
+            }
 
-                if (!isset($solicitacao["historico_status"]) || !is_array($solicitacao["historico_status"])) {
-                    $solicitacao["historico_status"] = [];
+            if ($encontrouIndice !== null) {
+                $statusAnteriorSolic = $solicitacoesRaw[$encontrouIndice]["status"] ?? "";
+                $solicitacoesRaw[$encontrouIndice]["status"] = $novoStatus;
+
+                if (!isset($solicitacoesRaw[$encontrouIndice]["historico_status"]) || !is_array($solicitacoesRaw[$encontrouIndice]["historico_status"])) {
+                    $solicitacoesRaw[$encontrouIndice]["historico_status"] = [];
                 }
 
-                $solicitacao["historico_status"][] = [
+                $solicitacoesRaw[$encontrouIndice]["historico_status"][] = [
                     "status"  => $novoStatus,
                     "data"    => date("Y-m-d H:i:s"),
                     "usuario" => $_SESSION["usuario_nome"] ?? "Sistema",
-                    "destino_conclusao" => ($novoStatus === "concluido") ? ($_POST["destino_conclusao"] ?? null) : null
+                    "destino_conclusao" => ($novoStatus === "concluido") ? $destinoConclusao : null
                 ];
 
                 if ($novoStatus === "devolvido") {
-                    $solicitacao["data_devolucao"] = date("Y-m-d H:i:s");
+                    $solicitacoesRaw[$encontrouIndice]["data_devolucao"] = date("Y-m-d H:i:s");
                 } elseif ($novoStatus === "concluido") {
-                    $solicitacao["data_conclusao"] = date("Y-m-d H:i:s");
-                    $solicitacao["destino_conclusao"] = $destino;
+                    $solicitacoesRaw[$encontrouIndice]["data_conclusao"] = date("Y-m-d H:i:s");
+                    $solicitacoesRaw[$encontrouIndice]["destino_conclusao"] = $destinoConclusao;
                 }
 
-                $salvouSolicitacao = salvarSolicitacoesManutencao($solicitacoes);
+                $salvouSolicitacao = salvarSolicitacoesManutencao($solicitacoesRaw);
                 $msgEquipamento = "";
 
                 if ($salvouSolicitacao) {
-                    $equipamentoRelId = $solicitacao["equipamento_relacionado_id"] ?? null;
+                    $equipamentoRelId = $solicitacoesRaw[$encontrouIndice]["equipamento_relacionado_id"] ?? null;
                     if ($equipamentoRelId) {
                         if ($novoStatus === "concluido") {
-                            $retorno = concluirSolicitacaoRetornarEquipamento($equipamentoRelId, $destino);
-                            if (!$retorno) {
-                                $msgEquipamento = " (Atenção: não foi possível retornar o equipamento da manutenção)";
+                            if ($destinoConclusao === "manter") {
+                                $atualizou = atualizarStatusInternoEquipamentoManutencao($equipamentoRelId, "concluido");
+                                if (!$atualizou) {
+                                    $msgEquipamento = " (Atenção: não foi possível atualizar o status do equipamento)";
+                                }
                             } else {
-                                registrarLog("Retorno de Equipamento",
-                                    "Equipamento ID: {$equipamentoRelId} | Destino: {$destino} | Via Solicitação #{$idSolicitacao}");
+                                $retorno = concluirSolicitacaoRetornarEquipamento($equipamentoRelId, $destinoConclusao);
+                                if (!$retorno) {
+                                    $detalheEq = "";
+                                    $buscaEq = buscarEquipamentoPorId($equipamentoRelId);
+                                    if ($buscaEq) {
+                                        $dadosEq = $buscaEq["equipamento"] ?? [];
+                                        $detalheEq = " (Equipamento ID: " . ($dadosEq["id"] ?? "?") . " — Status Atual: " . ($dadosEq["status"] ?? "?") . " | Origem: " . ($buscaEq["status_origem"] ?? "?") . "). Contate o administrador ou execute a sincronia.";
+                                    }
+                                    $msgEquipamento = " (Atenção: não foi possível retornar o equipamento da manutenção. {$detalheEq})";
+                                } else {
+                                    registrarLog("Retorno de Equipamento",
+                                        "Equipamento ID: {$equipamentoRelId} | Destino: {$destinoConclusao} | Via Solicitação #{$idSolicitacao}");
+                                }
+                            }
+                        } elseif ($novoStatus === "devolvido") {
+                            $buscaEq = buscarEquipamentoPorId($equipamentoRelId);
+                            if ($buscaEq && ($buscaEq["equipamento"]["status"] ?? "") === "manutencao") {
+                                $colabAntes = $buscaEq["equipamento"]["colaborador_id_antes_manutencao"] ?? null;
+                                $statusAntes = $buscaEq["equipamento"]["status_anterior"] ?? "estoque";
+                                $destinoAuto = ($colabAntes && in_array($statusAntes, ["alocado", "emprestado"])) ? "colaborador" : "estoque";
+                                $retorno = concluirSolicitacaoRetornarEquipamento($equipamentoRelId, $destinoAuto);
+                                if (!$retorno) {
+                                    $msgEquipamento = " (Atenção: não foi possível devolver o equipamento)";
+                                } else {
+                                    registrarLog("Devolução de Equipamento",
+                                        "Equipamento ID: {$equipamentoRelId} | Destino automático: {$destinoAuto} | Via Solicitação #{$idSolicitacao}");
+                                }
                             }
                         } else {
                             $atualizou = atualizarStatusInternoEquipamentoManutencao($equipamentoRelId, $novoStatus);
@@ -85,20 +119,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $can_edit) {
                     $_SESSION["mensagem_tipo"] = empty($msgEquipamento) ? "success" : "error";
                     header("Location: index.php" . (!empty($_GET) ? "?" . http_build_query($_GET) : ""));
                     exit();
+                } else {
+                    $_SESSION["mensagem"] = "Erro ao salvar solicitação. Verifique permissões da pasta data/.";
+                    $_SESSION["mensagem_tipo"] = "error";
+                    header("Location: index.php" . (!empty($_GET) ? "?" . http_build_query($_GET) : ""));
+                    exit();
                 }
             }
         }
     }
 
     if ($acao === "excluir" && $idSolicitacao && $is_admin) {
-        $busca = buscarSolicitacaoPorId($idSolicitacao);
-        if ($busca) {
-            $equipamentoRelId = $busca["solicitacao"]["equipamento_relacionado_id"] ?? null;
+        $solicitacoesRaw = carregarSolicitacoesManutencao();
+        $encontrouIdx = null;
+        foreach ($solicitacoesRaw as $idx => $s) {
+            if (($s["id"] ?? null) == $idSolicitacao) {
+                $encontrouIdx = $idx;
+                break;
+            }
+        }
 
-            $solicitacoes = carregarSolicitacoesManutencao();
-            array_splice($solicitacoes, $busca["index"], 1);
+        if ($encontrouIdx !== null) {
+            $equipamentoRelId = $solicitacoesRaw[$encontrouIdx]["equipamento_relacionado_id"] ?? null;
+            array_splice($solicitacoesRaw, $encontrouIdx, 1);
 
-            if (salvarSolicitacoesManutencao($solicitacoes)) {
+            if (salvarSolicitacoesManutencao($solicitacoesRaw)) {
                 if ($equipamentoRelId) {
                     $buscaEq = buscarEquipamentoPorId($equipamentoRelId);
                     if ($buscaEq && ($buscaEq["equipamento"]["status"] ?? "") === "manutencao") {
@@ -108,6 +153,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $can_edit) {
                 registrarLog("Exclusão de Solicitação de Manutenção", "ID: {$idSolicitacao}");
                 $_SESSION["mensagem"] = "Solicitação #{$idSolicitacao} excluída com sucesso.";
                 $_SESSION["mensagem_tipo"] = "success";
+                header("Location: index.php" . (!empty($_GET) ? "?" . http_build_query($_GET) : ""));
+                exit();
+            } else {
+                $_SESSION["mensagem"] = "Erro ao excluir solicitação. Verifique permissões.";
+                $_SESSION["mensagem_tipo"] = "error";
                 header("Location: index.php" . (!empty($_GET) ? "?" . http_build_query($_GET) : ""));
                 exit();
             }
@@ -121,6 +171,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $can_edit) {
 $solicitacoes = array_values(array_filter(carregarSolicitacoesManutencao(), function($s) {
     return isset($s["id"]) && !empty($s["id"]);
 }));
+
+try {
+    $sincronizados = sincronizarSolicitacoesComEquipamentos();
+    if ($sincronizados > 0 && empty($_POST)) {
+        $solicitacoes = array_values(array_filter(carregarSolicitacoesManutencao(), function($s) {
+            return isset($s["id"]) && !empty($s["id"]);
+        }));
+    }
+} catch (\Throwable $e) {
+    error_log("Erro sincronizar solicitacoes: " . $e->getMessage());
+}
+
 $filtro_status = $_GET["status"] ?? "todos";
 $filtro_prioridade = $_GET["prioridade"] ?? "todos";
 $filtro_destino = $_GET["destino"] ?? "todos";
@@ -576,6 +638,20 @@ $tiposLista = getTiposEquipamentoSolicitacao();
                         </p>
                     </div>
                 </label>
+
+                <label class="destino-opcao" id="opcao-manter"
+                    style="display:flex; gap:1rem; align-items:flex-start; padding:1.25rem 1rem; border:2px solid var(--gray-200); border-radius:16px; cursor:pointer; transition: all .2s ease; flex:1; background:var(--gray-50);">
+                    <input type="radio" name="destino_conclusao_modal" value="manter" style="margin-top:2px; accent-color: #F39C12;">
+                    <div style="flex:1;">
+                        <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.25rem;">
+                            <i class="fas fa-tools" style="color: #F39C12;"></i>
+                            <strong style="color: var(--gray-800); font-size: 0.95rem;">Manter em Manutenção</strong>
+                        </div>
+                        <p style="font-size: 0.825rem; color: var(--gray-600); line-height: 1.45;">
+                            A solicitação é marcada como concluída, mas o equipamento permanece em manutenção (não volta para colaborador nem estoque). Use se houver necessidade de reparos adicionais ou aguardando retirada.
+                        </p>
+                    </div>
+                </label>
             </div>
 
             <div class="modal-actions" style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:1rem; padding-top:1rem; border-top:1px solid var(--gray-200);">
@@ -841,7 +917,8 @@ $tiposLista = getTiposEquipamentoSolicitacao();
     function destacarOpcaoModalConcluir() {
         const opcaoColab = document.getElementById('opcao-colaborador');
         const opcaoEstoque = document.getElementById('opcao-estoque');
-        if (!opcaoColab || !opcaoEstoque) return;
+        const opcaoManter = document.getElementById('opcao-manter');
+        if (!opcaoColab || !opcaoEstoque || !opcaoManter) return;
 
         const radioSelecionado = document.querySelector('input[name="destino_conclusao_modal"]:checked');
         const valor = radioSelecionado ? radioSelecionado.value : 'colaborador';
@@ -853,6 +930,10 @@ $tiposLista = getTiposEquipamentoSolicitacao();
         opcaoEstoque.style.borderColor = valor === 'estoque' ? 'var(--primary-dark)' : 'var(--gray-200)';
         opcaoEstoque.style.background = valor === 'estoque' ? 'rgba(25,118,210,0.05)' : 'var(--gray-50)';
         opcaoEstoque.style.boxShadow = valor === 'estoque' ? '0 0 0 3px rgba(25,118,210,0.1)' : 'none';
+
+        opcaoManter.style.borderColor = valor === 'manter' ? '#F39C12' : 'var(--gray-200)';
+        opcaoManter.style.background = valor === 'manter' ? 'rgba(243,156,18,0.05)' : 'var(--gray-50)';
+        opcaoManter.style.boxShadow = valor === 'manter' ? '0 0 0 3px rgba(243,156,18,0.15)' : 'none';
     }
 
     document.querySelectorAll('input[name="destino_conclusao_modal"]').forEach(r => {

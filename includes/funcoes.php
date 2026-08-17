@@ -306,16 +306,20 @@ function carregarTodosEquipamentos() {
 
 /**
  * Busca equipamento por ID em todos os status
+ * Retorna: ['equipamento' => array, 'status_origem' => string, 'index' => int] ou null
  */
 function buscarEquipamentoPorId($id) {
     $statuses = ['estoque', 'alocado', 'emprestado', 'manutencao', 'fora_uso'];
     
     foreach ($statuses as $status) {
         $equipamentos = carregarEquipamentosPorStatus($status);
-        foreach ($equipamentos as $equipamento) {
+        foreach ($equipamentos as $idx => $equipamento) {
             if (($equipamento['id'] ?? null) == $id) {
-                $equipamento['status_origem'] = $status;
-                return $equipamento;
+                return [
+                    'equipamento'   => $equipamento,
+                    'status_origem' => $status,
+                    'index'         => $idx
+                ];
             }
         }
     }
@@ -346,25 +350,52 @@ function adicionarEquipamento($equipamento) {
 function moverEquipamentoParaStatus($equipamento, $novoStatus) {
     $statusAntigo = $equipamento['status'] ?? 'estoque';
     $equipamentoId = $equipamento['id'] ?? null;
-    
+
+    if (!$equipamentoId) {
+        $todos = carregarTodosEquipamentos();
+        $equipamento['id'] = gerarId($todos);
+        $statusAntigo = $novoStatus;
+    }
+
     if ($statusAntigo === $novoStatus) {
         return atualizarEquipamento($equipamento);
     }
-    
+
+    $statusesValidos = ['estoque', 'alocado', 'emprestado', 'manutencao', 'fora_uso'];
+    if (!in_array($statusAntigo, $statusesValidos)) $statusAntigo = 'estoque';
+    if (!in_array($novoStatus, $statusesValidos)) $novoStatus = 'estoque';
+
     $equipamentosAntigos = carregarEquipamentosPorStatus($statusAntigo);
-    
+    $removeu = false;
+
     foreach ($equipamentosAntigos as $index => $eq) {
-        if (($eq['id'] ?? null) == $equipamentoId) {
+        if (isset($eq['id']) && (string)$eq['id'] === (string)$equipamentoId) {
             array_splice($equipamentosAntigos, $index, 1);
+            $removeu = true;
             break;
         }
     }
-    
-    // Preservar vínculo com colaborador ao enviar para manutenção
+
+    if (!$removeu) {
+        foreach ($statusesValidos as $st) {
+            if ($st === $statusAntigo || $st === $novoStatus) continue;
+            $lista = carregarEquipamentosPorStatus($st);
+            $achou = false;
+            foreach ($lista as $i => $eq) {
+                if (isset($eq['id']) && (string)$eq['id'] === (string)$equipamentoId) {
+                    array_splice($lista, $i, 1);
+                    salvarArquivoJSON(getCaminhoEquipamentoPorStatus($st), $lista);
+                    $achou = true;
+                    break;
+                }
+            }
+            if ($achou) break;
+        }
+    }
+
     if ($novoStatus === 'manutencao') {
         $equipamento['status_anterior'] = $statusAntigo;
         $equipamento['data_manutencao'] = date('Y-m-d H:i:s');
-        // colaborador_id é mantido intencionalmente
     } elseif ($novoStatus === 'fora_uso' || $novoStatus === 'estoque') {
         $equipamento['colaborador_id'] = null;
         $equipamento['data_atribuicao'] = null;
@@ -379,16 +410,26 @@ function moverEquipamentoParaStatus($equipamento, $novoStatus) {
     } elseif ($novoStatus !== 'manutencao') {
         $equipamento['data_atribuicao'] = null;
     }
-    
+
     $caminhoAntigo = getCaminhoEquipamentoPorStatus($statusAntigo);
     if (!salvarArquivoJSON($caminhoAntigo, $equipamentosAntigos)) {
         return false;
     }
-    
+
     $equipamentosNovos = carregarEquipamentosPorStatus($novoStatus);
-    $equipamentosNovos[] = $equipamento;
+    $jaExiste = false;
+    foreach ($equipamentosNovos as $i => $eq) {
+        if (isset($eq['id']) && (string)$eq['id'] === (string)$equipamentoId) {
+            $equipamentosNovos[$i] = $equipamento;
+            $jaExiste = true;
+            break;
+        }
+    }
+    if (!$jaExiste) {
+        $equipamentosNovos[] = $equipamento;
+    }
     $caminhoNovo = getCaminhoEquipamentoPorStatus($novoStatus);
-    
+
     return salvarArquivoJSON($caminhoNovo, $equipamentosNovos);
 }
 
@@ -398,17 +439,34 @@ function moverEquipamentoParaStatus($equipamento, $novoStatus) {
 function atualizarEquipamento($equipamento) {
     $status = $equipamento['status'] ?? 'estoque';
     $equipamentoId = $equipamento['id'] ?? null;
+    if (!$equipamentoId) {
+        $todos = carregarTodosEquipamentos();
+        $equipamento['id'] = gerarId($todos);
+        return adicionarEquipamento($equipamento);
+    }
     $caminho = getCaminhoEquipamentoPorStatus($status);
     $equipamentos = carregarEquipamentosPorStatus($status);
     
+    $encontrou = false;
     foreach ($equipamentos as $index => $eq) {
-        if (($eq['id'] ?? null) == $equipamentoId) {
+        if (isset($eq['id']) && (string)$eq['id'] === (string)$equipamentoId) {
             $equipamentos[$index] = $equipamento;
-            return salvarArquivoJSON($caminho, $equipamentos);
+            $encontrou = true;
+            break;
         }
     }
-    
-    return false;
+
+    if ($encontrou) {
+        return salvarArquivoJSON($caminho, $equipamentos);
+    }
+
+    $busca = buscarEquipamentoPorId($equipamentoId);
+    if ($busca && ($busca['status_origem'] ?? '') !== $status) {
+        return moverEquipamentoParaStatus($equipamento, $status);
+    }
+
+    $equipamentos[] = $equipamento;
+    return salvarArquivoJSON($caminho, $equipamentos);
 }
 
 /**
@@ -920,7 +978,7 @@ function getStatusSolicitacaoManutencao() {
 
 function getStatusSolicitacaoTexto($status) {
     $statuses = getStatusSolicitacaoManutencao();
-    return $statuses[$status]['nome'] ?? $status;
+    return ($statuses[$status] ?? [])['nome'] ?? ucfirst($status);
 }
 
 function getPrioridadeSolicitacaoTexto($prioridade) {
@@ -936,7 +994,7 @@ function getDestinoReparoTexto($destino) {
 function buscarSolicitacaoPorId($id) {
     $solicitacoes = carregarSolicitacoesManutencao();
     foreach ($solicitacoes as $i => $s) {
-        if ($s['id'] == $id) {
+        if (($s['id'] ?? null) == $id) {
             return ['solicitacao' => $s, 'index' => $i];
         }
     }
@@ -990,6 +1048,123 @@ function vincularEquipamentoSolicitacaoManutencao($equipamentoId, $solicitacaoId
     }
 }
 
+/**
+ * Sincroniza solicitações de manutenção com os equipamentos vinculados.
+ * Remove duplicatas em manutencao.json que não possuem 'id' ou estão corrompidas,
+ * movendo corretamente os equipamentos de seus arquivos originais.
+ */
+function sincronizarSolicitacoesComEquipamentos() {
+    $solicitacoes = carregarSolicitacoesManutencao();
+    $alteracoes = 0;
+
+    foreach ($solicitacoes as $s) {
+        $solId = $s["id"] ?? null;
+        $eqRelId = $s["equipamento_relacionado_id"] ?? null;
+        $statusSolic = $s["status"] ?? "aguardando_envio";
+        if (!$solId || !$eqRelId) continue;
+
+        $buscaEq = buscarEquipamentoPorId($eqRelId);
+        if (!$buscaEq) continue;
+
+        $equipamento = $buscaEq["equipamento"];
+        $statusOrigem = $buscaEq["status_origem"];
+        $eqId = $equipamento["id"] ?? null;
+        $patrimonio = $equipamento["patrimonio"] ?? null;
+
+        $jaEstaEmManutencaoCorreto = ($statusOrigem === "manutencao"
+            && !empty($eqId)
+            && !empty($equipamento["solicitacao_manutencao_id"]));
+
+        if ($jaEstaEmManutencaoCorreto) {
+            continue;
+        }
+
+        $jaEstaEmManutencaoIncompleto = false;
+        $manutencaoAtual = carregarEquipamentosPorStatus('manutencao');
+        foreach ($manutencaoAtual as $manEq) {
+            $manSolicId = $manEq["solicitacao_manutencao_id"] ?? null;
+            $manPatrimonio = $manEq["patrimonio"] ?? "";
+            $solPatrimonio = $s["patrimonio"] ?? "";
+            $temIdEq = !empty($manEq["id"] ?? null);
+            if ($manSolicId == $solId) {
+                $jaEstaEmManutencaoIncompleto = true;
+                break;
+            }
+            if (!$temIdEq && !empty($patrimonio) && $manPatrimonio === $patrimonio) {
+                $jaEstaEmManutencaoIncompleto = true;
+                break;
+            }
+            if (!$temIdEq && !empty($solPatrimonio) && $manPatrimonio === $solPatrimonio) {
+                $jaEstaEmManutencaoIncompleto = true;
+                break;
+            }
+        }
+
+        $statusFinalEq = $equipamento["status"] ?? $statusOrigem;
+        $naoEstaEmManutencao = ($statusFinalEq !== "manutencao");
+
+        if ($jaEstaEmManutencaoIncompleto || $naoEstaEmManutencao) {
+            $colabIdAntes = $equipamento["colaborador_id_antes_manutencao"] ?? null;
+            if (empty($colabIdAntes)) {
+                $colabIdAntes = $equipamento["colaborador_id"] ?? null;
+                $equipamento["colaborador_id_antes_manutencao"] = $colabIdAntes;
+            }
+            $colabNomeAntes = $equipamento["colaborador_nome_antes_manutencao"] ?? null;
+            if (empty($colabNomeAntes)) {
+                $colabNomeAntes = $equipamento["colaborador_nome"] ?? null;
+                $equipamento["colaborador_nome_antes_manutencao"] = $colabNomeAntes;
+            }
+            if (empty($equipamento["linha_id_antes_manutencao"] ?? null)) {
+                $equipamento["linha_id_antes_manutencao"] = $equipamento["linha_id"] ?? null;
+            }
+
+            $statusAntesInterno = $statusOrigem;
+            if (empty($equipamento["status_anterior"] ?? null)) {
+                $equipamento["status_anterior"] = $statusAntesInterno;
+            }
+            $equipamento["manutencao_status_interno"] = $statusSolic;
+            $equipamento["solicitacao_manutencao_id"] = $solId;
+            $equipamento["data_inicio_manutencao_solicitacao"] = $s["data_envio"] ?? date("Y-m-d H:i:s");
+            $equipamento["data_atualizacao"] = date("Y-m-d H:i:s");
+
+            $caminhoAntigo = getCaminhoEquipamentoPorStatus($statusOrigem);
+            $equipamentosAntigos = carregarEquipamentosPorStatus($statusOrigem);
+            $encontrou = false;
+            foreach ($equipamentosAntigos as $idxAnt => $eqAnt) {
+                if (($eqAnt["id"] ?? null) == $eqRelId) {
+                    array_splice($equipamentosAntigos, $idxAnt, 1);
+                    $encontrou = true;
+                    break;
+                }
+            }
+
+            $equipamentosNovos = [];
+            foreach ($manutencaoAtual as $manEq) {
+                $manSolicId = $manEq["solicitacao_manutencao_id"] ?? null;
+                $manEqId = $manEq["id"] ?? null;
+                $manPatrimonio = $manEq["patrimonio"] ?? "";
+                $solPatrimonio = $s["patrimonio"] ?? "";
+                if ($manSolicId == $solId) { continue; }
+                if (empty($manEqId)) {
+                    if (!empty($patrimonio) && $manPatrimonio == $patrimonio) { continue; }
+                    if (!empty($solPatrimonio) && $manPatrimonio == $solPatrimonio) { continue; }
+                }
+                if (!empty($manEqId) && $manEqId == $eqRelId) { continue; }
+                $equipamentosNovos[] = $manEq;
+            }
+            $equipamentosNovos[] = $equipamento;
+
+            $salvouAnt = salvarArquivoJSON($caminhoAntigo, $equipamentosAntigos);
+            $salvouNov = salvarArquivoJSON(getCaminhoEquipamentoPorStatus('manutencao'), $equipamentosNovos);
+
+            if ($salvouAnt && $salvouNov) {
+                $alteracoes++;
+            }
+        }
+    }
+    return $alteracoes;
+}
+
 function atualizarStatusInternoEquipamentoManutencao($equipamentoId, $novoStatusInterno) {
     $busca = buscarEquipamentoPorId($equipamentoId);
     if (!$busca) return false;
@@ -1018,12 +1193,43 @@ function concluirSolicitacaoRetornarEquipamento($equipamentoId, $destino = 'cola
     $busca = buscarEquipamentoPorId($equipamentoId);
     if (!$busca) return false;
 
-    $equipamento = $busca['equipamento'];
+    $equipamento = $busca['equipamento'] ?? null;
+    if (!$equipamento) return false;
 
-    $statusAnterior = $equipamento['status_anterior'] ?? 'estoque';
+    $statusesValidos = ['estoque', 'alocado', 'emprestado', 'manutencao', 'fora_uso'];
+
+    $statusAnterior = $equipamento['status_anterior'] ?? null;
+    if (!in_array($statusAnterior, $statusesValidos, true)) {
+        $statusAnterior = null;
+    }
     $colaboradorIdAntes = $equipamento['colaborador_id_antes_manutencao'] ?? null;
     $colaboradorNomeAntes = $equipamento['colaborador_nome_antes_manutencao'] ?? null;
     $linhaIdAntes = $equipamento['linha_id_antes_manutencao'] ?? null;
+
+    if (!$colaboradorNomeAntes && $colaboradorIdAntes) {
+        $c = null;
+        $caminhosColab = [
+            __DIR__ . '/../data/colaboradores/ativos.json',
+            __DIR__ . '/../data/colaboradores/inativos.json'
+        ];
+        foreach ($caminhosColab as $caminho) {
+            if (file_exists($caminho)) {
+                $lista = lerArquivoJSON($caminho);
+                if (is_array($lista)) {
+                    foreach ($lista as $itemColab) {
+                        if (isset($itemColab['id']) && (string)$itemColab['id'] === (string)$colaboradorIdAntes) {
+                            $c = $itemColab;
+                            break 2;
+                        }
+                    }
+                }
+            }
+        }
+        if ($c && isset($c['nome'])) {
+            $colaboradorNomeAntes = $c['nome'];
+            $equipamento['colaborador_nome_antes_manutencao'] = $colaboradorNomeAntes;
+        }
+    }
 
     unset($equipamento['manutencao_status_interno']);
     unset($equipamento['solicitacao_manutencao_id']);
@@ -1032,6 +1238,7 @@ function concluirSolicitacaoRetornarEquipamento($equipamentoId, $destino = 'cola
     unset($equipamento['colaborador_nome_antes_manutencao']);
     unset($equipamento['linha_id_antes_manutencao']);
     unset($equipamento['status_anterior']);
+    unset($equipamento['data_manutencao']);
     $equipamento['data_atualizacao'] = date('Y-m-d H:i:s');
     $equipamento['data_retorno_manutencao'] = date('Y-m-d H:i:s');
 
@@ -1041,30 +1248,106 @@ function concluirSolicitacaoRetornarEquipamento($equipamentoId, $destino = 'cola
         $equipamento['centro_custo'] = null;
         $equipamento['local'] = 'Estoque';
         $equipamento['data_alocacao'] = null;
+        $equipamento['data_atribuicao'] = null;
         $statusRetorno = 'estoque';
     } else {
+        $deveAlocar = false;
         if ($colaboradorIdAntes && in_array($statusAnterior, ['alocado', 'emprestado'])) {
+            $deveAlocar = true;
+        }
+        if (!$deveAlocar && $colaboradorIdAntes) {
+            $deveAlocar = true;
+        }
+
+        if ($deveAlocar) {
             $equipamento['colaborador_id'] = $colaboradorIdAntes;
             $equipamento['colaborador_nome'] = $colaboradorNomeAntes;
             $equipamento['linha_id'] = $linhaIdAntes;
-            $statusRetorno = $statusAnterior;
+            $statusRetorno = ($statusAnterior === 'emprestado') ? 'emprestado' : 'alocado';
         } else {
             $equipamento['colaborador_id'] = null;
             $equipamento['colaborador_nome'] = null;
             $equipamento['centro_custo'] = null;
             $equipamento['local'] = 'Estoque';
             $equipamento['data_alocacao'] = null;
+            $equipamento['data_atribuicao'] = null;
             $statusRetorno = 'estoque';
         }
     }
 
+    if (!in_array($statusRetorno, $statusesValidos, true)) {
+        $statusRetorno = 'estoque';
+    }
     $equipamento['status'] = $statusRetorno;
 
-    $statusAtualArquivo = $busca['status_atual'] ?? 'manutencao';
-    if ($statusAtualArquivo === $statusRetorno) {
-        return atualizarEquipamento($equipamento);
-    } else {
-        return moverEquipamentoParaStatus($equipamento, $statusRetorno);
+    if ($statusRetorno === 'alocado' || $statusRetorno === 'emprestado') {
+        $equipamento['data_atribuicao'] = date('Y-m-d H:i:s');
+        if (empty($equipamento['data_alocacao'])) {
+            $equipamento['data_alocacao'] = date('Y-m-d H:i:s');
+        }
     }
+
+    $statusAtualArquivo = $busca['status_origem'] ?? 'manutencao';
+    if (!in_array($statusAtualArquivo, $statusesValidos, true)) {
+        $statusAtualArquivo = 'manutencao';
+    }
+
+    $equipamentoIdStr = (string)($equipamento['id'] ?? '');
+    $statusAtualValido = false;
+    $listaAtual = carregarEquipamentosPorStatus($statusAtualArquivo);
+    foreach ($listaAtual as $e) {
+        if (isset($e['id']) && (string)$e['id'] === $equipamentoIdStr) {
+            $statusAtualValido = true;
+            break;
+        }
+    }
+    if (!$statusAtualValido) {
+        foreach ($statusesValidos as $st) {
+            $lista = carregarEquipamentosPorStatus($st);
+            foreach ($lista as $e) {
+                if (isset($e['id']) && (string)$e['id'] === $equipamentoIdStr) {
+                    $statusAtualArquivo = $st;
+                    $statusAtualValido = true;
+                    break 2;
+                }
+            }
+        }
+    }
+    if (!$statusAtualValido) {
+        $statusAtualArquivo = 'manutencao';
+    }
+
+    $equipamentoOrigem = $equipamento;
+    $equipamentoOrigem['status'] = $statusAtualArquivo;
+    $equipamentoOrigemIdStr = (string)($equipamentoOrigem['id'] ?? '');
+
+    $listaOrigem = carregarEquipamentosPorStatus($statusAtualArquivo);
+    $removeuOrigem = false;
+    foreach ($listaOrigem as $i => $e) {
+        if (isset($e['id']) && (string)$e['id'] === $equipamentoOrigemIdStr) {
+            array_splice($listaOrigem, $i, 1);
+            $removeuOrigem = true;
+            break;
+        }
+    }
+    if ($removeuOrigem) {
+        salvarArquivoJSON(getCaminhoEquipamentoPorStatus($statusAtualArquivo), $listaOrigem);
+    }
+
+    $listaDestino = carregarEquipamentosPorStatus($statusRetorno);
+    $existeDestino = false;
+    foreach ($listaDestino as $i => $e) {
+        if (isset($e['id']) && (string)$e['id'] === $equipamentoIdStr) {
+            $listaDestino[$i] = $equipamento;
+            $existeDestino = true;
+            break;
+        }
+    }
+    if (!$existeDestino) {
+        $listaDestino[] = $equipamento;
+    }
+    $salvouDestino = salvarArquivoJSON(getCaminhoEquipamentoPorStatus($statusRetorno), $listaDestino);
+
+    return $salvouDestino;
 }
 ?>
