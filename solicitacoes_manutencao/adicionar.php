@@ -30,9 +30,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $destino_reparo = trim($_POST["destino_reparo"] ?? "");
     $descricao_problema = trim($_POST["descricao_problema"] ?? "");
     $prioridade = trim($_POST["prioridade"] ?? "");
-    $responsavel_envio = trim($_POST["responsavel_envio"] ?? "");
+    $responsavel_envio = trim($_SESSION["usuario_nome"] ?? "Sistema");
     $equipamento_relacionado = trim($_POST["equipamento_relacionado"] ?? "");
     $patrimonio = trim($_POST["patrimonio"] ?? "");
+    $busca_patrimonio = trim($_POST["busca_patrimonio"] ?? "");
+
+    if (empty($equipamento_relacionado) && ($busca_patrimonio || $patrimonio)) {
+        $todos = carregarTodosEquipamentos();
+        $procurarPat = $busca_patrimonio ?: $patrimonio;
+        foreach ($todos as $eq) {
+            $pEq = trim($eq["patrimonio"] ?? "");
+            if ($pEq !== "" && strcasecmp($pEq, $procurarPat) === 0) {
+                $equipamento_relacionado = (string)($eq["id"] ?? "");
+                if ($patrimonio === "") $patrimonio = $pEq;
+                break;
+            }
+        }
+    }
 
     if (empty($tipo_equipamento)) {
         $erro = "Selecione o tipo de equipamento.";
@@ -45,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } elseif (empty($prioridade)) {
         $erro = "Selecione a prioridade.";
     } elseif (empty($responsavel_envio)) {
-        $erro = "Informe o responsável pelo envio.";
+        $erro = "Não foi possível identificar o responsável pelo envio.";
     } else {
         $solicitacoes = carregarSolicitacoesManutencao();
         $novaSolicitacao = [
@@ -240,37 +254,29 @@ if ($equipamento_id_url && empty($_POST)) {
                     </div>
 
                     <div class="form-group">
-                        <label for="equipamento_relacionado">
-                            <i class="fas fa-link"></i> Equipamento cadastrado (opcional)
+                        <label for="busca_patrimonio">
+                            <i class="fas fa-barcode"></i> Buscar por Patrimônio
                         </label>
-                        <select id="equipamento_relacionado" name="equipamento_relacionado" class="form-control" onchange="preencherPatrimonio()">
-                            <option value="">Nenhum (não cadastrado)</option>
-                            <?php foreach ($equipamentosDisponiveis as $eq):
-                                $eqId = $eq["id"] ?? "";
-                                $eqPatrimonio = $eq["patrimonio"] ?? "(sem patrimônio)";
-                                $infoExtra = [];
-                                if (!empty($eq["marca"])) $infoExtra[] = $eq["marca"];
-                                if (!empty($eq["modelo"])) $infoExtra[] = $eq["modelo"];
-                                $infoText = $infoExtra ? " - " . implode(" ", $infoExtra) : "";
-                            ?>
-                                <option value="<?php echo htmlspecialchars($eqId); ?>"
-                                    data-patrimonio="<?php echo htmlspecialchars($eq['patrimonio'] ?? ''); ?>"
-                                    data-tipo="<?php echo htmlspecialchars($eq['tipo'] ?? ''); ?>"
-                                    <?php echo (($_POST['equipamento_relacionado'] ?? '') == $eqId) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars("Patrimônio: {$eqPatrimonio}" . $infoText); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                        <span class="help-text">Selecione se o equipamento já está cadastrado no sistema</span>
+                        <div style="position:relative;">
+                            <input type="text" id="busca_patrimonio" name="busca_patrimonio" class="form-control" autocomplete="off"
+                                placeholder="Digite o nº do patrimônio (ex: 1527) e pressione Enter ou selecione..."
+                                value="<?php echo htmlspecialchars($_POST['patrimonio'] ?? ''); ?>">
+                            <div id="sugestoes_patrimonio" style="display:none; position:absolute; top:100%; left:0; right:0; background:#fff; border:1px solid var(--gray-200); border-radius:0 0 12px 12px; z-index:9999; max-height:260px; overflow-y:auto; box-shadow: 0 6px 16px rgba(0,0,0,0.08);"></div>
+                        </div>
+                        <input type="hidden" id="equipamento_relacionado" name="equipamento_relacionado" value="<?php echo htmlspecialchars($_POST['equipamento_relacionado'] ?? ''); ?>">
+                        <div id="dados_equipamento_encontrado" style="display:none; margin-top:0.5rem; padding:0.75rem 1rem; background:rgba(33,150,243,0.08); border-left:3px solid var(--primary); border-radius:8px; font-size:0.9rem; color:var(--gray-700);">
+                            <strong style="color:var(--primary);"><i class="fas fa-info-circle"></i> Equipamento encontrado:</strong>
+                            <div id="dados_equipamento_texto" style="margin-top:0.35rem; line-height:1.5;"></div>
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label for="patrimonio">
-                            <i class="fas fa-barcode"></i> Patrimônio / Identificação
+                            <i class="fas fa-tag"></i> Patrimônio / Identificação (confirmar)
                         </label>
                         <input type="text" id="patrimonio" name="patrimonio" class="form-control"
-                            placeholder="Número de patrimônio ou etiqueta"
-                            value="<?php echo htmlspecialchars($_POST['patrimonio'] ?? ''); ?>">
+                            placeholder="(preenchido automaticamente pela busca)"
+                            value="<?php echo htmlspecialchars($_POST['patrimonio'] ?? ''); ?>" style="font-weight:600; color:var(--primary); background:rgba(33,150,243,0.03);">
                     </div>
 
                     <div class="form-group">
@@ -325,11 +331,15 @@ if ($equipamento_id_url && empty($_POST)) {
 
                     <div class="form-group">
                         <label for="responsavel_envio">
-                            <i class="fas fa-user"></i> Responsável pelo Envio <span class="required">*</span>
+                            <i class="fas fa-user"></i> Responsável pelo Envio
                         </label>
-                        <input type="text" id="responsavel_envio" name="responsavel_envio" class="form-control" required
-                            placeholder="Nome de quem está enviando para manutenção"
-                            value="<?php echo htmlspecialchars($_POST['responsavel_envio'] ?? ($_SESSION['usuario_nome'] ?? '')); ?>">
+                        <div style="position:relative;">
+                            <input type="text" id="responsavel_envio" name="responsavel_envio" class="form-control" required readonly
+                                style="background:rgba(40,167,69,0.05); color:#28a745; font-weight:600; cursor:not-allowed;"
+                                value="<?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? ''); ?>">
+                            <i class="fas fa-lock" style="position:absolute; right: 0.9rem; top: 50%; transform: translateY(-50%); color:#28a745; opacity:0.85;"></i>
+                        </div>
+                        <span class="help-text" style="color:#28a745;"><i class="fas fa-shield-alt"></i> Preenchido automaticamente com o usuário logado (<?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? ''); ?>).</span>
                     </div>
 
                     <div class="form-group">
@@ -362,6 +372,26 @@ if ($equipamento_id_url && empty($_POST)) {
 </main>
 
 <script>
+    const _listaEquipamentos = <?php
+        $export = [];
+        foreach ($equipamentosDisponiveis as $eq) {
+            $id = (string)($eq["id"] ?? "");
+            if ($id === "") continue;
+            $export[] = [
+                "id" => $id,
+                "patrimonio" => trim($eq["patrimonio"] ?? ""),
+                "tipo" => $eq["tipo"] ?? "",
+                "marca" => $eq["marca"] ?? "",
+                "modelo" => $eq["modelo"] ?? "",
+                "serial" => $eq["serial"] ?? "",
+                "hostname" => $eq["hostname"] ?? "",
+                "status" => $eq["status"] ?? "",
+                "colaborador_nome" => $eq["colaborador_nome"] ?? ""
+            ];
+        }
+        echo json_encode($export);
+    ?>;
+
     function atualizarCampos() {
         const tipo = document.getElementById('tipo_equipamento').value;
         const grupoOutro = document.getElementById('grupo_outro');
@@ -413,39 +443,195 @@ if ($equipamento_id_url && empty($_POST)) {
         }
     }
 
-    function preencherPatrimonio() {
-        const select = document.getElementById('equipamento_relacionado');
-        const patrimonioInput = document.getElementById('patrimonio');
+    function preencherCamposEquipamento(eq) {
+        if (!eq) return;
         const tipoSelect = document.getElementById('tipo_equipamento');
+        const patrimonioInput = document.getElementById('patrimonio');
+        const eqRelHidden = document.getElementById('equipamento_relacionado');
+        const outroInput = document.getElementById('outro_especificar');
+        const encontradosBox = document.getElementById('dados_equipamento_encontrado');
+        const encontradosTexto = document.getElementById('dados_equipamento_texto');
 
-        const opcaoSelecionada = select.options[select.selectedIndex];
+        eqRelHidden.value = String(eq.id || "");
 
-        if (select.value) {
-            const patrimonio = opcaoSelecionada.dataset.patrimonio;
-            const tipoEq = opcaoSelecionada.dataset.tipo;
-
-            if (patrimonio && !patrimonioInput.value) {
-                patrimonioInput.value = patrimonio;
-            }
-
-            if (tipoEq) {
-                const mapaTipoSolicitacao = {
-                    'notebook': 'notebook',
-                    'celular': 'celular'
-                };
-                const tipoCorrespondente = mapaTipoSolicitacao[tipoEq];
-                if (tipoCorrespondente && !tipoSelect.value) {
-                    tipoSelect.value = tipoCorrespondente;
-                    atualizarCampos();
-                }
+        if (eq.patrimonio) {
+            if (!patrimonioInput.value) {
+                patrimonioInput.value = eq.patrimonio;
+            } else if (patrimonioInput.value.trim() !== eq.patrimonio.trim()) {
+                patrimonioInput.value = eq.patrimonio;
             }
         }
+
+        const mapaTipoSolicitacao = {
+            'notebook': 'notebook',
+            'celular':  'celular'
+        };
+        const tipoEq = (eq.tipo || "").toLowerCase();
+        if (mapaTipoSolicitacao[tipoEq]) {
+            tipoSelect.value = mapaTipoSolicitacao[tipoEq];
+            outroInput.value = '';
+        } else if (tipoEq) {
+            tipoSelect.value = 'outro';
+            const texto = [eq.marca, eq.modelo].filter(Boolean).join(" ") || tipoEq;
+            outroInput.value = texto.charAt(0).toUpperCase() + texto.slice(1);
+        }
+        atualizarCampos();
+
+        const partesInfo = [];
+        if (eq.tipo) partesInfo.push("<strong>Tipo:</strong> " + eq.tipo);
+        if (eq.marca || eq.modelo) partesInfo.push("<strong>Modelo:</strong> " + [eq.marca, eq.modelo].filter(Boolean).join(" "));
+        if (eq.hostname) partesInfo.push("<strong>Hostname:</strong> " + eq.hostname);
+        if (eq.serial) partesInfo.push("<strong>Serial:</strong> " + eq.serial);
+        if (eq.status) {
+            const statusNome = {
+                'estoque':'Estoque',
+                'alocado':'Alocado',
+                'emprestado':'Emprestado',
+                'manutencao':'Em Manutenção',
+                'fora_uso':'Fora de Uso'
+            }[eq.status] || eq.status;
+            partesInfo.push("<strong>Situação atual:</strong> " + statusNome);
+        }
+        if (eq.colaborador_nome) partesInfo.push("<strong>Colaborador:</strong> " + eq.colaborador_nome);
+        encontradosTexto.innerHTML = partesInfo.join(" • ");
+        encontradosBox.style.display = "block";
+    }
+
+    function buscarSugestoesPatrimonio(texto) {
+        const caixa = document.getElementById('sugestoes_patrimonio');
+        const t = (texto || "").trim().toLowerCase();
+        if (!t) {
+            caixa.innerHTML = '';
+            caixa.style.display = 'none';
+            return;
+        }
+        let lista = _listaEquipamentos.filter(e => {
+            if (!e.patrimonio) return false;
+            return String(e.patrimonio).toLowerCase().includes(t);
+        });
+        lista.sort((a,b) => {
+            const ap = String(a.patrimonio).toLowerCase();
+            const bp = String(b.patrimonio).toLowerCase();
+            const aComeca = ap.startsWith(t) ? 0 : 1;
+            const bComeca = bp.startsWith(t) ? 0 : 1;
+            if (aComeca !== bComeca) return aComeca - bComeca;
+            return ap.localeCompare(bp);
+        });
+        lista = lista.slice(0, 8);
+
+        if (lista.length === 0) {
+            caixa.innerHTML = `<div style="padding:1rem; color:#6c757d; text-align:center; font-size:0.9rem;"><i class="fas fa-search"></i> Nenhum equipamento encontrado com este patrimônio.</div>`;
+            caixa.style.display = 'block';
+            return;
+        }
+
+        caixa.innerHTML = lista.map(e => {
+            const linha1 = `<strong style="color:var(--primary);">Patrimônio: ${e.patrimonio || "(sem)"}</strong>`;
+            const linha2Partes = [];
+            if (e.tipo) linha2Partes.push(e.tipo);
+            if (e.marca || e.modelo) linha2Partes.push([e.marca, e.modelo].filter(Boolean).join(" "));
+            if (e.colaborador_nome) linha2Partes.push("👤 " + e.colaborador_nome);
+            const linha2 = linha2Partes.length ? `<small style="color:#6c757d;">${linha2Partes.join(" • ")}</small>` : "";
+            const statusCor = {
+                'estoque':'#28a745',
+                'alocado':'#007BFF',
+                'emprestado':'#9b59b6',
+                'manutencao':'#F39C12',
+                'fora_uso':'#dc3545'
+            }[e.status] || '#6c757d';
+            const statusNome = {
+                'estoque':'Estoque',
+                'alocado':'Alocado',
+                'emprestado':'Emprestado',
+                'manutencao':'Manutenção',
+                'fora_uso':'Fora de Uso'
+            }[e.status] || (e.status || "");
+            return `<div class="sugestao-item"
+                        data-id='${JSON.stringify(e).replace(/'/g, "&#39;")}'
+                        style="padding:0.75rem 1rem; cursor:pointer; border-bottom:1px solid var(--gray-100); display:flex; justify-content:space-between; align-items:center; gap:0.5rem;"
+                        onmouseover="this.style.background='var(--gray-50)';"
+                        onmouseout="this.style.background='#fff';">
+                    <div style="flex:1;">
+                        <div style="margin-bottom:0.15rem;">${linha1}</div>
+                        ${linha2}
+                    </div>
+                    <span style="font-size:0.75rem; padding:0.25rem 0.5rem; border-radius:999px; background:${statusCor}15; color:${statusCor}; font-weight:600; white-space:nowrap;">
+                        ${statusNome}
+                    </span>
+                   </div>`;
+        }).join("");
+        caixa.style.display = 'block';
+
+        caixa.querySelectorAll('.sugestao-item').forEach(el => {
+            el.addEventListener('click', function() {
+                let data;
+                try { data = JSON.parse(this.dataset.id.replace(/&#39;/g, "'")); } catch(e) { data = null; }
+                if (!data) return;
+                document.getElementById('busca_patrimonio').value = data.patrimonio || "";
+                preencherCamposEquipamento(data);
+                caixa.innerHTML = '';
+                caixa.style.display = 'none';
+                document.getElementById('descricao_problema').focus();
+            });
+        });
     }
 
     document.addEventListener('DOMContentLoaded', function() {
         atualizarCampos();
-        if (document.getElementById('equipamento_relacionado').value) {
-            preencherPatrimonio();
+
+        const buscaInput = document.getElementById('busca_patrimonio');
+        const caixa = document.getElementById('sugestoes_patrimonio');
+
+        buscaInput.addEventListener('input', function() {
+            buscarSugestoesPatrimonio(this.value);
+        });
+
+        buscaInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const t = (this.value || "").trim().toLowerCase();
+                if (t) {
+                    const achado = _listaEquipamentos.find(e => String(e.patrimonio || "").toLowerCase() === t);
+                    if (achado) {
+                        preencherCamposEquipamento(achado);
+                        caixa.innerHTML = '';
+                        caixa.style.display = 'none';
+                        document.getElementById('descricao_problema').focus();
+                        return;
+                    }
+                }
+                caixa.innerHTML = '';
+                caixa.style.display = 'none';
+            } else if (e.key === 'Escape') {
+                caixa.innerHTML = '';
+                caixa.style.display = 'none';
+            } else if (e.key === 'Tab') {
+                const t = (this.value || "").trim().toLowerCase();
+                if (t) {
+                    const achado = _listaEquipamentos.find(e => String(e.patrimonio || "").toLowerCase() === t);
+                    if (achado) {
+                        preencherCamposEquipamento(achado);
+                        caixa.innerHTML = '';
+                        caixa.style.display = 'none';
+                    }
+                }
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!buscaInput.contains(e.target) && !caixa.contains(e.target)) {
+                caixa.innerHTML = '';
+                caixa.style.display = 'none';
+            }
+        });
+
+        const eqIdInicial = document.getElementById('equipamento_relacionado').value;
+        if (eqIdInicial) {
+            const eq = _listaEquipamentos.find(x => String(x.id) === String(eqIdInicial));
+            if (eq) {
+                preencherCamposEquipamento(eq);
+                if (!buscaInput.value && eq.patrimonio) buscaInput.value = eq.patrimonio;
+            }
         }
     });
 </script>
