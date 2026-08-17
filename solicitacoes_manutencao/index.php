@@ -997,15 +997,17 @@ $tiposLista = getTiposEquipamentoSolicitacao();
                         }
                     }
 
-                    if (solicitacao && solicitacao._colaborador_nome) {
-                        nomeColabSpan.innerHTML = '<i class="fas fa-user-tag"></i> Colaborador atual: ' + solicitacao._colaborador_nome;
+                    if (solicitacao && (solicitacao._colaborador_nome || solicitacao._status_anterior_equip === 'alocado' || solicitacao._status_anterior_equip === 'emprestado')) {
+                        nomeColabSpan.innerHTML = '<i class="fas fa-user-tag"></i> Colaborador atual: ' + (solicitacao._colaborador_nome ? solicitacao._colaborador_nome : 'Cadastrado');
                         opcaoColab.style.display = 'flex';
+                        const radios = document.querySelectorAll('input[name="destino_conclusao_modal"]');
+                        radios.forEach(r => { r.checked = (r.value === 'colaborador'); });
                     } else {
-                        nomeColabSpan.innerHTML = '';
+                        nomeColabSpan.innerHTML = '<i class="fas fa-warehouse" style="color:#6c757d;"></i> <span style="color:#6c757d; font-size:0.9rem;">Este equipamento não estava atrelado a colaborador — disponível apenas para estoque.</span>';
+                        opcaoColab.style.display = 'none';
+                        const radios = document.querySelectorAll('input[name="destino_conclusao_modal"]');
+                        radios.forEach(r => { r.checked = (r.value === 'estoque'); });
                     }
-
-                    const radios = document.querySelectorAll('input[name="destino_conclusao_modal"]');
-                    radios.forEach(r => { r.checked = (r.value === 'colaborador'); });
                     destacarOpcaoModalConcluir();
 
                     const modal = document.getElementById('modalConcluir');
