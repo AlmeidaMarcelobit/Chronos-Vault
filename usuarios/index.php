@@ -86,8 +86,10 @@ $usuario_atual_id = $_SESSION['usuario_id'];
             <li class="nav-item"><a href="../equipamentos/index.php" class="nav-link"><i class="fas fa-laptop"></i><span>Equipamentos</span></a></li>
             <li class="nav-item"><a href="../solicitacoes_manutencao/index.php" class="nav-link"><i class="fas fa-tools"></i><span>Solicitações Manutenção</span></a></li>
             <li class="nav-item"><a href="../linhas/index.php" class="nav-link"><i class="fas fa-phone"></i><span>Linhas</span></a></li>
-            <li class="nav-item"><a href="../Termos/index.php" class="nav-link"><i class="fas fa-file-contract"></i><span>Termos</span></a></li>
-            <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-user-cog"></i><span>Usuários</span></a></li>
+            <?php if (($_SESSION['usuario_nivel'] ?? '') === 'admin'): ?>
+                <li class="nav-item"><a href="../Termos/index.php" class="nav-link"><i class="fas fa-file-contract"></i><span>Termos</span></a></li>
+                <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fas fa-user-cog"></i><span>Usuários</span></a></li>
+            <?php endif; ?>
         </ul>
     </nav>
 </header>
