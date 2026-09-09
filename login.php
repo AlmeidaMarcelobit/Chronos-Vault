@@ -79,13 +79,13 @@ $lembrarChecked = !empty($usuarioSalvo);
 
 <body>
 
-<div class="login-wrap">
+<main class="login-wrap">
 
     <!-- ── PAINEL ESQUERDO (branding) ── -->
     <div class="panel-left">
         <div class="brand">
             <div class="brand-icon"><i class="fas fa-laptop-house"></i></div>
-            <h1>Sistema de<br>Gestão</h1>
+            <div class="eyebrow">Amor Saúde</div><h1>Sistema de<br> Gestão</h1>
             <p>Controle centralizado de colaboradores, equipamentos e linhas telefônicas.</p>
         </div>
 
@@ -119,13 +119,13 @@ $lembrarChecked = !empty($usuarioSalvo);
     <!-- ── PAINEL DIREITO (formulário) ── -->
     <div class="panel-right">
 
-        <div class="form-title">
+        <div class="form-icon" aria-hidden="true"><i class="fas fa-lock"></i></div><div class="form-title">
             <h2>Bem-vindo de volta</h2>
-            <p>Informe suas credenciais para acessar</p>
+            <p>Acesse sua conta para continuar a gestão.</p>
         </div>
 
         <?php if ($alerta): ?>
-            <div class="alert alert-<?php echo $alertaTipo; ?>">
+            <div class="alert alert-<?php echo $alertaTipo; ?>" role="alert">
                 <i class="fas fa-<?php echo $alertaTipo === 'warning' ? 'clock' : 'exclamation-circle'; ?>"></i>
                 <span><?php echo htmlspecialchars($alerta); ?></span>
             </div>
@@ -158,7 +158,7 @@ $lembrarChecked = !empty($usuarioSalvo);
                            required
                            autocomplete="current-password"
                            placeholder="Digite sua senha">
-                    <button type="button" class="toggle-pwd" id="togglePwd" title="Mostrar/ocultar senha">
+                    <button type="button" class="toggle-pwd" id="togglePwd" title="Mostrar senha" aria-label="Mostrar senha" aria-pressed="false">
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
@@ -181,18 +181,18 @@ $lembrarChecked = !empty($usuarioSalvo);
 
         <div class="form-footer">
             <i class="fas fa-shield-alt"></i>
-            Acesso protegido — <?php echo $maxTentativas; ?> tentativas máximas por sessão
+            Acesso exclusivo para usuários autorizados
         </div>
 
     </div>
-</div>
+</main>
 
 <!-- ── MODAL ESQUECI A SENHA ── -->
-<div class="modal-overlay" id="forgotModal">
+<div class="modal-overlay" id="forgotModal" role="dialog" aria-modal="true" aria-labelledby="forgotTitle" aria-hidden="true">
     <div class="modal-box">
         <div class="modal-header">
-            <h3><i class="fas fa-key"></i> Recuperar Senha</h3>
-            <button class="modal-close" id="modalClose">&#x2715;</button>
+            <h3 id="forgotTitle"><i class="fas fa-key"></i> Recuperar Senha</h3>
+            <button class="modal-close" id="modalClose" aria-label="Fechar recuperação de senha">&#x2715;</button>
         </div>
         <div class="modal-body">
             <p>Entre em contato com o administrador do sistema para recuperar sua senha.</p>
@@ -209,43 +209,6 @@ $lembrarChecked = !empty($usuarioSalvo);
     </div>
 </div>
 
-<script>
-// Toggle senha
-document.getElementById('togglePwd').addEventListener('click', function () {
-    var inp = document.getElementById('password');
-    var ico = this.querySelector('i');
-    if (inp.type === 'password') {
-        inp.type = 'text';
-        ico.className = 'fas fa-eye-slash';
-    } else {
-        inp.type = 'password';
-        ico.className = 'fas fa-eye';
-    }
-});
-
-// Modal
-var modal = document.getElementById('forgotModal');
-
-document.getElementById('forgotBtn').addEventListener('click', function (e) {
-    e.preventDefault();
-    modal.classList.add('open');
-});
-
-function closeModal() { modal.classList.remove('open'); }
-
-document.getElementById('modalClose').addEventListener('click', closeModal);
-document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
-modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
-document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
-
-// Loading no submit
-document.getElementById('loginForm').addEventListener('submit', function () {
-    var btn = document.getElementById('btnLogin');
-    if (btn.disabled) return;
-    btn.disabled = true;
-    document.getElementById('btnIcon').className   = 'fas fa-spinner fa-spin';
-    document.getElementById('btnLabel').textContent = 'Entrando…';
-});
-</script>
+<script src="js/login.js"></script>
 </body>
 </html>
