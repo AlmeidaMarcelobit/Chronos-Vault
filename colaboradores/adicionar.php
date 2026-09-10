@@ -684,29 +684,6 @@ $equipamentos_estoque = count(carregarEquipamentosPorStatus('estoque'));
                 </div>
             </div>
 
-            <!-- Campo Equipamentos (seleção múltipla) -->
-            <div class="form-grid">
-                <div class="form-group full-width opt">
-                    <label for="equipamentos">
-                        <i class="fas fa-laptop"></i>
-                        <span>Equipamentos <span class="optional-tag">opcional</span></span>
-                    </label>
-                    <select id="equipamentos" name="equipamentos[]" multiple class="form-select equipamentos-select">
-                        <?php
-                        $selecionados = $_POST['equipamentos'] ?? [];
-                        if (!is_array($selecionados)) $selecionados = [];
-                        foreach ($EQUIPAMENTOS_DISPONIVEIS as $eq):
-                        ?>
-                            <option value="<?php echo htmlspecialchars($eq); ?>"
-                                <?php echo in_array($eq, $selecionados) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($eq); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                    <small class="form-text">Mantenha Ctrl (ou Cmd no Mac) pressionado para selecionar múltiplos itens. Pode deixar vazio.</small>
-                </div>
-            </div>
-
             <!-- Seção de Endereço (visível apenas quando Home Office) -->
             <div id="endereco-section" style="display: <?php echo (($_POST['tipo_trabalho'] ?? '') == 'home') ? 'block' : 'none'; ?>;">
                 <div class="section-divider">
