@@ -290,7 +290,13 @@ $page_title = 'Dashboard - Sistema de Gestão';
             </thead>
             <tbody>
                 <?php 
-                $ultimosColaboradores = array_slice($colaboradores, 0, 10);
+                $ultimosColaboradores = $colaboradores;
+                usort($ultimosColaboradores, function ($a, $b) {
+                    $dataA = strtotime($a['data_cadastro'] ?? '') ?: 0;
+                    $dataB = strtotime($b['data_cadastro'] ?? '') ?: 0;
+                    return ($dataB <=> $dataA) ?: ((int)($b['id'] ?? 0) <=> (int)($a['id'] ?? 0));
+                });
+                $ultimosColaboradores = array_slice($ultimosColaboradores, 0, 10);
                 foreach ($ultimosColaboradores as $colaborador): ?>
                 <tr>
                     <td><strong><?php echo htmlspecialchars($colaborador['nome']); ?></strong></td>
