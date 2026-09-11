@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     // Validar status
-    if (!in_array($status, ['estoque', 'alocado', 'emprestado', 'manutencao', 'fora_uso'])) {
+    if (!in_array($status, ['estoque', 'alocado', 'emprestado', 'fora_uso'])) {
         $erros[] = 'Status inválido.';
     }
     
@@ -254,7 +254,6 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
         .status-dot-estoque { background: var(--success); }
         .status-dot-alocado { background: var(--info); }
         .status-dot-emprestado { background: var(--warning); }
-        .status-dot-manutencao { background: var(--warning); }
         .status-dot-forauso { background: var(--danger); }
         .form-actions { display: flex; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--gray-200); }
         .global-alert { max-width: 1440px; margin: 1rem auto; padding: 1rem; border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center; transition: opacity 0.3s ease; }
@@ -428,11 +427,6 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
                         <input type="radio" name="status" value="emprestado" <?php echo (isset($_POST['status']) && $_POST['status'] === 'emprestado') ? 'checked' : ''; ?> onchange="toggleColaboradorSelect(true)">
                         <span class="status-dot status-dot-emprestado"></span>
                         <span>Emprestar</span>
-                    </label>
-                    <label class="status-option">
-                        <input type="radio" name="status" value="manutencao" <?php echo (isset($_POST['status']) && $_POST['status'] === 'manutencao') ? 'checked' : ''; ?> onchange="toggleColaboradorSelect(false)">
-                        <span class="status-dot status-dot-manutencao"></span>
-                        <span>Enviar para Manutenção</span>
                     </label>
                     <label class="status-option">
                         <input type="radio" name="status" value="fora_uso" <?php echo (isset($_POST['status']) && $_POST['status'] === 'fora_uso') ? 'checked' : ''; ?> onchange="toggleColaboradorSelect(false)">
