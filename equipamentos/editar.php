@@ -130,6 +130,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Especificações técnicas (apenas Desktop e Notebook)
         $especificacoes = [];
         if ($tipo === 'desktop' || $tipo === 'notebook') {
+            // Preservar os dados de software cadastrados na inclusão.
+            foreach (['sistema_operacional', 'bit_instalado', 'milvus_instalado'] as $campoSoftware) {
+                if (array_key_exists($campoSoftware, $equipamento['especificacoes'] ?? [])) {
+                    $especificacoes[$campoSoftware] = $equipamento['especificacoes'][$campoSoftware];
+                }
+            }
             if (!empty($ram)) $especificacoes['ram'] = $ram;
             if (!empty($processador)) $especificacoes['processador'] = $processador;
             if (!empty($hd)) $especificacoes['hd'] = $hd;

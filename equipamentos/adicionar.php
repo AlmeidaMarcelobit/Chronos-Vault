@@ -65,7 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hd = trim($_POST['hd'] ?? '');
     
     // Validações básicas
+    $sistemasOperacionais = ['Windows 10', 'Windows 11', 'Ubuntu'];
+    $sistemaOperacional = $_POST['sistema_operacional'] ?? '';
     $erros = [];
+    if (in_array($tipo, ['desktop', 'notebook'], true) &&
+        $sistemaOperacional !== '' && !in_array($sistemaOperacional, $sistemasOperacionais, true)) {
+        $erros[] = 'Selecione um sistema operacional válido.';
+    }
     
     if (empty($tipo)) {
         $erros[] = 'O tipo de equipamento é obrigatório.';
@@ -116,6 +122,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($ram)) $especificacoes['ram'] = $ram;
             if (!empty($processador)) $especificacoes['processador'] = $processador;
             if (!empty($hd)) $especificacoes['hd'] = $hd;
+            if ($sistemaOperacional !== '') $especificacoes['sistema_operacional'] = $sistemaOperacional;
+            $especificacoes['bit_instalado'] = ($_POST['bit_instalado'] ?? '') === '1';
+            $especificacoes['milvus_instalado'] = ($_POST['milvus_instalado'] ?? '') === '1';
         }
         
         // Criar novo equipamento
@@ -246,6 +255,13 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
         .specs-section { background: var(--gray-50); border-radius: var(--radius-md); padding: 1rem; margin: 1rem 0; border: 1px solid var(--gray-200); }
         .specs-title { font-size: 0.875rem; font-weight: 600; color: var(--gray-700); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .specs-title i { color: var(--primary); }
+        .software-toggle { padding: 0.625rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); background: var(--white); cursor: pointer; flex-wrap: wrap; }
+        .software-toggle input { width: 1rem; height: 1rem; accent-color: #2e7d32; }
+        .software-toggle .software-sim { display: none; color: #2e7d32; }
+        .software-toggle .software-nao { color: #c62828; }
+        .software-toggle input:checked ~ .software-sim { display: inline; }
+        .software-toggle input:checked ~ .software-nao { display: none; }
+        .software-toggle .software-sim i, .software-toggle .software-nao i { color: inherit; }
         .status-options { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.5rem; }
         .status-option { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer; transition: var(--transition); border: 1px solid var(--gray-200); }
         .status-option:hover { background: var(--gray-100); border-color: var(--primary-soft); }
@@ -402,6 +418,27 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
                         <input type="text" id="processador" name="processador" value="<?php echo htmlspecialchars($_POST['processador'] ?? ''); ?>" class="form-control" placeholder="Ex: Intel Core i5, Ryzen 7">
                         <small class="form-text">Opcional</small>
                     </div>
+                    <div class="form-group">
+                        <label for="sistema_operacional"><i class="fas fa-desktop"></i> Sistema Operacional</label>
+                        <select id="sistema_operacional" name="sistema_operacional" class="form-select">
+                            <option value="">-- Selecione o sistema --</option>
+                            <?php foreach (['Windows 10', 'Windows 11', 'Ubuntu'] as $sistema): ?>
+                                <option value="<?php echo htmlspecialchars($sistema); ?>" <?php echo ($_POST['sistema_operacional'] ?? '') === $sistema ? 'selected' : ''; ?>><?php echo htmlspecialchars($sistema); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <small class="form-text">Opcional</small>
+                    </div>
+                    <?php foreach (['bit_instalado' => 'Bit', 'milvus_instalado' => 'Milvus'] as $campo => $software): ?>
+                        <div class="form-group">
+                            <label class="software-toggle" for="<?php echo $campo; ?>">
+                                <input type="checkbox" id="<?php echo $campo; ?>" name="<?php echo $campo; ?>" value="1" <?php echo ($_POST[$campo] ?? '') === '1' ? 'checked' : ''; ?>>
+                                <span><?php echo $software; ?> instalado</span>
+                                <span class="software-sim" aria-hidden="true"><i class="fas fa-check-circle"></i> Sim</span>
+                                <span class="software-nao" aria-hidden="true"><i class="fas fa-times-circle"></i> Não</span>
+                            </label>
+                            <small class="form-text">Marque se estiver instalado.</small>
+                        </div>
+                    <?php endforeach; ?>
                     <div class="form-group">
                         <label for="hd"><i class="fas fa-hdd"></i> Armazenamento (HD/SSD)</label>
                         <input type="text" id="hd" name="hd" value="<?php echo htmlspecialchars($_POST['hd'] ?? ''); ?>" class="form-control" placeholder="Ex: 256GB SSD, 1TB HD">
