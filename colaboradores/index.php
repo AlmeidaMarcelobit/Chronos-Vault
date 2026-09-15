@@ -296,7 +296,7 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
         <form method="GET" action="">
             <div class="search-wrapper">
                 <i class="fas fa-search search-icon"></i>
-                <input type="text" name="busca" class="search-input" placeholder="Buscar por nome, chamado, CPF, e-mail ou departamento..." value="<?php echo htmlspecialchars($busca); ?>">
+                <input type="text" name="busca" class="search-input" placeholder="Buscar por nome, matrícula, CPF, e-mail ou departamento..." value="<?php echo htmlspecialchars($busca); ?>">
                 <button type="submit" class="btn btn-primary search-btn">Buscar</button>
                 <?php if ($busca): ?>
                     <a href="index.php" class="btn btn-secondary">Limpar</a>
@@ -317,140 +317,93 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
             <?php endif; ?>
         </div>
     <?php else: ?>
-        <div class="colaboradores-grid">
-            <?php foreach ($colaboradores as $colaborador):
-                $equipamentosColab = $equipamentosPorColaborador[$colaborador['id']] ?? [];
-                $linhasColab = $linhasPorColaborador[$colaborador['id']] ?? [];
-                $totalEquip = count($equipamentosColab);
-                $totalLinhas = count($linhasColab);
-                $tipoTrabalho = $colaborador['tipo_trabalho'] ?? 'local';
-                $isHomeOffice = $tipoTrabalho === 'home';
-                ?>
-                <div class="colaborador-card">
-                    <div class="card-header">
-                        <div class="colaborador-nome">
-                            <h3><i class="fas fa-user-circle"></i> <?php echo htmlspecialchars($colaborador['nome']); ?></h3>
-                            <span class="tipo-badge-header">
-                                <i class="fas fa-<?php echo $isHomeOffice ? 'home' : 'building'; ?>"></i>
-                                <?php echo $isHomeOffice ? 'Home Office' : 'Presencial'; ?>
-                            </span>
-                        </div>
-                        <?php if (!empty($colaborador['matricula'])): ?>
-                            <div class="matricula-badge-header">
-                                <i class="fas fa-id-badge"></i> <?php echo htmlspecialchars($colaborador['matricula']); ?>
-                            </div>
-                        <?php endif; ?>
-                        <div class="card-stats">
-                            <div class="card-stat"><i class="fas fa-laptop"></i> <?php echo $totalEquip; ?> eqpt(s)</div>
-                            <div class="card-stat"><i class="fas fa-phone"></i> <?php echo $totalLinhas; ?> linha(s)</div>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="info-group">
-                            <div class="info-label"><i class="fas fa-briefcase"></i> Cargo</div>
-                            <div class="info-value"><?php echo htmlspecialchars($colaborador['cargo'] ?? 'Não informado'); ?></div>
-                        </div>
-
-                        <div class="info-group">
-                            <div class="info-label"><i class="fas fa-id-card"></i> CPF</div>
-                            <div class="info-value"><?php echo formatarCPF($colaborador['cpf'] ?? ''); ?></div>
-                        </div>
-
-                        <div class="info-group">
-                            <div class="info-label"><i class="fas fa-envelope"></i> E-mail</div>
-                            <div class="info-value">
-                                <?php if (!empty($colaborador['email'])): ?>
-                                    <a href="mailto:<?php echo htmlspecialchars($colaborador['email']); ?>" class="email-link">
-                                        <i class="fas fa-envelope"></i> <?php echo htmlspecialchars($colaborador['email']); ?>
-                                    </a>
-                                <?php else: ?>
-                                    <span class="text-muted">Não informado</span>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-
-                        <div class="info-group">
-                            <div class="info-label"><i class="fas fa-building"></i> Departamento</div>
-                            <div class="info-value">
-                                <span class="departamento-badge"><?php echo htmlspecialchars($colaborador['departamento'] ?? 'Não informado'); ?></span>
-                            </div>
-                        </div>
-
-                        <div class="info-group">
-                            <div class="info-label"><i class="fas fa-dollar-sign"></i> Centro de Custo</div>
-                            <div class="info-value">
-                                <span class="cc-badge"><?php echo htmlspecialchars($colaborador['centro_custo'] ?? 'Não informado'); ?></span>
-                            </div>
-                        </div>
-
-                        <?php if ($totalEquip > 0): ?>
-                            <div class="divider"></div>
-                            <div class="info-group">
-                                <div class="info-label"><i class="fas fa-laptop"></i> Equipamentos</div>
-                                <div class="equipamentos-list">
-                                    <?php foreach (array_slice($equipamentosColab, 0, 2) as $equip): ?>
-                                        <div class="equipamento-item">
-                                            <div class="equipamento-info">
-                                                <i class="fas fa-<?php echo $equip['tipo'] === 'notebook' ? 'laptop' : 'desktop'; ?>"></i>
-                                                <span><?php echo htmlspecialchars($equip['patrimonio']); ?></span>
-                                                <small><?php echo htmlspecialchars($equip['marca']); ?></small>
-                                            </div>
-                                            <span class="equipamento-status <?php echo $equip['status']; ?>">
-                                                <?php echo $equip['status'] === 'alocado' ? 'Alocado' : ($equip['status'] === 'emprestado' ? 'Emprestado' : 'Estoque'); ?>
-                                            </span>
-                                        </div>
-                                    <?php endforeach; ?>
-                                    <?php if ($totalEquip > 2): ?>
-                                        <div class="view-more" onclick="location.href='../equipamentos/index.php?colaborador=<?php echo $colaborador['id']; ?>'">
-                                            <i class="fas fa-arrow-right"></i> Ver mais <?php echo $totalEquip - 2; ?> equipamento(s)
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if ($totalLinhas > 0): ?>
-                            <div class="divider"></div>
-                            <div class="info-group">
-                                <div class="info-label"><i class="fas fa-phone"></i> Linhas</div>
-                                <div class="linhas-list">
-                                    <?php foreach (array_slice($linhasColab, 0, 2) as $linha): ?>
-                                        <div class="linha-item">
-                                            <div class="linha-info">
-                                                <i class="fas fa-sim-card"></i>
-                                                <span><?php echo formatarTelefone($linha['numero']); ?></span>
-                                                <span class="linha-type">(<?php echo $linha['tipo'] === 'chip' ? 'Chip' : 'E-Chip'; ?>)</span>
-                                            </div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                    <?php if ($totalLinhas > 2): ?>
-                                        <div class="view-more" onclick="showLinhasModal(<?php echo htmlspecialchars(json_encode($linhasColab)); ?>, '<?php echo htmlspecialchars($colaborador['nome']); ?>')">
-                                            <i class="fas fa-arrow-right"></i> Ver mais <?php echo $totalLinhas - 2; ?> linha(s)
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-
-                    <div class="card-footer">
+        <div class="colaboradores-table-wrapper" role="region" aria-label="Lista de colaboradores" tabindex="0">
+            <table class="colaboradores-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Número matrícula</th>
+                        <th scope="col">Nome do colaborador</th>
+                        <th scope="col">CPF</th>
+                        <th scope="col">Linhas</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Hostname</th>
+                        <th scope="col">Centro de custo</th>
+                        <th scope="col">BitDefender</th>
+                        <th scope="col">Milvus</th>
                         <?php if ($is_admin): ?>
-                            <a href="editar.php?id=<?php echo $colaborador['id']; ?>" class="action-btn edit" title="Editar"><i class="fas fa-edit"></i><span>Editar</span></a>
-                            
-                            <form method="POST" style="display: inline-block;" onsubmit="return confirm(<?php echo $isHomeOffice ? "'Tem certeza que deseja inativar este colaborador Home Office? Ele será movido para a lista de inativos com pendência de devolução de equipamentos.'" : "'Tem certeza que deseja inativar este colaborador? Todos os equipamentos serão devolvidos ao estoque.'"; ?>)">
-                                <input type="hidden" name="colaborador_id" value="<?php echo $colaborador['id']; ?>">
-                                <button type="submit" name="inativar" class="action-btn inactivate" title="Inativar">
-                                    <i class="fas fa-user-slash"></i><span>Inativar</span>
-                                </button>
-                            </form>
+                            <th scope="col">Inativar</th>
+                            <th scope="col">Editar</th>
                         <?php endif; ?>
-                        <a href="../equipamentos/index.php?colaborador=<?php echo $colaborador['id']; ?>" class="action-btn equipments" title="Equipamentos"><i class="fas fa-laptop"></i><span>Equipamentos</span></a>
-                        <a href="../linhas/index.php?colaborador=<?php echo $colaborador['id']; ?>" class="action-btn linhas" title="Linhas"><i class="fas fa-phone"></i><span>Linhas</span></a>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($colaboradores as $colaborador):
+                    $equipamentosColab = $equipamentosPorColaborador[$colaborador['id']] ?? [];
+                    $linhasColab = $linhasPorColaborador[$colaborador['id']] ?? [];
+                    $computadores = array_values(array_filter($equipamentosColab, fn($equip) => in_array($equip['tipo'] ?? '', ['desktop', 'notebook'], true)));
+                    $isHomeOffice = ($colaborador['tipo_trabalho'] ?? 'local') === 'home';
+                    $confirmacao = $isHomeOffice
+                        ? 'Tem certeza que deseja inativar este colaborador Home Office? Ele será movido para a lista de inativos com pendência de devolução de equipamentos.'
+                        : 'Tem certeza que deseja inativar este colaborador? Todos os equipamentos serão devolvidos ao estoque.';
+                ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($colaborador['matricula'] ?: '—'); ?></td>
+                        <th scope="row" class="colaborador-table-name"><?php echo htmlspecialchars($colaborador['nome']); ?></th>
+                        <td class="nowrap"><?php echo htmlspecialchars(formatarCPF($colaborador['cpf']) ?: '—'); ?></td>
+                        <td>
+                            <?php foreach ($linhasColab as $linha): ?>
+                                <a class="table-line nowrap" href="../linhas/index.php?colaborador=<?php echo (int)$colaborador['id']; ?>"><?php echo htmlspecialchars(formatarTelefone($linha['numero'] ?? '')); ?></a>
+                            <?php endforeach; ?>
+                            <?php if (!$linhasColab): ?><span class="text-muted">—</span><?php endif; ?>
+                        </td>
+                        <td class="colaborador-table-email">
+                            <?php if ($colaborador['email']): ?>
+                                <a href="mailto:<?php echo htmlspecialchars($colaborador['email']); ?>"><?php echo htmlspecialchars($colaborador['email']); ?></a>
+                            <?php else: ?><span class="text-muted">—</span><?php endif; ?>
+                        </td>
+                        <td>
+                            <?php foreach ($equipamentosColab as $equip): ?>
+                                <?php if (!empty($equip['hostname'])): ?>
+                                    <a class="table-line nowrap" href="../equipamentos/index.php?colaborador=<?php echo (int)$colaborador['id']; ?>"><?php echo htmlspecialchars($equip['hostname']); ?></a>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                            <?php if (!array_filter($equipamentosColab, fn($equip) => !empty($equip['hostname']))): ?><span class="text-muted">—</span><?php endif; ?>
+                        </td>
+                        <td><?php echo htmlspecialchars(($colaborador['centro_custo'] ?? '') ?: '—'); ?></td>
+                        <?php foreach (['bit_instalado' => 'BitDefender', 'milvus_instalado' => 'Milvus'] as $campo => $software): ?>
+                            <td class="software-cell">
+                                <?php foreach ($computadores as $computador):
+                                    $instalado = $computador['especificacoes'][$campo] ?? null;
+                                    $estado = $instalado === true ? 'sim' : ($instalado === false ? 'nao' : 'desconhecido');
+                                    $rotulo = $instalado === true ? 'Instalado' : ($instalado === false ? 'Não instalado' : 'Não informado');
+                                    $icone = $instalado === true ? 'check' : ($instalado === false ? 'times' : 'minus');
+                                    $identificacao = ($computador['hostname'] ?? '') ?: ($computador['patrimonio'] ?? 'Computador');
+                                ?>
+                                    <span class="software-entry">
+                                        <span class="software-indicator software-<?php echo $estado; ?>" role="img" aria-label="<?php echo htmlspecialchars($software . ': ' . $rotulo . ' — ' . $identificacao); ?>" title="<?php echo htmlspecialchars($identificacao . ': ' . $rotulo); ?>"><i class="fas fa-<?php echo $icone; ?>" aria-hidden="true"></i></span>
+                                        <?php if (count($computadores) > 1): ?><small><?php echo htmlspecialchars($identificacao); ?></small><?php endif; ?>
+                                    </span>
+                                <?php endforeach; ?>
+                                <?php if (!$computadores): ?><span class="text-muted" title="Sem computador vinculado" aria-label="Sem computador vinculado">—</span><?php endif; ?>
+                            </td>
+                        <?php endforeach; ?>
+                        <?php if ($is_admin): ?>
+                            <td class="table-action">
+                                <form method="POST" onsubmit="return confirm(<?php echo htmlspecialchars(json_encode($confirmacao), ENT_QUOTES, 'UTF-8'); ?>)">
+                                    <input type="hidden" name="colaborador_id" value="<?php echo (int)$colaborador['id']; ?>">
+                                    <button type="submit" name="inativar" class="table-icon-button inactivate" title="Inativar colaborador" aria-label="Inativar <?php echo htmlspecialchars($colaborador['nome']); ?>"><i class="fas fa-user-slash" aria-hidden="true"></i></button>
+                                </form>
+                            </td>
+                            <td class="table-action">
+                                <a href="editar.php?id=<?php echo (int)$colaborador['id']; ?>" class="table-icon-button edit" title="Editar colaborador" aria-label="Editar <?php echo htmlspecialchars($colaborador['nome']); ?>"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                            </td>
+                        <?php endif; ?>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
+        <p class="software-legend"><span class="legend-sim">✓ Instalado</span><span class="legend-nao">✕ Não instalado</span><span>— Não informado ou sem computador vinculado</span></p>
     <?php endif; ?>
 </main>
 
