@@ -161,12 +161,14 @@ foreach ($linhas as $linha) {
 }
 
 // Filtro de busca (só afeta a exibição, nunca os dados salvos)
-$busca = $_GET['busca'] ?? '';
-if ($busca) {
-    $colaboradores = array_values(array_filter($colaboradores, function($c) use ($busca) {
+$busca = trim($_GET['busca'] ?? '');
+$buscaCpf = preg_match('/^[0-9.\-\s]+$/', $busca) ? preg_replace('/[^0-9]/', '', $busca) : '';
+if ($busca !== '') {
+    $colaboradores = array_values(array_filter($colaboradores, function($c) use ($busca, $buscaCpf) {
         return stripos($c['nome'],        $busca) !== false
             || stripos($c['matricula']  ?? '', $busca) !== false
             || stripos($c['cpf']        ?? '', $busca) !== false
+            || ($buscaCpf !== '' && strpos(preg_replace('/[^0-9]/', '', $c['cpf'] ?? ''), $buscaCpf) !== false)
             || stripos($c['departamento']?? '', $busca) !== false
             || stripos($c['email']      ?? '', $busca) !== false;
     }));
