@@ -49,20 +49,9 @@
         "email": "alan@playtecnologia.com.br",
         "password": "$2y$10$pT7br8reu5q6b2lqeZWyhebZbAx1froP8PCiU.tiJehZvTBtYD1Ma",
         "nivel": "view",
-        "ativo": true,
+        "ativo": false,
         "data_cadastro": "2026-05-20 09:13:27",
-        "data_atualizacao": "2026-05-20 09:13:27"
-    },
-    {
-        "id": 7,
-        "username": "marcelo.almeida",
-        "nome": "Marcelo Almeida",
-        "email": "marceloaraujo1920@hotmail.com",
-        "password": "$2y$10$P6vEeq3OHBN2g0YVOGFMiuT9rLX92m14kYTbPot1ih\/x5kURSY1D.",
-        "nivel": "user",
-        "ativo": true,
-        "data_cadastro": "2026-06-03 16:08:53",
-        "data_atualizacao": "2026-06-22 15:33:42"
+        "data_atualizacao": "2026-09-16 10:46:23"
     },
     {
         "id": 8,
