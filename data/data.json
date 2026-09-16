@@ -1,0 +1,58 @@
+[
+    {
+        "id": 1745498372,
+        "tipo": "problema",
+        "titulo": "Computador da Ana Luisa Fumagalli",
+        "texto": "Dobradi\u00e7a danificada, antiga maquina da colaborada Erica Almeida alocada para Ana ",
+        "resolvido": false,
+        "data_hora": "2025-04-24 09:39:32"
+    },
+    {
+        "id": 1745585106,
+        "tipo": "problema",
+        "titulo": "Fabricio Baastista Florentino",
+        "texto": "O colaborador Fabr\u00edcio Baastista Florentino derramou ch\u00e1 acidentalmente sobre o notebook e o teclado port\u00e1til. Para que ele possa continuar suas atividades, foi entregue o notebook e o kit de teclado e mouse da ex-colaboradora Beatriz Chaves.",
+        "resolvido": false,
+        "data_hora": "2025-04-25 09:45:06"
+    },
+    {
+        "id": 1745587364,
+        "tipo": "problema",
+        "titulo": "Deise Leite",
+        "texto": "Computador novo da Deise Leite ainda n\u00e3o tem Termo de Entrega",
+        "resolvido": true,
+        "data_hora": "2025-04-25 10:22:44"
+    },
+    {
+        "id": 1745870467,
+        "tipo": "problema",
+        "titulo": "Add Colaborador: Caio Almeida",
+        "texto": "#145663 <br>\n<br>13006 - Pessoas\n<br>Departamento\/Time: Pessoas & Cultura\n<br>Substitui\u00e7\u00e3o: Laura Barros Ribeiro - foi para o time de atendimento a franquias.\n<br>Superior Imediato: K\u00e9ssya de Lima Rosolini\n<br>Equipamento serem entregues: Headset, Mouse, Notebook 8G, Suporte para notebook, Teclado\n<br>Nome: Caio Almeida\n<br>CPF: 047.845.731-60\n<br>Cargo de Admiss\u00e3o: Analista de Pessoas & Cultura Jr",
+        "resolvido": false,
+        "data_hora": "2025-04-28 17:01:07"
+    },
+    {
+        "id": 1745935179,
+        "tipo": "problema",
+        "titulo": "Add Julia Marin",
+        "texto": "Nome: J\u00falia Bernardino Marin <br>\nCPF: 514.357.068-97\nCargo: Analista Financeiro PL\nSuperior: Gerente Finaneiro\nDepartamento: Financeiro\nCentro de Custo - AmorSa\u00fade: 13001 - Financeiro",
+        "resolvido": false,
+        "data_hora": "2025-04-29 10:59:39"
+    },
+    {
+        "id": 1745956078,
+        "tipo": "anotacao",
+        "titulo": "Celulares Reparo",
+        "texto": "516\n794\n1029",
+        "resolvido": false,
+        "data_hora": "2025-04-29 16:47:58"
+    },
+    {
+        "id": 1748290007,
+        "tipo": "problema",
+        "titulo": "Celular n\u00e3o liga",
+        "texto": "Celular de patrimonio 510 mesmo depois de ficar muito tempo, n\u00e3o liga",
+        "resolvido": false,
+        "data_hora": "2025-05-26 17:06:47"
+    }
+]

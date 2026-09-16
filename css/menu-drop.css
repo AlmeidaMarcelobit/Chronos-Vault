@@ -1,0 +1,62 @@
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1a1a1a;
+    padding: 0px 0;
+}
+
+nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    gap: 20px; /* espaço igual entre itens */
+}
+
+nav ul li {
+    position: relative;
+}
+
+nav ul li a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 1rem 1rem;
+    transition: all 0.3s ease-in-out;
+}
+
+nav ul li a:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+/* Estilização do submenu */
+nav ul li ul.dropdown {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(10, 20, 30, 0.4);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    top: 100%; /* Posiciona o submenu abaixo do item */
+    left: 0;
+    min-width: 185px;
+    z-index: 100;
+}
+
+nav ul li ul.dropdown li {
+    width: 100%;
+}
+
+nav ul li ul.dropdown li a {
+    display: block;
+    color: #fff;
+    padding: 8px;
+    background: #1a1a1a;
+}
+
+nav ul li ul.dropdown li a:hover {
+    background: #eee;
+    color: #111;
+}

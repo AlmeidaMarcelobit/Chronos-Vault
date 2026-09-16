@@ -1,0 +1,91 @@
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+.container h2 {
+    color: #31a803;
+    text-align: center;
+    margin-bottom: 20px;
+}
+#lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+#lista div {
+    background-color: #2b2b2b;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-left: 5px solid #31a803;
+    border-radius: 8px;
+    transition: 0.3s ease;
+}
+
+#lista div:hover {
+    background-color: #333333;
+    transform: scale(1.01);
+}
+
+#lista strong {
+    display: block;
+    font-size: 18px;
+    color: #8ef261;
+    margin-bottom: 6px;
+}
+
+#lista small {
+    color: #aaa;
+    font-size: 13px;
+}
+
+#lista p {
+    margin-top: 8px;
+    line-height: 1.5;
+    color: #ddd;
+}
+
+#lista em {
+    color: #31a803;
+    font-weight: bold;
+}
+
+#lista button {
+    background-color: #31a803;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+#lista button:hover {
+    background-color: #278102;
+    transform: scale(1.05);
+}
+
+footer {
+    text-align: center;
+    color: #666;
+    padding: 20px 0;
+    font-size: 13px;
+    border-top: 1px solid #2a2a2a;
+    margin-top: 40px;
+}
