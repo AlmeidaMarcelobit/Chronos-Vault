@@ -325,9 +325,8 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
                         <th scope="col">Nome do colaborador</th>
                         <th scope="col">CPF</th>
                         <th scope="col">Linhas</th>
-                        <th scope="col">E-mail</th>
                         <th scope="col">Hostname</th>
-                        <th scope="col">Centro de custo</th>
+                        <th scope="col">Sistema Operacional</th>
                         <th scope="col">BitDefender</th>
                         <th scope="col">Milvus</th>
                         <?php if ($is_admin): ?>
@@ -356,11 +355,6 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
                             <?php endforeach; ?>
                             <?php if (!$linhasColab): ?><span class="text-muted">—</span><?php endif; ?>
                         </td>
-                        <td class="colaborador-table-email">
-                            <?php if ($colaborador['email']): ?>
-                                <a href="mailto:<?php echo htmlspecialchars($colaborador['email']); ?>"><?php echo htmlspecialchars($colaborador['email']); ?></a>
-                            <?php else: ?><span class="text-muted">—</span><?php endif; ?>
-                        </td>
                         <td>
                             <?php foreach ($equipamentosColab as $equip): ?>
                                 <?php if (!empty($equip['hostname'])): ?>
@@ -369,7 +363,18 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
                             <?php endforeach; ?>
                             <?php if (!array_filter($equipamentosColab, fn($equip) => !empty($equip['hostname']))): ?><span class="text-muted">—</span><?php endif; ?>
                         </td>
-                        <td><?php echo htmlspecialchars(($colaborador['centro_custo'] ?? '') ?: '—'); ?></td>
+                        <td>
+                            <?php foreach ($computadores as $computador):
+                                $sistemaOperacional = $computador['especificacoes']['sistema_operacional'] ?? '';
+                                $identificacao = ($computador['hostname'] ?? '') ?: ($computador['patrimonio'] ?? 'Computador');
+                            ?>
+                                <span class="table-line nowrap" title="<?php echo htmlspecialchars($identificacao); ?>">
+                                    <?php echo htmlspecialchars($sistemaOperacional ?: 'Não informado'); ?>
+                                    <?php if (count($computadores) > 1): ?><small>(<?php echo htmlspecialchars($identificacao); ?>)</small><?php endif; ?>
+                                </span>
+                            <?php endforeach; ?>
+                            <?php if (!$computadores): ?><span class="text-muted">—</span><?php endif; ?>
+                        </td>
                         <?php foreach (['bit_instalado' => 'BitDefender', 'milvus_instalado' => 'Milvus'] as $campo => $software): ?>
                             <td class="software-cell">
                                 <?php foreach ($computadores as $computador):
@@ -403,7 +408,6 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
                 </tbody>
             </table>
         </div>
-        <p class="software-legend"><span class="legend-sim">✓ Instalado</span><span class="legend-nao">✕ Não instalado</span><span>— Não informado ou sem computador vinculado</span></p>
     <?php endif; ?>
 </main>
 
