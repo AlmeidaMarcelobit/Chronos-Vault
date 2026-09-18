@@ -14,6 +14,10 @@ $is_admin = $usuario_nivel === "admin";
 $is_view = $usuario_nivel === "view";
 $can_edit = $is_admin || $usuario_nivel === "user";
 
+if ($is_admin && empty($_SESSION["csrf_excluir_equipamento"])) {
+    $_SESSION["csrf_excluir_equipamento"] = bin2hex(random_bytes(32));
+}
+
 // ============================================
 // CARREGAR DADOS DOS DIFERENTES BANCOS
 // ============================================
@@ -389,6 +393,13 @@ $totalFiltrado = count($equipamentosFiltrados);
                             <?php endif; ?>
                             <?php if ($can_edit && ($equipamento["status"] ?? "") != "fora_uso"): ?>
                                 <a href="marcar_fora_uso.php?id=<?php echo $equipamento["id"] ?? ""; ?>" class="action-btn action-delete" title="Marcar Fora de Uso"><i class="fas fa-times-circle"></i></a>
+                            <?php endif; ?>
+                            <?php if ($is_admin): ?>
+                                <form method="POST" action="excluir.php" style="display:inline" onsubmit="return confirm('Tem certeza que deseja excluir permanentemente este equipamento? Esta ação não pode ser desfeita.');">
+                                    <input type="hidden" name="id" value="<?php echo htmlspecialchars((string)($equipamento['id'] ?? ''), ENT_QUOTES, 'UTF-8'); ?>">
+                                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_excluir_equipamento'], ENT_QUOTES, 'UTF-8'); ?>">
+                                    <button type="submit" class="action-btn action-delete" title="Excluir permanentemente"><i class="fas fa-trash-alt"></i></button>
+                                </form>
                             <?php endif; ?>
                             <button type="button" class="action-btn action-view" data-equipamento="<?php echo htmlspecialchars(json_encode($equipamento), ENT_QUOTES, 'UTF-8'); ?>" onclick="showEquipmentDetailsFromBtn(this)" title="Ver Detalhes"><i class="fas fa-eye"></i></button>
                         </div>
