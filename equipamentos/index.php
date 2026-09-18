@@ -18,6 +18,7 @@ $can_edit = $is_admin || $usuario_nivel === "user";
 // CARREGAR DADOS DOS DIFERENTES BANCOS
 // ============================================
 $equipamentosEstoque = carregarEquipamentosPorStatus('estoque');
+$equipamentosInternos = carregarEquipamentosPorStatus('interno');
 $equipamentosAlocados = carregarEquipamentosPorStatus('alocado');
 $equipamentosEmprestados = carregarEquipamentosPorStatus('emprestado');
 $equipamentosManutencao = carregarEquipamentosPorStatus('manutencao');
@@ -26,6 +27,7 @@ $equipamentosForaUso = carregarEquipamentosPorStatus('fora_uso');
 // Combinar todos os equipamentos para estatísticas
 $todosEquipamentos = array_merge(
     $equipamentosEstoque,
+    $equipamentosInternos,
     $equipamentosAlocados,
     $equipamentosEmprestados,
     $equipamentosManutencao,
@@ -47,6 +49,7 @@ foreach ($colaboradores as $colaborador) {
 // ============================================
 $totalEquipamentos = count($todosEquipamentos);
 $totalEstoque = count($equipamentosEstoque);
+$totalInternos = count($equipamentosInternos);
 $totalAlocados = count($equipamentosAlocados);
 $totalEmprestados = count($equipamentosEmprestados);
 $totalManutencao = count($equipamentosManutencao);
@@ -75,6 +78,8 @@ $busca = $_GET["busca"] ?? "";
 // Selecionar a fonte de dados baseada no filtro principal
 if ($filtro === "estoque") {
     $equipamentosFonte = $equipamentosEstoque;
+} elseif ($filtro === "internos") {
+    $equipamentosFonte = $equipamentosInternos;
 } elseif ($filtro === "alocados") {
     $equipamentosFonte = $equipamentosAlocados;
 } elseif ($filtro === "emprestados") {
@@ -237,6 +242,9 @@ $totalFiltrado = count($equipamentosFiltrados);
         <a href="?filtro=estoque" class="filter-tab <?php echo $filtro == "estoque" ? "active" : ""; ?>">
             <i class="fas fa-warehouse"></i> Estoque (<?php echo $totalEstoque; ?>)
         </a>
+        <a href="?filtro=internos" class="filter-tab <?php echo $filtro == "internos" ? "active" : ""; ?>">
+            <i class="fas fa-building"></i> Internos (<?php echo $totalInternos; ?>)
+        </a>
         <a href="?filtro=alocados" class="filter-tab <?php echo $filtro == "alocados" ? "active" : ""; ?>">
             <i class="fas fa-user-check"></i> Alocados (<?php echo $totalAlocados; ?>)
         </a>
@@ -278,6 +286,7 @@ $totalFiltrado = count($equipamentosFiltrados);
                     <select name="status" class="form-control">
                         <option value="todos">Todos os Status</option>
                         <option value="estoque" <?php echo $status == "estoque" ? "selected" : ""; ?>>Em Estoque</option>
+                        <option value="interno" <?php echo $status == "interno" ? "selected" : ""; ?>>Equipamento Interno</option>
                         <option value="alocado" <?php echo $status == "alocado" ? "selected" : ""; ?>>Alocado</option>
                         <option value="emprestado" <?php echo $status == "emprestado" ? "selected" : ""; ?>>Emprestado</option>
                         <option value="manutencao" <?php echo $status == "manutencao" ? "selected" : ""; ?>>Em Manutenção</option>
@@ -311,6 +320,7 @@ $totalFiltrado = count($equipamentosFiltrados);
     <!-- STATS CARDS -->
     <div class="stats-grid">
         <div class="stat-card"><div class="stat-icon primary"><i class="fas fa-warehouse"></i></div><div class="stat-content"><h3>Em Estoque</h3><p class="stat-number"><?php echo $totalEstoque; ?></p></div></div>
+        <div class="stat-card"><div class="stat-icon primary"><i class="fas fa-building"></i></div><div class="stat-content"><h3>Internos</h3><p class="stat-number"><?php echo $totalInternos; ?></p></div></div>
         <div class="stat-card"><div class="stat-icon success"><i class="fas fa-user-check"></i></div><div class="stat-content"><h3>Alocados</h3><p class="stat-number"><?php echo $totalAlocados; ?></p></div></div>
         <div class="stat-card"><div class="stat-icon info"><i class="fas fa-handshake"></i></div><div class="stat-content"><h3>Emprestados</h3><p class="stat-number"><?php echo $totalEmprestados; ?></p></div></div>
         <div class="stat-card"><div class="stat-icon warning"><i class="fas fa-tools"></i></div><div class="stat-content"><h3>Manutenção</h3><p class="stat-number"><?php echo $totalManutencao; ?></p></div></div>
@@ -328,7 +338,7 @@ $totalFiltrado = count($equipamentosFiltrados);
                 <tr><td colspan="9" class="empty-state"><i class="fas fa-search"></i><p>Nenhum equipamento encontrado</p><a href="index.php" class="btn btn-secondary">Limpar filtros</a></td></tr>
             <?php else: ?>
                 <?php foreach ($equipamentosFiltrados as $equipamento):
-                    $statusClasses = ["estoque" => "status-ativo", "alocado" => "status-inativo", "emprestado" => "status-info", "manutencao" => "status-warning", "fora_uso" => "status-danger"];
+                    $statusClasses = ["estoque" => "status-ativo", "interno" => "status-info", "alocado" => "status-inativo", "emprestado" => "status-info", "manutencao" => "status-warning", "fora_uso" => "status-danger"];
                     $statusClass = $statusClasses[$equipamento["status"] ?? "estoque"] ?? "status-ativo";
                     $colabId = $equipamento["colaborador_id"] ?? null;
                     $colaboradorNome = ($colabId && isset($mapaColaboradores[$colabId])) ? $mapaColaboradores[$colabId]["nome"] : "N/A";
@@ -663,7 +673,7 @@ $totalFiltrado = count($equipamentosFiltrados);
             };
             return mapInt[equipamento.manutencao_status_interno] || 'Em Manutenção';
         }
-        const map = { 'estoque': 'Em Estoque', 'alocado': 'Alocado', 'emprestado': 'Emprestado', 'manutencao': 'Em Manutenção', 'fora_uso': 'Fora de Uso' };
+        const map = { 'estoque': 'Em Estoque', 'interno': 'Equipamento Interno', 'alocado': 'Alocado', 'emprestado': 'Emprestado', 'manutencao': 'Em Manutenção', 'fora_uso': 'Fora de Uso' };
         return map[status] || status;
     }
     

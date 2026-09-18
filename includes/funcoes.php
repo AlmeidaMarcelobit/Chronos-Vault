@@ -272,6 +272,7 @@ function getCaminhoEquipamentoPorStatus($status) {
     $base = __DIR__ . '/../data/equipamentos/';
     $caminhos = [
         'estoque'   => $base . 'estoque.json',
+        'interno'   => $base . 'internos.json',
         'alocado'   => $base . 'alocados.json',
         'emprestado'=> $base . 'emprestados.json',
         'manutencao'=> $base . 'manutencao.json',
@@ -293,7 +294,7 @@ function carregarEquipamentosPorStatus($status) {
  * Carrega todos os equipamentos de todos os status
  */
 function carregarTodosEquipamentos() {
-    $statuses = ['estoque', 'alocado', 'emprestado', 'manutencao', 'fora_uso'];
+    $statuses = ['estoque', 'interno', 'alocado', 'emprestado', 'manutencao', 'fora_uso'];
     $todosEquipamentos = [];
     
     foreach ($statuses as $status) {
@@ -309,7 +310,7 @@ function carregarTodosEquipamentos() {
  * Retorna: ['equipamento' => array, 'status_origem' => string, 'index' => int] ou null
  */
 function buscarEquipamentoPorId($id) {
-    $statuses = ['estoque', 'alocado', 'emprestado', 'manutencao', 'fora_uso'];
+    $statuses = ['estoque', 'interno', 'alocado', 'emprestado', 'manutencao', 'fora_uso'];
     
     foreach ($statuses as $status) {
         $equipamentos = carregarEquipamentosPorStatus($status);
@@ -361,7 +362,7 @@ function moverEquipamentoParaStatus($equipamento, $novoStatus) {
         return atualizarEquipamento($equipamento);
     }
 
-    $statusesValidos = ['estoque', 'alocado', 'emprestado', 'manutencao', 'fora_uso'];
+    $statusesValidos = ['estoque', 'interno', 'alocado', 'emprestado', 'manutencao', 'fora_uso'];
     if (!in_array($statusAntigo, $statusesValidos)) $statusAntigo = 'estoque';
     if (!in_array($novoStatus, $statusesValidos)) $novoStatus = 'estoque';
 
@@ -396,7 +397,7 @@ function moverEquipamentoParaStatus($equipamento, $novoStatus) {
     if ($novoStatus === 'manutencao') {
         $equipamento['status_anterior'] = $statusAntigo;
         $equipamento['data_manutencao'] = date('Y-m-d H:i:s');
-    } elseif ($novoStatus === 'fora_uso' || $novoStatus === 'estoque') {
+    } elseif (in_array($novoStatus, ['fora_uso', 'estoque', 'interno'], true)) {
         $equipamento['colaborador_id'] = null;
         $equipamento['data_atribuicao'] = null;
         unset($equipamento['status_anterior']);
@@ -607,6 +608,7 @@ function getTipoTexto($tipo) {
 function getIconByStatus($status) {
     $icones = [
         'estoque' => 'warehouse',
+        'interno' => 'building',
         'alocado' => 'user-check',
         'emprestado' => 'handshake',
         'manutencao' => 'tools',
@@ -621,6 +623,7 @@ function getIconByStatus($status) {
 function getStatusTexto($status) {
     $statusList = [
         'estoque' => 'Em Estoque',
+        'interno' => 'Equipamento Interno',
         'alocado' => 'Alocado',
         'emprestado' => 'Emprestado',
         'manutencao' => 'Em Manutenção',
@@ -633,6 +636,7 @@ function getStatusTexto($status) {
 function getStatusEquipamentos() {
     return [
         'estoque' => 'Em Estoque',
+        'interno' => 'Equipamento Interno',
         'alocado' => 'Alocado para Colaborador',
         'fora_uso' => 'Fora de Uso',
         'manutencao' => 'Em Manutenção',
@@ -834,6 +838,7 @@ function criarBackup($diretorio = 'backups/') {
         'data/colaboradores/ativos.json',
         'data/colaboradores/inativos.json',
         'data/equipamentos/estoque.json',
+        'data/equipamentos/internos.json',
         'data/equipamentos/alocados.json',
         'data/equipamentos/emprestados.json',
         'data/equipamentos/manutencao.json',
@@ -1196,7 +1201,7 @@ function concluirSolicitacaoRetornarEquipamento($equipamentoId, $destino = 'cola
     $equipamento = $busca['equipamento'] ?? null;
     if (!$equipamento) return false;
 
-    $statusesValidos = ['estoque', 'alocado', 'emprestado', 'manutencao', 'fora_uso'];
+    $statusesValidos = ['estoque', 'interno', 'alocado', 'emprestado', 'manutencao', 'fora_uso'];
 
     $statusAnterior = $equipamento['status_anterior'] ?? null;
     if (!in_array($statusAnterior, $statusesValidos, true)) {
@@ -1264,6 +1269,12 @@ function concluirSolicitacaoRetornarEquipamento($equipamentoId, $destino = 'cola
             $equipamento['colaborador_nome'] = $colaboradorNomeAntes;
             $equipamento['linha_id'] = $linhaIdAntes;
             $statusRetorno = ($statusAnterior === 'emprestado') ? 'emprestado' : 'alocado';
+        } elseif ($statusAnterior === 'interno') {
+            $equipamento['colaborador_id'] = null;
+            $equipamento['colaborador_nome'] = null;
+            $equipamento['data_alocacao'] = null;
+            $equipamento['data_atribuicao'] = null;
+            $statusRetorno = 'interno';
         } else {
             $equipamento['colaborador_id'] = null;
             $equipamento['colaborador_nome'] = null;

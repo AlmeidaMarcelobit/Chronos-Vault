@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     // Validar status
-    if (!in_array($status, ['estoque', 'alocado', 'emprestado', 'fora_uso'])) {
+    if (!in_array($status, ['estoque', 'interno', 'alocado', 'emprestado', 'fora_uso'])) {
         $erros[] = 'Status inválido.';
     }
     
@@ -278,6 +278,7 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
         .status-option input[type="radio"] { margin: 0; cursor: pointer; accent-color: var(--primary); }
         .status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
         .status-dot-estoque { background: var(--success); }
+        .status-dot-interno { background: var(--primary); }
         .status-dot-alocado { background: var(--info); }
         .status-dot-emprestado { background: var(--warning); }
         .status-dot-forauso { background: var(--danger); }
@@ -462,6 +463,11 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
                         <input type="radio" name="status" value="estoque" <?php echo (!isset($_POST['status']) || $_POST['status'] === 'estoque') ? 'checked' : ''; ?> onchange="toggleColaboradorSelect(false)">
                         <span class="status-dot status-dot-estoque"></span>
                         <span>Em Estoque</span>
+                    </label>
+                    <label class="status-option">
+                        <input type="radio" name="status" value="interno" <?php echo (isset($_POST['status']) && $_POST['status'] === 'interno') ? 'checked' : ''; ?> onchange="toggleColaboradorSelect(false)">
+                        <span class="status-dot status-dot-interno"></span>
+                        <span>Equipamento Interno</span>
                     </label>
                     <label class="status-option">
                         <input type="radio" name="status" value="alocado" <?php echo (isset($_POST['status']) && $_POST['status'] === 'alocado') ? 'checked' : ''; ?> onchange="toggleColaboradorSelect(true)">

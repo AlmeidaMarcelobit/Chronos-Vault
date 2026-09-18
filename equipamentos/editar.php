@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Validar status
-    if (!in_array($status, ['estoque', 'alocado', 'emprestado', 'manutencao', 'fora_uso'])) {
+    if (!in_array($status, ['estoque', 'interno', 'alocado', 'emprestado', 'manutencao', 'fora_uso'])) {
         $erros[] = 'Status inválido.';
     }
 
@@ -347,6 +347,7 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
         .status-option input[type="radio"] { margin: 0; cursor: pointer; accent-color: var(--primary); }
         .status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
         .status-dot-estoque { background: var(--success); }
+        .status-dot-interno { background: var(--primary); }
         .status-dot-alocado { background: var(--info); }
         .status-dot-emprestado { background: var(--warning); }
         .status-dot-manutencao { background: var(--warning); }
@@ -595,6 +596,11 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
                         <span>Em Estoque</span>
                     </label>
                     <label class="status-option">
+                        <input type="radio" name="status" value="interno" <?php echo $equipamento['status'] === 'interno' ? 'checked' : ''; ?> onchange="toggleColaboradorSelect(false)">
+                        <span class="status-dot status-dot-interno"></span>
+                        <span>Equipamento Interno</span>
+                    </label>
+                    <label class="status-option">
                         <input type="radio" name="status" value="alocado" <?php echo $equipamento['status'] === 'alocado' ? 'checked' : ''; ?> onchange="toggleColaboradorSelect(true)">
                         <span class="status-dot status-dot-alocado"></span>
                         <span>Alocar para Colaborador</span>
@@ -654,7 +660,7 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
                 </div>
                 <p>Ao alterar o status do equipamento:</p>
                 <ul>
-                    <li>Se mudar para "Em Estoque", "Em Manutenção" ou "Fora de Uso", o vínculo com o colaborador será removido</li>
+                    <li>Se mudar para "Em Estoque", "Equipamento Interno", "Em Manutenção" ou "Fora de Uso", o vínculo com o colaborador será removido</li>
                     <li>Se mudar para "Alocado" ou "Emprestado", será necessário selecionar um colaborador</li>
                     <li>O histórico da alteração será registrado nas observações</li>
                 </ul>

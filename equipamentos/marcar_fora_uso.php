@@ -20,7 +20,7 @@ if (!$id) {
 }
 
 // Buscar equipamento em todos os status possíveis
-$statuses = ['estoque', 'alocado', 'emprestado', 'manutencao'];
+$statuses = ['estoque', 'interno', 'alocado', 'emprestado', 'manutencao'];
 $equipamento = null;
 $statusOrigem = null;
 $indexOrigem = null;

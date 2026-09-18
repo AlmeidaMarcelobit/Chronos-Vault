@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $observacoes = trim($_POST['observacoes'] ?? '');
     $problema    = trim($_POST['problema']    ?? '');
 
-    if (!in_array($destino, ['estoque', 'manutencao', 'fora_uso'])) {
+    if (!in_array($destino, ['estoque', 'interno', 'manutencao', 'fora_uso'])) {
         $erro = 'Destino inválido.';
     } elseif ($destino === 'manutencao' && empty($problema)) {
         $erro = 'Descreva o problema para enviar à manutenção.';
@@ -228,19 +228,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         /* DESTINO CARDS */
         .section-label { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--gray-400); margin-bottom: .75rem; }
-        .destino-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; margin-bottom: 1.75rem; }
+        .destino-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; margin-bottom: 1.75rem; }
         .destino-card { border: 2px solid var(--gray-200); border-radius: var(--radius); padding: 1rem; cursor: pointer; transition: all .18s; text-align: center; user-select: none; }
         .destino-card:hover { border-color: var(--gray-300); background: var(--gray-50); }
         .destino-card.active-estoque  { border-color: var(--success); background: var(--success-light); }
+        .destino-card.active-interno { border-color: var(--primary); background: var(--primary-bg); }
         .destino-card.active-manutencao { border-color: var(--warning); background: var(--warning-light); }
         .destino-card.active-fora_uso { border-color: var(--danger);  background: var(--danger-light); }
         .destino-card i { font-size: 1.5rem; margin-bottom: .5rem; display: block; color: var(--gray-400); }
         .destino-card.active-estoque i   { color: var(--success); }
+        .destino-card.active-interno i { color: var(--primary); }
         .destino-card.active-manutencao i { color: var(--warning); }
         .destino-card.active-fora_uso i  { color: var(--danger); }
         .destino-card .dc-title { font-size: .8rem; font-weight: 700; color: var(--gray-700); }
         .destino-card .dc-sub   { font-size: .7rem; color: var(--gray-400); margin-top: 2px; }
         .destino-card.active-estoque .dc-title   { color: var(--success); }
+        .destino-card.active-interno .dc-title { color: var(--primary); }
         .destino-card.active-manutencao .dc-title { color: var(--warning-dark); }
         .destino-card.active-fora_uso .dc-title  { color: var(--danger); }
 
@@ -410,6 +413,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="dc-title">Estoque</div>
                         <div class="dc-sub">Disponível para uso</div>
                     </div>
+                    <div class="destino-card" id="card-interno" onclick="setDestino('interno')">
+                        <i class="fas fa-building"></i>
+                        <div class="dc-title">Equipamento Interno</div>
+                        <div class="dc-sub">Uso compartilhado na empresa</div>
+                    </div>
                     <div class="destino-card" id="card-manutencao" onclick="setDestino('manutencao')">
                         <i class="fas fa-tools"></i>
                         <div class="dc-title">Manutenção</div>
@@ -469,7 +477,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 function setDestino(d) {
     document.getElementById('inputDestino').value = d;
 
-    ['estoque', 'manutencao', 'fora_uso'].forEach(function(s) {
+    ['estoque', 'interno', 'manutencao', 'fora_uso'].forEach(function(s) {
         var card = document.getElementById('card-' + s);
         card.className = 'destino-card' + (s === d ? ' active-' + s : '');
     });
