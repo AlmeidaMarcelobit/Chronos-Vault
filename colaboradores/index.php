@@ -329,6 +329,7 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
                         <th scope="col">Sistema Operacional</th>
                         <th scope="col">BitDefender</th>
                         <th scope="col">Milvus</th>
+                        <th scope="col">Detalhes</th>
                         <?php if ($is_admin): ?>
                             <th scope="col">Inativar</th>
                             <th scope="col">Editar</th>
@@ -392,6 +393,16 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
                                 <?php if (!$computadores): ?><span class="text-muted" title="Sem computador vinculado" aria-label="Sem computador vinculado">—</span><?php endif; ?>
                             </td>
                         <?php endforeach; ?>
+                        <td class="table-action">
+                            <button type="button"
+                                    class="table-icon-button view"
+                                    title="Ver informações do colaborador"
+                                    aria-label="Ver informações de <?php echo htmlspecialchars($colaborador['nome']); ?>"
+                                    data-details="<?php echo htmlspecialchars(json_encode(['colaborador' => $colaborador, 'linhas' => $linhasColab, 'equipamentos' => $equipamentosColab], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), ENT_QUOTES, 'UTF-8'); ?>"
+                                    onclick="showColaboradorDetails(this)">
+                                <i class="fas fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </td>
                         <?php if ($is_admin): ?>
                             <td class="table-action">
                                 <form method="POST" onsubmit="return confirm(<?php echo htmlspecialchars(json_encode($confirmacao), ENT_QUOTES, 'UTF-8'); ?>)">
@@ -444,6 +455,20 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
     </div>
 </footer>
 
+<!-- Card de detalhes do colaborador -->
+<div id="modalColaborador" class="modal-linhas colaborador-details-modal" role="dialog" aria-modal="true" aria-labelledby="colaboradorDetailsTitle">
+    <div class="modal-linhas-content colaborador-details-card">
+        <div class="modal-linhas-header colaborador-details-header">
+            <div>
+                <span class="details-eyebrow">Informações do colaborador</span>
+                <h3 id="colaboradorDetailsTitle"><i class="fas fa-user-circle"></i> <span id="colaboradorDetailsName">Colaborador</span></h3>
+            </div>
+            <button type="button" class="modal-linhas-close" onclick="closeColaboradorDetails()" aria-label="Fechar detalhes">&times;</button>
+        </div>
+        <div class="modal-linhas-body colaborador-details-body" id="colaboradorDetailsBody"></div>
+    </div>
+</div>
+
 <!-- Modal para lista completa de linhas -->
 <div id="modalLinhas" class="modal-linhas">
     <div class="modal-linhas-content">
@@ -456,6 +481,65 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
 </div>
 
 <script>
+    function escapeHtml(value) {
+        return String(value ?? '').replace(/[&<>'"]/g, function(character) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#039;', '"': '&quot;' }[character];
+        });
+    }
+
+    function detailValue(value) {
+        return value === null || value === undefined || value === '' ? 'Não informado' : escapeHtml(value);
+    }
+
+    function formatarCPFLocal(cpf) {
+        const numero = String(cpf || '').replace(/\D/g, '');
+        return numero.length === 11 ? `${numero.slice(0, 3)}.${numero.slice(3, 6)}.${numero.slice(6, 9)}-${numero.slice(9)}` : detailValue(cpf);
+    }
+
+    function showColaboradorDetails(button) {
+        const data = JSON.parse(button.dataset.details || '{}');
+        const colaborador = data.colaborador || {};
+        const linhas = Array.isArray(data.linhas) ? data.linhas : [];
+        const equipamentos = Array.isArray(data.equipamentos) ? data.equipamentos : [];
+        const endereco = colaborador.endereco && typeof colaborador.endereco === 'object' ? colaborador.endereco : {};
+        const enderecoPartes = [endereco.logradouro, endereco.numero, endereco.complemento, endereco.bairro, endereco.cidade, endereco.estado, endereco.cep].filter(Boolean).map(escapeHtml);
+        const tipoTrabalho = colaborador.tipo_trabalho === 'home' ? 'Home Office' : 'Presencial';
+        const linhaCards = linhas.length
+            ? linhas.map(linha => `<div class="detail-list-item"><i class="fas fa-phone"></i><div><strong>${escapeHtml(formatarTelefoneLocal(linha.numero || ''))}</strong><span>${detailValue(linha.tipo)}</span></div></div>`).join('')
+            : '<p class="detail-empty">Nenhuma linha vinculada.</p>';
+        const equipamentoCards = equipamentos.length
+            ? equipamentos.map(equipamento => {
+                const identificacao = equipamento.hostname || equipamento.patrimonio || 'Sem identificação';
+                const modelo = [equipamento.marca, equipamento.modelo].filter(Boolean).join(' ');
+                return `<div class="detail-list-item"><i class="fas fa-laptop"></i><div><strong>${escapeHtml(identificacao)}</strong><span>${detailValue(modelo || equipamento.tipo)}</span></div></div>`;
+            }).join('')
+            : '<p class="detail-empty">Nenhum equipamento vinculado.</p>';
+
+        document.getElementById('colaboradorDetailsName').textContent = colaborador.nome || 'Colaborador';
+        document.getElementById('colaboradorDetailsBody').innerHTML = `
+            <div class="details-grid">
+                <div class="detail-field"><span>Matrícula</span><strong>${detailValue(colaborador.matricula)}</strong></div>
+                <div class="detail-field"><span>CPF</span><strong>${formatarCPFLocal(colaborador.cpf)}</strong></div>
+                <div class="detail-field"><span>Cargo</span><strong>${detailValue(colaborador.cargo)}</strong></div>
+                <div class="detail-field"><span>Departamento</span><strong>${detailValue(colaborador.departamento)}</strong></div>
+                <div class="detail-field"><span>Centro de custo</span><strong>${detailValue(colaborador.centro_custo)}</strong></div>
+                <div class="detail-field"><span>Tipo de trabalho</span><strong>${tipoTrabalho}</strong></div>
+                <div class="detail-field detail-field-wide"><span>E-mail</span><strong>${detailValue(colaborador.email)}</strong></div>
+                <div class="detail-field detail-field-wide"><span>Endereço</span><strong>${enderecoPartes.length ? enderecoPartes.join(', ') : 'Não informado'}</strong></div>
+            </div>
+            <div class="details-related-grid">
+                <section class="details-section"><h4><i class="fas fa-phone"></i> Linhas (${linhas.length})</h4>${linhaCards}</section>
+                <section class="details-section"><h4><i class="fas fa-laptop"></i> Equipamentos (${equipamentos.length})</h4>${equipamentoCards}</section>
+            </div>`;
+        document.getElementById('modalColaborador').style.display = 'block';
+        document.body.classList.add('modal-open');
+    }
+
+    function closeColaboradorDetails() {
+        document.getElementById('modalColaborador').style.display = 'none';
+        document.body.classList.remove('modal-open');
+    }
+
     function showLinhasModal(linhas, colaboradorNome) {
         const modal = document.getElementById('modalLinhas');
         const modalTitle = document.getElementById('modalTitle');
@@ -504,9 +588,18 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
     }
     
     window.onclick = function(event) {
-        const modal = document.getElementById('modalLinhas');
-        if (event.target === modal) closeLinhasModal();
+        const modalLinhas = document.getElementById('modalLinhas');
+        const modalColaborador = document.getElementById('modalColaborador');
+        if (event.target === modalLinhas) closeLinhasModal();
+        if (event.target === modalColaborador) closeColaboradorDetails();
     }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeLinhasModal();
+            closeColaboradorDetails();
+        }
+    });
     
     setTimeout(function() {
         const alert = document.querySelector('.global-alert');
