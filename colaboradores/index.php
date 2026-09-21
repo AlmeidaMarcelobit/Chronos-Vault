@@ -521,7 +521,6 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
         const endereco = colaborador.endereco && typeof colaborador.endereco === 'object' ? colaborador.endereco : {};
         const enderecoPartes = [endereco.logradouro, endereco.numero, endereco.complemento, endereco.bairro, endereco.cidade, endereco.estado, endereco.cep].filter(Boolean).map(escapeHtml);
         const tipoTrabalho = colaborador.tipo_trabalho === 'home' ? 'Home Office' : 'Presencial';
-        const iniciais = String(colaborador.nome || 'Colaborador').split(/\s+/).filter(Boolean).slice(0, 2).map(parte => parte.charAt(0)).join('').toUpperCase();
         const linhaCards = linhas.length
             ? linhas.map(linha => `<div class="compact-related-item"><strong>${escapeHtml(formatarTelefoneLocal(linha.numero || ''))}</strong><span>${detailValue(linha.tipo)}</span></div>`).join('')
             : '<p class="detail-empty">Nenhuma linha vinculada.</p>';
@@ -535,26 +534,18 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
 
         document.getElementById('colaboradorDetailsName').textContent = colaborador.nome || 'Colaborador';
         document.getElementById('colaboradorDetailsBody').innerHTML = `
-            <div class="compact-details-layout">
-                <div class="compact-details-info">
-                    <dl class="compact-fields">
-                        <div><dt>Matrícula</dt><dd>${detailValue(colaborador.matricula)}</dd></div>
-                        <div><dt>CPF</dt><dd>${formatarCPFLocal(colaborador.cpf)}</dd></div>
-                        <div><dt>Cargo</dt><dd>${detailValue(colaborador.cargo)}</dd></div>
-                        <div><dt>Departamento</dt><dd>${detailValue(colaborador.departamento)}</dd></div>
-                        <div><dt>Centro de custo</dt><dd>${detailValue(colaborador.centro_custo)}</dd></div>
-                        <div><dt>Tipo de trabalho</dt><dd>${tipoTrabalho}</dd></div>
-                        <div><dt>E-mail</dt><dd>${detailValue(colaborador.email)}</dd></div>
-                        <div><dt>Endereço</dt><dd>${enderecoPartes.length ? enderecoPartes.join(', ') : 'Não informado'}</dd></div>
-                    </dl>
-                    <section class="compact-related-section"><h4><i class="fas fa-phone"></i> Linhas (${linhas.length})</h4>${linhaCards}</section>
-                    <section class="compact-related-section"><h4><i class="fas fa-laptop"></i> Equipamentos (${equipamentos.length})</h4>${equipamentoCards}</section>
-                </div>
-                <aside class="collaborator-photo" aria-label="Foto do colaborador">
-                    <span class="collaborator-initials">${escapeHtml(iniciais)}</span>
-                    <small>Foto não cadastrada</small>
-                </aside>
-            </div>`;
+            <dl class="compact-fields">
+                <div><dt>Matrícula</dt><dd>${detailValue(colaborador.matricula)}</dd></div>
+                <div><dt>CPF</dt><dd>${formatarCPFLocal(colaborador.cpf)}</dd></div>
+                <div><dt>Cargo</dt><dd>${detailValue(colaborador.cargo)}</dd></div>
+                <div><dt>Departamento</dt><dd>${detailValue(colaborador.departamento)}</dd></div>
+                <div><dt>Centro de custo</dt><dd>${detailValue(colaborador.centro_custo)}</dd></div>
+                <div><dt>Tipo de trabalho</dt><dd>${tipoTrabalho}</dd></div>
+                <div><dt>E-mail</dt><dd>${detailValue(colaborador.email)}</dd></div>
+                <div><dt>Endereço</dt><dd>${enderecoPartes.length ? enderecoPartes.join(', ') : 'Não informado'}</dd></div>
+                <div class="related-row"><dt><i class="fas fa-phone"></i> Linhas (${linhas.length})</dt><dd>${linhaCards}</dd></div>
+                <div class="related-row"><dt><i class="fas fa-laptop"></i> Equipamentos (${equipamentos.length})</dt><dd>${equipamentoCards}</dd></div>
+            </dl>`;
         document.getElementById('modalColaborador').style.display = 'block';
         document.body.classList.add('modal-open');
     }
