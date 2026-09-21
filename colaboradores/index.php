@@ -329,6 +329,7 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
                         <th scope="col">Sistema Operacional</th>
                         <th scope="col">BitDefender</th>
                         <th scope="col">Milvus</th>
+                        <th scope="col">Equipamentos</th>
                         <th scope="col">Detalhes</th>
                         <?php if ($is_admin): ?>
                             <th scope="col">Inativar</th>
@@ -393,6 +394,22 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
                                 <?php if (!$computadores): ?><span class="text-muted" title="Sem computador vinculado" aria-label="Sem computador vinculado">—</span><?php endif; ?>
                             </td>
                         <?php endforeach; ?>
+                        <td class="table-action">
+                            <?php if (count($equipamentosColab) > 0): ?>
+                                <a href="../equipamentos/index.php?colaborador=<?php echo (int)$colaborador['id']; ?>"
+                                   class="equipment-count-badge has-equipment"
+                                   title="Ver <?php echo count($equipamentosColab); ?> equipamento(s) vinculado(s)"
+                                   aria-label="<?php echo count($equipamentosColab); ?> equipamento(s) vinculado(s) a <?php echo htmlspecialchars($colaborador['nome']); ?>">
+                                    <i class="fas fa-laptop" aria-hidden="true"></i>
+                                    <span><?php echo count($equipamentosColab); ?></span>
+                                </a>
+                            <?php else: ?>
+                                <span class="equipment-count-badge empty" title="Nenhum equipamento vinculado" aria-label="Nenhum equipamento vinculado">
+                                    <i class="fas fa-laptop" aria-hidden="true"></i>
+                                    <span>0</span>
+                                </span>
+                            <?php endif; ?>
+                        </td>
                         <td class="table-action">
                             <button type="button"
                                     class="table-icon-button view"
@@ -504,32 +521,39 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
         const endereco = colaborador.endereco && typeof colaborador.endereco === 'object' ? colaborador.endereco : {};
         const enderecoPartes = [endereco.logradouro, endereco.numero, endereco.complemento, endereco.bairro, endereco.cidade, endereco.estado, endereco.cep].filter(Boolean).map(escapeHtml);
         const tipoTrabalho = colaborador.tipo_trabalho === 'home' ? 'Home Office' : 'Presencial';
+        const iniciais = String(colaborador.nome || 'Colaborador').split(/\s+/).filter(Boolean).slice(0, 2).map(parte => parte.charAt(0)).join('').toUpperCase();
         const linhaCards = linhas.length
-            ? linhas.map(linha => `<div class="detail-list-item"><i class="fas fa-phone"></i><div><strong>${escapeHtml(formatarTelefoneLocal(linha.numero || ''))}</strong><span>${detailValue(linha.tipo)}</span></div></div>`).join('')
+            ? linhas.map(linha => `<div class="compact-related-item"><strong>${escapeHtml(formatarTelefoneLocal(linha.numero || ''))}</strong><span>${detailValue(linha.tipo)}</span></div>`).join('')
             : '<p class="detail-empty">Nenhuma linha vinculada.</p>';
         const equipamentoCards = equipamentos.length
             ? equipamentos.map(equipamento => {
                 const identificacao = equipamento.hostname || equipamento.patrimonio || 'Sem identificação';
                 const modelo = [equipamento.marca, equipamento.modelo].filter(Boolean).join(' ');
-                return `<div class="detail-list-item"><i class="fas fa-laptop"></i><div><strong>${escapeHtml(identificacao)}</strong><span>${detailValue(modelo || equipamento.tipo)}</span></div></div>`;
+                return `<div class="compact-related-item"><strong>${escapeHtml(identificacao)}</strong><span>${detailValue(modelo || equipamento.tipo)}</span></div>`;
             }).join('')
             : '<p class="detail-empty">Nenhum equipamento vinculado.</p>';
 
         document.getElementById('colaboradorDetailsName').textContent = colaborador.nome || 'Colaborador';
         document.getElementById('colaboradorDetailsBody').innerHTML = `
-            <div class="details-grid">
-                <div class="detail-field"><span>Matrícula</span><strong>${detailValue(colaborador.matricula)}</strong></div>
-                <div class="detail-field"><span>CPF</span><strong>${formatarCPFLocal(colaborador.cpf)}</strong></div>
-                <div class="detail-field"><span>Cargo</span><strong>${detailValue(colaborador.cargo)}</strong></div>
-                <div class="detail-field"><span>Departamento</span><strong>${detailValue(colaborador.departamento)}</strong></div>
-                <div class="detail-field"><span>Centro de custo</span><strong>${detailValue(colaborador.centro_custo)}</strong></div>
-                <div class="detail-field"><span>Tipo de trabalho</span><strong>${tipoTrabalho}</strong></div>
-                <div class="detail-field detail-field-wide"><span>E-mail</span><strong>${detailValue(colaborador.email)}</strong></div>
-                <div class="detail-field detail-field-wide"><span>Endereço</span><strong>${enderecoPartes.length ? enderecoPartes.join(', ') : 'Não informado'}</strong></div>
-            </div>
-            <div class="details-related-grid">
-                <section class="details-section"><h4><i class="fas fa-phone"></i> Linhas (${linhas.length})</h4>${linhaCards}</section>
-                <section class="details-section"><h4><i class="fas fa-laptop"></i> Equipamentos (${equipamentos.length})</h4>${equipamentoCards}</section>
+            <div class="compact-details-layout">
+                <div class="compact-details-info">
+                    <dl class="compact-fields">
+                        <div><dt>Matrícula</dt><dd>${detailValue(colaborador.matricula)}</dd></div>
+                        <div><dt>CPF</dt><dd>${formatarCPFLocal(colaborador.cpf)}</dd></div>
+                        <div><dt>Cargo</dt><dd>${detailValue(colaborador.cargo)}</dd></div>
+                        <div><dt>Departamento</dt><dd>${detailValue(colaborador.departamento)}</dd></div>
+                        <div><dt>Centro de custo</dt><dd>${detailValue(colaborador.centro_custo)}</dd></div>
+                        <div><dt>Tipo de trabalho</dt><dd>${tipoTrabalho}</dd></div>
+                        <div><dt>E-mail</dt><dd>${detailValue(colaborador.email)}</dd></div>
+                        <div><dt>Endereço</dt><dd>${enderecoPartes.length ? enderecoPartes.join(', ') : 'Não informado'}</dd></div>
+                    </dl>
+                    <section class="compact-related-section"><h4><i class="fas fa-phone"></i> Linhas (${linhas.length})</h4>${linhaCards}</section>
+                    <section class="compact-related-section"><h4><i class="fas fa-laptop"></i> Equipamentos (${equipamentos.length})</h4>${equipamentoCards}</section>
+                </div>
+                <aside class="collaborator-photo" aria-label="Foto do colaborador">
+                    <span class="collaborator-initials">${escapeHtml(iniciais)}</span>
+                    <small>Foto não cadastrada</small>
+                </aside>
             </div>`;
         document.getElementById('modalColaborador').style.display = 'block';
         document.body.classList.add('modal-open');
