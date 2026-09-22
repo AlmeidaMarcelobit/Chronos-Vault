@@ -68,8 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ram        = trim($_POST['ram'] ?? '');
     $processador = trim($_POST['processador'] ?? '');
     $hd         = trim($_POST['hd'] ?? '');
+    $sistemaOperacional = $_POST['sistema_operacional'] ?? '';
 
     $erros = [];
+    $sistemasOperacionais = ['Windows 10', 'Windows 11', 'Ubuntu'];
+    if (in_array($tipo, ['desktop', 'notebook'], true) &&
+        $sistemaOperacional !== '' && !in_array($sistemaOperacional, $sistemasOperacionais, true)) {
+        $erros[] = 'Selecione um sistema operacional válido.';
+    }
 
     if (empty($tipo)) {
         $erros[] = 'O tipo de equipamento é obrigatório.';
@@ -130,15 +136,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Especificações técnicas (apenas Desktop e Notebook)
         $especificacoes = [];
         if ($tipo === 'desktop' || $tipo === 'notebook') {
-            // Preservar os dados de software cadastrados na inclusão.
-            foreach (['sistema_operacional', 'bit_instalado', 'milvus_instalado'] as $campoSoftware) {
-                if (array_key_exists($campoSoftware, $equipamento['especificacoes'] ?? [])) {
-                    $especificacoes[$campoSoftware] = $equipamento['especificacoes'][$campoSoftware];
-                }
-            }
             if (!empty($ram)) $especificacoes['ram'] = $ram;
             if (!empty($processador)) $especificacoes['processador'] = $processador;
             if (!empty($hd)) $especificacoes['hd'] = $hd;
+            if ($sistemaOperacional !== '') $especificacoes['sistema_operacional'] = $sistemaOperacional;
+            $especificacoes['bit_instalado'] = ($_POST['bit_instalado'] ?? '') === '1';
+            $especificacoes['milvus_instalado'] = ($_POST['milvus_instalado'] ?? '') === '1';
         }
 
         // Histórico de centro de custo
@@ -338,9 +341,26 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
         .form-control:focus, .form-select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(33,150,243,0.1); }
         select.form-select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232196F3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
         .form-text { font-size: 0.7rem; color: var(--gray-500); margin-top: 0.25rem; display: block; }
-        .specs-section { background: var(--gray-50); border-radius: var(--radius-md); padding: 1rem; margin: 1rem 0; border: 1px solid var(--gray-200); }
-        .specs-title { font-size: 0.875rem; font-weight: 600; color: var(--gray-700); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .specs-section { background: var(--gray-50); border-radius: var(--radius-md); padding: 1.25rem; margin: 1rem 0; border: 1px solid var(--gray-300); }
+        .specs-title { font-size: 0.875rem; font-weight: 600; color: var(--gray-700); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
         .specs-title i { color: var(--primary); }
+        .technical-specs-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.5rem; align-items: end; }
+        .technical-specs-grid .form-group { margin-bottom: 0; }
+        .spec-storage { grid-column: 2; }
+        .software-toggle-group { display: flex; align-items: center; min-height: 42px; }
+        .software-toggle { width: 100%; min-height: 42px; padding: 0.5rem 0.75rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); background: var(--white); cursor: pointer; justify-content: space-between; margin: 0 !important; }
+        .software-toggle:hover { border-color: var(--primary-soft); }
+        .software-toggle input { position: absolute; opacity: 0; pointer-events: none; }
+        .software-toggle-name { display: flex; align-items: center; gap: 0.5rem; }
+        .toggle-switch { width: 44px; height: 24px; padding: 2px; border-radius: 999px; background: var(--gray-400); transition: var(--transition); flex: 0 0 auto; }
+        .toggle-switch::after { content: ''; display: block; width: 20px; height: 20px; border-radius: 50%; background: var(--white); box-shadow: var(--shadow-sm); transition: var(--transition); }
+        .software-toggle input:checked ~ .toggle-switch { background: var(--success); }
+        .software-toggle input:checked ~ .toggle-switch::after { transform: translateX(20px); }
+        .software-toggle input:focus-visible ~ .toggle-switch { box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2); }
+        .software-toggle-state { min-width: 28px; color: var(--gray-500); font-size: 0.75rem; font-weight: 600; }
+        .software-toggle-state::after { content: 'N\00e3o'; }
+        .software-toggle input:checked ~ .software-toggle-state { color: #2e7d32; }
+        .software-toggle input:checked ~ .software-toggle-state::after { content: 'Sim'; }
         .status-options { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.5rem; }
         .status-option { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer; transition: var(--transition); border: 1px solid var(--gray-200); }
         .status-option:hover { background: var(--gray-100); border-color: var(--primary-soft); }
@@ -374,7 +394,7 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
         .footer-bottom { max-width: 1440px; margin: 0 auto; padding: 1rem 2rem; border-top: 1px solid var(--gray-200); text-align: center; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.7rem; color: var(--gray-500); }
 
         @media (max-width: 1024px) { .footer-content { grid-template-columns: 1fr; text-align: center; } .footer-section h3 { justify-content: center; } .footer-links a { justify-content: center; } .footer-stats { justify-content: center; } }
-        @media (max-width: 768px) { .main-container { padding: 1rem; } .form-grid { grid-template-columns: 1fr; gap: 1rem; } .page-header { flex-direction: column; align-items: flex-start; } .status-options { flex-direction: column; } .status-option { width: 100%; } .form-actions { flex-direction: column; } .form-actions .btn { width: 100%; justify-content: center; } .footer-bottom { flex-direction: column; } .info-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 768px) { .main-container { padding: 1rem; } .form-grid, .technical-specs-grid { grid-template-columns: 1fr; gap: 1rem; } .spec-storage { grid-column: auto; } .page-header { flex-direction: column; align-items: flex-start; } .status-options { flex-direction: column; } .status-option { width: 100%; } .form-actions { flex-direction: column; } .form-actions .btn { width: 100%; justify-content: center; } .footer-bottom { flex-direction: column; } .info-grid { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .user-name { display: none; } .nav-link span { display: none; } .nav-link i { font-size: 1.2rem; } .info-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
@@ -523,19 +543,6 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
                 </div>
 
                 <div class="form-group">
-                    <label for="hostname"><i class="fas fa-network-wired"></i> Hostname <span id="hostname-required" class="required" style="display: <?php echo in_array($equipamento['tipo'], ['notebook', 'desktop', 'tv']) ? 'inline' : 'none'; ?>;">*</span></label>
-                    <input type="text" id="hostname" name="hostname" value="<?php echo htmlspecialchars($equipamento['hostname'] ?? ''); ?>" class="form-control" placeholder="Ex: NOTEBOOK-001, PC-123, TV-01">
-                    <small class="form-text" id="hostname-help">
-                        <?php if (in_array($equipamento['tipo'], ['notebook', 'desktop', 'tv'])): ?>
-                            <?php $nomeTipo = ['notebook' => 'Notebooks', 'desktop' => 'Desktops', 'tv' => 'TVs'][$equipamento['tipo']]; ?>
-                            <strong>Obrigatório</strong> para <?php echo $nomeTipo; ?>
-                        <?php else: ?>
-                            Obrigatório para Notebooks, Desktops e TVs
-                        <?php endif; ?>
-                    </small>
-                </div>
-
-                <div class="form-group">
                     <label for="patrimonio"><i class="fas fa-barcode"></i> Número de Patrimônio <span class="required">*</span></label>
                     <input type="text" id="patrimonio" name="patrimonio" value="<?php echo htmlspecialchars($equipamento['patrimonio']); ?>" required class="form-control" placeholder="Ex: PAT001, TI-2023-001">
                 </div>
@@ -560,32 +567,56 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
                 <small class="form-text">Opcional — será registrado no histórico</small>
             </div>
 
-            <!-- Especificações técnicas -->
-            <div id="especificacoes-section" class="specs-section" style="display: <?php echo in_array($equipamento['tipo'], ['desktop', 'notebook']) ? 'block' : 'none'; ?>;">
+            <!-- Especificações técnicas e hostname -->
+            <div id="especificacoes-section" class="specs-section" style="display: <?php echo in_array($equipamento['tipo'], ['desktop', 'notebook', 'tv']) ? 'block' : 'none'; ?>;">
                 <div class="specs-title">
                     <i class="fas fa-microchip"></i>
                     <span>Especificações Técnicas</span>
                     <small class="optional">(Opcional — apenas para Desktop e Notebook)</small>
                 </div>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="ram"><i class="fas fa-memory"></i> Memória RAM</label>
-                        <input type="text" id="ram" name="ram" value="<?php echo htmlspecialchars($equipamento['especificacoes']['ram'] ?? ''); ?>" class="form-control" placeholder="Ex: 8GB, 16GB DDR4">
+                <div class="technical-specs-grid">
+                    <div class="form-group technical-only">
+                        <label for="sistema_operacional"><i class="fas fa-desktop"></i> Sistema Operacional</label>
+                        <select id="sistema_operacional" name="sistema_operacional" class="form-select">
+                            <option value="">-- Selecione o sistema --</option>
+                            <?php foreach (['Windows 10', 'Windows 11', 'Ubuntu'] as $sistema): ?>
+                                <option value="<?php echo htmlspecialchars($sistema); ?>" <?php echo ($_POST['sistema_operacional'] ?? ($equipamento['especificacoes']['sistema_operacional'] ?? '')) === $sistema ? 'selected' : ''; ?>><?php echo htmlspecialchars($sistema); ?></option>
+                            <?php endforeach; ?>
+                        </select>
                         <small class="form-text">Opcional</small>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="hostname-group">
+                        <label for="hostname"><i class="fas fa-network-wired"></i> Hostname <span id="hostname-required" class="required">*</span></label>
+                        <input type="text" id="hostname" name="hostname" value="<?php echo htmlspecialchars($_POST['hostname'] ?? ($equipamento['hostname'] ?? '')); ?>" class="form-control" placeholder="Ex: AS-NOTE-01">
+                        <small class="form-text" id="hostname-help">Obrigatório para Notebooks, Desktops e TVs</small>
+                    </div>
+                    <div class="form-group technical-only">
                         <label for="processador"><i class="fas fa-microchip"></i> Processador</label>
-                        <input type="text" id="processador" name="processador" value="<?php echo htmlspecialchars($equipamento['especificacoes']['processador'] ?? ''); ?>" class="form-control" placeholder="Ex: Intel Core i5, Ryzen 7">
+                        <input type="text" id="processador" name="processador" value="<?php echo htmlspecialchars($_POST['processador'] ?? ($equipamento['especificacoes']['processador'] ?? '')); ?>" class="form-control" placeholder="Ex: Intel Core i5, Ryzen 7">
                         <small class="form-text">Opcional</small>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group technical-only">
+                        <label for="ram"><i class="fas fa-memory"></i> Memória RAM</label>
+                        <input type="text" id="ram" name="ram" value="<?php echo htmlspecialchars($_POST['ram'] ?? ($equipamento['especificacoes']['ram'] ?? '')); ?>" class="form-control" placeholder="Ex: 8GB, 16GB DDR4">
+                        <small class="form-text">Opcional</small>
+                    </div>
+                    <div class="form-group technical-only spec-storage">
                         <label for="hd"><i class="fas fa-hdd"></i> Armazenamento (HD/SSD)</label>
-                        <input type="text" id="hd" name="hd" value="<?php echo htmlspecialchars($equipamento['especificacoes']['hd'] ?? ''); ?>" class="form-control" placeholder="Ex: 256GB SSD, 1TB HD">
+                        <input type="text" id="hd" name="hd" value="<?php echo htmlspecialchars($_POST['hd'] ?? ($equipamento['especificacoes']['hd'] ?? '')); ?>" class="form-control" placeholder="Ex: 256GB SSD, 1TB HD">
                         <small class="form-text">Opcional</small>
                     </div>
+                    <?php foreach (['milvus_instalado' => 'Milvus', 'bit_instalado' => 'BitDefender'] as $campo => $software): ?>
+                        <div class="form-group technical-only software-toggle-group">
+                            <label class="software-toggle" for="<?php echo $campo; ?>">
+                                <input type="checkbox" id="<?php echo $campo; ?>" name="<?php echo $campo; ?>" value="1" <?php echo (($_SERVER['REQUEST_METHOD'] === 'POST') ? (($_POST[$campo] ?? '') === '1') : (($equipamento['especificacoes'][$campo] ?? false) === true)) ? 'checked' : ''; ?>>
+                                <span class="software-toggle-name"><i class="fas fa-shield-alt"></i><?php echo $software; ?></span>
+                                <span class="toggle-switch" aria-hidden="true"></span>
+                                <span class="software-toggle-state" aria-hidden="true"></span>
+                            </label>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
-
             <!-- Status -->
             <div class="form-group">
                 <label><i class="fas fa-map-marker-alt"></i> Status do Equipamento <span class="required">*</span></label>
@@ -737,28 +768,29 @@ $historicoCentroCusto  = $equipamento['historico_centro_custo'] ?? [];
 
     function toggleEspecificacoes() {
         const tipo = document.getElementById('tipo').value;
+        const hostnameGroup = document.getElementById('hostname-group');
         const hostnameInput = document.getElementById('hostname');
         const hostnameRequiredSpan = document.getElementById('hostname-required');
         const hostnameHelp = document.getElementById('hostname-help');
         const especificacoesSection = document.getElementById('especificacoes-section');
-
+        const technicalFields = especificacoesSection.querySelectorAll('.technical-only');
         const tiposComHostname = ['notebook', 'desktop', 'tv'];
-        const nomesTipo = { 'notebook': 'Notebooks', 'desktop': 'Desktops', 'tv': 'TVs' };
-        if (tiposComHostname.includes(tipo)) {
-            hostnameInput.required = true;
-            hostnameRequiredSpan.style.display = 'inline';
-            hostnameHelp.innerHTML = '<strong>Obrigatório</strong> para ' + (nomesTipo[tipo] || tipo);
-            hostnameHelp.style.color = 'var(--danger)';
-        } else {
-            hostnameInput.required = false;
-            hostnameRequiredSpan.style.display = 'none';
-            hostnameHelp.innerHTML = 'Obrigatório para Notebooks, Desktops e TVs';
-            hostnameHelp.style.color = 'var(--gray-500)';
-        }
+        const comHostname = tiposComHostname.includes(tipo);
+        const comEspecificacoes = tipo === 'desktop' || tipo === 'notebook';
+        const nomesTipo = { notebook: 'Notebooks', desktop: 'Desktops', tv: 'TVs' };
 
-        especificacoesSection.style.display = (tipo === 'desktop' || tipo === 'notebook') ? 'block' : 'none';
+        hostnameGroup.style.display = comHostname ? '' : 'none';
+        hostnameInput.required = comHostname;
+        hostnameRequiredSpan.style.display = comHostname ? 'inline' : 'none';
+        hostnameHelp.innerHTML = comHostname
+            ? '<strong>Obrigatório</strong> para ' + nomesTipo[tipo]
+            : 'Obrigatório para Notebooks, Desktops e TVs';
+        hostnameHelp.style.color = comHostname ? 'var(--danger)' : 'var(--gray-500)';
+        technicalFields.forEach(function(field) {
+            field.style.display = comEspecificacoes ? '' : 'none';
+        });
+        especificacoesSection.style.display = comHostname ? 'block' : 'none';
     }
-
     // Centro de custo: mostrar motivo se valor mudar
     const ccInput = document.getElementById('centro_custo');
     const motivoGroup = document.getElementById('motivo-alteracao-group');
