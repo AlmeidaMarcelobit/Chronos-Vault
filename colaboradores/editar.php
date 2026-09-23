@@ -48,6 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $centro_custo = trim($_POST['centro_custo'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $tipo_trabalho = $_POST['tipo_trabalho'] ?? 'local';
+    $tipo_colaborador = $_POST['tipo_colaborador'] ?? 'interno';
+    $bit_instalado = ($tipo_colaborador === 'terceiro' && ($_POST['bit_instalado'] ?? 'nao') === 'sim') ? 'sim' : 'nao';
     $endereco = trim($_POST['endereco'] ?? '');
     $numero = trim($_POST['numero'] ?? '');
     $complemento = trim($_POST['complemento'] ?? '');
@@ -58,10 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validações
     $erros = [];
-
-    if (empty($matricula)) {
-        $erros[] = 'A matrícula é obrigatória.';
-    }
 
     if (empty($nome)) {
         $erros[] = 'O nome é obrigatório.';
@@ -148,6 +146,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $colaboradores[$colaboradorIndex]['centro_custo'] = $centro_custo;
         $colaboradores[$colaboradorIndex]['email'] = $email ?: null;
         $colaboradores[$colaboradorIndex]['tipo_trabalho'] = $tipo_trabalho;
+        $colaboradores[$colaboradorIndex]['tipo_colaborador'] = $tipo_colaborador;
+        $colaboradores[$colaboradorIndex]['bit_instalado'] = $bit_instalado;
 
         // Atualizar endereço
         if ($tipo_trabalho === 'home') {
@@ -166,6 +166,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $colaboradores[$colaboradorIndex]['data_atualizacao'] = date('Y-m-d H:i:s');
 
+        if ($tipo_colaborador === 'terceiro') {
+            $terceiros = lerArquivoJSON('../data/colaboradores/terceiros.json');
+            if (!is_array($terceiros)) $terceiros = [];
+            $terceiros[] = $colaboradores[$colaboradorIndex];
+            $colaboradores = array_values(array_filter($colaboradores, fn($c) => $c['id'] != $id));
+            salvarArquivoJSON('../data/colaboradores/terceiros.json', $terceiros);
+            salvarArquivoJSON('../data/colaboradores/ativos.json', $colaboradores);
+            $_SESSION['mensagem'] = 'Colaborador movido para o cadastro de terceiros.';
+            $_SESSION['mensagem_tipo'] = 'success';
+            header('Location: ../terceiros/index.php');
+            exit;
+        }
         // Salvar no JSON (caminho correto: ativos.json)
         if (salvarArquivoJSON('../data/colaboradores/ativos.json', $colaboradores)) {
             $_SESSION['mensagem'] = 'Colaborador atualizado com sucesso!';
@@ -299,7 +311,7 @@ $equipamentos_estoque = count(carregarEquipamentosPorStatus('estoque'));
                     <input type="text" id="matricula" name="matricula"
                            value="<?php echo htmlspecialchars($colaboradorAtual['matricula'] ?? ''); ?>"
                            class="form-control" placeholder="Ex: #251506, #255676">
-                    <small class="form-text">Número do chamado do colaborador</small>
+                    <small class="form-text">Número do chamado do colaborador (opcional)</small>
                 </div>
 
                 <div class="form-group">
@@ -527,3 +539,7 @@ $equipamentos_estoque = count(carregarEquipamentosPorStatus('estoque'));
 </script>
 </body>
 </html>
+
+
+
+
