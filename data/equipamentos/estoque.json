@@ -481,5 +481,23 @@
             }
         ],
         "historico_centro_custo": []
+    },
+    {
+        "tipo": "notebook",
+        "marca": "Lenovo",
+        "modelo": "ThinkPad E14 Gen 3",
+        "patrimonio": "13012",
+        "serial": "PE09RPJ2",
+        "hostname": "NT-AS-022",
+        "centro_custo": "13012",
+        "especificacoes": null,
+        "colaborador_id": null,
+        "status": "estoque",
+        "observacoes": "[DEVOLUÇÃO] 22\/09\/2026 12:26:32\nColaborador: Alexsandro Ricardo Sousa Gomes\nStatus anterior: Alocado\nDestino: Em Estoque",
+        "data_cadastro": "2026-08-18 17:02:47",
+        "data_atualizacao": "2026-09-22 12:26:32",
+        "data_atribuicao": null,
+        "tipo_atribuicao": null,
+        "id": 401
     }
 ]
