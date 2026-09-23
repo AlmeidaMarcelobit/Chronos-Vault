@@ -1,146 +1,80 @@
-# 🏢 Sistema de Gestão
+# Chronos Vault
 
-Sistema completo para gestão de colaboradores, equipamentos e linhas telefônicas. Desenvolvido em PHP puro com armazenamento em JSON.
+Sistema web interno para gestão de colaboradores, equipamentos, linhas telefônicas, documentos e solicitações de manutenção.
 
----
+Desenvolvido em PHP puro, com interface responsiva e persistência em arquivos JSON.
 
+## Funcionalidades
 
+### Colaboradores
 
-## 🎨 Tema Visual - Fanta Uva
+- Cadastro, edição, consulta e exclusão;
+- Separação entre colaboradores ativos e inativos;
+- Busca, ordenação, gestores e organograma;
+- Tipo de trabalho presencial ou home office;
+- Associação de equipamentos, linhas, termos e documentos.
 
-| Cor | Nome | Valor Hexadecimal |
-|-----|------|-------------------|
-| 🟣 | Roxo Escuro | `#4A266A` |
-| 🟣 | Roxo Principal | `#6B3E8F` |
-| 🟣 | Roxo Claro | `#9B59B6` |
-| 🟣 | Roxo Suave | `#C39BD3` |
-| 🟢 | Verde | `#2ECC71` |
-| 🟡 | Amarelo | `#F1C40F` |
+### Equipamentos
 
----
+- Controle de estoque, alocação, empréstimo, manutenção e descarte;
+- Atribuição individual ou em massa e organização por caixas;
+- Vínculo com colaborador, centro de custo e histórico de movimentações.
 
-## 📋 Funcionalidades
+### Linhas telefônicas
 
-### 👥 Módulo Colaboradores
+- Cadastro de chips físicos e eSIMs;
+- Vinculação e desvinculação de colaboradores;
+- Atualização e relatório por centro de custo;
+- Alocação individual ou em massa.
 
-| Funcionalidade | Status |
-|----------------|--------|
-| Cadastro de colaboradores | ✅ |
-| Edição de colaboradores | ✅ |
-| Exclusão de colaboradores | ✅ |
-| Listagem com ordenação alfabética | ✅ |
-| Busca por nome, CPF, e-mail ou departamento | ✅ |
-| Tipo de trabalho (Presencial/Home Office) | ✅ |
-| Endereço completo para Home Office | ✅ |
-| Vínculo com gestor | ✅ |
-| Gerenciamento de termos e documentos | ✅ |
-| Upload de arquivos (PDF, imagens, DOC) | ✅ |
-| Organograma hierárquico | ✅ |
+### Outros módulos
 
-### 💻 Módulo Equipamentos
+- Solicitações e logs de manutenção;
+- Termos e documentos organizados por colaborador;
+- Cadastro, edição e exclusão de usuários;
+- Autenticação com sessão e logout.
 
-| Funcionalidade | Status |
-|----------------|--------|
-| Cadastro de equipamentos | ✅ |
-| Edição de equipamentos | ✅ |
-| Exclusão de equipamentos | ✅ |
-| Controle de status (Estoque/Alocado/Emprestado/Manutenção/Fora de Uso) | ✅ |
-| Histórico de centro de custo | ✅ |
-| Atribuição automática de centro de custo via colaborador | ✅ |
-| Gerenciamento por caixas | ✅ |
-| Atribuição em massa por caixa | ✅ |
-| Histórico de manutenções | ✅ |
+## Tecnologias
 
-### 📱 Módulo Linhas Telefônicas
+| Tecnologia | Uso |
+| --- | --- |
+| PHP 7.4+ | Backend e regras de negócio |
+| HTML5 / CSS3 | Estrutura, estilo e responsividade |
+| JavaScript ES6 | Interações da interface |
+| JSON | Persistência dos dados |
+| Font Awesome 6.4.0 | Ícones |
 
-| Funcionalidade | Status |
-|----------------|--------|
-| Cadastro de linhas (Chip Físico/E-Chip) | ✅ |
-| Edição de linhas | ✅ |
-| Exclusão de linhas | ✅ |
-| Vincular/Desvincular colaborador | ✅ |
-| Atualização automática de centro de custo | ✅ |
-| Histórico de centro de custo | ✅ |
-| Busca por número ou centro de custo | ✅ |
-| Operadora Vivo (fixa) | ✅ |
+## Requisitos e instalação
 
-### 📄 Termos e Documentos
+- PHP 7.4+ e servidor Apache ou Nginx;
+- Permissão de leitura e escrita em `data/` e `Termos/`;
+- Revise `includes/config.php` e acesse `login.php`;
+- Faça backups periódicos de `data/`, `Termos/` e dos logs.
 
-| Funcionalidade | Status |
-|----------------|--------|
-| Upload de termos de responsabilidade | ✅ |
-| Upload de termos de devolução | ✅ |
-| Upload de documentos gerais | ✅ |
-| Organização por pasta do colaborador | ✅ |
-| Visualização e exclusão de arquivos | ✅ |
+## Estrutura
 
----
+```text
+Chronos-Vault/
+├── includes/                 # Configurações e funções compartilhadas
+├── colaboradores/            # Gestão de colaboradores
+├── equipamentos/             # Gestão de equipamentos
+├── linhas/                   # Gestão de linhas telefônicas
+├── solicitacoes_manutencao/  # Solicitações de manutenção
+├── usuarios/                 # Usuários do sistema
+├── Termos/                   # Documentos por colaborador
+├── css/ e js/                # Interface
+└── data/                     # Arquivos JSON`r``n``` 
 
-## 🗂️ Estrutura do Projeto
+## Segurança
 
-```bash
-Sistema-Gestao/
-├── index.php
-├── login.php
-├── logout.php
-│
-├── includes/
-│   ├── header.php
-│   ├── footer.php
-│   └── funcoes.php
-│
-├── css/
-│   ├── colaboradores.css
-│   ├── equipamentos.css
-│   └── linhas/
-│       ├── index.css
-│       ├── adicionar.css
-│       ├── editar.css
-│       ├── vincular.css
-│       ├── desvincular.css
-│       └── excluir.css
-│
-├── js/
-│   ├── script.js
-│   └── colaboradores.js
-│
-├── data/
-│   ├── colaboradores.json
-│   ├── equipamentos.json
-│   ├── linhas.json
-│   └── usuarios.json
-│
-├── colaboradores/
-├── equipamentos/
-├── linhas/
-└── termos/
+Autenticação por sessão, timeout, sanitização e validação de entradas, escape contra XSS, validação de CPF/e-mail e restrição de extensões nos uploads.
 
-## 🔧 Tecnologias Utilizadas 
+## Responsividade
 
-| Tecnologia   | Versão | Descrição        |
-|--------------|--------|------------------|
-| PHP          | 7.4+   | Backend          |
-| HTML5        | -      | Estrutura        |
-| CSS3         | -      | Estilização      |
-| JavaScript   | ES6    | Interatividade   |
-| JSON         | -      | Armazenamento    |
-| Font Awesome | 6.4.0  | Ícones           |
+| Dispositivo | Largura |
+| --- | --- |
+| Desktop | Acima de 1024px |
+| Tablet | 768px a 1024px |
+| Mobile | Abaixo de 768px |
+| Mobile pequeno | Abaixo de 480px |
 
-
-
-
-### 🛡️ Segurança
-
-- Sessão com timeout de 30 minutos  
-- Verificação de autenticação  
-- Sanitização de inputs  
-- Proteção contra XSS (`htmlspecialchars`)  
-- Validação de CPF e e-mail  
-
-
-| Responsividade                   |
-|--------------|-------------------|
-| Dispositivo     | > 1024px       |
-| Tablet          | 768px - 1024px |
-|Mobile	          |< 768px         |
-|Mobile Pequeno	  |< 480px         |
