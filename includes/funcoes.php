@@ -1361,4 +1361,10 @@ function concluirSolicitacaoRetornarEquipamento($equipamentoId, $destino = 'cola
 
     return $salvouDestino;
 }
+function colaboradorEhTerceiro(array $colaborador): bool
+{
+    return ($colaborador['tipo_colaborador'] ?? 'interno') === 'terceiro';
+}
 ?>
+
+

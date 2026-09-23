@@ -332,7 +332,7 @@ $equipamentos_estoque = count(carregarEquipamentosPorStatus('estoque'));
                 </div>
 
                 <div class="form-group">
-                    <label for="tipo_trabalho"><i class="fas fa-briefcase"></i> Tipo de Trabalho <span class="required">*</span></label>
+                    <label for="tipo_colaborador">Tipo de Colaborador</label><select id="tipo_colaborador" name="tipo_colaborador" class="form-select"><option value="interno">Interno</option><option value="terceiro">Terceiro</option></select><label for="tipo_trabalho"><i class="fas fa-briefcase"></i> Tipo de Trabalho <span class="required">*</span></label>
                     <select id="tipo_trabalho" name="tipo_trabalho" required class="form-select" onchange="toggleEndereco()">
                         <option value="local" <?php echo $tipoTrabalhoAtual == 'local' ? 'selected' : ''; ?>>Presencial (Local)</option>
                         <option value="home" <?php echo $tipoTrabalhoAtual == 'home' ? 'selected' : ''; ?>>Home Office</option>

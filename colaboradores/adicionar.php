@@ -287,6 +287,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'centro_custo' => $centro_custo,
                 'email' => $email,
                 'tipo_trabalho' => $tipo_trabalho,
+                'tipo_colaborador' => $tipo_colaborador,
+                'bit_instalado' => $bit_instalado,
                 'equipamentos' => $equipamentos,
                 'endereco' => $tipo_trabalho === 'home' ? [
                     'logradouro' => $endereco,
@@ -1004,3 +1006,4 @@ $equipamentos_estoque = count(carregarEquipamentosPorStatus('estoque'));
 </script>
 </body>
 </html>
+
