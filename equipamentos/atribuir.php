@@ -1,5 +1,6 @@
 <?php
 session_start();
+$returnFiltro = $_SESSION['equipamentos_filtro'] ?? 'todos';
 require_once '../includes/funcoes.php';
 
 if (!isset($_SESSION['usuario_id'])) {
@@ -10,13 +11,13 @@ if (!isset($_SESSION['usuario_id'])) {
 $usuario_nivel = $_SESSION['usuario_nivel'] ?? 'user';
 $is_admin = ($usuario_nivel === 'admin');
 if ($usuario_nivel === 'view') {
-    header('Location: index.php');
+    header('Location: index.php' . ($returnFiltro !== 'todos' ? '?filtro=' . urlencode($returnFiltro) : ''));
     exit;
 }
 
 $id = $_GET['id'] ?? null;
 if (!$id) {
-    header('Location: index.php');
+    header('Location: index.php' . ($returnFiltro !== 'todos' ? '?filtro=' . urlencode($returnFiltro) : ''));
     exit;
 }
 
@@ -36,7 +37,7 @@ foreach ($listaEstoque as $i => $e) {
 if (!$equipamento) {
     $_SESSION['mensagem']      = 'Equipamento não encontrado ou não está disponível em estoque.';
     $_SESSION['mensagem_tipo'] = 'error';
-    header('Location: index.php');
+    header('Location: index.php' . ($returnFiltro !== 'todos' ? '?filtro=' . urlencode($returnFiltro) : ''));
     exit;
 }
 
@@ -114,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $acao = $tipo === 'emprestado' ? 'emprestado' : 'alocado';
                 $_SESSION['mensagem']      = "Equipamento {$equipamento['patrimonio']} {$acao} com sucesso para {$colaboradorSelecionado['nome']}!";
                 $_SESSION['mensagem_tipo'] = 'success';
-                header('Location: index.php');
+                header('Location: index.php' . ($returnFiltro !== 'todos' ? '?filtro=' . urlencode($returnFiltro) : ''));
                 exit;
             } else {
                 $erro = 'Erro ao salvar atribuição. Tente novamente.';
@@ -404,3 +405,4 @@ document.getElementById('formAtribuir').addEventListener('submit', function(e) {
 </script>
 </body>
 </html>
+

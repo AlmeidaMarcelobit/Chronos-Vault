@@ -1,5 +1,6 @@
 <?php
 session_start();
+$returnFiltro = $_SESSION['equipamentos_filtro'] ?? 'todos';
 require_once '../includes/funcoes.php';
 
 if (!isset($_SESSION['usuario_id'])) {
@@ -9,13 +10,13 @@ if (!isset($_SESSION['usuario_id'])) {
 
 $usuario_nivel = $_SESSION['usuario_nivel'] ?? 'user';
 if ($usuario_nivel === 'view') {
-    header('Location: index.php');
+    header('Location: index.php' . ($returnFiltro !== 'todos' ? '?filtro=' . urlencode($returnFiltro) : ''));
     exit;
 }
 
 $id = $_GET['id'] ?? null;
 if (!$id) {
-    header('Location: index.php');
+    header('Location: index.php' . ($returnFiltro !== 'todos' ? '?filtro=' . urlencode($returnFiltro) : ''));
     exit;
 }
 
@@ -40,7 +41,7 @@ foreach ($statuses as $status) {
 if (!$equipamento) {
     $_SESSION['mensagem'] = 'Equipamento não encontrado ou já está fora de uso.';
     $_SESSION['mensagem_tipo'] = 'error';
-    header('Location: index.php');
+    header('Location: index.php' . ($returnFiltro !== 'todos' ? '?filtro=' . urlencode($returnFiltro) : ''));
     exit;
 }
 
@@ -77,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (salvarArquivoJSON($caminhoForaUso, $foraUso)) {
                 $_SESSION['mensagem'] = 'Equipamento ' . htmlspecialchars($equipamento['patrimonio']) . ' marcado como Fora de Uso.';
                 $_SESSION['mensagem_tipo'] = 'success';
-                header('Location: index.php');
+                header('Location: index.php' . ($returnFiltro !== 'todos' ? '?filtro=' . urlencode($returnFiltro) : ''));
                 exit;
             } else {
                 $erro = 'Erro ao salvar. Tente novamente.';
@@ -183,3 +184,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 </html>
+
+

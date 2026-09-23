@@ -1,5 +1,6 @@
 <?php
 session_start();
+$returnFiltro = $_SESSION['equipamentos_filtro'] ?? 'todos';
 require_once '../includes/funcoes.php';
 
 // Verificar se o usuário está logado
@@ -575,3 +576,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </script>
 </body>
 </html>
+

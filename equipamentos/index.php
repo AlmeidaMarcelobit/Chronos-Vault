@@ -73,6 +73,7 @@ sort($centrosCustoUnicos);
 // APLICAR FILTROS
 // ============================================
 $filtro = $_GET["filtro"] ?? "todos";
+$_SESSION['equipamentos_filtro'] = $filtro;
 $tipo = $_GET["tipo"] ?? "todos";
 $status = $_GET["status"] ?? "todos";
 $colaboradorId = $_GET["colaborador"] ?? null;

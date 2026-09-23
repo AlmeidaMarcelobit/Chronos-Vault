@@ -1,5 +1,6 @@
 <?php
 session_start();
+$returnFiltro = $_SESSION['equipamentos_filtro'] ?? 'todos';
 require_once '../includes/funcoes.php';
 
 // Verificar se o usuário está logado
@@ -17,7 +18,7 @@ $can_edit = ($is_admin || $usuario_nivel === 'user');
 if (!$can_edit) {
     $_SESSION['mensagem'] = 'Acesso negado. Apenas administradores e usuários podem adicionar equipamentos.';
     $_SESSION['mensagem_tipo'] = 'error';
-    header('Location: index.php');
+    header('Location: index.php' . ($returnFiltro !== 'todos' ? '?filtro=' . urlencode($returnFiltro) : ''));
     exit;
 }
 
@@ -150,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (adicionarEquipamento($novoEquipamento)) {
             $_SESSION['mensagem'] = 'Equipamento cadastrado com sucesso!';
             $_SESSION['mensagem_tipo'] = 'success';
-            header('Location: index.php');
+            header('Location: index.php' . ($returnFiltro !== 'todos' ? '?filtro=' . urlencode($returnFiltro) : ''));
             exit;
         } else {
             $mensagem = 'Erro ao salvar o equipamento. Tente novamente.';
@@ -675,3 +676,5 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
 </script>
 </body>
 </html>
+
+
