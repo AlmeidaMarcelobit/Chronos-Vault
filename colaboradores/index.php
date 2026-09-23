@@ -249,12 +249,9 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
         </div>
         <?php if ($is_admin): ?>
             <div style="display: flex; gap: 0.75rem;">
-                <a href="inativos.php" class="btn btn-secondary">
-                    <i class="fas fa-archive"></i> Ver Inativos
-                </a>
-                <a href="adicionar.php" class="btn btn-primary">
-                    <i class="fas fa-user-plus"></i> Adicionar Colaborador
-                </a>
+                <a href="adicionar.php" class="btn btn-primary"><i class="fas fa-user-plus"></i> Adicionar Colaborador</a>
+                <a href="../terceiros/index.php" class="btn btn-secondary"><i class="fas fa-users"></i> Terceiros</a>
+                <a href="inativos.php" class="btn btn-secondary"><i class="fas fa-box-archive"></i> Ver Inativos</a>
             </div>
         <?php endif; ?>
     </div>
@@ -626,3 +623,6 @@ $totalHomeOffice           = count(array_filter($colaboradores, fn($c) => ($c['t
 </script>
 </body>
 </html>
+
+
+
