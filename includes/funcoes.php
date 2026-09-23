@@ -866,7 +866,7 @@ function criarBackup($diretorio = 'backups/') {
 
 // Registrar log de atividades
 function registrarLog($acao, $detalhes = '') {
-    $logFile = 'data/logs.json';
+    $logFile = __DIR__ . '/../data/logs/logs.json';
     $logs = lerArquivoJSON($logFile);
 
     $log = [
@@ -1366,5 +1366,6 @@ function colaboradorEhTerceiro(array $colaborador): bool
     return ($colaborador['tipo_colaborador'] ?? 'interno') === 'terceiro';
 }
 ?>
+
 
 
