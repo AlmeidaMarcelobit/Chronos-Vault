@@ -490,18 +490,20 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
 
             <div class="form-group" id="colaborador-select" style="display: <?php echo (isset($_POST['status']) && in_array($_POST['status'], ['alocado', 'emprestado'])) ? 'block' : 'none'; ?>;">
                 <label for="colaborador_id"><i class="fas fa-user"></i> Selecionar Colaborador <span class="required">*</span></label>
-                <select id="colaborador_id" name="colaborador_id" class="form-select">
-                    <option value="">-- Selecione um colaborador --</option>
-                    <?php if (empty($colaboradores)): ?>
-                        <option value="" disabled>Nenhum colaborador cadastrado</option>
-                    <?php else: ?>
-                        <?php foreach ($colaboradores as $colaborador): ?>
-                            <option value="<?php echo $colaborador['id']; ?>" <?php echo (isset($_POST['colaborador_id']) && $_POST['colaborador_id'] == $colaborador['id']) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($colaborador['nome'] . ' - ' . ($colaborador['departamento'] ?? 'N/A')); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </select>
+                <input type="hidden" id="colaborador_id" name="colaborador_id" value="<?= htmlspecialchars($_POST['colaborador_id'] ?? '') ?>">
+<input type="text" id="colaborador_busca" class="form-control" list="lista-colaboradores" placeholder="Digite o nome do colaborador" autocomplete="off" value="<?php
+    foreach ($colaboradores as $c) {
+        if ((string)($c['id'] ?? '') === (string)($_POST['colaborador_id'] ?? '')) {
+            echo htmlspecialchars($c['nome'] . ' - ' . ($c['departamento'] ?? 'N/A'));
+            break;
+        }
+    }
+?>">
+<datalist id="lista-colaboradores">
+<?php foreach ($colaboradores as $colaborador): ?>
+    <option data-id="<?php echo htmlspecialchars($colaborador['id']); ?>" value="<?php echo htmlspecialchars($colaborador['nome'] . ' - ' . ($colaborador['departamento'] ?? 'N/A')); ?>"></option>
+<?php endforeach; ?>
+</datalist>
                 <?php if (empty($colaboradores)): ?>
                     <small class="form-text text-danger"><i class="fas fa-exclamation-triangle"></i> Não há colaboradores cadastrados. <a href="../colaboradores/adicionar.php">Cadastre um colaborador primeiro</a>.</small>
                 <?php endif; ?>
@@ -554,6 +556,14 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
     function toggleColaboradorSelect(show) {
         const selectDiv = document.getElementById('colaborador-select');
         const selectElement = document.getElementById('colaborador_id');
+const buscaColaborador = document.getElementById('colaborador_busca');
+if (buscaColaborador) {
+    buscaColaborador.addEventListener('input', function () {
+        const opcao = Array.from(document.querySelectorAll('#lista-colaboradores option'))
+            .find(option => option.value === this.value);
+        selectElement.value = opcao ? opcao.dataset.id : '';
+    });
+}
         if (show) {
             selectDiv.style.display = 'block';
             if (selectElement) selectElement.required = true;
@@ -676,5 +686,6 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
 </script>
 </body>
 </html>
+
 
 
