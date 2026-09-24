@@ -9794,40 +9794,6 @@
     },
     {
         "tipo": "notebook",
-        "marca": "Dell",
-        "modelo": "Latitude 3420",
-        "patrimonio": "1582",
-        "serial": "9FSV9V3",
-        "hostname": "ANDRESA-LIMA",
-        "centro_custo": "13019",
-        "especificacoes": {
-            "sistema_operacional": "Windows 11",
-            "bit_instalado": true,
-            "milvus_instalado": true,
-            "ram": "16GB",
-            "processador": "Intel i7-1165G7",
-            "hd": "256GB"
-        },
-        "colaborador_id": 28,
-        "status": "alocado",
-        "observacoes": "\n\n[ALTERAÇÃO] 21\/09\/2026 17:19:45\nStatus alterado: Em Estoque → Alocado\nAtribuído a novo colaborador.",
-        "data_cadastro": "2026-09-21 16:58:51",
-        "data_atualizacao": "2026-09-21 17:19:45",
-        "data_atribuicao": "2026-09-21 17:19:45",
-        "tipo_atribuicao": "alocacao",
-        "id": 577,
-        "historico_centro_custo": [
-            {
-                "data": "2026-09-21 17:19:45",
-                "usuario": "Administrador",
-                "centro_custo_anterior": "11001",
-                "centro_custo_novo": "13019",
-                "motivo": ""
-            }
-        ]
-    },
-    {
-        "tipo": "notebook",
         "marca": "Lenovo",
         "modelo": "V15 G3 IAP",
         "patrimonio": "1950",
