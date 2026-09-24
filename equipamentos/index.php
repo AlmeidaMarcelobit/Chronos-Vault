@@ -41,6 +41,7 @@ $todosEquipamentos = array_merge(
 // Carregar colaboradores
 $colaboradores = lerArquivoJSON("../data/colaboradores/ativos.json");
 if ($colaboradores === false) $colaboradores = [];
+usort($colaboradores, fn($a, $b) => strcasecmp($a['nome'] ?? '', $b['nome'] ?? ''));
 
 // Criar mapa de colaboradores
 $mapaColaboradores = [];
@@ -744,3 +745,4 @@ $totalFiltrado = count($equipamentosFiltrados);
 
 </body>
 </html>
+
