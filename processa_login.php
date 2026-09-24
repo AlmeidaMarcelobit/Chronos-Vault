@@ -143,7 +143,7 @@ if ($usuarioEncontrado) {
     }
 
     // Registrar log de acesso (opcional)
-    registrarLog('login_sucesso', "Usuário {$usuarioEncontrado['nome']} fez login");
+    registrarLogSeguranca('login_sucesso', "Usuário {$usuarioEncontrado['nome']} fez login");
 
     // Redirecionar para o dashboard
     header('Location: index.php');
@@ -154,7 +154,7 @@ if ($usuarioEncontrado) {
     $_SESSION['ultima_tentativa'] = time();
 
     // Registrar log de falha (opcional)
-    registrarLog('login_falha', "Tentativa de login falha para usuário: {$username}");
+    registrarLogSeguranca('login_falha', "Tentativa de login falha para usuário: {$username}");
 
     // Redirecionar com erro
     header('Location: login.php?erro=1');

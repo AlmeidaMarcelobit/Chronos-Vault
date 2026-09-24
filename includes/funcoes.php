@@ -865,6 +865,22 @@ function criarBackup($diretorio = 'backups/') {
 }
 
 // Registrar log de atividades
+function registrarLogSeguranca($acao, $detalhes = '') {
+    $logFile = __DIR__ . '/../data/seguraca/logs.json';
+    $logs = lerArquivoJSON($logFile);
+    if (!is_array($logs)) $logs = [];
+    $log = [
+        'id' => gerarId($logs),
+        'usuario_id' => $_SESSION['usuario_id'] ?? null,
+        'usuario_nome' => $_SESSION['usuario_nome'] ?? 'Sistema',
+        'acao' => $acao,
+        'detalhes' => $detalhes,
+        'ip' => $_SERVER['REMOTE_ADDR'] ?? 'Desconhecido',
+        'data' => date('Y-m-d H:i:s')
+    ];
+    $logs[] = $log;
+    return salvarArquivoJSON($logFile, $logs);
+}
 function registrarLog($acao, $detalhes = '') {
     $logFile = __DIR__ . '/../data/logs/logs.json';
     $logs = lerArquivoJSON($logFile);
@@ -1366,6 +1382,7 @@ function colaboradorEhTerceiro(array $colaborador): bool
     return ($colaborador['tipo_colaborador'] ?? 'interno') === 'terceiro';
 }
 ?>
+
 
 
 
