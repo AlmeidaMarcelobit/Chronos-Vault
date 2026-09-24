@@ -28,20 +28,6 @@
         "data_atualizacao": "2026-06-15 20:58:24"
     },
     {
-        "id": 3,
-        "matricula": null,
-        "nome": "Alessandra Alves Pereira",
-        "cargo": null,
-        "cpf": "41415602867",
-        "departamento": "Marketing Internacional",
-        "centro_custo": "14005",
-        "email": "alessandra@agenciafr.com",
-        "tipo_trabalho": "local",
-        "endereco": null,
-        "data_cadastro": "2026-06-15 22:20:43",
-        "data_atualizacao": "2026-06-15 22:20:43"
-    },
-    {
         "id": 4,
         "matricula": null,
         "nome": "Yasmin Faria",
@@ -3078,20 +3064,6 @@
         "endereco": null,
         "data_cadastro": "2026-06-16 12:25:18",
         "data_atualizacao": "2026-06-16 12:25:18"
-    },
-    {
-        "id": 222,
-        "matricula": null,
-        "nome": "Alexandre Veloso Pimenta De Figueiredo",
-        "cargo": null,
-        "cpf": "07771865607",
-        "departamento": "RT Medico",
-        "centro_custo": "12008",
-        "email": "alexandre.pimenta@amorsaude.com",
-        "tipo_trabalho": "home",
-        "endereco": null,
-        "data_cadastro": "2026-06-16 12:25:31",
-        "data_atualizacao": "2026-06-16 12:25:31"
     },
     {
         "id": 223,
