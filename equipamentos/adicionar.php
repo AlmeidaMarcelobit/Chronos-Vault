@@ -2,6 +2,16 @@
 session_start();
 $returnFiltro = $_SESSION['equipamentos_filtro'] ?? 'todos';
 require_once '../includes/funcoes.php';
+$hostnamesUsados = [];
+foreach (carregarTodosEquipamentos() as $equipamentoExistente) {
+    $hostnameExistente = strtoupper(trim($equipamentoExistente['hostname'] ?? ''));
+    if ($hostnameExistente !== '') $hostnamesUsados[$hostnameExistente] = true;
+}
+$hostnamesDisponiveis = [];
+for ($numeroHostname = 999; $numeroHostname >= 1; $numeroHostname--) {
+    $hostnameOpcao = 'NT-AS-' . str_pad((string)$numeroHostname, 3, '0', STR_PAD_LEFT);
+    if (!isset($hostnamesUsados[$hostnameOpcao])) $hostnamesDisponiveis[] = $hostnameOpcao;
+}
 
 // Verificar se o usuário está logado
 if (!isset($_SESSION['usuario_id'])) {
@@ -426,7 +436,12 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
                     </div>
                     <div class="form-group" id="hostname-group">
                         <label for="hostname"><i class="fas fa-network-wired"></i> Hostname <span class="required">*</span></label>
-                        <input type="text" id="hostname" name="hostname" value="<?php echo htmlspecialchars($_POST['hostname'] ?? ''); ?>" class="form-control" placeholder="Ex: NT-AS-999 ou um nome personalizado">
+                        <input type="text" id="hostname" name="hostname" value="<?php echo htmlspecialchars($_POST['hostname'] ?? ''); ?>" class="form-control" list="hostnames-disponiveis" placeholder="Digite ou selecione um hostname">
+<datalist id="hostnames-disponiveis">
+<?php foreach ($hostnamesDisponiveis as $hostnameOpcao): ?>
+    <option value="<?php echo htmlspecialchars($hostnameOpcao); ?>"></option>
+<?php endforeach; ?>
+</datalist>
                         <small class="form-text">Obrigatório para Notebooks, Desktops e TVs. Aceita NT-AS-999 ou nome personalizado</small>
                     </div>
                     <div class="form-group technical-only">
@@ -686,6 +701,9 @@ if (buscaColaborador) {
 </script>
 </body>
 </html>
+
+
+
 
 
 
