@@ -426,8 +426,8 @@ $tiposEquipamentos = getTiposEquipamentosComIcones();
                     </div>
                     <div class="form-group" id="hostname-group">
                         <label for="hostname"><i class="fas fa-network-wired"></i> Hostname <span class="required">*</span></label>
-                        <input type="text" id="hostname" name="hostname" value="<?php echo htmlspecialchars($_POST['hostname'] ?? ''); ?>" class="form-control" placeholder="Ex: AS-NOTE-01">
-                        <small class="form-text">Obrigatório para Notebooks, Desktops e TVs</small>
+                        <input type="text" id="hostname" name="hostname" value="<?php echo htmlspecialchars($_POST['hostname'] ?? ''); ?>" class="form-control" placeholder="Ex: NT-AS-999 ou um nome personalizado">
+                        <small class="form-text">Obrigatório para Notebooks, Desktops e TVs. Aceita NT-AS-999 ou nome personalizado</small>
                     </div>
                     <div class="form-group technical-only">
                         <label for="processador"><i class="fas fa-microchip"></i> Processador</label>
@@ -686,6 +686,7 @@ if (buscaColaborador) {
 </script>
 </body>
 </html>
+
 
 
 
